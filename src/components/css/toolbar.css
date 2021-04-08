@@ -1,0 +1,9 @@
+.logo{
+    width: 35%;
+    margin-top: 17%;
+    margin-bottom: 17%;
+}
+
+.logo:hover{
+    filter: drop-shadow(10px 10px 4px gray);
+}

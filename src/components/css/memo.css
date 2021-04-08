@@ -1,0 +1,13 @@
+.icon{
+    width: 9%;
+}
+
+.icon:hover{
+    filter: drop-shadow(10px 10px 4px gray);
+}
+
+#phone{
+    background-color: red;
+    border-radius: 25%;
+    border: red 5px solid;
+}

@@ -1,0 +1,443 @@
+
+{
+  "header": {
+    "reportVersion": 1,
+    "event": "Allocation failed - JavaScript heap out of memory",
+    "trigger": "FatalError",
+    "filename": "report.20210201.025654.23751.0.001.json",
+    "dumpEventTime": "2021-02-01T02:56:54Z",
+    "dumpEventTimeStamp": "1612144614917",
+    "processId": 23751,
+    "cwd": "/home/david/Documents/Projet Simplon/notelNext",
+    "commandLine": [
+      "/bin/node",
+      "/home/david/Documents/Projet Simplon/notelNext/.cache/tmp-23729-gOUSI8S2PnIG"
+    ],
+    "nodejsVersion": "v12.16.1",
+    "glibcVersionRuntime": "2.31",
+    "glibcVersionCompiler": "2.17",
+    "wordSize": 64,
+    "arch": "x64",
+    "platform": "linux",
+    "componentVersions": {
+      "node": "12.16.1",
+      "v8": "7.8.279.23-node.31",
+      "uv": "1.34.0",
+      "zlib": "1.2.11",
+      "brotli": "1.0.7",
+      "ares": "1.15.0",
+      "modules": "72",
+      "nghttp2": "1.40.0",
+      "napi": "5",
+      "llhttp": "2.0.4",
+      "http_parser": "2.9.3",
+      "openssl": "1.1.1d",
+      "cldr": "35.1",
+      "icu": "64.2",
+      "tz": "2019c",
+      "unicode": "12.1"
+    },
+    "release": {
+      "name": "node",
+      "lts": "Erbium",
+      "headersUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1-headers.tar.gz",
+      "sourceUrl": "https://nodejs.org/download/release/v12.16.1/node-v12.16.1.tar.gz"
+    },
+    "osName": "Linux",
+    "osRelease": "5.4.0-65-generic",
+    "osVersion": "#73-Ubuntu SMP Mon Jan 18 17:25:17 UTC 2021",
+    "osMachine": "x86_64",
+    "cpus": [
+      {
+        "model": "Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz",
+        "speed": 2575,
+        "user": 46323000,
+        "nice": 301000,
+        "sys": 7288000,
+        "idle": 304593900,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz",
+        "speed": 2559,
+        "user": 44593100,
+        "nice": 333900,
+        "sys": 6692500,
+        "idle": 307466400,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz",
+        "speed": 2366,
+        "user": 45470500,
+        "nice": 298300,
+        "sys": 7475700,
+        "idle": 305388600,
+        "irq": 0
+      },
+      {
+        "model": "Intel(R) Core(TM) i5-5300U CPU @ 2.30GHz",
+        "speed": 2582,
+        "user": 44908500,
+        "nice": 305800,
+        "sys": 6508900,
+        "idle": 307627000,
+        "irq": 0
+      }
+    ],
+    "networkInterfaces": [
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "127.0.0.1",
+        "netmask": "255.0.0.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "wlo1",
+        "internal": false,
+        "mac": "64:80:99:d3:8f:83",
+        "address": "192.168.1.76",
+        "netmask": "255.255.255.0",
+        "family": "IPv4"
+      },
+      {
+        "name": "lo",
+        "internal": true,
+        "mac": "00:00:00:00:00:00",
+        "address": "::1",
+        "netmask": "ffff:ffff:ffff:ffff:ffff:ffff:ffff:ffff",
+        "family": "IPv6",
+        "scopeid": 0
+      },
+      {
+        "name": "wlo1",
+        "internal": false,
+        "mac": "64:80:99:d3:8f:83",
+        "address": "fe80::5b35:292a:4b2b:dafe",
+        "netmask": "ffff:ffff:ffff:ffff::",
+        "family": "IPv6",
+        "scopeid": 3
+      }
+    ],
+    "host": "david-EliteBook"
+  },
+  "javascriptStack": {
+    "message": "No stack.",
+    "stack": [
+      "Unavailable."
+    ]
+  },
+  "nativeStack": [
+    {
+      "pc": "0x0000000000b278f5",
+      "symbol": "report::TriggerNodeReport(v8::Isolate*, node::Environment*, char const*, char const*, std::string const&, v8::Local<v8::String>) [/bin/node]"
+    },
+    {
+      "pc": "0x00000000009f13ec",
+      "symbol": "node::OnFatalError(char const*, char const*) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b5da9e",
+      "symbol": "v8::Utils::ReportOOMFailure(v8::internal::Isolate*, char const*, bool) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000b5de19",
+      "symbol": "v8::internal::V8::FatalProcessOutOfMemory(v8::internal::Isolate*, char const*, bool) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d0a765",
+      "symbol": " [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d0adf6",
+      "symbol": "v8::internal::Heap::RecomputeLimits(v8::internal::GarbageCollector) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d1760a",
+      "symbol": "v8::internal::Heap::PerformGarbageCollection(v8::internal::GarbageCollector, v8::GCCallbackFlags) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d18515",
+      "symbol": "v8::internal::Heap::CollectGarbage(v8::internal::AllocationSpace, v8::internal::GarbageCollectionReason, v8::GCCallbackFlags) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000d1afcc",
+      "symbol": "v8::internal::Heap::AllocateRawWithRetryOrFail(int, v8::internal::AllocationType, v8::internal::AllocationOrigin, v8::internal::AllocationAlignment) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000ce26ae",
+      "symbol": "v8::internal::Factory::NewUninitializedFixedArray(int, v8::internal::AllocationType) [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000e51b31",
+      "symbol": " [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000e51de0",
+      "symbol": " [/bin/node]"
+    },
+    {
+      "pc": "0x0000000000ffaf1b",
+      "symbol": "v8::internal::Runtime_GrowArrayElements(int, unsigned long*, v8::internal::Isolate*) [/bin/node]"
+    },
+    {
+      "pc": "0x00000000013a71b9",
+      "symbol": " [/bin/node]"
+    }
+  ],
+  "javascriptHeap": {
+    "totalMemory": 2153615360,
+    "totalCommittedMemory": 2145934936,
+    "usedMemory": 2120338304,
+    "availableMemory": 65608928,
+    "memoryLimit": 2197815296,
+    "heapSpaces": {
+      "read_only_space": {
+        "memorySize": 262144,
+        "committedMemory": 33088,
+        "capacity": 32808,
+        "used": 32808,
+        "available": 0
+      },
+      "new_space": {
+        "memorySize": 16777216,
+        "committedMemory": 10371992,
+        "capacity": 8379648,
+        "used": 133704,
+        "available": 8245944
+      },
+      "old_space": {
+        "memorySize": 410402816,
+        "committedMemory": 409559976,
+        "capacity": 403408264,
+        "used": 399063936,
+        "available": 4344328
+      },
+      "code_space": {
+        "memorySize": 6459392,
+        "committedMemory": 6256960,
+        "capacity": 6152192,
+        "used": 5713120,
+        "available": 439072
+      },
+      "map_space": {
+        "memorySize": 8916992,
+        "committedMemory": 8916120,
+        "capacity": 5269520,
+        "used": 5269520,
+        "available": 0
+      },
+      "large_object_space": {
+        "memorySize": 1709850624,
+        "committedMemory": 1709850624,
+        "capacity": 1709270656,
+        "used": 1709270656,
+        "available": 0
+      },
+      "code_large_object_space": {
+        "memorySize": 946176,
+        "committedMemory": 946176,
+        "capacity": 854560,
+        "used": 854560,
+        "available": 0
+      },
+      "new_large_object_space": {
+        "memorySize": 0,
+        "committedMemory": 0,
+        "capacity": 8379648,
+        "used": 0,
+        "available": 8379648
+      }
+    }
+  },
+  "resourceUsage": {
+    "userCpuSeconds": 2314.03,
+    "kernelCpuSeconds": 103.403,
+    "cpuConsumptionPercent": 16.1356,
+    "maxRss": 2477424640,
+    "pageFaults": {
+      "IORequired": 385,
+      "IONotRequired": 32057751
+    },
+    "fsActivity": {
+      "reads": 350672,
+      "writes": 346352
+    }
+  },
+  "uvthreadResourceUsage": {
+    "userCpuSeconds": 1300.8,
+    "kernelCpuSeconds": 70.9339,
+    "cpuConsumptionPercent": 9.15585,
+    "fsActivity": {
+      "reads": 211808,
+      "writes": 335264
+    }
+  },
+  "libuv": [
+  ],
+  "environmentVariables": {
+    "SHELL": "/bin/bash",
+    "SESSION_MANAGER": "local/david-EliteBook:@/tmp/.ICE-unix/2346,unix/david-EliteBook:/tmp/.ICE-unix/2346",
+    "QT_ACCESSIBILITY": "1",
+    "COLORTERM": "truecolor",
+    "XDG_CONFIG_DIRS": "/etc/xdg/xdg-ubuntu:/etc/xdg",
+    "XDG_MENU_PREFIX": "gnome-",
+    "TERM_PROGRAM_VERSION": "1.50.1",
+    "GNOME_DESKTOP_SESSION_ID": "this-is-deprecated",
+    "MANDATORY_PATH": "/usr/share/gconf/ubuntu.mandatory.path",
+    "GNOME_SHELL_SESSION_MODE": "ubuntu",
+    "SSH_AUTH_SOCK": "/run/user/1000/keyring/ssh",
+    "XMODIFIERS": "@im=ibus",
+    "DESKTOP_SESSION": "ubuntu",
+    "SSH_AGENT_PID": "2309",
+    "GTK_MODULES": "gail:atk-bridge",
+    "PWD": "/home/david/Documents/Projet Simplon/notelNext",
+    "XDG_SESSION_DESKTOP": "ubuntu",
+    "LOGNAME": "david",
+    "XDG_SESSION_TYPE": "x11",
+    "GPG_AGENT_INFO": "/run/user/1000/gnupg/S.gpg-agent:0:1",
+    "XAUTHORITY": "/run/user/1000/gdm/Xauthority",
+    "VSCODE_GIT_ASKPASS_NODE": "/usr/share/code/code",
+    "GJS_DEBUG_TOPICS": "JS ERROR;JS LOG",
+    "WINDOWPATH": "2",
+    "HOME": "/home/david",
+    "USERNAME": "david",
+    "IM_CONFIG_PHASE": "1",
+    "LANG": "fr_FR.UTF-8",
+    "LS_COLORS": "rs=0:di=01;34:ln=01;36:mh=00:pi=40;33:so=01;35:do=01;35:bd=40;33;01:cd=40;33;01:or=40;31;01:mi=00:su=37;41:sg=30;43:ca=30;41:tw=30;42:ow=34;42:st=37;44:ex=01;32:*.tar=01;31:*.tgz=01;31:*.arc=01;31:*.arj=01;31:*.taz=01;31:*.lha=01;31:*.lz4=01;31:*.lzh=01;31:*.lzma=01;31:*.tlz=01;31:*.txz=01;31:*.tzo=01;31:*.t7z=01;31:*.zip=01;31:*.z=01;31:*.dz=01;31:*.gz=01;31:*.lrz=01;31:*.lz=01;31:*.lzo=01;31:*.xz=01;31:*.zst=01;31:*.tzst=01;31:*.bz2=01;31:*.bz=01;31:*.tbz=01;31:*.tbz2=01;31:*.tz=01;31:*.deb=01;31:*.rpm=01;31:*.jar=01;31:*.war=01;31:*.ear=01;31:*.sar=01;31:*.rar=01;31:*.alz=01;31:*.ace=01;31:*.zoo=01;31:*.cpio=01;31:*.7z=01;31:*.rz=01;31:*.cab=01;31:*.wim=01;31:*.swm=01;31:*.dwm=01;31:*.esd=01;31:*.jpg=01;35:*.jpeg=01;35:*.mjpg=01;35:*.mjpeg=01;35:*.gif=01;35:*.bmp=01;35:*.pbm=01;35:*.pgm=01;35:*.ppm=01;35:*.tga=01;35:*.xbm=01;35:*.xpm=01;35:*.tif=01;35:*.tiff=01;35:*.png=01;35:*.svg=01;35:*.svgz=01;35:*.mng=01;35:*.pcx=01;35:*.mov=01;35:*.mpg=01;35:*.mpeg=01;35:*.m2v=01;35:*.mkv=01;35:*.webm=01;35:*.ogm=01;35:*.mp4=01;35:*.m4v=01;35:*.mp4v=01;35:*.vob=01;35:*.qt=01;35:*.nuv=01;35:*.wmv=01;35:*.asf=01;35:*.rm=01;35:*.rmvb=01;35:*.flc=01;35:*.avi=01;35:*.fli=01;35:*.flv=01;35:*.gl=01;35:*.dl=01;35:*.xcf=01;35:*.xwd=01;35:*.yuv=01;35:*.cgm=01;35:*.emf=01;35:*.ogv=01;35:*.ogx=01;35:*.aac=00;36:*.au=00;36:*.flac=00;36:*.m4a=00;36:*.mid=00;36:*.midi=00;36:*.mka=00;36:*.mp3=00;36:*.mpc=00;36:*.ogg=00;36:*.ra=00;36:*.wav=00;36:*.oga=00;36:*.opus=00;36:*.spx=00;36:*.xspf=00;36:",
+    "XDG_CURRENT_DESKTOP": "Unity",
+    "GIT_ASKPASS": "/usr/share/code/resources/app/extensions/git/dist/askpass.sh",
+    "INVOCATION_ID": "3f61ef2f951c4e37a1e955f26feed296",
+    "MANAGERPID": "2128",
+    "CHROME_DESKTOP": "code-url-handler.desktop",
+    "GJS_DEBUG_OUTPUT": "stderr",
+    "NVM_DIR": "/home/david/.nvm",
+    "LESSCLOSE": "/usr/bin/lesspipe %s %s",
+    "XDG_SESSION_CLASS": "user",
+    "TERM": "xterm-256color",
+    "DEFAULTS_PATH": "/usr/share/gconf/ubuntu.default.path",
+    "LESSOPEN": "| /usr/bin/lesspipe %s",
+    "USER": "david",
+    "VSCODE_GIT_IPC_HANDLE": "/run/user/1000/vscode-git-ffbe9544fb.sock",
+    "DISPLAY": ":0",
+    "SHLVL": "1",
+    "NVM_CD_FLAGS": "",
+    "QT_IM_MODULE": "ibus",
+    "XDG_RUNTIME_DIR": "/run/user/1000",
+    "VSCODE_GIT_ASKPASS_MAIN": "/usr/share/code/resources/app/extensions/git/dist/askpass-main.js",
+    "JOURNAL_STREAM": "9:44907",
+    "XDG_DATA_DIRS": "/usr/share/ubuntu:/usr/local/share/:/usr/share/:/var/lib/snapd/desktop",
+    "PATH": "/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin",
+    "GDMSESSION": "ubuntu",
+    "ORIGINAL_XDG_CURRENT_DESKTOP": "ubuntu:GNOME",
+    "DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+    "GIO_LAUNCHED_DESKTOP_FILE_PID": "2692",
+    "GIO_LAUNCHED_DESKTOP_FILE": "/usr/share/applications/code.desktop",
+    "TERM_PROGRAM": "vscode",
+    "_": "/bin/gatsby",
+    "INTERNAL_GATSBY_TELEMETRY_SESSION_ID": "4d280d55-88b8-40f6-9414-26ba9846d15b",
+    "GATSBY_LOGGER": "ink",
+    "gatsby_log_level": "normal",
+    "gatsby_executing_command": "develop",
+    "NODE_ENV": "development",
+    "GATSBY_EXPERIMENTAL_QUERY_ON_DEMAND": "true",
+    "GATSBY_HOT_LOADER": "react-hot-loader",
+    "GATSBY_QUERY_ON_DEMAND_LOADING_INDICATOR": "true",
+    "VIPSHOME": "/target",
+    "GATSBY_BUILD_STAGE": "develop"
+  },
+  "userLimits": {
+    "core_file_size_blocks": {
+      "soft": 0,
+      "hard": "unlimited"
+    },
+    "data_seg_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "file_size_blocks": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_locked_memory_bytes": {
+      "soft": 67108864,
+      "hard": 67108864
+    },
+    "max_memory_size_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "open_files": {
+      "soft": 1048576,
+      "hard": 1048576
+    },
+    "stack_size_bytes": {
+      "soft": 8388608,
+      "hard": "unlimited"
+    },
+    "cpu_time_seconds": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    },
+    "max_user_processes": {
+      "soft": 31123,
+      "hard": 31123
+    },
+    "virtual_memory_kbytes": {
+      "soft": "unlimited",
+      "hard": "unlimited"
+    }
+  },
+  "sharedObjects": [
+    "linux-vdso.so.1",
+    "/lib/x86_64-linux-gnu/libdl.so.2",
+    "/usr/lib/x86_64-linux-gnu/libstdc++.so.6",
+    "/lib/x86_64-linux-gnu/libm.so.6",
+    "/lib/x86_64-linux-gnu/libgcc_s.so.1",
+    "/lib/x86_64-linux-gnu/libpthread.so.0",
+    "/lib/x86_64-linux-gnu/libc.so.6",
+    "/lib64/ld-linux-x86-64.so.2",
+    "/lib/x86_64-linux-gnu/libnss_files.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/sharp.node",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libvips-cpp.so.42",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libvips.so.42",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libglib-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgobject-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libcairo.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libexif.so.12",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libexpat.so.1",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libffi.so.7",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libfontconfig.so.1",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libfreetype.so.6",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libfribidi.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgdk_pixbuf-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgif.so.7",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgio-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgmodule-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgsf-1.so.114",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libgthread-2.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libharfbuzz.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libjpeg.so.8",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/liblcms2.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/liborc-0.4.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libpango-1.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libpangocairo-1.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libpangoft2-1.0.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libpixman-1.so.0",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libpng16.so.16",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/librsvg-2.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libtiff.so.5",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libwebp.so.7",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libwebpdemux.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libwebpmux.so.3",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libxml2.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libz.so.1",
+    "/lib/x86_64-linux-gnu/librt.so.1",
+    "/lib/x86_64-linux-gnu/libresolv.so.2",
+    "/home/david/Documents/Projet Simplon/notelNext/node_modules/sharp/build/Release/../../vendor/lib/libcairo-gobject.so.2",
+    "/lib/x86_64-linux-gnu/libnss_mdns4_minimal.so.2",
+    "/lib/x86_64-linux-gnu/libnss_dns.so.2"
+  ]
+}

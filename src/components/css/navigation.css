@@ -1,0 +1,7 @@
+.hov{
+    background-color: aliceblue;
+}
+
+.hov:hover{
+    background-color: lightgray;
+}
