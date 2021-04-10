@@ -4,6 +4,7 @@ import CoolBar from './coolBar'
 import '../css/memo.css'
 import Divider from '@material-ui/core/Divider'
 import { FirebaseContext, db, auth } from '../../Firebase'
+import Messenger from './messenger'
 
 
 const Memo =()=>{
@@ -12,10 +13,8 @@ const Memo =()=>{
     return(
         
             <div className="memo_container">
-                <h5 className="font-weight-bolder memo_title">Memo Board</h5>
-                <Divider/>
-                {!!userDB && !!setUserDB &&
-                <StickList />}
+                <h5 className="font-weight-bolder memo_title">Note de service</h5>
+                <Messenger />
                 <CoolBar />
             </div>
     )

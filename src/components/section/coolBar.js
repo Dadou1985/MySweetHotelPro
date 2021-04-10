@@ -8,7 +8,7 @@ import { FirebaseContext, db, auth } from '../../Firebase'
 
 
 const CoolBar = () => {
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     return (
         <div style={{
@@ -17,11 +17,11 @@ const CoolBar = () => {
             justifyContent: "space-around",
             width:"100%"
         }}>
-            {!!userDB && !!setUserDB && 
+            {!!userDB && !!setUserDB && !!user && !!setUser &&
             <CheckList />}
-            {!!userDB && !!setUserDB &&
+            {!!userDB && !!setUserDB && !!user && !!setUser &&
             <Annuaire />}
-            {!!userDB && !!setUserDB &&
+            {!!userDB && !!setUserDB && !!user && !!setUser &&
             <Caisse />}    
         </div>
     )

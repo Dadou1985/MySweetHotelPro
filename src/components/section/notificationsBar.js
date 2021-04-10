@@ -6,9 +6,8 @@ import { FirebaseContext, db, auth } from '../../Firebase'
 export default function NotificationsBar({message, markup}) {
 
     const [visible, setVisible] = useState(true)
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user } = useContext(FirebaseContext)
     
     const showNotification = () => {
         setVisible(true)

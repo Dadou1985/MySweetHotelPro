@@ -2,13 +2,13 @@ import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext, db, auth } from '../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
 const ItemList = ({item}) => {
 
     const [info, setInfo] = useState([])
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     useEffect(() => {
         const listOnAir = () => {
@@ -43,6 +43,8 @@ const ItemList = ({item}) => {
            
      },[item])
 
+     moment.locale('fr')
+
     return (
         <div>
            
@@ -60,7 +62,7 @@ const ItemList = ({item}) => {
                         <tr key={flow.id}>
                         <td>{flow.client}</td>
                         <td>{flow.room}</td>
-                        <td>{moment(flow.markup).format('LT')}</td>
+                        <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
                                return db.collection('mySweetHotel')

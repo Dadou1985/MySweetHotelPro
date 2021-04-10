@@ -7,9 +7,8 @@ const FeedbackBox = () =>{
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "Améliorations", feedback: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, user } = useContext(FirebaseContext)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

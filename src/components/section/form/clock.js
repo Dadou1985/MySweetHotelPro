@@ -3,14 +3,13 @@ import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from '
 import Timer from '../../../svg/timer.svg'
 import { db, auth } from '../../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
-
-const Clock = ({userDB, setUserDB}) =>{
+const Clock = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({room: "", client: "", hour: "", date: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
 
     const handleClose = () => setList(false)

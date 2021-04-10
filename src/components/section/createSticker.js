@@ -11,9 +11,8 @@ const CreateSticker = () => {
     const [info, setInfo] = useState([])
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const showSticker = () => {
         setVisible(true)

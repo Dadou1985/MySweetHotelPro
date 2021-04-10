@@ -3,14 +3,13 @@ import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from '
 import Maintenance from '../../../svg/repair.svg'
 import { db, auth } from '../../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
-const Repair = ({userDB, setUserDB}) =>{
+const Repair = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({room: "", client: "", details: "", type: ""})
-    const [user, setUser] = useState(auth.currentUser)
-
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

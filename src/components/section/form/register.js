@@ -7,7 +7,6 @@ const Register = ({firebase, hide}) => {
     const [errorMessage, setErrorMessage] = useState('')
     const [messageError, setMessageError] = useState('')
 
-
     const handleChange = (event) =>{
         event.persist()
         setErrorMessage('')

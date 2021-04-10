@@ -4,13 +4,13 @@ import Taxi from '../../../svg/taxi.svg'
 import DatePicker from "react-datepicker";
 import { db, auth } from '../../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
-const Cab = ({userDB, setUserDB}) =>{
+const Cab = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({room: "", client: "", date: "", hour: "", passenger:"", model:"", destination: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

@@ -18,7 +18,7 @@ import Upload from '../../svg/plus2.svg'
 import Drawer from '@material-ui/core/Drawer'
 import { FirebaseContext, db, auth, storage } from '../../Firebase'
 import moment from 'moment'
-
+import 'moment/locale/fr';
 
 const Messenger = () =>{
 
@@ -32,9 +32,8 @@ const Messenger = () =>{
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const handleChangeNote = event =>{
         setNote(event.currentTarget.value)
@@ -159,14 +158,14 @@ const Messenger = () =>{
     const handleSubmit = (event) =>{
         event.preventDefault()
         if(img !== null) {
-            const uploadTask = storage.ref(`img/${img.name}`).put(img)
+            const uploadTask = storage.ref(`msh-photo-user/${img.name}`).put(img)
         uploadTask.on(
           "state_changed",
           snapshot => {},
           error => {console.log(error)},
           () => {
             storage
-              .ref("img")
+              .ref("msh-photo-user")
               .child(img.name)
               .getDownloadURL()
               .then(url => {
@@ -220,25 +219,28 @@ const Messenger = () =>{
     const hideCalendar = () => {
         setShowCalendar(false)
     }
+
+    console.log('*****', user)
     
     return(
         <div className="messenger_container">
-            <h5 className="font-weight-bolder messenger_title">Note Book</h5>
             <PerfectScrollbar className="perfect-scrollbar">
                 <div className="messenger_notebox">
                     {!!userDB && !!setUserDB &&
                     <NoteBox />}
                 </div>
-                <OverlayTrigger
+            </PerfectScrollbar>
+            <OverlayTrigger
                 placement="top"
                 overlay={
                     <Tooltip id="title">
                     Ajouter une note
                     </Tooltip>
                 }>
-                <img src={Plus} alt="Plus" className="icon-add-note" onClick={handleShow} />
+                <div className="icon-add-note-container"  onClick={handleShow}>
+                    <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note
+                </div>
             </OverlayTrigger>
-            </PerfectScrollbar>
             
             <Modal show={showModal} 
             size="lg"
@@ -247,10 +249,11 @@ const Messenger = () =>{
             centered>
                 <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="example-modal-sizes-title-sm" style={{width: "100%"}}>
-                    <Input type="text" name="title" placeholder="Donner un titre à la note..." className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
+                    Rédiger une note de service
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
+                    <Input type="text" name="title" placeholder="Donner un titre à la note..." className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
                     <Input type="textarea" placeholder="Rédiger une note..." value={note} className="modal-note-input" onChange={handleChangeNote} required />
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>

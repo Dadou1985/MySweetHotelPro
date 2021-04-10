@@ -3,15 +3,13 @@ import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from '
 import ChangeRoom from '../../../svg/logout.png'
 import {  db, auth } from '../../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
-
-const Maid = ({userDB, setUserDB}) =>{
+const Maid = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
-    const [user, setUser] = useState(auth.currentUser)
-
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

@@ -4,15 +4,14 @@ import Safe from '../../../svg/vault.svg'
 import { useReactToPrint } from 'react-to-print';
 import { FirebaseContext, db, auth } from '../../../Firebase'
 import moment from 'moment'
-
+import 'moment/locale/fr';
 
 const Caisse = () =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
     const [formValue, setFormValue] = useState({shift: "matin"})
-    const [user, setUser] = useState(auth.currentUser)
-    const {userDB} = useContext(FirebaseContext)
+    const {userDB, user} = useContext(FirebaseContext)
 
 
     const handleClose = () => setList(false)
@@ -166,7 +165,7 @@ const Caisse = () =>{
                 Caisse
               </Tooltip>
             }>
-                <img src={Safe}  alt="contact" onClick={handleShow} style={{width: "30%"}} />
+                <img src={Safe}  alt="contact" onClick={handleShow} style={{width: "25%"}} />
             </OverlayTrigger>
 
 

@@ -3,7 +3,9 @@ import { Button, Modal, InputGroup, FormControl, Form, OverlayTrigger, Tooltip, 
 import ItemList from '../itemList'
 import Maid from '../../../svg/maid.svg'
 import { db, auth } from '../../../Firebase'
-import Badge from '@material-ui/core/Badge';
+import Badge from '@material-ui/core/Badge'
+import StyleBadge from '../common/badgeMaker'
+import GlobalBadge from '../common/globalBadgeGather'
 
 
 const HouseKeeping = ({userDB}) =>{
@@ -14,9 +16,6 @@ const HouseKeeping = ({userDB}) =>{
     
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-
-
-    console.log("++++++", itemQty)
 
     return(
         <div style={{
@@ -52,44 +51,44 @@ const HouseKeeping = ({userDB}) =>{
                     <Col sm={3}>
                     <Nav variant="pills" className="flex-column">
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="towel">
                                 <Nav.Link eventKey="Serviette">Serviette</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="soap">
                                 <Nav.Link eventKey="Savon">Savon</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="toilet-paper">
                                 <Nav.Link eventKey="Papier Toilette">Papier Toilette</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="hair-dryer">
                                 <Nav.Link eventKey="Sèche-cheveux">Sèche-cheveux</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                        <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                        <StyleBadge item="pillow">
                             <Nav.Link eventKey="Coussin">Coussin</Nav.Link>
-                        </Badge>
+                        </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="blanket">
                                 <Nav.Link eventKey="Couverture">Couverture</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="iron">
                                 <Nav.Link eventKey="Fer à repasser">Fer à repasser</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <Badge style={{top: "13", right: "-3"}} badgeContent={4} color="primary">
+                            <StyleBadge item="baby-bed">
                                 <Nav.Link eventKey="Lit Bébé">Lit Bébé</Nav.Link>
-                            </Badge>
+                            </StyleBadge>
                         </Nav.Item>
                     </Nav>
                     </Col>

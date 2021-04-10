@@ -1,4 +1,4 @@
-import React, {useContext} from 'react'
+import React, {useContext, useEffect} from 'react'
 import '../css/toolbar.css'
 import Lost from './form/lost'
 import Cab from './form/cab'
@@ -10,22 +10,22 @@ import { FirebaseContext, db, auth } from '../../Firebase'
 
 
 const ToolBar = () =>{
-    const { userDB } = useContext(FirebaseContext)
+    const { userDB, user } = useContext(FirebaseContext)
 
     return(
         <div className="toolbar_container">
-            {userDB && 
-                <HouseKeeping userDB={userDB}  />}
-            {userDB && 
-                <Lost userDB={userDB}  />}
-           {userDB && 
-                <Cab userDB={userDB}  />}
-            {userDB && 
-                <Maid userDB={userDB}  />}
-            {userDB && 
-                <Clock userDB={userDB}  />}
-            {userDB && 
-                <Repair userDB={userDB}  />}
+            {userDB && user &&
+                <HouseKeeping userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Lost userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Cab userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Maid userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Clock userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Repair userDB={userDB} user={user}  />}
         </div>
     )
 }

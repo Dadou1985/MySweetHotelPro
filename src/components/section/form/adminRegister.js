@@ -5,9 +5,8 @@ import { FirebaseContext, db, auth } from '../../../Firebase'
 const AdminRegister = ({hide}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const handleChange = (event) =>{
         event.persist()

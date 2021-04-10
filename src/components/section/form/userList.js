@@ -5,9 +5,8 @@ import { FirebaseContext, db, auth } from '../../../Firebase'
 
 const UserList = () => {
     const [info, setInfo] = useState([])
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     useEffect(() => {
         const toolOnAir = () => {

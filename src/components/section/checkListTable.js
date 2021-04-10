@@ -7,9 +7,8 @@ const CheckListTable = ({shift}) => {
     const [info, setInfo] = useState([])
     const [isChecked, setIsChecked] = useState(false)
     const [formValue, setFormValue] = useState({task: ""})
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const handleChange = (event) =>{
         event.persist()

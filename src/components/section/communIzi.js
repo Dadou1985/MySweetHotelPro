@@ -15,11 +15,13 @@ import {
   AccordionItemPanel,
 } from 'react-accessible-accordion'
 import moment from 'moment'
+import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { db, auth } from '../../Firebase'
+import Switch from '@material-ui/core/Switch';
 
 
-export default function CommunIzi() {
+export default function CommunIzi({userDB, user}) {
     
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
@@ -28,9 +30,6 @@ export default function CommunIzi() {
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
-
-    const { userDB, setUserDB } = useContext(FirebaseContext)
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -79,10 +78,8 @@ export default function CommunIzi() {
           })
     }
 
-    const handleRoomnameSubmit = (event) => {
-      event.preventDefault()
-      setRoom('')
-      return this.db.collection('mySweetHotel')
+    const changeRoomStatus = (roomName) => {
+      return db.collection('mySweetHotel')
         .doc('country')
         .collection('France')
         .doc('collection')
@@ -93,9 +90,9 @@ export default function CommunIzi() {
         .collection(userDB.hotelDept)
         .doc(`${userDB.hotelId}`)
         .collection('chat')
-        .doc(room)
-        .set({
-          user: user.uid,
+        .doc(roomName)
+        .update({
+          status: false,
           markup: Date.now()
       })      
     .then(handleClose())
@@ -125,7 +122,7 @@ export default function CommunIzi() {
           .orderBy("markup", "asc")
         }
 
-      let unsubscribe = chatOnAir({hotelId: userDB.hotelId, region: userDB.hotelRegion, departement: userDB.hotelDept, signal : signal}).onSnapshot(function(snapshot) {
+      let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
                     const snapInfo = []
                   snapshot.forEach(function(doc) {          
                     snapInfo.push({
@@ -139,8 +136,6 @@ export default function CommunIzi() {
                 return unsubscribe
      },[])
 
-     console.log(expanded)
-
 
     return (
         <div className="communizi-container">
@@ -149,6 +144,7 @@ export default function CommunIzi() {
             <div className="communizi_notebox">
             <Accordion allowZeroExpanded>
                 {info.map((flow) => (
+                  flow.status &&
                   <AccordionItem key={flow.id} onClick={() => handleChangeExpanded(flow.id)}>
                     <AccordionItemHeading style={{
                       backgroundColor: "rgb(33, 35, 39)", 
@@ -157,19 +153,30 @@ export default function CommunIzi() {
                       borderTopRightRadius: "5px",
                       marginTop: "1vh"
                       }}>
-                        <AccordionItemButton style={{outline: "none"}}>
-                          <Avatar 
-                            round={true}
-                            name={flow.user}
-                            size="30"
-                            color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                            style={{marginRight: "1vw"}} />
-                            {flow.id}
-                            <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                        <AccordionItemButton style={{outline: "none", color: "gray", display: "flex", justifyContent: "space-between"}}>
+                          <div style={{display: "flex", alignItems: "center"}}>
+                            <Avatar 
+                              round={true}
+                              name={flow.id}
+                              size="30"
+                              color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
+                              style={{marginRight: "1vw"}} />
+                              {flow.id}
+                          </div>
+                          <div style={{display: "flex", alignItems: "center"}}>#{userDB.room}</div>
+                            <div style={{display: "flex", alignItems: "center"}}>
+                              <Switch
+                                checked={flow.status}
+                                onChange={() => changeRoomStatus(flow.id)}
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                              />
+                              <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                            </div>
                         </AccordionItemButton>
                     </AccordionItemHeading>
-                    <AccordionItemPanel style={{backgroundColor: 'lightgray', marginBottom: "1vh"}}>
-                      <ChatRoom title={flow.id} />
+                    <AccordionItemPanel style={{marginBottom: "1vh"}}>
+                      {user&& userDB&& 
+                      <ChatRoom user={user} userDB={userDB} title={flow.id} />}
                     </AccordionItemPanel>
                   </AccordionItem>
                 ))}
@@ -179,7 +186,7 @@ export default function CommunIzi() {
             <div>
                 <Form inline className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
-                    <Input type="text" placeholder="Participer à la conversation..."  
+                    <Input type="text" placeholder="Répondre au client..."  
                     value={note}
                     onChange={handleChange}
                     id="dark_message_note" />
@@ -192,9 +199,9 @@ export default function CommunIzi() {
                             Créer une conversation
                           </Tooltip>
                         }>
-                        <img src={Plus} alt="plus" style={{width: "40%", cursor: "pointer"}} onClick={handleShow} />          
+                        <img src={Plus} alt="plus" style={{width: "2vw", cursor: "pointer"}} onClick={handleShow} />          
                      </OverlayTrigger>
-                        <img src={Send} alt="sendIcon" style={{width: "40%", cursor: "pointer"}} onClick={handleSubmit} />          
+                        <img src={Send} alt="sendIcon" style={{width: "2vw", cursor: "pointer"}} onClick={handleSubmit} />          
                     </div>
                 </Form>
             </div>
@@ -211,7 +218,7 @@ export default function CommunIzi() {
                     <Input type="text" placeholder="Donnez un nom à la conversation" value={room} style={{borderTop: "none", borderLeft: "none", borderRight: "none"}} maxLength="60" onChange={handleChangeRoomName} />
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
-                    <Button variant="success" onClick={handleRoomnameSubmit}>Créer</Button>
+                    <Button variant="success">Créer</Button>
                 </Modal.Footer>
             </Modal>
 
@@ -223,7 +230,7 @@ export default function CommunIzi() {
                   padding: "5%", 
                   maxHeight: "30vh"}}>
                   <div><Input type="text" placeholder="Donnez un nom à la conversation..." value={room} style={{borderTop: "none", borderLeft: "none", borderRight: "none", marginBottom: "3vh"}} maxLength="35" onChange={handleChangeRoomName} /></div>
-                  <div><Button variant="success" style={{width: "100%"}} onClick={handleRoomnameSubmit}>Créer</Button></div>
+                  <div><Button variant="success" style={{width: "100%"}}>Créer</Button></div>
               </div>
             </Drawer>
         </div>

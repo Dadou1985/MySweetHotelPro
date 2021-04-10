@@ -7,6 +7,7 @@ import {
     AccordionItemPanel,
   } from 'react-accessible-accordion'
 import moment from 'moment'
+import 'moment/locale/fr';
 import Avatar from 'react-avatar'
 import Checkbox from '@material-ui/core/Checkbox';
 import { FirebaseContext, db, auth } from '../../Firebase'
@@ -17,9 +18,8 @@ const NoteBox = () => {
     const [messages, setMessages] = useState([])
     const [dayDate, setDayDate] = useState(new Date())
     const [expanded, setExpanded] = useState(null)
-    const [user, setUser] = useState(auth.currentUser)
 
-    const {userDB} = useContext(FirebaseContext)
+    const {userDB, user} = useContext(FirebaseContext)
 
     Date.prototype.standard = function() {
         let day = this.getDate() - 1
@@ -80,7 +80,7 @@ const NoteBox = () => {
 
 
     return (
-        <Accordion allowZeroExpanded className="accordion">
+        <Accordion allowZeroExpanded className="accordion-note">
                 {messages.map((flow, index) => {
                        console.log("$$$$$$", moment(flow.markup).format('LT'))
 

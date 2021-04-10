@@ -8,9 +8,8 @@ import  '../css/post-it.css'
 const PostIt = ({title, text, markup, assignee}) => {
 
     const [visible, setVisible] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const showSticker = () => {
         setVisible(true)

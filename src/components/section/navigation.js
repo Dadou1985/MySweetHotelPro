@@ -14,12 +14,9 @@ import Notifications from './notifications'
 import { FirebaseContext, db, auth } from '../../Firebase'
 
 
-const Navigation = () =>{
+const Navigation = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
-
-    const { userDB, setUserDB } = useContext(FirebaseContext)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -61,8 +58,8 @@ const Navigation = () =>{
                     size="30"
                     color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
                     />*/}
-                    {!!userDB && !!setUserDB &&
-                        <AdminBoard />}
+                    {userDB && user&&
+                        <AdminBoard user={user} userDB={userDB} />}
                     <FeedbackBox />
                     </div>
                     <OverlayTrigger
@@ -74,7 +71,7 @@ const Navigation = () =>{
                         }>
                     <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} onClick={()=>navigate('/doorsStage')} />
                     </OverlayTrigger>
-                    <div className="username_title">Dadou</div>
+                    <div className="username_title">{user.displayName}</div>
                     <OverlayTrigger
                         placement="bottom"
                         overlay={
@@ -96,7 +93,7 @@ const Navigation = () =>{
                     <Button variant="danger" onClick={handleLogout}>Quitter</Button>
                 </Modal.Body>
             </Modal>
-            {!!userDB && !!setUserDB &&
+            {!!userDB && !!user&&
             <Notifications />}
         </div>
     )

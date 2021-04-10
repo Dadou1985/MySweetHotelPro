@@ -7,9 +7,8 @@ import { FirebaseContext, db, auth } from '../../Firebase'
 const StickList = () => {
 
     const [postIt, setPostIt] = useState([])
-    const [user, setUser] = useState(auth.currentUser)
 
-    const {userDB} = useContext(FirebaseContext)
+    const {userDB, user} = useContext(FirebaseContext)
 
     useEffect(() => {
         const stickerOnAir = () => {

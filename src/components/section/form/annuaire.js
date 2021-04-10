@@ -8,8 +8,7 @@ const Annuaire = () =>{
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
-    const [user, setUser] = useState(auth.currentUser)
-    const {userDB} = useContext(FirebaseContext)
+    const {userDB, user} = useContext(FirebaseContext)
 
 
     const handleClose = () => setList(false)

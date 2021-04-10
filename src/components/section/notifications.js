@@ -5,9 +5,8 @@ import { FirebaseContext, db, auth } from '../../Firebase'
 export default function Notifications() {
 
     const [info, setInfo] = useState([])
-    const [user, setUser] = useState(auth.currentUser)
 
-    const {userDB} = useContext(FirebaseContext)
+    const {userDB, user} = useContext(FirebaseContext)
 
 
     useEffect(() => {

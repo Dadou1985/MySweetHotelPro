@@ -5,13 +5,10 @@ import AdminRegister from './adminRegister'
 import UserList from './userList'
 import { FirebaseContext, db, auth } from '../../../Firebase'
 
-const AdminBoard = () =>{
+const AdminBoard = ({user, userDB}) =>{
 
     const [tab, setTab] = useState(false)
     const [adminStatus, setAdminStatus] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
-
-    const { userDB, setUserDB } = useContext(FirebaseContext)
 
     const handleCloseTab = () => setTab(false)
     const handleShowTab = () => setTab(true)

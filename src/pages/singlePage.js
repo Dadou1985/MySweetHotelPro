@@ -8,19 +8,20 @@ import Memo from '../components/section/memo'
 import Navigation from '../components/section/navigation'
 import {FirebaseContext, db, auth} from '../Firebase'
 import { navigate } from 'gatsby'
+import Chat from '../components/section/communIzi'
 
 const SinglePage = () => {
 
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
-
+  const [user, setUser] = useState(null)
 
 
   useEffect(() => {
         
     let unsubscribe = auth.onAuthStateChanged(async(user) => {
         if (user) {
-          
+          await setUser(user)
            await db.collection("mySweetHotel")
             .doc("country")
             .collection("France")
@@ -47,16 +48,21 @@ const SinglePage = () => {
 }, [])
   
   return (
-    <FirebaseContext.Provider value={{ userDB, setUserDB }}>
+    <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>
       <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
         <Loader hide={hide} />
       </div>
-      <Navigation />
+      {!!user&& !!userDB&&
+      <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
       }}>
           <ToolBar />
-          <Messenger />
+          <div id="iziChat" className="dark_messenger_communizi_container">
+            <h5 className="font-weight-bolder dark_messenger_title">Chat Client</h5>
+            {!!userDB && !!user&&
+            <Chat userDB={userDB} user={user} />}
+        </div>
           <Memo />
         </div>
         </FirebaseContext.Provider>

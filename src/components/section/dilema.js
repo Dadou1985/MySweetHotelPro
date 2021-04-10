@@ -28,9 +28,8 @@ const Dilema = () => {
     const [formValue, setFormValue] = useState({hotelName: "", job: "", level: "", mood: ""})
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
-    const [user, setUser] = useState(auth.currentUser)
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const handleWorkspace = () => {
         if(!user.displayName) {

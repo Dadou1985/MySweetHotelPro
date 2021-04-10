@@ -4,12 +4,9 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import { FirebaseContext, db, auth } from '../../Firebase'
 
 
-export default function ChatRoom({title}) {
+export default function ChatRoom({user, userDB, title}) {
 
     const [messages, setMessages] = useState([])
-    const [user, setUser] = useState(auth.currentUser)
-
-    const { userDB, setUserDB } = useContext(FirebaseContext)
 
     useEffect(() => {
         const chatRoomOnAir = () => {
@@ -43,16 +40,18 @@ export default function ChatRoom({title}) {
                 return unsubscribe
      },[])
 
+
+
     return (
         <div>
             <PerfectScrollbar>
-                {messages.map(flow => (
+                {user&& userDB&& messages.map(flow => (
                     <Message 
                     author={flow.author}
                     text={flow.text}
-                    date={flow.date}
-                    hour={flow.hour}
-                   userRef={flow.userId}
+                    date={flow.markup}
+                   user={user}
+                   userDB={userDB}
                     />
                 ))}
             </PerfectScrollbar>

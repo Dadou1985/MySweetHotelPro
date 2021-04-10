@@ -4,14 +4,13 @@ import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from '
 import BootstrapInput from '../common/button/selectButton'
 import { db, auth } from '../../../Firebase'
 import moment from 'moment'
+import 'moment/locale/fr';
 
-const Lost = ({userDB, setUserDB}) =>{
+const Lost = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({type: "", place: "", details: "", description: ""})
-    const [user, setUser] = useState(auth.currentUser)
-
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
