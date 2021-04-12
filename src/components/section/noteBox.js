@@ -135,7 +135,7 @@ const NoteBox = () => {
                     </AccordionItemPanel>
                   </AccordionItem> 
                   :
-                  <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
+                  <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="old_User_Message">
                     <AccordionItemHeading style={{
                       padding: "2%",
                       filter: "grayscale(100%)",

@@ -1052,15 +1052,16 @@ input[type=number] {
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     margin-bottom: 1vh;
-    opacity: 0.5
 }
 
-.oldMessage {
+.old_User_Message {
     width: 100%;
-    background-color: lightgrey;
     font-size: small;
     margin-bottom: 2%;
-    margin-left: 10%;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    margin-bottom: 1vh;
+    opacity: 0.5
 }
 
 
@@ -1741,6 +1742,7 @@ input[type=number] {
 
 #dark_message_note {
     width: 98%;
+    background-color: #ECECEC;
 }
 
 #dark_story {

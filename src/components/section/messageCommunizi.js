@@ -4,8 +4,6 @@ import moment from 'moment'
 import 'moment/locale/fr';
 
   const MessageCommunizi = ({author, text, date, email, user, userDB}) =>{
-    console.log(userDB)
-
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(author === user.displayName){

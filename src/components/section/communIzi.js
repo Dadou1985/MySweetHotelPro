@@ -19,7 +19,7 @@ import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
 import { db, auth } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
-
+import Select from 'react-select'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -30,10 +30,17 @@ export default function CommunIzi({userDB, user}) {
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
+    const [initialFilter, setInitialFilter] = useState('')
+    const [filter, setFilter] = useState([])
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
     }
+
+    const handleChangeFilter = event =>{
+      setInitialFilter(event.currentTarget.value)
+  }
+
 
     const handleChangeRoomName = event =>{
       setRoom(event.currentTarget.value)
@@ -98,11 +105,6 @@ export default function CommunIzi({userDB, user}) {
     .then(handleClose())
     }
 
-    const handleShowMoodList = () => {
-      let moodList = document.getElementById('moodList')
-      moodList.classList.toggle('moodList')
-    }
-
     const handleChangeExpanded = (title) => setExpanded(title)
   
 
@@ -123,19 +125,51 @@ export default function CommunIzi({userDB, user}) {
         }
 
       let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    console.log(snapInfo)
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+          const snapInfo = []
+        snapshot.forEach(function(doc) {          
+          snapInfo.push({
+              id: doc.id,
+              ...doc.data()
+            })        
+          });
+          console.log(snapInfo)
+          setInfo(snapInfo)
+      });
+      return unsubscribe
      },[])
 
+     useEffect(() => {
+      const guestOnAir = () => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('guest')
+        }
+
+      let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
+          const snapInfo = []
+        snapshot.forEach(function(doc) {          
+          snapInfo.push({
+              id: doc.id,
+              ...doc.data()
+            })        
+          });
+          console.log(snapInfo)
+          setFilter(snapInfo)
+      });
+      return unsubscribe
+     },[])
+
+     console.log(filter)
+
+     let guestList = filter && filter.filter(guest => guest.room == initialFilter)
 
     return (
         <div className="communizi-container">
@@ -163,7 +197,7 @@ export default function CommunIzi({userDB, user}) {
                               style={{marginRight: "1vw"}} />
                               {flow.id}
                           </div>
-                          <div style={{display: "flex", alignItems: "center"}}>#{userDB.room}</div>
+                          <div style={{display: "flex", alignItems: "center"}}>Chambre {flow.room}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
@@ -211,14 +245,51 @@ export default function CommunIzi({userDB, user}) {
             centered>
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-sm">
-                    Créer une conversation
+                    Contacter un client
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Input type="text" placeholder="Donnez un nom à la conversation" value={room} style={{borderTop: "none", borderLeft: "none", borderRight: "none"}} maxLength="60" onChange={handleChangeRoomName} />
+                    <Input 
+                      type="text" 
+                      placeholder="Entrer le numéro de chambre du client" 
+                      value={initialFilter} 
+                      style={{
+                        borderTop: "none", 
+                        borderLeft: "none", 
+                        borderRight: "none"}} 
+                      maxLength="60" 
+                      onChange={handleChangeFilter} />
+                      <PerfectScrollbar>
+                      {guestList.map(guest => (
+                        <div style={{
+                          display: "flex",
+                          flexFlow: "column",
+                          padding: "2%",
+                          maxHeight: "30vh",
+                          backgroundColor: "#ECECEC",
+                          cursor: "pointer"
+                        }}
+                        onClick={() => {
+                          setExpanded(guest.id)
+                          setInitialFilter(guest.id)}}>{guest.id} - Chambre {guest.room}</div>
+                      ))}
+                      </PerfectScrollbar>
+                    <Input 
+                      type="text" 
+                      placeholder="Ecrire un message..." 
+                      value={note} 
+                      style={{
+                        borderTop: "none", 
+                        borderLeft: "none", 
+                        borderRight: "none"}} 
+                      maxLength="60" 
+                      onChange={handleChange} />
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
-                    <Button variant="success">Créer</Button>
+                    <Button variant="success" onClick={(event) => {
+                      handleSubmit(event)
+                      setShowModal(false)
+                    }}>Envoyer</Button>
                 </Modal.Footer>
             </Modal>
 
