@@ -32,6 +32,7 @@ export default function CommunIzi({userDB, user}) {
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
     const [filter, setFilter] = useState([])
+    const [deleteList, setDeleteList] = useState([])
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -167,7 +168,62 @@ export default function CommunIzi({userDB, user}) {
       return unsubscribe
      },[])
 
-     console.log(filter)
+     const deleteGuest = (guest) => {
+      return db.collection('mySweetHotel')
+      .doc('country')
+      .collection('France')
+      .doc('collection')
+      .collection('hotel')
+      .doc('region')
+      .collection(userDB.hotelRegion)
+      .doc('departement')
+      .collection(userDB.hotelDept)
+      .doc(`${userDB.hotelId}`)
+      .collection('guest')
+      .doc(guest)
+      .delete()
+     }
+
+     useEffect(() => {
+       const deleteListGuest = () => {
+        let checkoutHour = new Date().getHours()
+
+        if(checkoutHour >= 14) {
+          return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('guest')
+            .where("checkoutDate", "==", moment(new Date()).format('LL'))
+            .onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                }
+                ).then(snapInfo.map(guest => {
+                  return deleteGuest(guest.id)
+                }))     
+              })
+              console.log(snapInfo)
+          })
+        }
+       }
+
+       let unsubscribe = deleteListGuest();
+        return unsubscribe
+
+     }, [])
+
+     
+     console.log(deleteList)
 
      let guestList = filter && filter.filter(guest => guest.room == initialFilter)
 
@@ -289,6 +345,7 @@ export default function CommunIzi({userDB, user}) {
                     <Button variant="success" onClick={(event) => {
                       handleSubmit(event)
                       setShowModal(false)
+                      setInitialFilter('')
                     }}>Envoyer</Button>
                 </Modal.Footer>
             </Modal>

@@ -12,25 +12,24 @@ import Dialog from './common/fullScreenDialog'
 import Divider from '@material-ui/core/Divider'
 import AddPhotoURL from '../../svg/camera.svg'
 import Avatar from '@material-ui/core/Avatar';
-import { FirebaseContext, db, auth, storage } from '../../Firebase'
+import { db, auth, storage } from '../../Firebase'
 
 
-const Dilema = () => {
+const Dilema = ({user, userDB}) => {
 
     const [showModal, setShowModal] = useState(false)
     const [showDetails, setShowDetails] = useState(false)
     const [confModal, setConfModal] = useState(true)
-    const [createRefSpace, setCreateRefSpace] = useState("")
-    const [joinRefSpace, setJoinRefSpace] = useState("")
     const [info, setInfo] = useState([])
-    const [list, setList] = useState(false)
+    const [listEmail, setListEmail] = useState(false)
+    const [listPassword, setListPassword] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
-    const [formValue, setFormValue] = useState({hotelName: "", job: "", level: "", mood: ""})
+    const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
+    
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
-
+    
     const handleWorkspace = () => {
         if(!user.displayName) {
             if(window.innerWidth > 480) {
@@ -74,7 +73,7 @@ const Dilema = () => {
           .then(url => {
             const uploadTask = () => {
                 setConfModal(false)
-                auth.user.updateProfile({ photoURL: url })
+                auth.currentUser.updateProfile({ photoURL: url })
                 setTimeout(
                     () => window.location.reload(),
                     1000
@@ -101,7 +100,7 @@ const Dilema = () => {
     }
 
 
-    const handleSubmit = async(event) => {
+    const handleSubmit = async(event, field) => {
         event.preventDefault()
         setFormValue({hotelName: "", job: "", level: "", mood: ""})
         
@@ -114,8 +113,7 @@ const Dilema = () => {
         .collection('users')
         .doc(user.displayName)
         .update({
-            job: formValue.job,
-            category: formValue.level
+            field
           })
     }
 
@@ -123,8 +121,15 @@ const Dilema = () => {
     const handleClose = () => setShowModal(false)
     const handleShow = () => setShowModal(true)
 
-    const handleCloseUpdate = () => setList(false)
-    const handleShowUpdate = () => setList(true)
+    const handleCloseUpdateEmail = () => setListEmail(false)
+    const handleShowUpdateEmail = () => setListEmail(true)
+
+    const handleCloseUpdatePassword = () => setListPassword(false)
+    const handleShowUpdatePassword = () => setListPassword(true)
+
+    const handleCloseUpdatePhoto = () => setConfModal(false)
+    const handleShowUpdatePhoto = () => setConfModal(true)
+
 
     const hideDialog = () => {
         setShowDialog(false)
@@ -140,7 +145,7 @@ const Dilema = () => {
             .collection('business')
             .doc('collection')
             .collection('users')
-            .where("userId", "==", user.uid)
+            .where("email", "==", user.email)
         }
 
        let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
@@ -158,8 +163,16 @@ const Dilema = () => {
                 return unsubscribe
                 
      },[])
+
+     const handleChangeEmail = () => {
+        auth
+        .signInWithEmailAndPassword(user.email, userDB.password)
+        .then(function(userCredential) {
+            userCredential.user.updateEmail(formValue.email)
+        })
+      }
     
-    console.log(window.innerWidth)
+    console.log(user)
 
     return (
         info.map(flow => (
@@ -169,88 +182,82 @@ const Dilema = () => {
                 <div className="profile-container">
                     <h1>
                         <div style={{color: "#5bc0de", fontWeight: "bold"}}>{flow.id}</div>
+                        <div style={{fontSize: "15px"}}>{flow.email}</div>
                        { /*<div className="header-profile">
                             <img src={Tips} alt="tips" className="tips" /> 
                             {flow.tips} tips 
                             <img src={Arrow} alt="arrow" style={{width: "1vw", cursor: "pointer", marginLeft: "1vw", transform: "rotate(0turn)"}} id="arrowTop" onClick={handleShowDetails} /> 
                         </div>*/}
                     </h1>
-                    <ToggleDisplay show={showDetails}>
-                        <div>
                         <div className="header-toggle-container">
-                            <div>
-                                <b>hotel</b><p className="profile-details">{flow.hotelName}</p>
-                            </div>
-                            <div>
-                                <b>poste</b><p className="profile-details">{flow.job}</p>
-                            </div>
-                            <div>
-                                <b>level</b><p className="profile-details">{flow.category}</p>
-                            </div>
+                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
+                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
                         </div>
-                        <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdate}>Actualiser votre profil</Button>
-                        </div>
-                    </ToggleDisplay>
+                       
                 </div>
             <div className="space-container">
             <div className="space-box">
                 <div className="softSkin space-card"
                     onClick={handleWorkspace}>
-                <h2>Work Space</h2>
+                <h2 style={{textAlign: "center"}}>Espace de travail</h2>
                 <img src={Fom} alt="Fom" className="white-fom-icon" />
                 </div>
             </div>
         </div>
         
-                    <Modal show={list}
-                    size="lg"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    onHide={handleCloseUpdate}
-                    >
-                    <Modal.Header closeButton className="bg-light">
-                        <Modal.Title id="contained-modal-title-vcenter">
-                        Modifier mon profil
-                        </Modal.Title>
-                    </Modal.Header>
+            <Modal show={listEmail}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={handleCloseUpdateEmail}
+            >
+            <Modal.Header closeButton className="bg-light">
+                <Modal.Title id="contained-modal-title-vcenter">
+                Modifier mon adresse e-mail
+                </Modal.Title>
+            </Modal.Header>
             <Modal.Body>
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Label>Change d'hôtel</Form.Label>
-                <Form.Control type="text" placeholder={flow.hotelName} className="hotelName-input" value={formValue.hotelName} name="hotelName" onChange={handleChange} />
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group controlId="description">
-                <Form.Label>Change de <i>casquette</i></Form.Label><br/>
-                <select class="selectpicker" value={formValue.job} name="job" onChange={handleChange} 
-                className="update-profile-select">
-                    <option></option>
-                    <option>Réceptionniste</option>
-                    <option>Chef de Brigade</option>
-                    <option>Chef de Réception</option>
-                    <option>Assistant de direction</option>
-                    <option>Head Manager</option>
-                </select>
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group controlId="description">
-                <Form.Label>Change de <i>level</i></Form.Label><br/>
-                <select class="selectpicker"defaultValue={flow.category} value={formValue.level} name="level" onChange={handleChange} 
-                className="update-profile-select">
-                    <option></option>
-                    <option>Jeune Padawan</option>
-                    <option>Je gère, tranquille</option>
-                    <option>I'm a living Legend</option>
-                </select>
+                <Form.Control type="text" placeholder="Entrer une nouvelle adresse e-mail" style={{width: "40vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-success" onClick={handleSubmit}>Modifier</Button>
+                <Button variant="outline-success" onClick={(event) => {
+                    handleSubmit(event, {email: formValue.email})
+                    handleChangeEmail(formValue.email)
+                }}>Actualiser maintenant</Button>
+            </Modal.Footer>
+        </Modal>
+
+        <Modal show={listPassword}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={handleCloseUpdatePassword}
+            >
+            <Modal.Header closeButton className="bg-light">
+                <Modal.Title id="contained-modal-title-vcenter">
+                Modifier mon mot de passe
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <div className="update_modal_container">
+            <Form.Row>
+                <Form.Group controlId="description">
+                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "40vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
+                </Form.Group>
+            </Form.Row>
+            </div>
+            </Modal.Body>
+            <Modal.Footer>
+                <Button variant="outline-success" onClick={(event) => {
+                    handleSubmit(event, {email: formValue.email})
+                    handleChangeEmail(formValue.email)
+                }}>Actualiser maintenant</Button>
             </Modal.Footer>
         </Modal>
         
@@ -290,7 +297,7 @@ const Dilema = () => {
         size="sm"
         aria-labelledby="contained-modal-title-vcenter"
         centered
-        onHide={handleCloseUpdate}
+        onHide={handleCloseUpdatePhoto}
         >
         <Modal.Body>
             <p style={{textAlign: "center"}}>Etes-vous sûr.e de vouloir ajouter ou changer votre photo de profil ?</p>

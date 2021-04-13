@@ -52,6 +52,7 @@ export default function ChatRoom({user, userDB, title}) {
                     date={flow.markup}
                    user={user}
                    userDB={userDB}
+                   photo={flow.photo}
                     />
                 ))}
             </PerfectScrollbar>

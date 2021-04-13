@@ -52,7 +52,7 @@ const SinglePage = () => {
       <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
         <Loader hide={hide} />
       </div>
-      {!!user&& !!userDB&&
+      {!!user && !!userDB &&
       <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
