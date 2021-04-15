@@ -2,14 +2,13 @@ import React, { useContext, useEffect } from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
 import { FirebaseContext, auth, db } from '../../../../Firebase'
-import Drawer from '@material-ui/core/Drawer'
 
 const PhoneCheckList = ({user, userDB}) =>{
 
 
     return(
         <div className="phoneCheckList_container">
-            <h2 className="phone_title">Check List</h2>
+            <h3 className="phone_title">Check List</h3>
             <Tab.Container defaultActiveKey="matin">
             <Row>
                 <Col sm={2}>

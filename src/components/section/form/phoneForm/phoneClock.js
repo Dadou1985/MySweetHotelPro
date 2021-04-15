@@ -1,14 +1,19 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button } from 'react-bootstrap'
+import { Form, Button, Table } from 'react-bootstrap'
 import { FirebaseContext, auth, db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import Left from '../../../../svg/arrow-left.svg'
+import Right from '../../../../svg/arrow-right.svg'
 
 const PhoneClock = ({user, userDB}) =>{
 
     const [formValue, setFormValue] = useState({room: "", client: "", hour: "", date: ""})
     const [info, setInfo] = useState([])
+    const [activate, setActivate] = useState(false)
+    const [expand, setExpand] = useState(false)
 
     const handleChange = (event) =>{
         event.persist()
@@ -17,6 +22,8 @@ const PhoneClock = ({user, userDB}) =>{
           [event.target.name]: event.target.value
         }))
       }
+
+      const handleChangeExpand = () => setExpand(!expand)
 
       const handleSubmit = event => {
         event.preventDefault()
@@ -75,12 +82,72 @@ const PhoneClock = ({user, userDB}) =>{
            
      },[])
 
+     const handleShow = () => setActivate(true)
+     const handleHide = () => setActivate(false)
 
     return(
 
     <div className="phone_container">
         <h3 className="phone_title">Programmation des réveils</h3>
-        <Form.Row>
+        <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
+            <div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
+                <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
+                {expand ? "Rétrécir" : "Agrandir"}
+                {expand ? <img src={Left} style={{width: "3vw", marginRight: "1vw"}} /> : <img src={Right} style={{width: "3vw", marginLeft: "1vw"}} />}
+                </span>
+            </div>
+            <Table striped bordered hover size="sm" className="text-center">
+                            <thead className="bg-dark text-center text-light">
+                                <tr>
+                                {expand && <th>Client</th>}
+                                <th>Chambre</th>
+                                <th>Jour</th>
+                                <th>Heure</th>
+                                <th>Date</th>
+                                {expand && <th>Collaborateur</th>}
+                                {expand && <th className="bg-dark"></th>}
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {info.map(flow =>(
+                                    <tr key={flow.id}>
+                                    {expand && <td>{flow.client}</td>}
+                                    <td>{flow.room}</td>
+                                    <td>{flow.day}</td>
+                                    <td>{moment(flow.hour).format('LT')}</td>
+                                    <td>{moment(flow.date).format('L')}</td>
+                                    {expand && <td>{flow.author}</td>}
+                                    {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                            return db.collection('mySweetHotel')
+                                            .doc('country')
+                                            .collection('France')
+                                            .doc('collection')
+                                            .collection('hotel')
+                                            .doc('region')
+                                            .collection(userDB.hotelRegion)
+                                            .doc('departement')
+                                            .collection(userDB.hotelDept)
+                                            .doc(`${userDB.hotelId}`)
+                                            .collection("clock")
+                                            .doc(flow.id)
+                                            .delete()
+                                            .then(function() {
+                                              console.log("Document successfully deleted!");
+                                            }).catch(function(error) {
+                                                console.log(error);
+                                            });
+                                        }}>Supprimer</Button></td>}
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </Table>
+            </div>
+        <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Programmer un réveil</Button>
+    
+        <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
+                <div  className="phone_container_drawer">
+                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Programmer un réveil</h4>
+                <Form.Row>
             <Form.Group controlId="description" className="phone_input">
             <Form.Label>Nom du client</Form.Label>
             <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
@@ -104,7 +171,12 @@ const PhoneClock = ({user, userDB}) =>{
             <Form.Control type="text" placeholder="ex: 08h30" value={formValue.hour} name="hour" onChange={handleChange} />
             </Form.Group>
         </Form.Row>
-        <Button variant="success" className="phone_submitButton" onClick={handleSubmit}>Enregistrer</Button>
+                <Button variant="success" className="phone_submitButton" onClick={(event) => {
+                    handleSubmit(event)
+                    setActivate(false)
+                    }}>Programmer maintenant</Button>
+                </div>
+            </Drawer>
     </div>
     )
 }

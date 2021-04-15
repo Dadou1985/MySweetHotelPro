@@ -13,7 +13,6 @@ const PhoneCab = ({user, userDB}) =>{
     const [formValue, setFormValue] = useState({room: "", client: "", date: "", hour: "", passenger:"", model:"", destination: ""})
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
-    const [confModal, setConfModal] = useState(true)
     const [expand, setExpand] = useState(false)
 
     const handleChange = (event) =>{

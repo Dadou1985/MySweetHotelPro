@@ -48,7 +48,7 @@ export default function TemporaryDrawer({userDB, user}) {
         </List>
         <Divider />
       <List className="drawer_listIcons2">
-        <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
+        <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/houseKeeping")}} />
         <img src={Lost} alt="Lost and found" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
         <img src={Cab} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/cab")}} />
         <img src={Clock} alt="Clock" className="drawer_icons" onClick={()=>{navigate("/clock")}} />

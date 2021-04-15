@@ -1,54 +1,21 @@
 import React, {useState, useEffect } from 'react'
 import { Button, Modal, InputGroup, FormControl, Form, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
-import ItemList from '../itemList'
-import Maid from '../../../svg/maid.svg'
-import { db, auth } from '../../../Firebase'
+import ItemList from '../../itemList'
+import { FirebaseContext, auth, db } from '../../../../Firebase'
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../common/badgeMaker'
+import StyleBadge from '../../common/badgeMaker'
+import moment from 'moment'
+import 'moment/locale/fr';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
-
-const HouseKeeping = ({userDB}) =>{
-
-    const [list, setList] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
-    const [itemQty, setItemQty] = useState([])
-    
-    const handleClose = () => setList(false)
-    const handleShow = () => setList(true)
-
-    return(
-        <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "center"
-        }}>
-        <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                Click & Wait
-              </Tooltip>
-            }>
-                <img src={Maid} className="icon" alt="todolist" onClick={handleShow} style={{width: "55%", marginRight: "1vw"}} />
-        </OverlayTrigger>
-
-            <Modal
-                show={list}
-                size="lg"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                onHide={handleClose}>
-            <Modal.Header closeButton className="bg-light">
-                <Modal.Title id="contained-modal-title-vcenter">
-                Click & Wait
-                </Modal.Title>
-            </Modal.Header>
-            <Modal.Body
-            style={{overflow: "auto"}}>
-                <Tab.Container defaultActiveKey="Serviette">
+function PhoneHouseKeeping({user, userDB}) {
+    return (
+        <div className="phoneCheckList_container">
+            <h3 className="phone_title">Check List</h3>
+            <Tab.Container defaultActiveKey="Serviette">
                 <Row>
                     <Col sm={3}>
-                    <Nav variant="pills" className="flex-column">
+                    <Nav variant="pills" className="flex-row justify-content-center">
                         <Nav.Item>
                             <StyleBadge item="towel">
                                 <Nav.Link eventKey="Serviette">Serviette</Nav.Link>
@@ -122,10 +89,8 @@ const HouseKeeping = ({userDB}) =>{
                     </Col>
                 </Row>
             </Tab.Container>
-            </Modal.Body>
-            </Modal>
-    </div>
+        </div>
     )
 }
 
-export default HouseKeeping
+export default PhoneHouseKeeping
