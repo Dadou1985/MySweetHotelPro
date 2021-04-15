@@ -1,9 +1,14 @@
-import React, {useState } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { FirebaseContext, auth, db } from '../../../../Firebase'
+import moment from 'moment'
+import 'moment/locale/fr';
+import Drawer from '@material-ui/core/Drawer'
 
-const PhoneMaid = ({user, firebase}) =>{
+const PhoneMaid = ({user, userDB}) =>{
 
     const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
+    const [info, setInfo] = useState([])
 
     const handleChange = (event) =>{
         event.persist()
@@ -15,14 +20,61 @@ const PhoneMaid = ({user, firebase}) =>{
 
       const handleSubmit = event => {
         event.preventDefault()
-        let day = new Date().getDate()
-        let month = new Date().getMonth() + 1
-        let year = new Date().getFullYear()
-        let time = day + "/" + month + "/" + year
-        let marker = Date.now()
-        firebase.addMaid({documentId: user.displayName, author: user.username, fromRoom: formValue.fromRoom, client: formValue.client, markup: marker, date: time, toRoom: formValue.toRoom, reason: formValue.reason, details: formValue.details, state: formValue.state})
-        setFormValue({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
+        setFormValue("")
+        return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('roomChange')
+            .add({
+            author: user.displayName,
+            date: new Date(),
+            details: formValue.details,
+            client: formValue.client,
+            fromRoom: formValue.fromRoom,
+            markup: Date.now(),
+            toRoom: formValue.toRoom,
+            reason: formValue.reason,
+            state: formValue.state
+            })
     }
+
+    useEffect(() => {
+        const toolOnAir = () => {
+            return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('roomChange')
+            .orderBy("markup", "asc")
+        }
+
+        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setInfo(snapInfo)
+                });
+                return unsubscribe
+           
+     },[])
 
     return(
         

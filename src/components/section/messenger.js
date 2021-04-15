@@ -220,7 +220,7 @@ const Messenger = () =>{
         setShowCalendar(false)
     }
 
-    console.log('*****', user)
+    console.log('*****', img)
     
     return(
         <div className="messenger_container">
@@ -354,7 +354,7 @@ const Messenger = () =>{
                     justifyContent: "flex-end",
                     padding: "5%", 
                     maxHeight: "90vh"}}>
-                    
+                    <h4 style={{textAlign: "center", marginBottom: "3vh"}}>Ecrire une note de service</h4>
                     <div><Input type="text" name="title" placeholder="Titre de la note" className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
                     <div><Input type="text" placeholder="Rédiger une note..." value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>
                     <DatePicker

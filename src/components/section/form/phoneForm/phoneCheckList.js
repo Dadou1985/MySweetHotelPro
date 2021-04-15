@@ -1,12 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
-import { FirebaseContext } from '../../../../Firebase'
+import { FirebaseContext, auth, db } from '../../../../Firebase'
+import Drawer from '@material-ui/core/Drawer'
 
+const PhoneCheckList = ({user, userDB}) =>{
 
-const PhoneCheckList = () =>{
-
-    const { user, firebase } = useContext(FirebaseContext)
 
     return(
         <div className="phoneCheckList_container">
@@ -29,16 +28,16 @@ const PhoneCheckList = () =>{
                 <Col sm={10}>
                 <Tab.Content>
                     <Tab.Pane eventKey="matin">
-                        {!!firebase && !!user && 
-                        <CheckListTable shift="matin" firebase={firebase} user={user} />}
+                        {!!userDB && !!user && 
+                        <CheckListTable shift="matin" userDB={userDB} user={user} />}
                     </Tab.Pane>
                     <Tab.Pane eventKey="soir">
-                    {!!firebase && !!user && 
-                        <CheckListTable shift="soir" firebase={firebase} user={user} />}
+                    {!!userDB && !!user && 
+                        <CheckListTable shift="soir" userDB={userDB} user={user} />}
                     </Tab.Pane>
                     <Tab.Pane eventKey="nuit">
-                    {!!firebase && !!user && 
-                        <CheckListTable shift="nuit" firebase={firebase} user={user} />}
+                    {!!userDB && !!user && 
+                        <CheckListTable shift="nuit" userDB={userDB} user={user} />}
                     </Tab.Pane>
                 </Tab.Content>
                 </Col>

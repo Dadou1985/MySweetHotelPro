@@ -1,9 +1,14 @@
-import React, {useState } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Button } from 'react-bootstrap'
+import { FirebaseContext, auth, db } from '../../../../Firebase'
+import moment from 'moment'
+import 'moment/locale/fr';
+import Drawer from '@material-ui/core/Drawer'
 
-const PhoneClock = ({user, firebase}) =>{
+const PhoneClock = ({user, userDB}) =>{
 
     const [formValue, setFormValue] = useState({room: "", client: "", hour: "", date: ""})
+    const [info, setInfo] = useState([])
 
     const handleChange = (event) =>{
         event.persist()
@@ -13,16 +18,63 @@ const PhoneClock = ({user, firebase}) =>{
         }))
       }
 
-    const handleSubmit = event => {
+      const handleSubmit = event => {
         event.preventDefault()
-        let day = new Date().getDate()
-        let month = new Date().getMonth() + 1
-        let year = new Date().getFullYear()
-        let time = day + "/" + month + "/" + year
-        let marker = Date.now()
-        firebase.addClock({documentId: user.displayName, author: user.username, room: formValue.room, day: formValue.date, client: formValue.client, markup: marker, date: time, hour: formValue.hour})
-        setFormValue({room: "", client: "", hour: "", date: ""})
+        setFormValue("")
+        return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('clock')
+            .add({
+            author: user.displayName,
+            date: formValue.date,
+            client: formValue.client,
+            room: formValue.room,
+            day: new Date(),
+            markup: Date.now(),
+            hour: formValue.hour
+            })
     }
+
+
+    useEffect(() => {
+        const toolOnAir = () => {
+            return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('clock')
+            .orderBy("markup", "asc")
+        }
+
+        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setInfo(snapInfo)
+                });
+                return unsubscribe
+           
+     },[])
+
 
     return(
 

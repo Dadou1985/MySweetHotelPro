@@ -305,7 +305,10 @@ const Dilema = ({user, userDB}) => {
         <Modal.Footer>
             <div>
                 <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>Oui</Button>
-                <Button size="sm" variant="danger" onClick={() => setConfModal(false)}>Non</Button>
+                <Button size="sm" variant="danger" onClick={() => {
+                    setImg(null)
+                    handleCloseUpdatePhoto()
+                }}>Non</Button>
             </div>
         </Modal.Footer>
     </Modal>}

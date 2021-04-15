@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
-import PhoneRepair from '../components/section/form/phoneForm/phoneRepair'
+import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
 
-const Repair = () => {
+const NotebookPage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
@@ -45,13 +45,16 @@ const Repair = () => {
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
                 <Loader hide={hide} />
-            </div>   
+            </div>     
             {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}    
-        {!!user && !!userDB &&
-        <PhoneRepair user={user} userDB={userDB} />}
+            <Navigation user={user} userDB={userDB} />}  
+        <div id="iziChat" className="dark_messenger_communizi_container">
+            <h5 className="font-weight-bolder dark_messenger_title">Note de service</h5>
+            {!!userDB && !!user&&
+            <Notebook userDB={userDB} user={user} />}
+        </div>
     </FirebaseContext.Provider>
   )
 }
 
-export default Repair
+export default NotebookPage

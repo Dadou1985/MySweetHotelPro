@@ -36,7 +36,8 @@ const Navigation = ({user, userDB}) =>{
                     justifyContent: "space-between",
                     height: "7vh"
                 }}>
-                <Drawer className="drawer" />
+                {!!user && userDB &&
+                <Drawer className="drawer" user={user} userDB={userDB} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>MySweetHotel<p>Pro</p></Navbar.Brand>
                     {/*{!!user &&

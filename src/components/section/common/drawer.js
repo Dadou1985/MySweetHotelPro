@@ -14,8 +14,12 @@ import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'
 import Notifications from '../notifications'
 import Fom from '../../../svg/fom.svg'
+import Chat from '../../../svg/chat.png'
+import Notebook from '../../../svg/notebook.png'
+import RoomChange from '../../../svg/logout.svg'
+import { FirebaseContext, auth, db } from '../../../Firebase'
 
-export default function TemporaryDrawer({firebase, user}) {
+export default function TemporaryDrawer({userDB, user}) {
   const [state, setState] = React.useState({left: false,});
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -27,11 +31,7 @@ export default function TemporaryDrawer({firebase, user}) {
   };
 
   const handleLogout = () =>{
-    firebase.logout().then(()=>navigate('/'))
-}
-
-const handleCallCenter = () => {
-  return firebase.addNotification({documentId: user.displayName, notification: "Nos équipes vous assistent au : 06.59.87.28.84"})
+    auth.signOut().then(()=>navigate('/'))
 }
 
   const list = (anchor) => (
@@ -41,20 +41,24 @@ const handleCallCenter = () => {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-        <h3 className="drawer_title">Menu</h3>
+        <h4 className="drawer_title">Menu</h4>
+        <List className="drawer_listIcons">
+        <img src={Chat} alt="Chat" className="drawer_icons" onClick={()=>{navigate("/chat")}} />
+        <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
+        </List>
         <Divider />
-      <List className="drawer_listIcons">
+      <List className="drawer_listIcons2">
+        <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
         <img src={Lost} alt="Lost and found" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
         <img src={Cab} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/cab")}} />
         <img src={Clock} alt="Clock" className="drawer_icons" onClick={()=>{navigate("/clock")}} />
-        <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
-        <img src={Repair} alt="epair" className="drawer_icons" onClick={()=>{navigate("/repair")}} />
+        <img src={Repair} alt="Repair" className="drawer_icons" onClick={()=>{navigate("/repair")}} />
+        <img src={RoomChange} alt="Roum Change" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
       </List>
       <Divider />
-      <List className="drawer_listIcons2">
+      <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
-        <img src={CallCenter} alt="Lost and found" className="drawer_icons" onClick={handleCallCenter} />
-        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/doorsStage")}} />
+        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
       </List>
       <Divider />
       <PowerSettingsNewIcon id="drawer_icons2" onClick={handleLogout} />
@@ -71,8 +75,8 @@ const handleCallCenter = () => {
           </Drawer>
         </React.Fragment>
       ))}
-      {!!firebase && !!user &&
-            <Notifications firebase={firebase} user={user} />}
+      {!!userDB && !!user &&
+            <Notifications userDB={userDB} user={user} />}
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useState, Fragment, useContext } from "react"
 import Loader from '../components/section/common/loader'
-import Layout from "../components/layout"
 import Dilema from '../components/section/dilema'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'

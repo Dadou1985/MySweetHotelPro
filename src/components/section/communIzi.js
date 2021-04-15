@@ -289,9 +289,9 @@ export default function CommunIzi({userDB, user}) {
                             Créer une conversation
                           </Tooltip>
                         }>
-                        <img src={Plus} alt="plus" style={{width: "2vw", cursor: "pointer"}} onClick={handleShow} />          
+                        <img src={Plus} alt="plus" className="communizi-button " onClick={handleShow} />          
                      </OverlayTrigger>
-                        <img src={Send} alt="sendIcon" style={{width: "2vw", cursor: "pointer"}} onClick={handleSubmit} />          
+                        <img src={Send} alt="sendIcon" className="communizi-button " onClick={handleSubmit} />          
                     </div>
                 </Form>
             </div>
@@ -357,9 +357,49 @@ export default function CommunIzi({userDB, user}) {
                   justifyContent: "flex-end",
                   padding: "5%", 
                   maxHeight: "30vh"}}>
-                  <div><Input type="text" placeholder="Donnez un nom à la conversation..." value={room} style={{borderTop: "none", borderLeft: "none", borderRight: "none", marginBottom: "3vh"}} maxLength="35" onChange={handleChangeRoomName} /></div>
-                  <div><Button variant="success" style={{width: "100%"}}>Créer</Button></div>
+                  <h4 style={{textAlign: "center", marginBottom: "2vh"}}>Contacter un client</h4>
+                  <Input 
+                      type="text" 
+                      placeholder="Entrer le numéro de chambre du client" 
+                      value={initialFilter} 
+                      style={{
+                        borderTop: "none", 
+                        borderLeft: "none", 
+                        borderRight: "none", 
+                      marginBottom: "2vh"}} 
+                      maxLength="60" 
+                      onChange={handleChangeFilter} />
+                      <PerfectScrollbar>
+                      {guestList.map(guest => (
+                        <div style={{
+                          display: "flex",
+                          flexFlow: "column",
+                          padding: "2%",
+                          maxHeight: "30vh",
+                          backgroundColor: "#ECECEC",
+                          cursor: "pointer"
+                        }}
+                        onClick={() => {
+                          setExpanded(guest.id)
+                          setInitialFilter(guest.id)}}>{guest.id} - Chambre {guest.room}</div>
+                      ))}
+                      </PerfectScrollbar>
+                    <Input 
+                      type="text" 
+                      placeholder="Ecrire un message..." 
+                      value={note} 
+                      style={{
+                        borderTop: "none", 
+                        borderLeft: "none", 
+                        borderRight: "none"}} 
+                      maxLength="60" 
+                      onChange={handleChange} />
               </div>
+              <Button variant="success" size="lg" onClick={(event) => {
+                      handleSubmit(event)
+                      setShowModal(false)
+                      setInitialFilter('')
+                    }}>Envoyer</Button>
             </Drawer>
         </div>
     )

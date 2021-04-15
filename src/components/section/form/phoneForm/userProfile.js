@@ -2,19 +2,21 @@ import React, { useState, useContext, useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar'
 import DefaultProfile from "../../../../svg/profile.png"
-import Tips from '../../../../svg/coin.svg'
 import Home from '../../../../svg/home.svg'
 import { navigate } from 'gatsby'
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import { FirebaseContext, auth, db, storage } from '../../../../Firebase'
 
-const UserProfile = ({user, firebase}) => {
+const UserProfile = ({user, userDB}) => {
     
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
-    const [formValue, setFormValue] = useState({hotelName: "", job: "", level: ""})
+    const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
+    const [listEmail, setListEmail] = useState(false)
+    const [listPassword, setListPassword] = useState(false)
     const [confModal, setConfModal] = useState(true)
     const [url, setUrl] = useState("")
 
@@ -40,28 +42,38 @@ const UserProfile = ({user, firebase}) => {
             setActivate(true)
     }
 
-    const handleSubmit = event => {
+    const handleSubmit = async(event, field) => {
         event.preventDefault()
-        setFormValue({hotelName: "", job: "", level: ""})
-        firebase.updateIziProfile({username: user.username, hotelName: formValue.hotelName, job: formValue.job, level: formValue.level}).then(handleHideDrawer)
-        .then(setActivate(false))
+        setFormValue({email: "", password: ""})
+        
+        return db.collection("mySweetHotel")
+        .doc("country")
+        .collection("France")
+        .doc('collection')
+        .collection('business')
+        .doc('collection')
+        .collection('users')
+        .doc(user.displayName)
+        .update({
+            field
+          })
     }
 
     const handleChangePhotoUrl = (event) => {
         event.preventDefault()
-        const uploadTask = firebase.storage.ref(`photo-user/${img.name}`).put(img)
+        const uploadTask = storage.ref(`photo-user/${img.name}`).put(img)
         uploadTask.on(
           "state_changed",
           snapshot => {},
           error => {console.log(error)},
           () => {
-            firebase.storage
+            storage
               .ref("photo-user")
               .child(img.name)
               .getDownloadURL()
               .then(url => {
                 const uploadTask = () => {
-                    firebase.addPhotoProfileUser({ img: url })
+                    auth.currentUser.updateProfile({ photoURL: url })
                     setTimeout(
                         () => window.location.reload(),
                         1000
@@ -72,13 +84,31 @@ const UserProfile = ({user, firebase}) => {
         )
       } 
 
+    const handleCloseUpdateEmail = () => setListEmail(false)
+    const handleShowUpdateEmail = () => setListEmail(true)
+
+    const handleCloseUpdatePassword = () => setListPassword(false)
+    const handleShowUpdatePassword = () => setListPassword(true)
+
+    const handleCloseUpdatePhoto = () => setConfModal(false)
+    const handleShowUpdatePhoto = () => setConfModal(true)
+
       console.log("$$$$$$", img)
 
 
-    useEffect(() => {
-        const abortController = new AbortController()
-        const signal = abortController.signal
-        firebase.iziUserOnAir2({userId: user.uid, signal : signal}).onSnapshot(function(snapshot) {
+      useEffect(() => {
+        const iziUserOnAir2 = () => {
+            return db.collection("mySweetHotel")
+            .doc("country")
+            .collection("France")
+            .doc('collection')
+            .collection('business')
+            .doc('collection')
+            .collection('users')
+            .where("email", "==", user.email)
+        }
+
+       let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
                     const snapInfo = []
                   snapshot.forEach(function(doc) {          
                     snapInfo.push({
@@ -89,10 +119,10 @@ const UserProfile = ({user, firebase}) => {
                     console.log(snapInfo)
                     setInfo(snapInfo)
                 });
-                return () => {
-                    abortController.abort()
-                }
-     },[firebase, user.email])
+               
+                return unsubscribe
+                
+     },[])
     
     return (
         info.map(flow => (
@@ -110,7 +140,7 @@ const UserProfile = ({user, firebase}) => {
                     
                 </div>
                 <input accept="image/*" style={{display: "none"}} id="icon-button-file" type="file" onChange={handleImgChange} />
-                    <label htmlFor="icon-button-file" style={{zIndex: "15", position: "absolute", right: "1%", top: "45vh"}}>
+                    <label htmlFor="icon-button-file" style={{zIndex: "15", position: "absolute", right: "1%", top: "50vh"}}>
                         <IconButton color="disabled" style={{filter: "invert()"}} aria-label="upload picture" component="span">
                         <PhotoCamera />
                         </IconButton>
@@ -118,61 +148,43 @@ const UserProfile = ({user, firebase}) => {
                 <div style={{
                     borderTop: "1px solid lightgray",
                     padding: "5%",
-                    borderBottom: "1px solid lightgray"
                     }}>
                 <h1>
                     <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center"}}>{flow.id}</div>
+                    <div style={{fontSize: "15px", textAlign: "center"}}>{flow.email}</div>
                     {/*<div className="header-profile">
                         <img src={Tips} alt="tips" className="tips" /> 
                         {flow.tips} tips 
                     </div>*/}
                 </h1>
-                <div>
-                    <div className="header-toggle-container">
-                        <div>
-                            <b>hotel</b><p className="user-profile-details">{flow.hotelName}</p>
+                <div className="userProfile-header-toggle-container">
+                            <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
+                            <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
                         </div>
-                        <div>
-                            <b>poste</b><p className="user-profile-details">{flow.job}</p>
-                        </div>
-                        <div>
-                            <b>level</b><p className="user-profile-details">{flow.category}</p>
-                        </div>
-                    </div>
-                    <div style={{textAlign: "center"}}> 
-                        <b>Code Workspace</b><p className="user-profile-details">{user.displayName}</p>
-
-                    </div>
-                    <Button variant="secondary" className="update-profile-button" onClick={handleShow}>Actualiser votre profil</Button>
-                </div>
-                </div>
-                <div style={{
-                    display: "flex",
-                    flexFlow: "row",
-                    justifyContent: "center",
-                    alignItems: "flex-end",
-                    width: "100%"
-                }}>
-                    <img src={Home} alt="Home" style={{width: "10%", filter: "drop-shadow(1px 1px 1px)", marginTop: "3vh"}} onClick={() => navigate('/doorsStage')} />
                 </div>
                 <Avatar alt="user-profile-photo" 
                     src={user.photoURL ? user.photoURL : DefaultProfile}
                     style={{
                         display: typeof window && window.innerWidth > 480 ? "none" : "flex",
                         position: "absolute",
-                        top: "25vh",
+                        top: "30vh",
                         left: "28vw",
                         width: "45%",
                         height: "25%",
                         filter: "drop-shadow(1px 1px 1px)",
                         zIndex: "10"
                     }} />
-                <Drawer anchor="bottom" open={activate} onClose={handleHideDrawer}>
-                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre profil</b></h5>
+                <Drawer anchor="bottom" open={listEmail} onClose={handleCloseUpdateEmail}>
+                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre adresse e-mail</b></h5>
                     <div className="drawer-container">
-                        <div><input type="text" name="hotelName" value={formValue.hotelName} placeholder={flow.hotelName} className="user-dialog-hotel" onChange={handleChange} required /></div>
-                        <div><input type="text" name="job" value={formValue.job} placeholder={flow.job} className="user-dialog-job" onChange={handleChange} required /></div>
-                        <div><input type="text" name="level" value={formValue.level} placeholder={flow.category} className="user-dialog-level" onChange={handleChange} required /></div>
+                        <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder="Entrer une nouvelle adresse e-mail" className="user-dialog-hotel" onChange={handleChange} required /></div>
+                    </div>
+                    <Button variant="success" size="lg" onClick={handleSubmit}>Actualiser</Button>
+                </Drawer>
+                <Drawer anchor="bottom" open={listPassword} onClose={handleCloseUpdatePassword}>
+                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre mot de passe</b></h5>
+                    <div className="drawer-container">
+                        <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder="Entrer un nouveau mot de passe" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
                     <Button variant="success" size="lg" onClick={handleSubmit}>Actualiser</Button>
                 </Drawer>
@@ -187,8 +199,11 @@ const UserProfile = ({user, firebase}) => {
                     </Modal.Body>
                     <Modal.Footer>
                         <div>
-                            <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>Oui</Button>
-                            <Button size="sm" variant="danger" onClick={() => setConfModal(false)}>Non</Button>
+                            <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={(event) => handleChangePhotoUrl(event)}>Oui</Button>
+                            <Button size="sm" variant="danger" onClick={() => {
+                                setImg(null)
+                                handleCloseUpdatePhoto()
+                                }}>Non</Button>
                         </div>
                     </Modal.Footer>
                 </Modal>}
