@@ -7,6 +7,9 @@ import Drawer from '@material-ui/core/Drawer'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Left from '../../../../svg/arrow-left.svg'
 import Right from '../../../../svg/arrow-right.svg'
+import Switch from '@material-ui/core/Switch';
+import Close from '../../../../svg/close.svg'
+import Picture from '../../../../svg/picture.svg'
 
 const PhoneRepair = ({user, userDB}) =>{
 
@@ -14,6 +17,8 @@ const PhoneRepair = ({user, userDB}) =>{
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
+    const [img, setImg] = useState("")
+    const [imgFrame, setImgFrame] = useState(false)
 
     const handleChange = (event) =>{
         event.persist()
@@ -46,9 +51,29 @@ const PhoneRepair = ({user, userDB}) =>{
             client: formValue.client,
             room: formValue.room,
             markup: Date.now(),
-            type: formValue.type
+            type: formValue.type,
+            status: false
             })
     }
+
+
+    const changeIssueStatus = (document) => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('maintenance')
+          .doc(document)
+          .update({
+            status: false,
+        })      
+      }
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -95,14 +120,16 @@ const PhoneRepair = ({user, userDB}) =>{
                 {expand ? <img src={Left} style={{width: "3vw", marginRight: "1vw"}} /> : <img src={Right} style={{width: "3vw", marginLeft: "1vw"}} />}
                 </span>
             </div>
-            <Table striped bordered hover size="sm" className="text-center">
+            {!imgFrame ? <Table striped bordered hover size="sm" className="text-center">
                     <thead className="bg-dark text-center text-light">
                         <tr>
                         <th>Client</th>
                         <th>Chambre</th>
                         <th>Catégorie</th>
+                        <th>Statut</th>
                         {expand && <th>Détails</th>}
                         {expand && <td>Date</td>}
+                        {expand && <th>Photo</th>}
                         {expand && <td>Collaborateur</td>}
                         {expand && <th className="bg-dark"></th>}
                         </tr>
@@ -113,8 +140,19 @@ const PhoneRepair = ({user, userDB}) =>{
                             <td>{flow.client}</td>
                             <td>{flow.room}</td>
                             <td>{flow.type}</td>
+                            <td>
+                            <Switch
+                                checked={flow.status}
+                                onChange={() => changeIssueStatus(flow.id)}
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                            </td>
                             {expand && <td>{flow.details}</td>}
                             {expand && <td>{moment(flow.markup).format('L')}</td>}
+                            {expand && flow.img && <td style={{cursor: "pointer"}} onClick={() => {
+                                setImg(flow.img)
+                                setImgFrame(true)
+                            }}><img src={Picture} style={{width: "5vw"}} /></td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                 return db.collection('mySweetHotel')
@@ -139,7 +177,18 @@ const PhoneRepair = ({user, userDB}) =>{
                             </tr>
                         ))}
                     </tbody>
-                </Table>
+                </Table> : 
+                    <div style={{
+                        display: "flex",
+                        flexFlow: 'column',
+                        alignItems: "center",
+                        padding: "2%"
+                    }}>
+                        <div style={{width: "100%"}}>
+                            <img src={Close} style={{width: "5vw", float: "right", cursor: "pointer", marginBottom: "2vh"}} onClick={() => setImgFrame(false)} /> 
+                        </div>
+                        <img src={img} style={{width: "90%"}} />
+                    </div>}
             </div>
             <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Enregistrer</Button>
             

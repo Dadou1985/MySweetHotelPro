@@ -4,10 +4,6 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Lost from '../../../svg/lost-items.svg'
-import Cab from '../../../svg/taxi.svg'
-import Clock from '../../../svg/timer.svg'
-import Maid from '../../../svg/maid.svg'
-import Repair from '../../../svg/repair.svg'
 import CheckList from '../../../svg/todoList.svg'
 import CallCenter from '../../../svg/call-center.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
@@ -16,8 +12,13 @@ import Notifications from '../notifications'
 import Fom from '../../../svg/fom.svg'
 import Chat from '../../../svg/chat.png'
 import Notebook from '../../../svg/notebook.png'
-import RoomChange from '../../../svg/logout.svg'
-import { FirebaseContext, auth, db } from '../../../Firebase'
+import { auth } from '../../../Firebase'
+import Housekeeping from '../form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
+import Cab from '../form/phoneForm/phoneToolbarOverlays/cabOverlay'
+import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
+import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
+import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
+
 
 export default function TemporaryDrawer({userDB, user}) {
   const [state, setState] = React.useState({left: false,});
@@ -48,12 +49,17 @@ export default function TemporaryDrawer({userDB, user}) {
         </List>
         <Divider />
       <List className="drawer_listIcons2">
-        <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/houseKeeping")}} />
-        <img src={Lost} alt="Lost and found" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
-        <img src={Cab} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/cab")}} />
-        <img src={Clock} alt="Clock" className="drawer_icons" onClick={()=>{navigate("/clock")}} />
-        <img src={Repair} alt="Repair" className="drawer_icons" onClick={()=>{navigate("/repair")}} />
-        <img src={RoomChange} alt="Roum Change" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
+        {!!user && !!userDB &&
+        <Housekeeping user={user} userDB={userDB} />}
+        {!!user && !!userDB &&
+        <Cab user={user} userDB={userDB} />}
+        {!!user && !!userDB &&
+        <Clock user={user} userDB={userDB} />}
+        {!!user && !!userDB &&
+        <Repair user={user} userDB={userDB} />}
+        {!!user && !!userDB &&
+        <RoomChange user={user} userDB={userDB} />}
+        <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
       </List>
       <Divider />
       <List className="drawer_listIcons3">

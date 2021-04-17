@@ -103,7 +103,6 @@ export default function CommunIzi({userDB, user}) {
           status: false,
           markup: Date.now()
       })      
-    .then(handleClose())
     }
 
     const handleChangeExpanded = (title) => setExpanded(title)
@@ -251,7 +250,7 @@ export default function CommunIzi({userDB, user}) {
                               size="30"
                               color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
                               style={{marginRight: "1vw"}} />
-                              {flow.id}
+                              {typeof window && window.innerWidth > 480 ? flow.id : null}
                           </div>
                           <div style={{display: "flex", alignItems: "center"}}>Chambre {flow.room}</div>
                             <div style={{display: "flex", alignItems: "center"}}>

@@ -1,12 +1,10 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { db, auth } from '../../../Firebase'
 
 
-const UserList = () => {
+const UserList = ({user, userDB}) => {
     const [info, setInfo] = useState([])
-
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -14,8 +12,10 @@ const UserList = () => {
             .doc('country')
             .collection('France')
             .doc('collection')
+            .collection('business')
+            .doc('collection')
             .collection('users')
-            .orderBy("markup", "asc")
+            .orderBy("createdAt", "asc")
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -35,9 +35,8 @@ const UserList = () => {
     return (
         <div>
             <Table striped bordered hover>
-                <thead>
+                <thead className="bg-dark text-center text-light">
                     <tr>
-                    <th>#</th>
                     <th>Pseudo</th>
                     <th>E-mail</th>
                     <th>Mot de Passe</th>
@@ -47,9 +46,8 @@ const UserList = () => {
                 <tbody>
                 {info.map(flow =>(
                     <tr key={flow.markup}>
-                    <td></td>
                     <td>{flow.id}</td>
-                    <td>{flow.mail}</td>
+                    <td>{flow.email}</td>
                     <td>{flow.password}</td>
                     <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={()=>{
                         return db.collection('mySweetHotel')

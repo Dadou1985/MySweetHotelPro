@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Left from '../../../../svg/arrow-left.svg'
 import Right from '../../../../svg/arrow-right.svg'
+import Switch from '@material-ui/core/Switch';
 
 const PhoneCab = ({user, userDB}) =>{
 
@@ -48,9 +49,28 @@ const PhoneCab = ({user, userDB}) =>{
             pax: formValue.passenger,
             model: formValue.model,
             markup: Date.now(),
-            hour: formValue.hour
+            hour: formValue.hour,
+            status: false
             })
     }
+
+    const changeDemandStatus = (document) => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('cab')
+          .doc(document)
+          .update({
+            status: false,
+        })      
+      }
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -104,7 +124,8 @@ const PhoneCab = ({user, userDB}) =>{
                     {expand && <th>Date</th>}
                     <th>Heure</th>
                     <th>Pax</th>
-                    <th>Véhicule</th>
+                    <th>Statut</th>
+                    {expand && <th>Véhicule</th>}
                     {expand &&<th>Destination</th>}
                     {expand && <th className="bg-dark"></th>}
                     </tr>
@@ -117,7 +138,14 @@ const PhoneCab = ({user, userDB}) =>{
                         {expand && <td>{moment(flow.date).format('L')}</td>}
                         <td>{moment(flow.hour).format('LT')}</td>
                         <td>{flow.pax}</td>
-                        <td>{flow.model}</td>
+                        <td>
+                        <Switch
+                            checked={flow.status}
+                            onChange={() => changeDemandStatus(flow.id)}
+                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        </td>
+                        {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                             return db.collection('mySweetHotel')

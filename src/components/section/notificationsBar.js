@@ -25,7 +25,7 @@ export default function NotificationsBar({message, markup}) {
             .doc('departement')
             .collection(userDB.hotelDept)
             .doc(`${userDB.hotelId}`)
-            .collection('notification')
+            .collection('notifications')
             .doc(markup)
             .delete()
     }

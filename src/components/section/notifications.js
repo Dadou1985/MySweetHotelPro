@@ -21,7 +21,7 @@ export default function Notifications() {
             .doc('departement')
             .collection(userDB.hotelDept)
             .doc(`${userDB.hotelId}`)
-            .collection('notification')
+            .collection('notifications')
             .orderBy("markup", "asc")
         }
 

@@ -1,16 +1,26 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Taxi from '../../../svg/taxi.svg'
-import DatePicker from "react-datepicker";
 import { db, auth } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
+import Switch from '@material-ui/core/Switch';
+import Badge from '@material-ui/core/Badge'
+import StyleBadge from '../common/badgeMaker'
+import { withStyles } from '@material-ui/core/styles';
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
+} from '@material-ui/pickers';
 
 const Cab = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({room: "", client: "", date: "", hour: "", passenger:"", model:"", destination: ""})
+    const [formValue, setFormValue] = useState({room: "", client: "", date: new Date(), hour: new Date(), passenger:"", model:"", destination: ""})
+    const [demandQty, setDemandQty] = useState([])
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -22,6 +32,23 @@ const Cab = ({userDB, user}) =>{
           [event.target.name]: event.target.value
         }))
       }
+
+      const handleDateChange = (date) => {
+        setFormValue({date: date});
+      };
+
+      const handleHourChange = (hour) => {
+        setFormValue({hour: hour});
+      };
+
+      const StyledBadge = withStyles((theme) => ({
+        badge: {
+          right: -3,
+          top: 13,
+          border: `2px solid ${theme.palette.background.paper}`,
+          padding: '0 4px',
+        },
+      }))(Badge);
 
     const handleSubmit = event => {
         event.preventDefault()
@@ -46,10 +73,30 @@ const Cab = ({userDB, user}) =>{
             pax: formValue.pax,
             model: formValue.model,
             markup: Date.now(),
-            hour: formValue.hour
+            hour: formValue.hour,
+            status: false
             })
         .then(handleClose)
     }
+
+    const changeDemandStatus = (document) => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('cab')
+          .doc(document)
+          .update({
+            status: false,
+        })      
+      }
+
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -81,17 +128,51 @@ const Cab = ({userDB, user}) =>{
                 return unsubscribe
      },[])
 
+     useEffect(() => {
+        const toolOnAir = () => {
+            return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('cab')
+            .where("status", "==", true)
+        }
+
+        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setDemandQty(snapInfo)
+                });
+                return unsubscribe
+     },[])
+
+     console.log("######", formValue.hour)
+
     return(
         <div>
-            <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                Taxi
-              </Tooltip>
-            }>
-                <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "40%", marginLeft: "20%"}} />
-            </OverlayTrigger>
+            <StyledBadge badgeContent={info.length} color="secondary">
+                <OverlayTrigger
+                placement="right"
+                overlay={
+                <Tooltip id="title">
+                    Taxi
+                </Tooltip>
+                }>
+                    <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                </OverlayTrigger>
+            </StyledBadge>
 
             <Modal show={list}
                     size="lg"
@@ -141,13 +222,34 @@ const Cab = ({userDB, user}) =>{
                                         width: "70%"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Date de réservation</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 16/04/2020" style={{width: "10vw"}} value={formValue.date} name="date" onChange={handleChange} />
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardDatePicker
+                                            margin="normal"
+                                            id="date-picker-dialog"
+                                            label="Date de réservation"
+                                            format="dd/MM/yyyy"
+                                            value={formValue.date}
+                                            onChange={handleDateChange}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change date',
+                                            }}
+                                            />    
+                                        </MuiPickersUtilsProvider>
                                         </Form.Group>
                                    
                                         <Form.Group controlId="description">
-                                        <Form.Label>Heure de réservation</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 08h30" style={{width: "10vw"}} value={formValue.hour} name="hour" onChange={handleChange} />
+                                        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                                        <KeyboardTimePicker
+                                            margin="normal"
+                                            id="time-picker"
+                                            label="Heure de réservation"
+                                            value={formValue.hour}
+                                            onChange={handleHourChange}
+                                            KeyboardButtonProps={{
+                                                'aria-label': 'change time',
+                                            }}
+                                            />
+                                        </MuiPickersUtilsProvider>
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row style={{
@@ -196,6 +298,7 @@ const Cab = ({userDB, user}) =>{
                                     <th>Passagers</th>
                                     <th>Véhicule</th>
                                     <th>Destination</th>
+                                    <th>Statut</th>
                                     <th className="bg-dark"></th>
                                     </tr>
                                 </thead>
@@ -209,6 +312,13 @@ const Cab = ({userDB, user}) =>{
                                         <td>{flow.pax}</td>
                                         <td>{flow.model}</td>
                                         <td>{flow.destination}</td>
+                                        <td>
+                                        <Switch
+                                            checked={flow.status}
+                                            onChange={() => changeDemandStatus(flow.id)}
+                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                        />
+                                        </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             return db.collection('mySweetHotel')
                                             .doc('country')

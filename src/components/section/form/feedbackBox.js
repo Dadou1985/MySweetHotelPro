@@ -1,14 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Feedback from '../../../svg/feedbackBox.svg'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { db, auth } from '../../../Firebase'
 
-const FeedbackBox = () =>{
+const FeedbackBox = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "Améliorations", feedback: ""})
-
-    const { userDB, user } = useContext(FirebaseContext)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -42,7 +40,7 @@ const FeedbackBox = () =>{
                 text: formValue.feedback,
                 markup: Date.now()
             })
-            return this.db.collection('mySweetHotel')
+            return db.collection('mySweetHotel')
                 .doc('country')
                 .collection('France')
                 .doc('collection')

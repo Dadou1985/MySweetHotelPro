@@ -571,7 +571,7 @@ input[type=number] {
 
 .brand {
     position: absolute;
-    left: 8vw;
+    left: 5vw;
     font-weight: bolder;
     font-size: 1.5em;
     text-decoration: none;
@@ -583,7 +583,7 @@ input[type=number] {
     font-family: "Charmonman"; 
     position: absolute; 
     top: 1vh; 
-    left: -25px;
+    left: 135px;
     color: #5bc0de;
 
 }
@@ -835,7 +835,7 @@ input[type=number] {
 
 .modal-note-button-container {
     display: flex;
-    flex-flow: row;
+    flex-flow: row wrap;
     justify-content: flex-end;
 }
 
@@ -889,7 +889,7 @@ input[type=number] {
 }
 
 .modal-note-list-circle {
-    width: 25%;
+    width: 20%;
     cursor: pointer;
     margin-right: 1vw;
 }
@@ -2087,6 +2087,76 @@ input[type=number] {
     padding: 15px;
     color: black;
     filter: drop-shadow(2px 2px 2px) grayscale()
+}
+
+.user_avatar_chat_label {
+    font-weight: bolder; 
+    color: black;
+    margin-right: 3vw;
+}
+
+.old_user_avatar_chat_label {
+    font-weight: bolder; 
+    color: gray;
+    margin-right: 3vw;
+}
+
+.customer_avatar_chat_label {
+    font-weight: bolder; 
+    color: black;
+    margin-left: 3vw;
+}
+
+.customer_old_user_avatar_chat_label {
+    font-weight: bolder; 
+    color: gray;
+    margin-left: 3vw;
+}
+
+
+.avatar_chat {
+    display: flex;
+    width: 4%;
+    height: 4%;
+    position: absolute;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.old_avatar_chat {
+    display: flex;
+    width: 4%;
+    height: 4%;
+    position: absolute;
+    filter: drop-shadow(1px 1px 1px);
+    filter: grayscale(90%) drop-shadow(1px 1px 1px);
+    bottom: 11vh;
+}
+
+@media screen and (max-width: 480px) {
+    .user_avatar_chat_label {
+        margin-right: 12vw;
+    }
+    
+    .old_user_avatar_chat_label {
+        margin-right: 12vw;
+    }
+    
+    .customer_avatar_chat_label {
+        margin-left: 12vw;
+    }
+    
+    .customer_old_user_avatar_chat_label {
+        margin-left: 12vw;
+    }
+    
+    
+    .avatar_chat {
+        bottom: 14vh;
+    }
+    
+    .old_avatar_chat {
+        bottom: 14vh;
+    }
 }
 
 

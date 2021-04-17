@@ -61,7 +61,8 @@ const Navigation = ({user, userDB}) =>{
                     />*/}
                     {userDB && user&&
                         <AdminBoard user={user} userDB={userDB} />}
-                    <FeedbackBox />
+                    {userDB && user&&
+                        <FeedbackBox user={user} userDB={userDB} />}
                     </div>
                     <OverlayTrigger
                         placement="bottom"

@@ -4,12 +4,21 @@ import ChangeRoom from '../../../svg/logout.png'
 import {  db, auth } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
+import Switch from '@material-ui/core/Switch';
+import Badge from '@material-ui/core/Badge'
+import StyleBadge from '../common/badgeMaker'
+import { withStyles } from '@material-ui/core/styles';
+import Picture from '../../../svg/picture.svg'
+import Close from '../../../svg/close.svg'
 
 const Maid = ({userDB, user}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
+    const [demandQty, setDemandQty] = useState([])
+    const [img, setImg] = useState("")
+    const [imgFrame, setImgFrame] = useState(false)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -21,6 +30,15 @@ const Maid = ({userDB, user}) =>{
           [event.target.name]: event.target.value
         }))
       }
+
+      const StyledBadge = withStyles((theme) => ({
+        badge: {
+          right: -3,
+          top: 13,
+          border: `2px solid ${theme.palette.background.paper}`,
+          padding: '0 4px',
+        },
+      }))(Badge);
 
       const handleSubmit = event => {
         event.preventDefault()
@@ -45,10 +63,29 @@ const Maid = ({userDB, user}) =>{
             markup: Date.now(),
             toRoom: formValue.toRoom,
             reason: formValue.reason,
-            state: formValue.state
+            state: formValue.state,
+            status: false
             })
         .then(handleClose)
     }
+
+    const changeDemandStatus = (document) => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('roomChange')
+          .doc(document)
+          .update({
+            status: false,
+        })      
+      }
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -81,18 +118,50 @@ const Maid = ({userDB, user}) =>{
            
      },[])
 
+     useEffect(() => {
+        const toolOnAir = () => {
+            return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('roomChange')
+            .where("status", "==", true)
+        }
+
+        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setDemandQty(snapInfo)
+                });
+                return unsubscribe
+           
+     },[])
+
     return(
         <div>
-            <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                Délogement
-              </Tooltip>
-            }>
-                <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "50%", marginLeft: "20%"}} />
-            </OverlayTrigger>
-
+            <StyledBadge badgeContent={demandQty.length} color="secondary">
+                <OverlayTrigger
+                placement="right"
+                overlay={
+                <Tooltip id="title">
+                    Délogement
+                </Tooltip>
+                }>
+                        <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                </OverlayTrigger>
+            </StyledBadge>
 
             <Modal show={list}
                     size="lg"
@@ -187,7 +256,7 @@ const Maid = ({userDB, user}) =>{
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des délogements" title="Liste des délogements">
-                            <Table striped bordered hover size="sm" className="text-center"  style={{overflowX: "auto",
+                            {!imgFrame ? <Table striped bordered hover size="sm" className="text-center"  style={{overflowX: "auto",
                                     maxWidth: "90vw"}}>
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
@@ -198,7 +267,9 @@ const Maid = ({userDB, user}) =>{
                                     <th>Etat</th>
                                     <th>Details</th>
                                     <td>Date</td>
+                                    <th>Photo</th>
                                     <th>Collaborateur</th>
+                                    <th>Statut</th>
                                     <th className="bg-dark"></th>
                                     </tr>
                                 </thead>
@@ -212,7 +283,18 @@ const Maid = ({userDB, user}) =>{
                                         <td>{flow.state}</td>
                                         <td>{flow.details}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
+                                        {flow.img && <td style={{cursor: "pointer"}} onClick={() => {
+                                            setImg(flow.img)
+                                            setImgFrame(true)
+                                        }}><img src={Picture} style={{width: "1vw"}} /></td>}
                                         <td>{flow.author}</td>
+                                        <td>
+                                        <Switch
+                                            checked={flow.status}
+                                            onChange={() => changeDemandStatus(flow.id)}
+                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                        />
+                                        </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             return db.collection('mySweetHotel')
                                             .doc('country')
@@ -236,7 +318,18 @@ const Maid = ({userDB, user}) =>{
                                         </tr>
                                     ))}
                                 </tbody>
-                            </Table>
+                            </Table> : 
+                            <div style={{
+                                display: "flex",
+                                flexFlow: 'column',
+                                alignItems: "center",
+                                padding: "2%"
+                            }}>
+                                <div style={{width: "100%"}}>
+                                    <img src={Close} style={{width: "1vw", float: "right", cursor: "pointer"}} onClick={() => setImgFrame(false)} /> 
+                                </div>
+                                <img src={img} style={{width: "70%"}} />
+                            </div>}
                             </Tab>
                         </Tabs>
                     </Modal.Body>

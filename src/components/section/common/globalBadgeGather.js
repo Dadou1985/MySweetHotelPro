@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext } from 'react'
 import { FirebaseContext, db, auth } from '../../../Firebase'
 
 
-export default function BadgeMaker({item}) {
+const GlobalBadge = () => {
     const [data, setData] = useState([])
 
     const { userDB, setUserDB } = useContext(FirebaseContext)
@@ -22,7 +22,7 @@ export default function BadgeMaker({item}) {
             .doc(`${userDB.hotelId}`)
             .collection("housekeeping")
             .doc("item")
-            .collection(item)
+            .collection('towel')
         }
     
         let unsubscribe = listOnAir().onSnapshot(function(snapshot) {
@@ -38,8 +38,12 @@ export default function BadgeMaker({item}) {
                 });
                 return unsubscribe
            
-     },[item])
+     },[])
+
+     let itemQty = data.length
 
 
-    return (<div>{data.length}</div>)
+    return itemQty
 }
+
+export default GlobalBadge

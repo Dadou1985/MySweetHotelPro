@@ -1,12 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {Form, Button, Modal} from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { db, auth } from '../../../Firebase'
 
-const AdminRegister = ({hide}) => {
+const AdminRegister = ({hide, user, userDB}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
-
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     const handleChange = (event) =>{
         event.persist()
@@ -24,18 +22,18 @@ const AdminRegister = ({hide}) => {
 
     const handleSubmit = async(event) => {
         event.preventDefault()
-        setFormValue("")
+        //setFormValue("")
         await auth.createUserWithEmailAndPassword(formValue.email, "password");
         await user.updateProfile({displayName: formValue.username})
-        await resetPassword()
-        return this.db.collection("mySweetHotel")
+        //await resetPassword()
+        return db.collection("mySweetHotel")
         .doc("country")
         .collection("France")
         .doc('collection')
         .collection('business')
         .doc('collection')
         .collection('users')
-        .doc(user.displayName)
+        .doc(formValue.username)
         .set({   
         adminStatus: false, 
         email: formValue.email,
@@ -44,10 +42,12 @@ const AdminRegister = ({hide}) => {
         hotelName: userDB.hotelName,
         hotelRegion: userDB.hotelRegion,
         hotelDept: userDB.hotelDept,
-        createdAt: new Date()
+        createdAt: Date.now()
         }) 
         .then(hide())
       }
+
+      console.log("$$$$$", user)
 
     return (
         <div>

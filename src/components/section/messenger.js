@@ -138,7 +138,7 @@ const Messenger = () =>{
     }
 
     const addNotification = (notification) => {
-        return this.db.collection('mySweetHotel')
+        return db.collection('mySweetHotel')
             .doc('country')
             .collection('France')
             .doc('collection')
@@ -175,7 +175,7 @@ const Messenger = () =>{
                     let marker = startDate.getTime()
                         
                     if(moment(startDate).format('L') !== moment(new Date()).format('L')) {
-                        const notif = "Votre message a bien été enregistré pour le " + moment(startDate).format('L') 
+                        const notif = "Votre note a bien été enregistrée pour le " + moment(startDate).format('L') 
                         addNote(marker)
                         addNotification(notif)
                         setStartDate(new Date)
@@ -276,12 +276,13 @@ const Messenger = () =>{
                         <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" />
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                         <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
-                            position: "absolute",
                             display: checked ? "flex" : "none",
-                            flexFlow: "column",
-                            justifyContent: "space-around",
+                            width: "100%",
+                            flexFlow: "row wrap",
+                            justifyContent: "flex-end",
                             alignItems: "center",
                             }}>
+                            <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>Critère d'importance</h5>
                             <ListItemIcon button>
                                 <ListItemIcon>
                                 <OverlayTrigger

@@ -17,8 +17,6 @@ const ToolBar = () =>{
             {userDB && user &&
                 <HouseKeeping userDB={userDB} user={user}  />}
             {userDB && user &&
-                <Lost userDB={userDB} user={user}  />}
-            {userDB && user &&
                 <Cab userDB={userDB} user={user}  />}
             {userDB && user &&
                 <Maid userDB={userDB} user={user}  />}
@@ -26,6 +24,8 @@ const ToolBar = () =>{
                 <Clock userDB={userDB} user={user}  />}
             {userDB && user &&
                 <Repair userDB={userDB} user={user}  />}
+            {userDB && user &&
+                <Lost userDB={userDB} user={user}  />}
         </div>
     )
 }

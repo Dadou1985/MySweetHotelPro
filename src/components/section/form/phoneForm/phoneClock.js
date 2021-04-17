@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Left from '../../../../svg/arrow-left.svg'
 import Right from '../../../../svg/arrow-right.svg'
+import Switch from '@material-ui/core/Switch';
 
 const PhoneClock = ({user, userDB}) =>{
 
@@ -46,10 +47,28 @@ const PhoneClock = ({user, userDB}) =>{
             room: formValue.room,
             day: new Date(),
             markup: Date.now(),
-            hour: formValue.hour
+            hour: formValue.hour,
+            status: false
             })
     }
 
+    const changeDemandStatus = (document) => {
+        return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('hotel')
+          .doc('region')
+          .collection(userDB.hotelRegion)
+          .doc('departement')
+          .collection(userDB.hotelDept)
+          .doc(`${userDB.hotelId}`)
+          .collection('clock')
+          .doc(document)
+          .update({
+            status: false,
+        })      
+      }
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -103,7 +122,8 @@ const PhoneClock = ({user, userDB}) =>{
                                 <th>Chambre</th>
                                 <th>Jour</th>
                                 <th>Heure</th>
-                                <th>Date</th>
+                                <th>Statut</th>
+                                {expand && <th>Date</th>}
                                 {expand && <th>Collaborateur</th>}
                                 {expand && <th className="bg-dark"></th>}
                                 </tr>
@@ -113,9 +133,16 @@ const PhoneClock = ({user, userDB}) =>{
                                     <tr key={flow.id}>
                                     {expand && <td>{flow.client}</td>}
                                     <td>{flow.room}</td>
-                                    <td>{flow.day}</td>
+                                    <td>{moment(flow.day).format('LLL')}</td>
                                     <td>{moment(flow.hour).format('LT')}</td>
-                                    <td>{moment(flow.date).format('L')}</td>
+                                    <td>
+                                        <Switch
+                                            checked={flow.status}
+                                            onChange={() => changeDemandStatus(flow.id)}
+                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                        />
+                                        </td>
+                                    {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             return db.collection('mySweetHotel')

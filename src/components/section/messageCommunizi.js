@@ -11,40 +11,27 @@ import 'moment/locale/fr';
     if(author === user.displayName){
       return (
         <span className="darkTextUser">
-          <span style={{fontWeight: "bolder", color: "black", marginRight: "2vw"}}>{author}</span>
+          <span className="user_avatar_chat_label">{author}</span>
           <div className="darkTextBodyUser">
           <span style={{marginBottom: "2%", color: "lightskyblue", fontFamily: "Coiny"}}>{text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            style={{
-                display: "flex",
-                width: "4%",
-                height: "4%",
-                position: "absolute",
-                filter: "drop-shadow(1px 1px 1px)"
-            }} />
+            className="avatar_chat" />
         </span>
       )
     }else{
       return (
         <span className="darkTextOther">
-          <span style={{fontWeight: "bolder", color: "black", marginLeft: "2vw"}}>{author}</span>
+          <span className="customer_avatar_chat_label">{author}</span>
           <div className="darkTextBodyOther">
           <span style={{marginBottom: "2%", color: "lightskyblue", fontFamily: "Coiny"}}>{text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            style={{
-                display: "flex",
-                width: "4%",
-                height: "4%",
-                position: "absolute",
-                filter: "drop-shadow(1px 1px 1px)"
-
-            }} />
+            className="avatar_chat" />
         </span>
       )
     }
@@ -52,41 +39,27 @@ import 'moment/locale/fr';
     if(author === user.displayName){
       return (
         <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
-          <span style={{color: "gray", marginRight: "2vw"}}>{author}</span>
+          <span className="old_user_avatar_chat_label">{author}</span>
           <div className="oldDarkTextBodyUser">
           <span style={{marginBottom: "2%", color: "lightskyblue", fontFamily: "Coiny"}}>{text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            style={{
-                display: "flex",
-                width: "4%",
-                height: "4%",
-                position: "absolute",
-                filter: "grayscale(90%) drop-shadow(1px 1px 1px)",
-
-            }} />
+            className="old_avatar_chat" />
         </span>
       )
     }else{
       return (
         <span className="oldDarkTextOther" style={{fontWeight: "bolder"}}>
-          <span style={{color: "gray", marginLeft: "2vw"}}>{author}</span>
+          <span className="customer_old_user_avatar_chat_label">{author}</span>
           <div className="oldDarkTextBodyOther">
           <span style={{marginBottom: "2%", color: "lightskyblue", fontFamily: "Coiny"}}>{text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            style={{
-                display: "flex",
-                width: "4%",
-                height: "4%",
-                position: "absolute",
-                filter: "grayscale(90%) drop-shadow(1px 1px 1px)",
-
-            }} />
+            className="old_avatar_chat" />
         </span>
       )
     }

@@ -92,7 +92,7 @@ const Lost = ({userDB, user}) =>{
                 Objets trouvés
               </Tooltip>
             }>
-                <img src={LostOnes} className="icon" alt="contact" onClick={handleShow} style={{width: "40%", marginLeft: "20%"}} />
+                <img src={LostOnes} className="icon" alt="contact" onClick={handleShow} style={{width: "40%", marginLeft: "25%"}} />
             </OverlayTrigger>
 
 
