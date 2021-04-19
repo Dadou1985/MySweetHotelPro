@@ -9,6 +9,9 @@ const ItemList = ({item}) => {
     const [info, setInfo] = useState([])
 
     const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+    const [expand, setExpand] = useState(false)
+
+    const handleChangeExpand = () => setExpand(!expand)
 
     useEffect(() => {
         const listOnAir = () => {
@@ -51,7 +54,7 @@ const ItemList = ({item}) => {
             <Table striped bordered hover size="sm" className="text-center">
                 <thead className="bg-dark text-center text-light">
                     <tr>
-                    <th>Client</th>
+                    {expand && <th>Client</th>}
                     <th>Chambre</th>
                     <th>Heure</th>
                     <th className="bg-dark"></th>
@@ -60,7 +63,7 @@ const ItemList = ({item}) => {
                 <tbody>
                     {info.map(flow =>(
                         <tr key={flow.id}>
-                        <td>{flow.client}</td>
+                        {expand && <td>{flow.client}</td>}
                         <td>{flow.room}</td>
                         <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">

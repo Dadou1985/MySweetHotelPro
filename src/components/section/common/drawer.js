@@ -12,12 +12,15 @@ import Notifications from '../notifications'
 import Fom from '../../../svg/fom.svg'
 import Chat from '../../../svg/chat.png'
 import Notebook from '../../../svg/notebook.png'
+import Feedback from '../../../svg/feedbackBox.svg'
 import { auth } from '../../../Firebase'
 import Housekeeping from '../form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
 import Cab from '../form/phoneForm/phoneToolbarOverlays/cabOverlay'
 import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
 import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
 import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
+import FeedbackBox from '../form/feedbackBox';
+import Connection from '../../../svg/employee.svg'
 
 
 export default function TemporaryDrawer({userDB, user}) {
@@ -64,10 +67,14 @@ export default function TemporaryDrawer({userDB, user}) {
       <Divider />
       <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
+        <img src={Feedback} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/feedback")}} />
+        {userDB.adminStatus && <img src={Connection} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
       </List>
       <Divider />
-      <PowerSettingsNewIcon id="drawer_icons2" onClick={handleLogout} />
+      <List className="drawer_listIcons4">
+        <PowerSettingsNewIcon id="drawer_icons2" onClick={handleLogout} />
+      </List>
     </div>
   );
 

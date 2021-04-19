@@ -113,7 +113,7 @@ const Dilema = ({user, userDB}) => {
         .collection('users')
         .doc(user.displayName)
         .update({
-            field
+            email: field
           })
     }
 
@@ -164,13 +164,34 @@ const Dilema = ({user, userDB}) => {
                 
      },[])
 
+     const addNotification = (notification) => {
+        return db.collection('mySweetHotel')
+            .doc('country')
+            .collection('France')
+            .doc('collection')
+            .collection('hotel')
+            .doc('region')
+            .collection(userDB.hotelRegion)
+            .doc('departement')
+            .collection(userDB.hotelDept)
+            .doc(`${userDB.hotelId}`)
+            .collection('notifications')
+            .add({
+            content: notification,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
      const handleChangeEmail = () => {
-        auth
-        .signInWithEmailAndPassword(user.email, userDB.password)
+        const notif = "Le changement de votre adresse e-mail a été enregistré avec succès !" 
+
+         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
+            addNotification(notif)
         })
       }
+      
     
     console.log(user)
 
@@ -220,7 +241,7 @@ const Dilema = ({user, userDB}) => {
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Control type="text" placeholder="Entrer une nouvelle adresse e-mail" style={{width: "40vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
+                <Form.Control type="text" placeholder="Entrer une nouvelle adresse e-mail" style={{width: "30vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
@@ -229,6 +250,7 @@ const Dilema = ({user, userDB}) => {
                 <Button variant="outline-success" onClick={(event) => {
                     handleSubmit(event, {email: formValue.email})
                     handleChangeEmail(formValue.email)
+                    handleCloseUpdateEmail()
                 }}>Actualiser maintenant</Button>
             </Modal.Footer>
         </Modal>
@@ -255,7 +277,7 @@ const Dilema = ({user, userDB}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-success" onClick={(event) => {
-                    handleSubmit(event, {email: formValue.email})
+                    handleSubmit(event, formValue.email)
                     handleChangeEmail(formValue.email)
                 }}>Actualiser maintenant</Button>
             </Modal.Footer>

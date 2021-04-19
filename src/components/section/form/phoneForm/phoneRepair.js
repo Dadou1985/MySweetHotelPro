@@ -190,7 +190,7 @@ const PhoneRepair = ({user, userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-            <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Enregistrer</Button>
+            <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Signaler un problème</Button>
             
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">

@@ -902,7 +902,7 @@ input[type=number] {
     }
 
     .perfect-scrollbar {
-        height: 70vh;
+        height: 75vh !important;
     }
 
     .messenger_notebox {
@@ -1102,7 +1102,7 @@ input[type=number] {
     display: flex;
     flex-flow: column;
     padding: 5%;
-    text-align: center;
+    align-items: center;
     height: 90vh;
     overflow: hidden;
 }
@@ -1589,7 +1589,7 @@ input[type=number] {
 .drawer_listIcons {
     display: flex;
     flex-flow: column;
-    height: 17vh;
+    height: 15vh;
     justify-content: space-around;
     align-items: center;
 }
@@ -1597,7 +1597,7 @@ input[type=number] {
 .drawer_listIcons2 {
     display: flex;
     flex-flow: column;
-    height: 50vh;
+    height: 45vh;
     justify-content: space-around;
     align-items: center;
 }
@@ -1605,8 +1605,16 @@ input[type=number] {
 .drawer_listIcons3 {
     display: flex;
     flex-flow: column;
-    height: 17vh;
+    height: 25vh;
     justify-content: space-around;
+    align-items: center;
+}
+
+.drawer_listIcons4 {
+    display: flex;
+    flex-flow: column;
+    height: 5vh;
+    justify-content: center;
     align-items: center;
 }
 
@@ -2581,3 +2589,5 @@ input[type=number] {
         margin-bottom: 2vh;
     }
 }
+
+.modal-90w {width: 90vw}

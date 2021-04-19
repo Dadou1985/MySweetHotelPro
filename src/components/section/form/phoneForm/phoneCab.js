@@ -172,7 +172,7 @@ const PhoneCab = ({user, userDB}) =>{
                 </tbody>
             </Table>
             </div>
-            <Button variant="outline-success" onClick={handleShow}>Réserver un taxi</Button>
+            <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Réserver un taxi</Button>
 
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
