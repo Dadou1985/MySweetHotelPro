@@ -214,10 +214,17 @@ const Dilema = ({user, userDB}) => {
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
-            userCredential.user.updatePassword(formValue.password)
+            userCredential.user.updateEmail(formValue.email)
             addNotification(notif)
         })
-    }
+        auth.currentUser.updatePassword(formValue.password)
+        .then(function() {
+            // Update successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          addNotification(notif)
+        }
       
     
     console.log(user)

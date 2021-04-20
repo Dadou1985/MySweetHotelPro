@@ -123,7 +123,7 @@ const UserProfile = ({user, userDB}) => {
             .collection('business')
             .doc('collection')
             .collection('users')
-            .where("userId", "==", user.uid)
+            .where("email", "==", user.email)
         }
 
        let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
@@ -141,44 +141,6 @@ const UserProfile = ({user, userDB}) => {
                 return unsubscribe
                 
      },[])
-
-     const addNotification = (notification) => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
-            .add({
-            content: notification,
-            markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
-    }
-
-    const handleChangeEmail = () => {
-        const notif = "Le changement de votre adresse e-mail a été enregistré avec succès !" 
-
-         auth.signInWithEmailAndPassword(user.email, userDB.password)
-        .then(function(userCredential) {
-            userCredential.user.updateEmail(formValue.email)
-            addNotification(notif)
-        })
-      }
-
-      const handleChangePassword = () => {
-        const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
-
-        auth.signInWithEmailAndPassword(user.email, userDB.password)
-        .then(function(userCredential) {
-            userCredential.user.updatePassword(formValue.password)
-            addNotification(notif)
-        })
-    }
     
     return (
         info.map(flow => (
@@ -235,22 +197,14 @@ const UserProfile = ({user, userDB}) => {
                     <div className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder="Entrer une nouvelle adresse e-mail" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
-                        handleUpdateEmail(event, formValue.email)
-                        handleChangeEmail(formValue.email)
-                        handleCloseUpdateEmail()
-                    }}>Actualiser maintenant</Button>
+                    <Button variant="success" size="lg" onClick={handleSubmit}>Actualiser</Button>
                 </Drawer>
                 <Drawer anchor="bottom" open={listPassword} onClose={handleCloseUpdatePassword}>
                     <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre mot de passe</b></h5>
                     <div className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder="Entrer un nouveau mot de passe" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
-                        handleUpdatePassword(event, formValue.password)
-                        handleChangePassword()
-                        handleCloseUpdatePassword()
-                    }}>Actualiser maintenant</Button>
+                    <Button variant="success" size="lg" onClick={handleSubmit}>Actualiser</Button>
                 </Drawer>
                 {img && 
                     <Modal show={confModal}

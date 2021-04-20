@@ -212,12 +212,14 @@ const Dilema = ({user, userDB}) => {
       const handleChangePassword = () => {
         const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
 
-        auth.signInWithEmailAndPassword(user.email, userDB.password)
-        .then(function(userCredential) {
-            userCredential.user.updatePassword(formValue.password)
-            addNotification(notif)
-        })
-    }
+        auth.currentUser.updatePassword(formValue.password)
+        .then(function() {
+            // Update successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          addNotification(notif)
+        }
       
     
     console.log(user)

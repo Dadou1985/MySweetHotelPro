@@ -217,7 +217,7 @@ const Dilema = ({user, userDB}) => {
             userCredential.user.updatePassword(formValue.password)
             addNotification(notif)
         })
-    }
+        }
       
     
     console.log(user)

@@ -236,21 +236,17 @@ const UserProfile = ({user, userDB}) => {
                         <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder="Entrer une nouvelle adresse e-mail" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
                     <Button variant="success" onClick={(event) => {
-                        handleUpdateEmail(event, formValue.email)
-                        handleChangeEmail(formValue.email)
-                        handleCloseUpdateEmail()
-                    }}>Actualiser maintenant</Button>
+                    handleUpdateEmail(event, formValue.email)
+                    handleChangeEmail(formValue.email)
+                    handleCloseUpdateEmail()
+                }}>Actualiser maintenant</Button>
                 </Drawer>
                 <Drawer anchor="bottom" open={listPassword} onClose={handleCloseUpdatePassword}>
                     <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre mot de passe</b></h5>
                     <div className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder="Entrer un nouveau mot de passe" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
-                        handleUpdatePassword(event, formValue.password)
-                        handleChangePassword()
-                        handleCloseUpdatePassword()
-                    }}>Actualiser maintenant</Button>
+                    <Button variant="success" size="lg" onClick={handleSubmit}>Actualiser</Button>
                 </Drawer>
                 {img && 
                     <Modal show={confModal}

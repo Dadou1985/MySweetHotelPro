@@ -100,9 +100,9 @@ const Dilema = ({user, userDB}) => {
     }
 
 
-    const handleUpdateEmail = async(event, field) => {
+    const handleSubmit = async(event, field) => {
         event.preventDefault()
-        setFormValue({email: ""})
+        setFormValue({hotelName: "", job: "", level: "", mood: ""})
         
         return db.collection("mySweetHotel")
         .doc("country")
@@ -114,23 +114,6 @@ const Dilema = ({user, userDB}) => {
         .doc(user.displayName)
         .update({
             email: field
-          })
-    }
-
-    const handleUpdatePassword = async(event, field) => {
-        event.preventDefault()
-        setFormValue({email: ""})
-        
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
-        .doc(user.displayName)
-        .update({
-            password: field
           })
     }
 
@@ -208,16 +191,6 @@ const Dilema = ({user, userDB}) => {
             addNotification(notif)
         })
       }
-
-      const handleChangePassword = () => {
-        const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
-
-        auth.signInWithEmailAndPassword(user.email, userDB.password)
-        .then(function(userCredential) {
-            userCredential.user.updatePassword(formValue.password)
-            addNotification(notif)
-        })
-    }
       
     
     console.log(user)
@@ -275,7 +248,7 @@ const Dilema = ({user, userDB}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-success" onClick={(event) => {
-                    handleUpdateEmail(event, formValue.email)
+                    handleSubmit(event, {email: formValue.email})
                     handleChangeEmail(formValue.email)
                     handleCloseUpdateEmail()
                 }}>Actualiser maintenant</Button>
@@ -297,16 +270,15 @@ const Dilema = ({user, userDB}) => {
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "30vw", textAlign: "center"}} value={formValue.password} name="password" onChange={handleChange} />
+                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "40vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-success" onClick={(event) => {
-                    handleUpdatePassword(event, formValue.password)
-                    handleChangePassword()
-                    handleCloseUpdatePassword()
+                    handleSubmit(event, formValue.email)
+                    handleChangeEmail(formValue.email)
                 }}>Actualiser maintenant</Button>
             </Modal.Footer>
         </Modal>

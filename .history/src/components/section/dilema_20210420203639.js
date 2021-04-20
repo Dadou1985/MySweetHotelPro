@@ -217,7 +217,14 @@ const Dilema = ({user, userDB}) => {
             userCredential.user.updatePassword(formValue.password)
             addNotification(notif)
         })
-    }
+        auth.currentUser.updatePassword(formValue.password)
+        .then(function() {
+            // Update successful.
+          }).catch(function(error) {
+            // An error happened.
+          });
+          addNotification(notif)
+        }
       
     
     console.log(user)

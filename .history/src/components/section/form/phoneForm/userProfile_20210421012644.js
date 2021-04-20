@@ -246,11 +246,11 @@ const UserProfile = ({user, userDB}) => {
                     <div className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder="Entrer un nouveau mot de passe" className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
-                        handleUpdatePassword(event, formValue.password)
-                        handleChangePassword()
-                        handleCloseUpdatePassword()
-                    }}>Actualiser maintenant</Button>
+                    <Button variant="outline-success" onClick={(event) => {
+                    handleUpdatePassword(event, formValue.password)
+                    handleChangePassword()
+                    handleCloseUpdatePassword()
+                }}>Actualiser maintenant</Button>
                 </Drawer>
                 {img && 
                     <Modal show={confModal}

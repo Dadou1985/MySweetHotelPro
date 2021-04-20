@@ -212,12 +212,12 @@ const Dilema = ({user, userDB}) => {
       const handleChangePassword = () => {
         const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
 
-        auth.signInWithEmailAndPassword(user.email, userDB.password)
+        user.updatePassword(formValue.password)
         .then(function(userCredential) {
-            userCredential.user.updatePassword(formValue.password)
+            userCredential.user.updateEmail(formValue.email)
             addNotification(notif)
         })
-    }
+      }
       
     
     console.log(user)
@@ -275,7 +275,7 @@ const Dilema = ({user, userDB}) => {
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-success" onClick={(event) => {
-                    handleUpdateEmail(event, formValue.email)
+                    handleSubmit(event, formValue.email)
                     handleChangeEmail(formValue.email)
                     handleCloseUpdateEmail()
                 }}>Actualiser maintenant</Button>
@@ -297,16 +297,15 @@ const Dilema = ({user, userDB}) => {
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "30vw", textAlign: "center"}} value={formValue.password} name="password" onChange={handleChange} />
+                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "30vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-success" onClick={(event) => {
-                    handleUpdatePassword(event, formValue.password)
+                    handleSubmit(event, formValue.password)
                     handleChangePassword()
-                    handleCloseUpdatePassword()
                 }}>Actualiser maintenant</Button>
             </Modal.Footer>
         </Modal>
