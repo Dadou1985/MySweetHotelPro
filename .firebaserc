@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "notel-765b1"
+  },
+  "targets": {
+    "notel-765b1": {
+      "hosting": {
+        "mySweetHotelPro": [
+          "mysweethotelpro"
+        ]
+      }
+    }
   }
 }

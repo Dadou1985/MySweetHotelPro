@@ -54,7 +54,7 @@ const ItemList = ({item}) => {
             <Table striped bordered hover size="sm" className="text-center">
                 <thead className="bg-dark text-center text-light">
                     <tr>
-                    {expand && <th>Client</th>}
+                    <th>Client</th>
                     <th>Chambre</th>
                     <th>Heure</th>
                     <th className="bg-dark"></th>
@@ -63,7 +63,7 @@ const ItemList = ({item}) => {
                 <tbody>
                     {info.map(flow =>(
                         <tr key={flow.id}>
-                        {expand && <td>{flow.client}</td>}
+                        <td>{flow.client}</td>
                         <td>{flow.room}</td>
                         <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">
