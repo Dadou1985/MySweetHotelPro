@@ -1730,10 +1730,6 @@ input[type=number] {
     margin-bottom: 3vh;
 }
 
-.communizi-file-button {
-
-}
-
 .communizi-button-container {
     display: flex;
     flex-flow: row;

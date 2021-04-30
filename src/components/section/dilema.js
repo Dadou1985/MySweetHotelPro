@@ -1,15 +1,8 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import Fom from '../../svg/fom.svg'
 import { navigate } from 'gatsby'
-import { sha256, sha224 } from 'js-sha256';
 import { Form, Button, Tabs, Tab, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { Input } from 'reactstrap'
-import Tips from '../../svg/coin.svg'
 import DefaultProfile from "../../svg/profile.png"
-import ToggleDisplay from 'react-toggle-display'
-import Arrow from '../../svg/arrowDown.svg'
-import Dialog from './common/fullScreenDialog'
-import Divider from '@material-ui/core/Divider'
 import AddPhotoURL from '../../svg/camera.svg'
 import Avatar from '@material-ui/core/Avatar';
 import { db, auth, storage } from '../../Firebase'
@@ -219,7 +212,6 @@ const Dilema = ({user, userDB}) => {
         })
     }
       
-    
     console.log(user)
 
     return (
