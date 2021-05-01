@@ -655,6 +655,10 @@ input[type=number] {
     margin-top: 2vh;
 }
 
+.super-admin-icon {
+    display: none;
+}
+
 @media screen and (max-width: 480px) {
     .menu{
         visibility: visible;
@@ -673,6 +677,12 @@ input[type=number] {
 
     .drawer {
         visibility: visible;
+    }
+
+    .super-admin-icon {
+        display: flex;
+        width: 5vw;
+        border-radius: 50px;
     }
 }
 

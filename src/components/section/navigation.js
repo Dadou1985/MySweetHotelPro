@@ -8,18 +8,29 @@ import CallCenter from './CallCenter'
 import Avatar from 'react-avatar'
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Drawer from './common/drawer'
+import SuperAdminDrawer from '@material-ui/core/Drawer'
 import Fom from '../../svg/fom.svg'
+import SuperAdmin from '../../svg/superhero.svg'
+import Magician from '../../svg/magician.svg'
+import Ghost from '../../svg/ghost.svg'
+import Support from '../../svg/support.svg'
 import '../css/navigation.css'
 import Notifications from './notifications'
 import { FirebaseContext, db, auth } from '../../Firebase'
+import Divider from '@material-ui/core/Divider';
+import List from '@material-ui/core/List';
 
 
 const Navigation = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
+    const [activate, setActivate] = useState(false)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
+
+    const handleShowDrawer = () => setActivate(true)
+     const handleHideDrawer = () => setActivate(false)
 
     const handleLogout = async() =>{
         await auth.signOut().then(()=>navigate('/'))
@@ -50,6 +61,7 @@ const Navigation = ({user, userDB}) =>{
                         fontWeight: "bolder",
                         fontSize: "XXL"
                     }}>{user.displayName}</div>}*/}
+                    {user.uid === "007ec77a3e6adcf041b88bc5f07a84dce4e2ea2e1619832341794" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
                     <div className="nav_container">
                     <div className="icon_container">
                     {/*!!user &&
@@ -97,6 +109,23 @@ const Navigation = ({user, userDB}) =>{
             </Modal>
             {!!userDB && !!user&&
             <Notifications />}
+            {userDB && user &&
+            <SuperAdminDrawer 
+            anchor="right" 
+            open={activate} 
+            onClose={handleHideDrawer} 
+            className="drawer_listlist drawer_fullList"
+            user={user}
+            userDB={userDB}>
+               <div style={{padding: "3vw"}}> 
+                <h4 className="drawer_title">Super Menu</h4>
+                    <List className="drawer_listIcons3">
+                    <img src={Support} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/chatSupport")}} />
+                    <img src={Magician} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/adminMaker")}} />
+                    <img src={Ghost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/ghostHost")}} />
+                    </List>
+               </div>
+            </SuperAdminDrawer>}
         </div>
     )
 }
