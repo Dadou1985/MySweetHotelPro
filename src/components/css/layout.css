@@ -583,7 +583,7 @@ input[type=number] {
     font-family: "Charmonman"; 
     position: absolute; 
     top: 1vh; 
-    left: 135px;
+    left: 160px;
     color: #5bc0de;
 
 }
@@ -947,7 +947,7 @@ input[type=number] {
         width: 40%;
         cursor: pointer;
         position: absolute;
-        bottom: 5vh;
+        bottom: 2vh;
     }
 
     .icon-add-note {
@@ -1949,18 +1949,24 @@ input[type=number] {
     
 
     .communizi_form_input_container {
-        width: 80%;
+        width: 75%;
         margin-top: 1vh;
         position: sticky;
     }
 
     .communizi-button-container {
-        width: 20%;
+        width: 25%;
         justify-content: space-around;
     }
 
-    .communizi-button {
+    .communizi-file-button {
+        width: 30%;
+        filter: drop-shadow(2px 2px 2px)
+    }
+    
+    .communizi-send-button {
         width: 40%;
+        border-radius: 50px;
     }
 
     .karenStories-container {
@@ -2627,3 +2633,9 @@ input[type=number] {
 }
 
 .modal-90w {width: 90vw}
+
+/*CallCenter*/
+
+.support-scrollbar {
+    height: 60vh !important;
+}

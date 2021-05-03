@@ -290,7 +290,7 @@ export default function CommunIzi({userDB, user}) {
                         }>
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
                      </OverlayTrigger>
-                        <img src={Send} alt="sendIcon" className="communizi-send-button " onClick={handleSubmit} />          
+                        <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
                     </div>
                 </Form>
             </div>

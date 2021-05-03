@@ -22,7 +22,9 @@ const CoolBar = () => {
             {!!userDB && !!setUserDB && !!user && !!setUser &&
             <Annuaire />}
             {!!userDB && !!setUserDB && !!user && !!setUser &&
-            <Caisse />}    
+            <Caisse />} 
+            {!!userDB && !!setUserDB && !!user && !!setUser &&
+            <CallCenter user={user} userDB={userDB} />}    
         </div>
     )
 }

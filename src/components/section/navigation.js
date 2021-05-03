@@ -13,7 +13,7 @@ import Fom from '../../svg/fom.svg'
 import SuperAdmin from '../../svg/superhero.svg'
 import Magician from '../../svg/magician.svg'
 import Ghost from '../../svg/ghost.svg'
-import Support from '../../svg/support.svg'
+import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
 import '../css/navigation.css'
 import Notifications from './notifications'
 import { FirebaseContext, db, auth } from '../../Firebase'
@@ -120,8 +120,8 @@ const Navigation = ({user, userDB}) =>{
                <div style={{padding: "3vw"}}> 
                 <h4 className="drawer_title">Super Menu</h4>
                     <List className="drawer_listIcons3">
-                    <img src={Support} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/chatSupport")}} />
-                    <img src={Magician} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/adminMaker")}} />
+                    <Support />
+                    <img src={Magician} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/quickPlay")}} />
                     <img src={Ghost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/ghostHost")}} />
                     </List>
                </div>
