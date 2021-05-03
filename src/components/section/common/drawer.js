@@ -19,6 +19,7 @@ import Cab from '../form/phoneForm/phoneToolbarOverlays/cabOverlay'
 import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
 import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
 import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
+import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
 import FeedbackBox from '../form/feedbackBox';
 import Connection from '../../../svg/employee.svg'
 
@@ -71,6 +72,8 @@ export default function TemporaryDrawer({userDB, user}) {
         <img src={Feedback} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/feedback")}} />
         {userDB.adminStatus && <img src={Connection} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
+        {!!user && !!userDB &&
+        <Support user={user} userDB={userDB} />}
       </List>
       <Divider />
       <List className="drawer_listIcons4">

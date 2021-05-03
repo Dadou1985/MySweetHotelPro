@@ -90,7 +90,6 @@ const changeAdminSpeakStatus = (roomName) => {
     .doc(roomName)
     .update({
       adminSpeak: true,
-      markup: Date.now()
   })      
 }
 

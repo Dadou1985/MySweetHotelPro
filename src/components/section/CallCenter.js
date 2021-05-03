@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Tooltip, OverlayTrigger, Modal, Badge } from 'react-bootstrap'
 import Assistance from '../../svg/support-technique.svg'
 import Send from '../../svg/paper-plane.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -8,6 +8,7 @@ import 'moment/locale/fr';
 import { db, auth } from '../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
+import Bubble from "../../svg/bubble.svg"
 
 
 export default function CallCenter({user, userDB}) {
@@ -15,7 +16,7 @@ export default function CallCenter({user, userDB}) {
     const [note, setNote] = useState("")
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)
-
+    const [adminSpeakStatus, setAdminSpeakStatus] = useState([])
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
 
@@ -104,6 +105,20 @@ export default function CallCenter({user, userDB}) {
         })      
       }
 
+      const updateAdminSpeakStatus = () => {
+        return db.collection('mySweetHotel')
+        .doc('country')
+        .collection('France')
+        .doc('collection')
+        .collection('business')
+        .doc('collection')
+        .collection('assistance')
+        .doc(userDB.hotelName)
+        .update({
+            adminSpeak: false,
+        })      
+      }
+
     const sendMessage = () => {
         setNote("")
         return db.collection("mySweetHotel")
@@ -129,6 +144,33 @@ export default function CallCenter({user, userDB}) {
           })
     }
 
+    useEffect(() => {
+      const toolOnAir = () => {
+          return db.collection('mySweetHotel')
+          .doc('country')
+          .collection('France')
+          .doc('collection')
+          .collection('business')
+          .doc('collection')
+          .collection("assistance")
+          .where("hotelName", "==", userDB.hotelName)
+      }
+
+      let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                  const snapInfo = []
+                snapshot.forEach(function(doc) {          
+                  snapInfo.push({
+                      id: doc.id,
+                      ...doc.data()
+                    })        
+                  });
+                  console.log(snapInfo)
+                  setAdminSpeakStatus(snapInfo)
+              });
+              return unsubscribe
+   },[])
+
+
     return (
         <div style={{
             display: "flex",
@@ -143,9 +185,17 @@ export default function CallCenter({user, userDB}) {
                     Assistance Technique
                     </Tooltip>
                 }>
-                <img src={Assistance} className="icon" alt="contact" onClick={handleShow} style={{width: "35%"}} />
+                <img src={Assistance} className="icon" alt="contact" onClick={() => {
+                  handleShow()
+                  updateAdminSpeakStatus()
+                  }} style={{width: "35%"}} />
 
                 </OverlayTrigger>
+                {adminSpeakStatus.map(status => {
+                  if(status.adminSpeak) {
+                    return <img src={Bubble} style={{width: "20%"}} />
+                  }
+                })}
 
                 <Modal show={list}
                 size="lg"

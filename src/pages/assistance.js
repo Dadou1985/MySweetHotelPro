@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react"
 import Loader from '../components/section/common/loader'
-import Support from '../components/section/assistance'
+import PhoneSupport from '../components/section/form/phoneForm/phoneSupport'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
 
-function Assistance() {
+export default function Assistance() {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
@@ -40,20 +40,18 @@ function Assistance() {
       return unsubscribe
   }, [])
 
-    return (
-       <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
+
+  return(
+    <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
                 <Loader hide={hide} />
             </div>   
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}    
-       <div id="iziChat" className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">Support Technique</h5>
-            {!!userDB && !!user&&
-            <Support userDB={userDB} user={user} />}
-        </div>
+        {!!user && !!userDB &&
+        <PhoneSupport user={user} userDB={userDB} />}
     </FirebaseContext.Provider>
-    )
+  )
 }
 
-export default Assistance
+

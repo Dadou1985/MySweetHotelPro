@@ -1,11 +1,10 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Assistance from '../../../../../svg/support-technique.svg'
 import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
 import { navigate } from 'gatsby'
+import Bubble from "../../../../../svg/bubble.svg"
 
-function CallCenterOverlay() {
+function CallCenterOverlay({user, userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
 
     useEffect(() => {
@@ -17,7 +16,7 @@ function CallCenterOverlay() {
             .collection('business')
             .doc('collection')
             .collection("assistance")
-            .where("status", "==", true)
+            .where("hotelName", "==", userDB.hotelName)
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -34,20 +33,35 @@ function CallCenterOverlay() {
                 return unsubscribe
      },[])
 
-    const StyledBadge = withStyles((theme) => ({
-        badge: {
-          right: -3,
-          top: 13,
-          border: `2px solid ${theme.palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }))(Badge);
+     const updateAdminSpeakStatus = () => {
+      return db.collection('mySweetHotel')
+      .doc('country')
+      .collection('France')
+      .doc('collection')
+      .collection('business')
+      .doc('collection')
+      .collection('assistance')
+      .doc(userDB.hotelName)
+      .update({
+          adminSpeak: false,
+      })      
+    }
 
     return (
-        <div>
-            <StyledBadge badgeContent={chatRoomQty.length} color="secondary">
-                <img src={Assistance} alt="Support" className="drawer_icons" onClick={()=>{navigate("/support")}} />
-            </StyledBadge>
+        <div style={{
+          display: "flex",
+          flexFlow: "row",
+          justifyContent: "center"
+        }}>
+          <img src={Assistance} alt="Support" className="drawer_icons" onClick={()=>{
+            updateAdminSpeakStatus()
+            navigate("/assistance")
+            }} />
+            {chatRoomQty.map(status => {
+                  if(status.adminSpeak) {
+                    return <img src={Bubble} style={{width: "20%"}} />
+                  }
+                })}
         </div>
     )
 }
