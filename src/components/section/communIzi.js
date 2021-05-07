@@ -64,17 +64,9 @@ export default function CommunIzi({userDB, user}) {
         event.preventDefault()
         setNote("")
         let date = startDate.yyyymmdd()
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
-          .collection('chat')
+        return db.collection('chatClient')
+          .doc(userDB.hotelId)
+          .collection("client")
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
@@ -87,17 +79,9 @@ export default function CommunIzi({userDB, user}) {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('hotel')
-        .doc('region')
-        .collection(userDB.hotelRegion)
-        .doc('departement')
-        .collection(userDB.hotelDept)
-        .doc(`${userDB.hotelId}`)
-        .collection('chat')
+      return db.collection('chatClient')
+        .doc(userDB.hotelId)
+        .collection("client")
         .doc(roomName)
         .update({
           status: false,
@@ -110,18 +94,10 @@ export default function CommunIzi({userDB, user}) {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
-          .collection('chat')
-          .orderBy("markup", "asc")
+        return db.collection('chatClient')
+        .doc(userDB.hotelId)
+        .collection("client")
+        .orderBy("markup", "asc")
         }
 
       let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
