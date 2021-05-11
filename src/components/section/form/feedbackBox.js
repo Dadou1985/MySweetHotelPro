@@ -6,7 +6,7 @@ import { db, auth } from '../../../Firebase'
 const FeedbackBox = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
-    const [formValue, setFormValue] = useState({categorie: "Améliorations", feedback: ""})
+    const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -23,13 +23,7 @@ const FeedbackBox = ({user, userDB}) =>{
         event.preventDefault()
         setFormValue({categorie: "improvement", feedback: ""})
         const notif = "La Team MSH vous remercie pour votre contribution !"
-        await db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('feedback')
+        await db.collection('feedbacks')
             .doc('category')
             .collection(formValue.categorie)
             .add({
@@ -40,19 +34,10 @@ const FeedbackBox = ({user, userDB}) =>{
                 text: formValue.feedback,
                 markup: Date.now()
             })
-            return db.collection('mySweetHotel')
-                .doc('country')
-                .collection('France')
-                .doc('collection')
-                .collection('hotel')
-                .doc('region')
-                .collection(userDB.hotelRegion)
-                .doc('departement')
-                .collection(userDB.hotelDept)
-                .doc(`${userDB.hotelId}`)
-                .collection('notifications')
+            return db.collection('notifications')
                 .add({
                 content: notif,
+                hotelId: userDB.hotelId,
                 markup: Date.now()})
                 .then(doc => console.log('nouvelle notitfication'))
         .then(handleClose)

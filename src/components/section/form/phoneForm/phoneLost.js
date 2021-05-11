@@ -42,17 +42,9 @@ const PhoneLost = ({user, userDB}) =>{
       const addLostObject = (event, photo) => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('lostNfound')
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('lostAndFound')
             .add({
             author: user.displayName,
             date: new Date(),
@@ -93,17 +85,9 @@ const PhoneLost = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('lostNfound')
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('lostAndFound')
             .orderBy("markup", "asc")
         }
 
@@ -162,17 +146,9 @@ const PhoneLost = ({user, userDB}) =>{
                         {expand && <td>{flow.details}</td>}
                         {expand && <td>{flow.author}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('mySweetHotel')
-                            .doc('country')
-                            .collection('France')
-                            .doc('collection')
-                            .collection('hotel')
-                            .doc('region')
-                            .collection(userDB.hotelRegion)
-                            .doc('departement')
-                            .collection(userDB.hotelDept)
-                            .doc(`${userDB.hotelId}`)
-                            .collection("lostNfound")
+                            return db.collection('hotels')
+                            .doc(userDB.hotelId)
+                            .collection('lostAndFound')
                             .doc(flow.id)
                             .delete()
                             .then(function() {

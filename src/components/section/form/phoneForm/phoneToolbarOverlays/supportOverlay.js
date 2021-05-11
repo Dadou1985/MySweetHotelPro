@@ -10,14 +10,8 @@ function SupportOverlay() {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection("assistance")
-            .where("status", "==", true)
+            return db.collection("assistance")
+              .where("status", "==", true)
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {

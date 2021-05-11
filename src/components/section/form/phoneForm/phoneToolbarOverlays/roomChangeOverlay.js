@@ -10,16 +10,8 @@ function RoomChangeOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+          return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('roomChange')
             .where("status", "==", true)
         }

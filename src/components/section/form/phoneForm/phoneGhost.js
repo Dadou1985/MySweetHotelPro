@@ -3,34 +3,28 @@ import { Form, Button, Table, DropdownButton, Dropdown } from 'react-bootstrap'
 import { auth, db, functions } from '../../../../Firebase'
 import RegionDetails from '../../../../../hotels/regionDetailsSheet.json'
 import { paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur } from "../../../../../hotels"
+import { Input } from 'reactstrap'
 
 export default function PhoneGhost({user, userDB, setUserDB}) {
-    const [formValue, setFormValue] = useState({username: "", email: "", hotelName: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: ""})
+    const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: ""})
+    const [activateAdminMaker, setActivateAdminMaker] = useState(false)
+    const [activateCreateHotel, setActivateCreateHotel] = useState(false)
     const [info, setInfo] = useState([])
-    const [region, setRegion] = useState('Sélectionner une région')
-    const [departement, setDepartement] = useState('Sélectionner un département')
-    const [arrondissement, setArrondissement] = useState('Sélectionner un arrondissement')
-    const [hotel, setHotel] = useState("Sélectionner un hôtel")
-    const [hotelId, setHotelId] = useState(null)
+    const [filter, setFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
-    const [number, setNumber] = useState(0)
     const [ghostMode, setGhostMode] = useState(false)
 
     const deptDetails = [paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur]
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
+    const handleChangeFilter = event =>{
+        setFilter(event.currentTarget.value)
+    }
 
     useEffect(() => {
         const getHotel = () => {
-        return db.collection('hotels')
-            .orderBy("markup", "asc")
-        }
+            return db.collection("hotels")
+                .where("code_postal", "==", filter)
+            }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
             const snapInfo = []
@@ -44,7 +38,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
             setInfo(snapInfo)
         });
         return unsubscribe
-    }, [region, departement, arrondissement])
+    }, [filter])
 
     const addNotification = (notification) => {
         return db.collection('notifications')
@@ -59,10 +53,14 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         return db.collection('businessUsers')
         .doc(user.displayName)
         .update({   
-        hotelId: hotelId,
-        hotelName: hotelName,
-        hotelRegion: region,
-        hotelDept: departement
+            hotelId: formValue.hotelId,
+            hotelName: hotelName,
+            hotelRegion: formValue.region,
+            hotelDept: formValue.departement,
+            classement: formValue.classement,
+            code_postal: formValue.code_postal,
+            city: formValue.city,
+            room: formValue.room,
         }) 
     }
 
@@ -73,24 +71,18 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",
         hotelName: "Bates Motel",
         hotelRegion: "MilkyWay",
-        hotelDept: "zone51"
+        hotelDept: "zone51",
+        city: "Gotham",
+        classement: "infinity",
+        room: "99",
+        code_postal: "99999"
         }) 
     }
 
     const enableGhostMode = async() => {
         const notif = `Vous venez d'entrer en mode Ghost Host sur l'hôtel ${hotelName}`
         await ghostIn()
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc("collection")
-        .collection('hotel')
-        .doc("region")
-        .collection(region)
-        .doc('departement')
-        .collection(departement)
-        .doc(`${hotelId}`)
-        .collection('guest')
+        return db.collection("businessUsers")
         .doc(user.displayName)
         .get()
         .then((doc) => {
@@ -108,17 +100,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     const disableGhostMode = async() => {
         const notif = `Vous venez de sortir du mode Ghost Host sur l'hôtel ${hotelName}`
         await ghostOut()
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc("collection")
-        .collection('hotel')
-        .doc("region")
-        .collection(region)
-        .doc('departement')
-        .collection(departement)
-        .doc(`${hotelId}`)
-        .collection('guest')
+        return db.collection("businessUsers")
         .doc(user.displayName)
         .get()
         .then((doc) => {
@@ -144,58 +126,43 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
             textAlign: "center",
             height: "80vh"
         }}>
-            <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Ghost Host</h4>
-            <div>
+            <h4 style={{marginBottom: "5vh", fontWeight: "bold"}}>Ghost Host</h4>
+            <div style={{width: "90%", display: "flex", flexFlow: "column", alignItems: "center"}}>
             <Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
                     alignItems: "center"
                 }}>
-                <DropdownButton id="dropdown-basic-button" title={region} drop="bottom">
-                {RegionDetails.map(details => (
-                    <Dropdown.Item  onClick={()=>{
-                        setRegion(details.region)
-                        setNumber(details.number)
-                        }}>{details.region}</Dropdown.Item>
-                    ))}
-                </DropdownButton>
+                <Input 
+                    type="text" 
+                    placeholder="Enter un code postal" 
+                    value={filter} 
+                    onChange={handleChangeFilter}
+                    className="text-center" />
                 </Form.Group>
             </Form.Row>
+
             <Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
-                    alignItems: "center"
-                }}>
-                
-                {region !== "sélectionner une région" ? <DropdownButton id="dropdown-basic-button" title={departement} variant='info' drop="bottom">
-                    
-                {region === "PARIS" ? deptDetails[number].map(details => (
-                    <Dropdown.Item  onClick={()=>{
-                        setArrondissement(details.nom)
-                        }}>{details.nom}</Dropdown.Item>
-                    )) : deptDetails[number].map(details => (
-                        <Dropdown.Item  onClick={()=>{
-                            setDepartement(details.nom)
-                            }}>{details.nom}</Dropdown.Item>
-                        ))}
-                </DropdownButton> 
-                :
-                <></>}
-                </Form.Group>
-            </Form.Row>
-            <Form.Row>
-                <Form.Group style={{
-                    display: "flex",
-                    flexFlow: "column",
-                    alignItems: "center"
+                    alignItems: "center",
                 }}>
                 <DropdownButton id="dropdown-basic-button" title={hotelName} drop="bottom" variant="dark">
                 {info.map(details => (
                     <Dropdown.Item  onClick={()=>{
+                        setFormValue({
+                            hotelId: details.id,
+                            departement: details.departement,
+                            region: details.region,
+                            classement: details.classement,
+                            city: details.city,
+                            code_postal: details.code_postal,
+                            country: details.country,
+                            room: details.room
+                        })
                         setHotelName(details.hotelName)
-                        setHotelId(details.id)
                         }}>{details.hotelName}</Dropdown.Item>
                     ))}
                 </DropdownButton>
@@ -203,7 +170,12 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
             </Form.Row>
             </div>
             <div>
-                <Button variant="success" style={{position: "absoute", bottom: "0", width: "100%", marginBottom: "2vh"}} onClick={enableGhostMode}>Entrer en mode Ghost</Button>
+                <Button variant="success" style={{position: "absoute", bottom: "0", width: "100%", marginBottom: "2vh"}} onClick={() => {
+                    enableGhostMode()
+                    setFilter('')
+                    setFormValue("" || 0)
+                    setHotelName("Sélectionner un hôtel")
+                    }}>Entrer en mode Ghost</Button>
                 <Button variant="outline-danger" style={{position: "absoute", bottom: "0", width: "100%"}} onClick={disableGhostMode}>Sortir du mode Ghost</Button>
             </div>
         </div>

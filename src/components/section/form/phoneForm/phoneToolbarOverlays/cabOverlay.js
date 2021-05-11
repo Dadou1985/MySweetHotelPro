@@ -10,18 +10,10 @@ function CabOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('cab')
-            .where("status", "==", true)
+            return db.collection('hotels')
+              .doc(userDB.hotelId)
+              .collection('cab')
+              .where("status", "==", true)
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {

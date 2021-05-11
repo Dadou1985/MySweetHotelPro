@@ -10,12 +10,8 @@ export default function SupportRoom({user, userDB, title}) {
 
     useEffect(() => {
         const chatRoomOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('assistance')
             .doc(title)
             .collection("chatRoom")

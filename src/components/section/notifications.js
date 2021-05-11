@@ -11,18 +11,8 @@ export default function Notifications() {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
-            .orderBy("markup", "asc")
+            return db.collection('notifications')
+            .where("hotelId", "==", userDB.hotelId)
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {

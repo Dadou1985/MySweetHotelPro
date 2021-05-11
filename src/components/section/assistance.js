@@ -58,7 +58,9 @@ export default function Assistance({userDB, user}) {
 }
 
 const changeAdminSpeakStatus = (roomName) => {
-  return db.collection('assistance')
+  return db.collection('hotels')
+    .doc(userDB.hotelId)
+    .collection('assistance')
     .doc(roomName)
     .update({
       adminSpeak: true,
@@ -68,7 +70,9 @@ const changeAdminSpeakStatus = (roomName) => {
     const handleSubmit = async(event) =>{
         event.preventDefault()
         await changeAdminSpeakStatus(expanded)
-        return db.collection('assistance')
+        return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection('assistance')
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
@@ -85,7 +89,9 @@ const changeAdminSpeakStatus = (roomName) => {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('assistance')
+      return db.collection('hotels')
+        .doc(userDB.hotelId)
+        .collection('assistance')
         .doc(roomName)
         .update({
           status: false,
@@ -98,8 +104,9 @@ const changeAdminSpeakStatus = (roomName) => {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('assistance')
-            .where("hotelId", "==", userDB.hotelId)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('assistance')
             .orderBy("markup")
         }
 
@@ -135,15 +142,7 @@ const changeAdminSpeakStatus = (roomName) => {
                       marginTop: "1vh"
                       }}>
                         <AccordionItemButton style={{outline: "none", color: "black", display: "flex", justifyContent: "space-between"}}>
-                          <div style={{display: "flex", alignItems: "center"}}>
-                            <Avatar 
-                              round={true}
-                              name={flow.id}
-                              size="30"
-                              color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                              style={{marginRight: "1vw"}} />
-                          </div>
-                          <div style={{display: "flex", alignItems: "center"}}>{flow.hotelName}</div>
+                          <div style={{display: "flex", alignItems: "center"}}>{flow.id}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}

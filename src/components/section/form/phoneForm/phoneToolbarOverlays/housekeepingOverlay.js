@@ -17,16 +17,8 @@ function HousekeepingOverlay({user, userDB}) {
     const [babyBed, setBabyBed] = useState([])
 
     const itemList = (item) => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('hotel')
-        .doc('region')
-        .collection(userDB.hotelRegion)
-        .doc('departement')
-        .collection(userDB.hotelDept)
-        .doc(`${userDB.hotelId}`)
+      return db.collection('hotels')
+        .doc(userDB.hotelId)
         .collection('housekeeping')
         .doc("item")
         .collection(item)

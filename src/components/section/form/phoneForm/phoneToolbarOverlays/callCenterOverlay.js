@@ -9,14 +9,9 @@ function CallCenterOverlay({user, userDB}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
+          return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection("assistance")
-            .where("hotelName", "==", userDB.hotelName)
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -34,17 +29,13 @@ function CallCenterOverlay({user, userDB}) {
      },[])
 
      const updateAdminSpeakStatus = () => {
-      return db.collection('mySweetHotel')
-      .doc('country')
-      .collection('France')
-      .doc('collection')
-      .collection('business')
-      .doc('collection')
-      .collection('assistance')
-      .doc(userDB.hotelName)
-      .update({
-          adminSpeak: false,
-      })      
+      return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('assistance')
+            .doc(userDB.hotelName)
+            .update({
+                adminSpeak: false,
+            })      
     }
 
     return (

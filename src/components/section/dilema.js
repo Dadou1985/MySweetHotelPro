@@ -97,13 +97,7 @@ const Dilema = ({user, userDB}) => {
         event.preventDefault()
         setFormValue({email: ""})
         
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
+        return db.collection('businessUsers')
         .doc(user.displayName)
         .update({
             email: field
@@ -114,13 +108,7 @@ const Dilema = ({user, userDB}) => {
         event.preventDefault()
         setFormValue({email: ""})
         
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
+        return db.collection('businessUsers')
         .doc(user.displayName)
         .update({
             password: field
@@ -148,13 +136,7 @@ const Dilema = ({user, userDB}) => {
 
     useEffect(() => {
         const iziUserOnAir2 = () => {
-            return db.collection("mySweetHotel")
-            .doc("country")
-            .collection("France")
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('users')
+            return db.collection('businessUsers')
             .where("userId", "==", user.uid)
         }
 
@@ -175,19 +157,10 @@ const Dilema = ({user, userDB}) => {
      },[])
 
      const addNotification = (notification) => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
+        return db.collection('notifications')
             .add({
             content: notification,
+            hotelId: userDB.hotelId,
             markup: Date.now()})
             .then(doc => console.log('nouvelle notitfication'))
     }

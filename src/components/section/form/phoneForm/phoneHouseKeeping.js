@@ -27,12 +27,12 @@ function PhoneHouseKeeping({user, userDB}) {
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="toilet-paper">
+                            <StyleBadge item="toiletPaper">
                                 <Nav.Link eventKey="Papier Toilette">Papier Toilette</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="hair-dryer">
+                            <StyleBadge item="hairDryer">
                                 <Nav.Link eventKey="Sèche-cheveux">Sèche-cheveux</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
@@ -52,7 +52,7 @@ function PhoneHouseKeeping({user, userDB}) {
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="baby-bed">
+                            <StyleBadge item="babyBed">
                                 <Nav.Link eventKey="Lit Bébé">Lit Bébé</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
@@ -67,11 +67,11 @@ function PhoneHouseKeeping({user, userDB}) {
                             <ItemList item="soap" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Papier Toilette"> 
-                            <ItemList item="toilet-paper" />
+                            <ItemList item="toiletPaper" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Sèche-cheveux">
  
-                            <ItemList item="hair-dryer" />
+                            <ItemList item="hairDryer" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Coussin"> 
                             <ItemList item="pillow" />
@@ -83,7 +83,7 @@ function PhoneHouseKeeping({user, userDB}) {
                             <ItemList item="iron" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Lit Bébé"> 
-                            <ItemList item="baby-bed" />
+                            <ItemList item="babyBed" />
                         </Tab.Pane>
                     </Tab.Content>
                     </Col>

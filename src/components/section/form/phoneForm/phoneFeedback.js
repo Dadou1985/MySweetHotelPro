@@ -8,7 +8,7 @@ import Drawer from '@material-ui/core/Drawer'
 function PhoneFeedback({user, userDB}) {
 
     const [list, setList] = useState(false)
-    const [formValue, setFormValue] = useState({categorie: "Améliorations", feedback: ""})
+    const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -25,7 +25,7 @@ function PhoneFeedback({user, userDB}) {
         event.preventDefault()
         setFormValue({categorie: "improvement", feedback: ""})
         const notif = "La Team MSH vous remercie pour votre contribution !"
-        await db.collection('feedback')
+        await db.collection('feedbacks')
             .doc('category')
             .collection(formValue.categorie)
             .add({

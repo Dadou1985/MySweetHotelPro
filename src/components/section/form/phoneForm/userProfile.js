@@ -46,34 +46,22 @@ const UserProfile = ({user, userDB}) => {
         event.preventDefault()
         setFormValue({email: ""})
         
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
-        .doc(user.displayName)
-        .update({
-            email: field
-          })
+        return db.collection('businessUsers')
+            .doc(user.displayName)
+            .update({
+                email: field
+            })
     }
 
     const handleUpdatePassword = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
         
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
-        .doc(user.displayName)
-        .update({
-            password: field
-          })
+        return db.collection('businessUsers')
+            .doc(user.displayName)
+            .update({
+                password: field
+            })
     }
 
 
@@ -116,14 +104,8 @@ const UserProfile = ({user, userDB}) => {
 
       useEffect(() => {
         const iziUserOnAir2 = () => {
-            return db.collection("mySweetHotel")
-            .doc("country")
-            .collection("France")
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('users')
-            .where("userId", "==", user.uid)
+            return db.collection('businessUsers')
+                .where("userId", "==", user.uid)
         }
 
        let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
@@ -143,19 +125,10 @@ const UserProfile = ({user, userDB}) => {
      },[])
 
      const addNotification = (notification) => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
+        return db.collection('notifications')
             .add({
             content: notification,
+            hotelId: userDB.hotelId,
             markup: Date.now()})
             .then(doc => console.log('nouvelle notitfication'))
     }

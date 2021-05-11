@@ -15,17 +15,7 @@ export default function NotificationsBar({message, markup}) {
 
     const removeNotifications = () => {
         setVisible(false)
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
+        return db.collection('notifications')
             .doc(markup)
             .delete()
     }

@@ -42,16 +42,8 @@ const PhoneRepair = ({user, userDB}) =>{
       const addTechnicalProblem = (event, photo) => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('maintenance')
             .add({
             author: user.displayName,
@@ -93,16 +85,8 @@ const PhoneRepair = ({user, userDB}) =>{
     }
 
     const changeIssueStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+          .doc(userDB.hotelId)
           .collection('maintenance')
           .doc(document)
           .update({
@@ -112,16 +96,8 @@ const PhoneRepair = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('maintenance')
             .orderBy("markup", "asc")
         }
@@ -190,16 +166,8 @@ const PhoneRepair = ({user, userDB}) =>{
                             }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : "Aucune"}</td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                return db.collection('mySweetHotel')
-                                .doc('country')
-                                .collection('France')
-                                .doc('collection')
-                                .collection('hotel')
-                                .doc('region')
-                                .collection(userDB.hotelRegion)
-                                .doc('departement')
-                                .collection(userDB.hotelDept)
-                                .doc(`${userDB.hotelId}`)
+                                return db.collection('hotels')
+                                .doc(userDB.hotelId)
                                 .collection("maintenance")
                                 .doc(flow.id)
                                 .delete()

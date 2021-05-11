@@ -26,14 +26,10 @@ export default function PhoneSupport({user, userDB}) {
 
     useEffect(() => {
         const getMessages = () => {
-            return db.collection("mySweetHotel")
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('assistance')
-            .doc(`${userDB.hotelName}`)
+            .doc(userDB.hotelName)
             .collection("chatRoom")
             .orderBy("markup", "desc")
         }
@@ -53,127 +49,70 @@ export default function PhoneSupport({user, userDB}) {
     }, [])
 
     const getChatRoom = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
-        .doc(userDB.hotelName)
-        .get()
-        .then((doc) => {
-            if (doc.exists) {
-            setChatRoom(doc.data())
-            } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!");
-            }
-        })
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('assistance')
+            .doc(userDB.hotelName)
+            .get()
+            .then((doc) => {
+                if (doc.exists) {
+                setChatRoom(doc.data())
+                } else {
+                    // doc.data() will be undefined in this case
+                    console.log("No such document!");
+                }
+            })
     }
 
 
     const createRoomnameSubmit = () => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)
             .set({
-                hotelId: userDB.hotelId,
-                hotelName: userDB.hotelName,
+                adminSpeakStatus: false,
                 markup: Date.now(),
                 status: true
             })      
       }
 
     const updateRoomnameSubmit = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
-        .doc(userDB.hotelName)
-        .update({
-            status: true,
-            markup: Date.now()
-        })      
-      }
-
-      const updateAdminSpeakStatus = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
-        .doc(userDB.hotelName)
-        .update({
-            adminSpeak: false,
-        })      
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('assistance')
+            .doc(userDB.hotelName)
+            .update({
+                status: true,
+                markup: Date.now()
+            })      
       }
 
     const sendMessage = () => {
         setNote("")
-        return db.collection("mySweetHotel")
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
-        .doc(userDB.hotelName)
-        .collection("chatRoom")
-        .add({
-            author: user.displayName,
-            date: new Date(),
-            email: user.email,
-            photo: user.photoURL,
-            text: note,
-            markup: Date.now(),
-        }).then(function(docRef){
-            console.log(docRef.id)
-          }).catch(function(error) {
-            console.error(error)
-          })
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('assistance')
+            .doc(userDB.hotelName)
+            .collection("chatRoom")
+            .add({
+                author: user.displayName,
+                date: new Date(),
+                email: user.email,
+                photo: user.photoURL,
+                text: note,
+                markup: Date.now(),
+            }).then(function(docRef){
+                console.log(docRef.id)
+            }).catch(function(error) {
+                console.error(error)
+            })
     }
-
-    useEffect(() => {
-      const toolOnAir = () => {
-          return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('business')
-          .doc('collection')
-          .collection("assistance")
-          .where("hotelName", "==", userDB.hotelName)
-      }
-
-      let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                  const snapInfo = []
-                snapshot.forEach(function(doc) {          
-                  snapInfo.push({
-                      id: doc.id,
-                      ...doc.data()
-                    })        
-                  });
-                  console.log(snapInfo)
-                  setAdminSpeakStatus(snapInfo)
-              });
-              return unsubscribe
-   },[])
 
 
     return (
         <div className="communizi-container">
-            <h4 style={{padding: "2vh", textAlign: "center"}}>Assistance technique</h4>
+            <h4 style={{padding: "2vh", textAlign: "center", fontWeight: 'bold'}}>Assistance technique</h4>
 
             <PerfectScrollbar className="sassistance-scrollbar">
             <div style={{
