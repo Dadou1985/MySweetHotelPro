@@ -12,19 +12,11 @@ export default function BadgeMaker({item, children}) {
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection("housekeeping")
-            .doc("item")
-            .collection(item)
+          return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection('housekeeping')
+          .doc("item")
+          .collection(item)
         }
     
         let unsubscribe = listOnAir().onSnapshot(function(snapshot) {

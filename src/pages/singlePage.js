@@ -19,13 +19,7 @@ const SinglePage = () => {
     let unsubscribe = auth.onAuthStateChanged(async(user) => {
         if (user) {
           await setUser(user)
-           await db.collection("mySweetHotel")
-            .doc("country")
-            .collection("France")
-            .doc("collection")
-            .collection("business")
-            .doc("collection")
-            .collection('users')
+           await db.collection('businessUsers')
             .doc(user.displayName)
             .get()
             .then((doc) => {

@@ -6,7 +6,6 @@ import Clock from './form/clock'
 import Maid from './form/maid'
 import Repair from './form/repair'
 import HouseKeeping from './form/HouseKeeping'
-
 import GuestTerminator from './guestTerminator'
 import { FirebaseContext, db, auth } from '../../Firebase'
 
@@ -30,7 +29,7 @@ const ToolBar = () =>{
                 <Lost userDB={userDB} user={user}  />}
 
             {userDB && user &&
-                <GuestTerminator userDB={userDB} user={user}  />}      
+                <GuestTerminator userDB={userDB} user={user}  />} 
         </div>
     )
 }

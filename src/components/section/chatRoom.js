@@ -11,9 +11,9 @@ export default function ChatRoom({user, userDB, title}) {
 
     useEffect(() => {
         const chatRoomOnAir = () => {
-            return db.collection('chatClient')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
-            .collection("client")
+            .collection("chat")
             .doc(title)
             .collection("chatRoom")
             .orderBy("markup", "desc")
@@ -105,19 +105,10 @@ console.log("")
                                userDB={userDB}
                                photo={flow.photo}
                                 />
-                            case 'zh-CN':
+                            case 'zh':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.zhCN}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                                />
-                            case 'zh-TW':
-                                return <Message 
-                                author={flow.author}
-                                text={flow.translated.zhTW}
+                                text={flow.translated.zh}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}

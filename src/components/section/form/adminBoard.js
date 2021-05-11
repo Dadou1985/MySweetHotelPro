@@ -3,48 +3,13 @@ import { Form, Button, Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-b
 import Connection from '../../../svg/employee.svg'
 import AdminRegister from './adminRegister'
 import UserList from './userList'
-import { FirebaseContext, db, auth } from '../../../Firebase'
 
 const AdminBoard = ({user, userDB}) =>{
 
     const [tab, setTab] = useState(false)
-    const [adminStatus, setAdminStatus] = useState(false)
 
     const handleCloseTab = () => setTab(false)
     const handleShowTab = () => setTab(true)
-
-    useEffect(() => {
-        const adminOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection("users")
-            .where("email", "==", user.email)
-        }
-        
-    let unsubscribe = adminOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push(
-                        doc.data().adminStatus
-                      )        
-                    });
-                    console.log(snapInfo)
-                    setAdminStatus(snapInfo[0])
-                });
-                
-    return unsubscribe
-                
-     },[])
-
-     console.log(user)
 
     if(userDB.adminStatus === true){
         return(

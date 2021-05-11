@@ -1,18 +1,39 @@
 import React from 'react'
-import {Button} from 'react-bootstrap'
-import hotel from '../../../hotels/Ile-de-France/hotel_paris.json'
+import { db } from "../../Firebase"
+import hotel from '../../../hotels/'
 
-export default function HotelRegitrator({firebase}) {
+export default function HotelRegitrator() {
 
-    let panameHotel = hotel.filter(hostel => hostel.fields.code_postal === "75020")
+    const hotelRegistrator = ({hotelId, hotelName, classement, adresse, room, phone, mail, website, region, departement, code_postal, city, lat, lng}) => {
+        return db.collection("hotels")
+        .doc(`${hotelId}`)
+        .set({
+          hotelName: hotelName,
+          classement: classement,
+          adresse: adresse,
+          room: room,
+          phone: phone,
+          mail: mail,
+          website: website,
+          region: region,
+          departement: departement,
+          code_postal: code_postal,
+          city: city,
+          lat: lat,
+          lng: lng,
+          partnership: false,
+          country: "FRANCE",
+          markup: Date.now()
+        })
+    }
         
     return (
         <div>
             
-            {/*panameHotel.forEach( doc => (
-                firebase.hotelRegistrator({
+            {/*hotel.forEach( doc => (
+                hotelRegistrator({
                     hotelId: doc.recordid,
-                    arrondissement: doc.fields.code_postal,
+                    //arrondissement: doc.fields.code_postal,
                     hotelName: doc.fields.nom_commercial,
                     classement: doc.fields.classement,
                     adresse: doc.fields.adresse,

@@ -51,17 +51,9 @@ const Cab = ({userDB, user}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('cab')
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("cab")
             .add({
             author: user.displayName,
             destination: formValue.destination,
@@ -72,23 +64,16 @@ const Cab = ({userDB, user}) =>{
             markup: Date.now(),
             hour: moment(formValue.date).format('LT'),
             date: moment(formValue.date).format('L'),
-            status: false
+            status: false,
+            hotelId: userDB.hotelId
             })
         .then(handleClose)
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
-          .collection('cab')
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("cab")
           .doc(document)
           .update({
             status: false,
@@ -98,17 +83,9 @@ const Cab = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('cab')
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("cab")
             .orderBy("markup", "asc")
         }
 
@@ -128,17 +105,9 @@ const Cab = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('cab')
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("cab")
             .where("status", "==", true)
         }
 
@@ -310,16 +279,8 @@ const Cab = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('mySweetHotel')
-                                            .doc('country')
-                                            .collection('France')
-                                            .doc('collection')
-                                            .collection('hotel')
-                                            .doc('region')
-                                            .collection(userDB.hotelRegion)
-                                            .doc('departement')
-                                            .collection(userDB.hotelDept)
-                                            .doc(`${userDB.hotelId}`)
+                                            return db.collection('hotels')
+                                            .doc(userDB.hotelId)
                                             .collection("cab")
                                             .doc(flow.id)
                                             .delete()

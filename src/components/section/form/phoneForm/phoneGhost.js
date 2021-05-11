@@ -28,32 +28,9 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
 
     useEffect(() => {
         const getHotel = () => {
-            if(departement === 'PARIS') {
-                return db.collection("mySweetHotel")
-                    .doc('country')
-                    .collection('France')
-                    .doc('collection')
-                    .collection('hotel')
-                    .doc("region")
-                    .collection(region)
-                    .doc('departement')
-                    .collection(departement)
-                    .doc("arrondissement")
-                    .collection(arrondissement)
-                    .orderBy("markup", "asc")
-            }else{
-                return db.collection("mySweetHotel")
-                    .doc('country')
-                    .collection('France')
-                    .doc('collection')
-                    .collection('hotel')
-                    .doc("region")
-                    .collection(region)
-                    .doc('departement')
-                    .collection(departement)
-                    .orderBy("markup", "asc")
-            }
-                }
+        return db.collection('hotels')
+            .orderBy("markup", "asc")
+        }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
             const snapInfo = []
@@ -70,31 +47,16 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     }, [region, departement, arrondissement])
 
     const addNotification = (notification) => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('notifications')
+        return db.collection('notifications')
             .add({
             content: notification,
+            hotelId: userDB.hotelId,
             markup: Date.now()})
             .then(doc => console.log('nouvelle notitfication'))
     }
     
     const ghostIn = () => {
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
+        return db.collection('businessUsers')
         .doc(user.displayName)
         .update({   
         hotelId: hotelId,
@@ -105,13 +67,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     }
 
     const ghostOut = () => {
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
+        return db.collection('businessUsers')
         .doc(user.displayName)
         .update({   
         hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",

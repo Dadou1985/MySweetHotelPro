@@ -9,13 +9,7 @@ const UserList = ({user, userDB}) => {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('users')
+            return db.collection('businessUsers')
             .where('hotelId', "==", userDB.hotelId)
         }
 
@@ -34,13 +28,7 @@ const UserList = ({user, userDB}) => {
      },[])
 
      const changeUserStatus = (documentId, status) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('business')
-          .doc('collection')
-          .collection('users')
+        return db.collection('businessUsers')
           .doc(documentId)
           .update({
             adminStatus: status,
@@ -51,8 +39,8 @@ const UserList = ({user, userDB}) => {
 
     return (
         <div>
-            <Table striped bordered hover>
-                <thead className="bg-dark text-center text-light">
+            <Table striped bordered hover className=" text-center">
+                <thead className="bg-dark text-light">
                     <tr>
                     <th>Pseudo</th>
                     <th>E-mail</th>
@@ -75,13 +63,7 @@ const UserList = ({user, userDB}) => {
                         />
                     </td>
                     <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
-                        await db.collection('mySweetHotel')
-                        .doc('country')
-                        .collection('France')
-                        .doc('collection')
-                        .collection('business')
-                        .doc('collection')
-                        .collection("users")
+                        await db.collection('businessUsers')
                         .doc(flow.id)
                         .delete()
                         .then(function() {

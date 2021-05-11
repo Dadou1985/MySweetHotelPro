@@ -51,16 +51,8 @@ const Clock = ({userDB, user}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('clock')
             .add({
             author: user.displayName,
@@ -76,16 +68,8 @@ const Clock = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
           .update({
@@ -96,16 +80,8 @@ const Clock = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
         }
@@ -127,16 +103,8 @@ const Clock = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('clock')
             .where("status", "==", true)
         }
@@ -265,16 +233,8 @@ const Clock = ({userDB, user}) =>{
                                         </td>
                                     <td>{flow.author}</td>
                                     <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('mySweetHotel')
-                                            .doc('country')
-                                            .collection('France')
-                                            .doc('collection')
-                                            .collection('hotel')
-                                            .doc('region')
-                                            .collection(userDB.hotelRegion)
-                                            .doc('departement')
-                                            .collection(userDB.hotelDept)
-                                            .doc(`${userDB.hotelId}`)
+                                            return db.collection('hotels')
+                                            .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)
                                             .delete()

@@ -26,14 +26,8 @@ export default function CallCenter({user, userDB}) {
 
     useEffect(() => {
         const getMessages = () => {
-            return db.collection("mySweetHotel")
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('assistance')
-            .doc(`${userDB.hotelName}`)
+            return db.collection('assistance')
+            .doc(userDB.hotelName)
             .collection("chatRoom")
             .orderBy("markup", "desc")
         }
@@ -53,13 +47,7 @@ export default function CallCenter({user, userDB}) {
     }, [])
 
     const getChatRoom = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
+        return db.collection('assistance')
         .doc(userDB.hotelName)
         .get()
         .then((doc) => {
@@ -74,30 +62,26 @@ export default function CallCenter({user, userDB}) {
 
 
     const createRoomnameSubmit = () => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('assistance')
+        return db.collection('assistance')
             .doc(userDB.hotelName)
             .set({
+                adminSpeak: false,
                 hotelId: userDB.hotelId,
                 hotelName: userDB.hotelName,
                 markup: Date.now(),
-                status: true
+                status: true,
+                classement: userDB.classement,
+                code_postal: userDB.codePostal,
+                room: userDB.room,
+                city: userDB.city,
+                hotelDept: userDB.hotelDept,
+                hotelRegion: userDB.hotelRegion,
+                country: userDB.country
             })      
       }
 
     const updateRoomnameSubmit = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
+        return db.collection('assistance')
         .doc(userDB.hotelName)
         .update({
             status: true,
@@ -106,28 +90,16 @@ export default function CallCenter({user, userDB}) {
       }
 
       const updateAdminSpeakStatus = () => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
+        return db.collection('assistance')
         .doc(userDB.hotelName)
         .update({
-            adminSpeak: false,
+            adminSpeak: false
         })      
       }
 
     const sendMessage = () => {
         setNote("")
-        return db.collection("mySweetHotel")
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
+        return db.collection('assistance')
         .doc(userDB.hotelName)
         .collection("chatRoom")
         .add({
@@ -146,14 +118,8 @@ export default function CallCenter({user, userDB}) {
 
     useEffect(() => {
       const toolOnAir = () => {
-          return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('business')
-          .doc('collection')
-          .collection("assistance")
-          .where("hotelName", "==", userDB.hotelName)
+          return db.collection("assistance")
+          .where("hotelId", "==", userDB.hotelId)
       }
 
       let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {

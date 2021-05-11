@@ -28,13 +28,7 @@ const AdminRegister = ({hide, user, userDB}) => {
         event.preventDefault()
         //setFormValue("")
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return db.collection("mySweetHotel")
-        .doc("country")
-        .collection("France")
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('users')
+        return db.collection('businessUsers')
         .doc(formValue.username)
         .set({   
         adminStatus: false, 
@@ -45,7 +39,13 @@ const AdminRegister = ({hide, user, userDB}) => {
         hotelRegion: userDB.hotelRegion,
         hotelDept: userDB.hotelDept,
         createdAt: Date.now(),
-        userId: newUid
+        userId: newUid,
+        city: userDB.city,
+        classement: userDB.classement,
+        language: userDB.language,
+        room: userDB.room,
+        country: userDB.country,
+        code_postal: userDB.code_postal
         }) 
         .then(hide())
       }

@@ -26,29 +26,15 @@ export default function Assistance({userDB, user}) {
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
     const [room, setRoom] = useState('')
-    const [startDate, setStartDate] = useState(new Date())
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
-    const [filter, setFilter] = useState([])
-    const [deleteList, setDeleteList] = useState([])
-    const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
     }
 
-    const handleChangeFilter = event =>{
-      setInitialFilter(event.currentTarget.value)
-  }
-
-
-    const handleChangeRoomName = event =>{
-      setRoom(event.currentTarget.value)
-  }
-
-    const handleClose = () => setShowModal(false)
     const handleShow = () => {
       if(window.innerWidth > 480) {
           setShowModal(true)
@@ -62,31 +48,17 @@ export default function Assistance({userDB, user}) {
   }
 
   const addNotification = (notification) => {
-    return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('hotel')
-        .doc('region')
-        .collection(userDB.hotelRegion)
-        .doc('departement')
-        .collection(userDB.hotelDept)
-        .doc(`${userDB.hotelId}`)
-        .collection('notifications')
+    return db.collection('notifications')
         .add({
         content: notification,
-        markup: Date.now()})
+        markup: Date.now(),
+        hotelId: userDB.hotelId
+      })
         .then(doc => console.log('nouvelle notitfication'))
 }
 
 const changeAdminSpeakStatus = (roomName) => {
-  return db.collection('mySweetHotel')
-    .doc('country')
-    .collection('France')
-    .doc('collection')
-    .collection('business')
-    .doc('collection')
-    .collection('assistance')
+  return db.collection('assistance')
     .doc(roomName)
     .update({
       adminSpeak: true,
@@ -96,13 +68,7 @@ const changeAdminSpeakStatus = (roomName) => {
     const handleSubmit = async(event) =>{
         event.preventDefault()
         await changeAdminSpeakStatus(expanded)
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('business')
-          .doc('collection')
-          .collection('assistance')
+        return db.collection('assistance')
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
@@ -110,7 +76,8 @@ const changeAdminSpeakStatus = (roomName) => {
             text: note,
             date: new Date(),
             userId: user.uid,
-            markup: Date.now()
+            markup: Date.now(),
+            photo: user.photoURL
           })
           .then(() => {
             setNote("")
@@ -118,13 +85,7 @@ const changeAdminSpeakStatus = (roomName) => {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('business')
-        .doc('collection')
-        .collection('assistance')
+      return db.collection('assistance')
         .doc(roomName)
         .update({
           status: false,
@@ -137,14 +98,9 @@ const changeAdminSpeakStatus = (roomName) => {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('business')
-            .doc('collection')
-            .collection('assistance')
-            .orderBy("markup", "asc")
+        return db.collection('assistance')
+            .where("hotelId", "==", userDB.hotelId)
+            .orderBy("markup")
         }
 
       let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {

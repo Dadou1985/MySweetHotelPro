@@ -15,17 +15,9 @@ const ItemList = ({item}) => {
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection("housekeeping")
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('housekeeping')
             .doc("item")
             .collection(item)
             .orderBy("markup", "asc")
@@ -68,17 +60,9 @@ const ItemList = ({item}) => {
                         <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('mySweetHotel')
-                               .doc('country')
-                               .collection('France')
-                               .doc('collection')
-                               .collection('hotel')
-                               .doc('region')
-                               .collection(userDB.hotelRegion)
-                               .doc('departement')
-                               .collection(userDB.hotelDept)
-                               .doc(`${userDB.hotelId}`)
-                               .collection("housekeeping")
+                               return db.collection('hotels')
+                               .doc(userDB.hotelId)
+                               .collection('housekeeping')
                                .doc("item")
                                .collection(item)
                                .doc(flow.id)

@@ -26,16 +26,8 @@ const HouseKeeping = ({userDB}) =>{
     const handleShow = () => setList(true)
 
     const itemList = (item) => {
-        return db.collection('mySweetHotel')
-        .doc('country')
-        .collection('France')
-        .doc('collection')
-        .collection('hotel')
-        .doc('region')
-        .collection(userDB.hotelRegion)
-        .doc('departement')
-        .collection(userDB.hotelDept)
-        .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+        .doc(userDB.hotelId)
         .collection('housekeeping')
         .doc("item")
         .collection(item)
@@ -76,7 +68,7 @@ const HouseKeeping = ({userDB}) =>{
 
     useEffect(() => {
         
-        let unsubscribe = itemList('toilet-paper').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('toiletPaper').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -92,7 +84,7 @@ const HouseKeeping = ({userDB}) =>{
 
     useEffect(() => {
         
-        let unsubscribe = itemList('hair-dryer').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('hairDryer').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -156,7 +148,7 @@ const HouseKeeping = ({userDB}) =>{
 
     useEffect(() => {
         
-        let unsubscribe = itemList('baby-bed').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('babyBed').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -231,12 +223,12 @@ const HouseKeeping = ({userDB}) =>{
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="toilet-paper">
+                            <StyleBadge item="toiletPaper">
                                 <Nav.Link eventKey="Papier Toilette">Papier Toilette</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="hair-dryer">
+                            <StyleBadge item="hairDryer">
                                 <Nav.Link eventKey="Sèche-cheveux">Sèche-cheveux</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
@@ -256,7 +248,7 @@ const HouseKeeping = ({userDB}) =>{
                             </StyleBadge>
                         </Nav.Item>
                         <Nav.Item>
-                            <StyleBadge item="baby-bed">
+                            <StyleBadge item="babyBed">
                                 <Nav.Link eventKey="Lit Bébé">Lit Bébé</Nav.Link>
                             </StyleBadge>
                         </Nav.Item>
@@ -271,11 +263,11 @@ const HouseKeeping = ({userDB}) =>{
                             <ItemList item="soap" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Papier Toilette"> 
-                            <ItemList item="toilet-paper" />
+                            <ItemList item="toiletPaper" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Sèche-cheveux">
  
-                            <ItemList item="hair-dryer" />
+                            <ItemList item="hairDryer" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Coussin"> 
                             <ItemList item="pillow" />
@@ -287,7 +279,7 @@ const HouseKeeping = ({userDB}) =>{
                             <ItemList item="iron" />
                         </Tab.Pane>
                         <Tab.Pane eventKey="Lit Bébé"> 
-                            <ItemList item="baby-bed" />
+                            <ItemList item="babyBed" />
                         </Tab.Pane>
                     </Tab.Content>
                     </Col>

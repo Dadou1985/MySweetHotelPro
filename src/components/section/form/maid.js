@@ -44,16 +44,8 @@ const Maid = ({userDB, user}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
             author: user.displayName,
@@ -71,16 +63,8 @@ const Maid = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
           .collection('roomChange')
           .doc(document)
           .update({
@@ -90,16 +74,8 @@ const Maid = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('roomChange')
             .orderBy("markup", "asc")
         }
@@ -121,16 +97,8 @@ const Maid = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('roomChange')
             .where("status", "==", true)
         }
@@ -304,16 +272,8 @@ const Maid = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('mySweetHotel')
-                                            .doc('country')
-                                            .collection('France')
-                                            .doc('collection')
-                                            .collection('hotel')
-                                            .doc('region')
-                                            .collection(userDB.hotelRegion)
-                                            .doc('departement')
-                                            .collection(userDB.hotelDept)
-                                            .doc(`${userDB.hotelId}`)
+                                            return db.collection('hotels')
+                                            .doc(userDB.hotelId)
                                             .collection("roomChange")
                                             .doc(flow.id)
                                             .delete()

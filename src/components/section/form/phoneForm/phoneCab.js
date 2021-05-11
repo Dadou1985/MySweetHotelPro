@@ -40,16 +40,8 @@ const PhoneCab = ({user, userDB}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('cab')
             .add({
             author: user.displayName,
@@ -66,16 +58,8 @@ const PhoneCab = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+          .doc(userDB.hotelId)
           .collection('cab')
           .doc(document)
           .update({
@@ -85,16 +69,8 @@ const PhoneCab = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('cab')
             .orderBy("markup", "asc")
         }
@@ -159,16 +135,8 @@ const PhoneCab = ({user, userDB}) =>{
                         {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('mySweetHotel')
-                            .doc('country')
-                            .collection('France')
-                            .doc('collection')
-                            .collection('hotel')
-                            .doc('region')
-                            .collection(userDB.hotelRegion)
-                            .doc('departement')
-                            .collection(userDB.hotelDept)
-                            .doc(`${userDB.hotelId}`)
+                            return db.collection('hotels')
+                            .doc(userDB.hotelId)
                             .collection("cab")
                             .doc(flow.id)
                             .delete()

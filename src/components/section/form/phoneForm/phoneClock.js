@@ -40,16 +40,8 @@ const PhoneClock = ({user, userDB}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('clock')
             .add({
             author: user.displayName,
@@ -64,16 +56,8 @@ const PhoneClock = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+          .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
           .update({
@@ -83,16 +67,8 @@ const PhoneClock = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
         }
@@ -156,16 +132,8 @@ const PhoneClock = ({user, userDB}) =>{
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('mySweetHotel')
-                                            .doc('country')
-                                            .collection('France')
-                                            .doc('collection')
-                                            .collection('hotel')
-                                            .doc('region')
-                                            .collection(userDB.hotelRegion)
-                                            .doc('departement')
-                                            .collection(userDB.hotelDept)
-                                            .doc(`${userDB.hotelId}`)
+                                            return db.collection('hotels')
+                                            .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)
                                             .delete()

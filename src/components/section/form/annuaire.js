@@ -26,38 +26,22 @@ const Annuaire = () =>{
     event.preventDefault()
     setFormValue("")
     let marker = Date.now()
-    return db.collection('mySweetHotel')
-    .doc('country')
-    .collection('France')
-    .doc('collection')
-    .collection('hotel')
-    .doc('region')
-    .collection(userDB.hotelRegion)
-    .doc('departement')
-    .collection(userDB.hotelDept)
-    .doc(`${userDB.hotelId}`)
-    .collection('contact')
-    .add({
-      name: formValue.name,
-      mobile: formValue.mobile,
-      fix: formValue.fix,
-      markup: Date.now()
-    })
-    .then(handleClose)
+    return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('contact')
+            .add({
+            name: formValue.name,
+            mobile: formValue.mobile,
+            fix: formValue.fix,
+            markup: Date.now()
+            })
+            .then(handleClose)
     }
 
     useEffect(() => {
         const contactOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('contact')
             .orderBy("name")
         }

@@ -30,16 +30,8 @@ const Caisse = () =>{
         setFormValue("")
         let caisse = document.getElementById("montant").value
         handleReset()
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('safe')
             .add({
             author: user.displayName,
@@ -122,16 +114,8 @@ const Caisse = () =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('safe')
             .orderBy("markup", "asc")
         }
@@ -368,20 +352,12 @@ const Caisse = () =>{
                                     {info.map(flow =>(
                                         <tr key={flow.id}>
                                         <td>{flow.author}</td>
-                                        <td>{flow.amount}</td>
+                                        <td>{flow.amount} euros</td>
                                         <td>{flow.shift}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('mySweetHotel')
-                                            .doc('country')
-                                            .collection('France')
-                                            .doc('collection')
-                                            .collection('hotel')
-                                            .doc('region')
-                                            .collection(userDB.hotelRegion)
-                                            .doc('departement')
-                                            .collection(userDB.hotelDept)
-                                            .doc(`${userDB.hotelId}`)
+                                            return db.collection('hotels')
+                                            .doc(userDB.hotelId)
                                             .collection("safe")
                                             .doc(flow.id)
                                             .delete()

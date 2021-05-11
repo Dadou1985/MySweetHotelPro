@@ -31,8 +31,7 @@ export default function CommunIzi({userDB, user}) {
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
-    const [filter, setFilter] = useState([])
-    const [deleteList, setDeleteList] = useState([])
+    const [guestList, setGuestList] = useState([])
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -40,11 +39,6 @@ export default function CommunIzi({userDB, user}) {
 
     const handleChangeFilter = event =>{
       setInitialFilter(event.currentTarget.value)
-  }
-
-
-    const handleChangeRoomName = event =>{
-      setRoom(event.currentTarget.value)
   }
 
     const handleClose = () => setShowModal(false)
@@ -64,9 +58,9 @@ export default function CommunIzi({userDB, user}) {
         event.preventDefault()
         setNote("")
         let date = startDate.yyyymmdd()
-        return db.collection('chatClient')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
-          .collection("client")
+          .collection("chat")
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
@@ -79,9 +73,9 @@ export default function CommunIzi({userDB, user}) {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('chatClient')
+      return db.collection('hotels')
         .doc(userDB.hotelId)
-        .collection("client")
+        .collection("chat")
         .doc(roomName)
         .update({
           status: false,
@@ -94,10 +88,10 @@ export default function CommunIzi({userDB, user}) {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('chatClient')
-        .doc(userDB.hotelId)
-        .collection("client")
-        .orderBy("markup", "asc")
+        return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection("chat")
+          .orderBy("markup", "asc")
         }
 
       let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
@@ -116,17 +110,8 @@ export default function CommunIzi({userDB, user}) {
 
      useEffect(() => {
       const guestOnAir = () => {
-        return db.collection('mySweetHotel')
-          .doc('country')
-          .collection('France')
-          .doc('collection')
-          .collection('hotel')
-          .doc('region')
-          .collection(userDB.hotelRegion)
-          .doc('departement')
-          .collection(userDB.hotelDept)
-          .doc(`${userDB.hotelId}`)
-          .collection('guest')
+        return db.collection('guestUsers')
+        .where('hotelId', "==", userDB.hotelId)
         }
 
       let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
@@ -138,23 +123,13 @@ export default function CommunIzi({userDB, user}) {
             })        
           });
           console.log(snapInfo)
-          setFilter(snapInfo)
+          setGuestList(snapInfo)
       });
       return unsubscribe
      },[])
 
      const deleteGuest = (guest) => {
-      return db.collection('mySweetHotel')
-      .doc('country')
-      .collection('France')
-      .doc('collection')
-      .collection('hotel')
-      .doc('region')
-      .collection(userDB.hotelRegion)
-      .doc('departement')
-      .collection(userDB.hotelDept)
-      .doc(`${userDB.hotelId}`)
-      .collection('guest')
+      return db.collection('guestUsers')
       .doc(guest)
       .delete()
      }
@@ -164,17 +139,7 @@ export default function CommunIzi({userDB, user}) {
         let checkoutHour = new Date().getHours()
 
         if(checkoutHour >= 14) {
-          return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
-            .collection('guest')
+          return db.collection('guestUsers')
             .where("checkoutDate", "==", moment(new Date()).format('LL'))
             .onSnapshot(function(snapshot) {
               const snapInfo = []
@@ -196,11 +161,6 @@ export default function CommunIzi({userDB, user}) {
         return unsubscribe
 
      }, [])
-
-     
-     console.log(deleteList)
-
-     let guestList = filter && filter.filter(guest => guest.room == initialFilter)
 
     return (
         <div className="communizi-container">
