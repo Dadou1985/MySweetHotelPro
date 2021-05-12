@@ -9,7 +9,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { FirebaseContext, auth, db, storage } from '../../../../Firebase'
 
-const UserProfile = ({user, userDB}) => {
+const UserProfile = ({user, userDB, setUserDB}) => {
     
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
@@ -42,6 +42,21 @@ const UserProfile = ({user, userDB}) => {
             setActivate(true)
     }
 
+    const handleLoadUserDB = () => {
+        db.collection('businessUsers')
+            .doc(user.displayName)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                console.log("+++++++", doc.data())
+                setUserDB(doc.data())
+              } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!")
+              }
+            })
+    }
+
     const handleUpdateEmail = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
@@ -51,6 +66,7 @@ const UserProfile = ({user, userDB}) => {
             .update({
                 email: field
             })
+            .then(handleLoadUserDB())
     }
 
     const handleUpdatePassword = async(event, field) => {
@@ -62,6 +78,7 @@ const UserProfile = ({user, userDB}) => {
             .update({
                 password: field
             })
+            .then(handleLoadUserDB())
     }
 
 

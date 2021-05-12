@@ -40,8 +40,8 @@ export default function DoorsStage() {
             </div>
             {!!user && !!userDB &&
             <Navigation user={user} userDB={userDB} />}
-            {!!user && userDB && 
-            <Dilema user={user} userDB={userDB} />}
+            {!!user && userDB && !!setUserDB &&
+            <Dilema user={user} userDB={userDB} setUserDB={setUserDB} />}
         </FirebaseContext.Provider>
     )
 }

@@ -8,7 +8,7 @@ import Avatar from '@material-ui/core/Avatar';
 import { db, auth, storage } from '../../Firebase'
 
 
-const Dilema = ({user, userDB}) => {
+const Dilema = ({user, userDB, setUserDB}) => {
 
     const [showModal, setShowModal] = useState(false)
     const [showDetails, setShowDetails] = useState(false)
@@ -92,6 +92,21 @@ const Dilema = ({user, userDB}) => {
         }
     }
 
+    const handleLoadUserDB = () => {
+        db.collection('businessUsers')
+            .doc(user.displayName)
+            .get()
+            .then((doc) => {
+              if (doc.exists) {
+                console.log("+++++++", doc.data())
+                setUserDB(doc.data())
+              } else {
+                // doc.data() will be undefined in this case
+                console.log("No such document!")
+              }
+            })
+    }
+
 
     const handleUpdateEmail = async(event, field) => {
         event.preventDefault()
@@ -102,6 +117,7 @@ const Dilema = ({user, userDB}) => {
         .update({
             email: field
           })
+        .then(handleLoadUserDB())
     }
 
     const handleUpdatePassword = async(event, field) => {
@@ -113,6 +129,7 @@ const Dilema = ({user, userDB}) => {
         .update({
             password: field
           })
+        .then(handleLoadUserDB())
     }
 
 
@@ -184,8 +201,9 @@ const Dilema = ({user, userDB}) => {
             addNotification(notif)
         })
     }
+
       
-    console.log(user)
+    console.log(user.password)
 
     return (
         info.map(flow => (

@@ -42,8 +42,8 @@ const UserPage = () => {
             </div>     
             {!!user && !!userDB &&
             <Navigation user={user} userDB={userDB} />}  
-        {!!user && !!userDB &&
-        <UserProfile user={user} userDB={userDB} />}
+        {!!user && !!userDB && !!setUserDB &&
+        <UserProfile user={user} userDB={userDB} setUserDB={setUserDB} />}
     </FirebaseContext.Provider>
   )
 }

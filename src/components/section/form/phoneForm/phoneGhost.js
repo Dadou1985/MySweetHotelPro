@@ -11,13 +11,14 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     const [activateCreateHotel, setActivateCreateHotel] = useState(false)
     const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
+    const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
     const [ghostMode, setGhostMode] = useState(false)
 
     const deptDetails = [paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur]
 
-    const handleChangeFilter = event =>{
-        setFilter(event.currentTarget.value)
+    const handleChangeInitialfilter = event =>{
+        setInitialFilter(event.currentTarget.value)
     }
 
     useEffect(() => {
@@ -115,6 +116,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         })
     }
         
+    console.log(initialFilter)
         
     return (
         <div style={{
@@ -137,9 +139,11 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                 <Input 
                     type="text" 
                     placeholder="Enter un code postal" 
-                    value={filter} 
-                    onChange={handleChangeFilter}
-                    className="text-center" />
+                    value={initialFilter} 
+                    onChange={handleChangeInitialfilter}
+                    className="text-center"
+                    pattern=".{5,}"
+                     />
                 </Form.Group>
             </Form.Row>
 
@@ -149,7 +153,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                     flexFlow: "column",
                     alignItems: "center",
                 }}>
-                <DropdownButton id="dropdown-basic-button" title={hotelName} drop="bottom" variant="dark">
+                <DropdownButton id="dropdown-basic-button" title={hotelName} drop="bottom" variant="dark" onClick={() => setFilter(initialFilter)}>
                 {info.map(details => (
                     <Dropdown.Item  onClick={()=>{
                         setFormValue({

@@ -142,7 +142,7 @@ const changeAdminSpeakStatus = (roomName) => {
                       marginTop: "1vh"
                       }}>
                         <AccordionItemButton style={{outline: "none", color: "black", display: "flex", justifyContent: "space-between"}}>
-                          <div style={{display: "flex", alignItems: "center"}}>{flow.id}</div>
+                          <div style={{display: "flex", alignItems: "center", width: "50%"}}>{flow.id}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
