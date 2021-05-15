@@ -1,19 +1,15 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Table, DropdownButton, Dropdown } from 'react-bootstrap'
 import { auth, db, functions } from '../../../../Firebase'
-import RegionDetails from '../../../../../hotels/regionDetailsSheet.json'
 import { paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur } from "../../../../../hotels"
 import { Input } from 'reactstrap'
 
 export default function PhoneGhost({user, userDB, setUserDB}) {
     const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: ""})
-    const [activateAdminMaker, setActivateAdminMaker] = useState(false)
-    const [activateCreateHotel, setActivateCreateHotel] = useState(false)
     const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
-    const [ghostMode, setGhostMode] = useState(false)
 
     const deptDetails = [paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur]
 

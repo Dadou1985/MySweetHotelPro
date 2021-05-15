@@ -20,6 +20,7 @@ import Drawer from '@material-ui/core/Drawer'
 import { db, auth } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import Select from 'react-select'
+import firebase from 'firebase'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -52,6 +53,16 @@ export default function CommunIzi({userDB, user}) {
 
   const handleHideDrawer = () => {
     setActivate(false)
+  }
+
+  const updateAdminSpeakStatus = () => {
+    return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection('chat')
+          .doc(`${expanded}`)
+          .update({
+              hotelResponding: true,
+          })      
   }
 
     const handleSubmit = (event) =>{
@@ -141,19 +152,22 @@ export default function CommunIzi({userDB, user}) {
         if(checkoutHour >= 14) {
           return db.collection('guestUsers')
             .where("checkoutDate", "==", moment(new Date()).format('LL'))
-            .onSnapshot(function(snapshot) {
-              const snapInfo = []
-            snapshot.forEach(function(doc) {          
-              snapInfo.push({
-                  id: doc.id,
-                  ...doc.data()
-                }
-                ).then(snapInfo.map(guest => {
-                  return deleteGuest(guest.id)
-                }))     
-              })
-              console.log(snapInfo)
-          })
+            .update({
+              checkoutDate: "",
+              hotelId: "",
+              hotelName: "",
+              hotelDept: "",
+              hotelRegion: "",
+              room: "",
+              babyBed: false,
+              blanket: false,
+              hairDryer: false,
+              iron: false,
+              pillow: false,
+              toiletPaper: false,
+              towel: false,
+              soap: false
+            })
         }
        }
 
@@ -226,7 +240,10 @@ export default function CommunIzi({userDB, user}) {
                         }>
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
                      </OverlayTrigger>
-                        <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
+                        <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={() => {
+                          handleSubmit()
+                          updateAdminSpeakStatus()
+                        }} />          
                     </div>
                 </Form>
             </div>
