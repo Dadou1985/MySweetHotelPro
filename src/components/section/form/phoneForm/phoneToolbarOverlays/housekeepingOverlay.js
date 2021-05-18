@@ -157,21 +157,18 @@ function HousekeepingOverlay({user, userDB}) {
     let itemQty = [towel.length, soap.length, toiletPaper.length, hairDryer.length, pillow.length, blanket.length, iron.length, babyBed.length]
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
     let itemBadgeQty = itemQty.reduce(reducer)
-
-    const StyledBadge = withStyles((theme) => ({
-        badge: {
-          right: -3,
-          top: 13,
-          border: `2px solid ${theme.palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }))(Badge);
     return (
         <div>
-            <StyledBadge badgeContent={itemBadgeQty} color="secondary">
-                <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/houseKeeping")}} />
-            </StyledBadge>
-
+            <img src={Maid} alt="Maid" className="drawer_icons" onClick={()=>{navigate("/houseKeeping")}} />
+            {itemBadgeQty > 0 && <span style={{
+              borderRadius: "50%", 
+              backgroundColor: "red", 
+              position: "absolute", 
+              width: "17%", 
+              height: "6%", 
+              color: "white", 
+              textAlign: "center", 
+              fontSize: "12px"}}>{itemBadgeQty}</span>}
         </div>
     )
 }

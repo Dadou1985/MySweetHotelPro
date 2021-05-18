@@ -30,20 +30,18 @@ function RoomChangeOverlay({userDB, user}) {
                 return unsubscribe
      },[])
 
-    const StyledBadge = withStyles((theme) => ({
-        badge: {
-          right: -3,
-          top: 13,
-          border: `2px solid ${theme.palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }))(Badge);
-
     return (
         <div>
-            <StyledBadge badgeContent={demandQty.length} color="secondary">
-                <img src={RoomChange} alt="Room change" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
-            </StyledBadge>
+            <img src={RoomChange} alt="Room change" className="drawer_icons" onClick={()=>{navigate("/maid")}} />
+            {demandQty.length > 0 && <span style={{
+              borderRadius: "50%", 
+              backgroundColor: "red", 
+              position: "absolute", 
+              width: "17%", 
+              height: "6%", 
+              color: "white", 
+              textAlign: "center", 
+              fontSize: "12px"}}>{demandQty.length}</span>}        
         </div>
     )
 }

@@ -8,6 +8,7 @@ import { zhCN } from 'date-fns/locale'
 export default function ChatRoom({user, userDB, title}) {
 
     const [messages, setMessages] = useState([])
+    const [chatRoom, setChatRoom] = useState([])
 
     useEffect(() => {
         const chatRoomOnAir = () => {
@@ -33,7 +34,29 @@ export default function ChatRoom({user, userDB, title}) {
                 return unsubscribe
      },[])
 
-console.log("")
+     useEffect(() => {
+        const getChatRoom = () => {
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("chat")
+            .where("title", "==", title)
+        }
+
+        let unsubscribe = getChatRoom().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setChatRoom(snapInfo)
+                });
+                return unsubscribe
+     },[])
+
+console.log(chatRoom)
 
     return (
         <div>
@@ -45,7 +68,7 @@ console.log("")
                             case 'en':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.en}
+                                translation={flow.translated.en}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -54,7 +77,7 @@ console.log("")
                             case 'ja':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.ja}
+                                translation={flow.translated.ja}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -63,7 +86,7 @@ console.log("")
                             case 'ko':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.ko}
+                                translation={flow.translated.ko}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -72,7 +95,7 @@ console.log("")
                             case 'pt':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.pt}
+                                translation={flow.translated.pt}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -81,7 +104,7 @@ console.log("")
                             case 'ar':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.ar}
+                                translation={flow.translated.ar}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -90,7 +113,7 @@ console.log("")
                             case 'it':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.it}
+                                translation={flow.translated.it}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -99,7 +122,7 @@ console.log("")
                             case 'es':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.es}
+                                translation={flow.translated.es}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -108,7 +131,7 @@ console.log("")
                             case 'zh':
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.zh}
+                                translation={flow.translated.zh}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -117,13 +140,23 @@ console.log("")
                             default:
                                 return <Message 
                                 author={flow.author}
-                                text={flow.translated.fr}
+                                translation={flow.translated.fr}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
                                 />
                         }
+                    }
+
+                    if(userDB.language === chatRoom.guestLanguage) {
+                        return <Message 
+                                author={flow.author}
+                                photo={flow.photo}
+                                text={flow.text}
+                                markup={flow.markup}
+                                user={user}
+                            />
                     }
 
                     if(flow.translated){

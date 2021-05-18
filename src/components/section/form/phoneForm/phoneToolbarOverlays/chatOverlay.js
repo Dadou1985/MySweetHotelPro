@@ -30,20 +30,19 @@ function ChatOverlay({userDB, user}) {
                 return unsubscribe
      },[])
 
-    const StyledBadge = withStyles((theme) => ({
-        badge: {
-          right: -3,
-          top: 13,
-          border: `2px solid ${theme.palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }))(Badge);
-
     return (
         <div>
-            <StyledBadge badgeContent={chatRoomQty.length} color="secondary">
-                <img src={Chat} alt="Chat" className="drawer_icons" onClick={()=>{navigate("/chat")}} />
-            </StyledBadge>
+            <img src={Chat} alt="Chat" className="drawer_icons" onClick={()=>{navigate("/chat")}} />
+            {chatRoomQty.length > 0 && <span style={{
+              borderRadius: "50%", 
+              backgroundColor: "red", 
+              position: "absolute", 
+              width: "17%", 
+              height: "20%", 
+              color: "white", 
+              textAlign: "center", 
+              fontSize: "12px",
+              }}>{chatRoomQty.length}</span>}
         </div>
     )
 }
