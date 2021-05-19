@@ -170,22 +170,23 @@ export default function CommunIzi({userDB, user}) {
        if(checkoutHour >= 14) {
          return db.collection('guestUsers')
            .where("checkoutDate", "==", moment(new Date()).format('LL'))
+           .onSnapshot(function(snapshot) {
+            const snapInfo = []
+              snapshot.forEach(function(doc) {          
+                snapInfo.push({
+                    id: doc.id,
+                    ...doc.data()
+                  })        
+                });
+                console.log(snapInfo)
+                return snapInfo.map(guest => {
+                  return deleteGuest(guest.id)
+                })
+              });
        }
       }
 
-      let unsubscribe = deleteListGuest().onSnapshot(function(snapshot) {
-        const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            console.log(snapInfo)
-            return snapInfo.map(guest => {
-              return deleteGuest(guest.id)
-            })
-          });
+      let unsubscribe = deleteListGuest()
        return unsubscribe
 
     }, [])
