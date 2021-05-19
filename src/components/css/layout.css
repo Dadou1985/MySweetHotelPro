@@ -1176,13 +1176,13 @@ input[type=number] {
 
 .phone-camera-icon{
     position: absolute; 
-    width: 1%;
+    width: 40%;
     height: 5vh;
-    z-index: 2;
+    z-index: 5;
     left: 20%; 
     opacity: 0;
     cursor: pointer;
-    
+    margin-left: 7vw;
 }
 
 /*CheckList*/

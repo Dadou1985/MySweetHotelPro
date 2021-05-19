@@ -96,18 +96,18 @@ const PhoneClock = ({user, userDB}) =>{
     <div className="phone_container">
         <h3 className="phone_title">Programmation des réveils</h3>
         <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
-            <div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
+            {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
                 {expand ? "Rétrécir" : "Agrandir"}
                 {expand ? <img src={Left} style={{width: "3vw", marginRight: "1vw"}} /> : <img src={Right} style={{width: "3vw", marginLeft: "1vw"}} />}
                 </span>
-            </div>
+            </div>*/}
             <Table striped bordered hover size="sm" className="text-center">
                             <thead className="bg-dark text-center text-light">
                                 <tr>
                                 {expand && <th>Client</th>}
                                 <th>Chambre</th>
-                                {expand && <th>Date</th>}
+                                <th>Date</th>
                                 <th>Heure</th>
                                 <th>Statut</th>
                                 {expand && <th>Date</th>}
@@ -120,7 +120,7 @@ const PhoneClock = ({user, userDB}) =>{
                                     <tr key={flow.id}>
                                     {expand && <td>{flow.client}</td>}
                                     <td>{flow.room}</td>
-                                    {expand && <td>{flow.date}</td>}
+                                    <td>{flow.date}</td>
                                     <td>{flow.hour}</td>
                                     <td>
                                         <Switch

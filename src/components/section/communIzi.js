@@ -33,6 +33,7 @@ export default function CommunIzi({userDB, user}) {
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
     const [guestList, setGuestList] = useState([])
+    const [deleteListGuestArray, setDeleteListGuestArray] = useState([])
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -142,39 +143,53 @@ export default function CommunIzi({userDB, user}) {
      const deleteGuest = (guest) => {
       return db.collection('guestUsers')
       .doc(guest)
-      .delete()
+      .update({
+        checkoutDate: "",
+        hotelId: "",
+        hotelName: "",
+        hotelDept: "",
+        hotelRegion: "",
+        room: "",
+        phone: "",
+        city: "",
+        classement: "",
+        babyBed: false,
+        blanket: false,
+        hairDryer: false,
+        iron: false,
+        pillow: false,
+        toiletPaper: false,
+        towel: false,
+        soap: false
+      })
      }
 
      useEffect(() => {
-       const deleteListGuest = () => {
-        let checkoutHour = new Date().getHours()
-
-        if(checkoutHour >= 14) {
-          return db.collection('guestUsers')
-            .where("checkoutDate", "==", moment(new Date()).format('LL'))
-            .update({
-              checkoutDate: "",
-              hotelId: "",
-              hotelName: "",
-              hotelDept: "",
-              hotelRegion: "",
-              room: "",
-              babyBed: false,
-              blanket: false,
-              hairDryer: false,
-              iron: false,
-              pillow: false,
-              toiletPaper: false,
-              towel: false,
-              soap: false
-            })
-        }
+      const deleteListGuest = () => {
+       let checkoutHour = new Date().getHours()
+       if(checkoutHour >= 14) {
+         return db.collection('guestUsers')
+           .where("checkoutDate", "==", moment(new Date()).format('LL'))
        }
+      }
 
-       let unsubscribe = deleteListGuest();
-        return unsubscribe
+      let unsubscribe = deleteListGuest().onSnapshot(function(snapshot) {
+        const snapInfo = []
+          snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+              })        
+            });
+            console.log(snapInfo)
+            return snapInfo.map(guest => {
+              return deleteGuest(guest.id)
+            })
+          });
+       return unsubscribe
 
-     }, [])
+    }, [])
+
 
     return (
         <div className="communizi-container">
