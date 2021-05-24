@@ -40,7 +40,7 @@ const Connection = () =>{
     return (
         <div className="connection_container">
             <div id="jumbo" fluid className="bg-info">
-            <img src={Logo} style={{width: "20%"}} />
+            <img src={Logo} className="connection-logo" />
             </div>
             <form 
               method="post"

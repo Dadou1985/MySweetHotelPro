@@ -500,15 +500,8 @@ input[type=number] {
     filter: drop-shadow(3px 3px 5px);
 }
 
-.connection_title {
-    font-weight: bolder;
-    text-align: center;
-}
-
-.connection_title_firstWord {
-    font-family: "Charmonman";
-    position: relative; 
-    font-weight: bolder;
+.connection-logo {
+    width: 20%;
 }
 
 #warning {
@@ -523,6 +516,10 @@ input[type=number] {
 @media screen and (max-width: 480px) {
     .connection_container {
         height: 99vh;
+    }
+
+    .connection-logo {
+        width: 50%;
     }
 }
 
