@@ -19,7 +19,7 @@ import Notifications from './notifications'
 import { FirebaseContext, db, auth } from '../../Firebase'
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-
+import Logo from '../../svg/mini-logo-msh-pro.png'
 
 const Navigation = ({user, userDB}) =>{
 
@@ -50,7 +50,8 @@ const Navigation = ({user, userDB}) =>{
                 {!!user && userDB &&
                 <Drawer className="drawer" user={user} userDB={userDB} />}
                 <Navbar.Brand className="brand"
-                    onClick={handleMove}>MySweetHotel<p>Pro</p></Navbar.Brand>
+                    onClick={handleMove}>
+                        <img src={Logo} className="logo-msh" /></Navbar.Brand>
                     {/*{!!user &&
                     <div style={{
                         display: "flex",

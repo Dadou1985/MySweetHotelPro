@@ -572,20 +572,12 @@ input[type=number] {
 .brand {
     position: absolute;
     left: 5vw;
-    font-weight: bolder;
-    font-size: 1.5em;
-    text-decoration: none;
-    color: #5bc0de;
     cursor: pointer;
 }
 
-.brand p {
-    font-family: "Charmonman"; 
-    position: absolute; 
-    top: 1vh; 
-    left: 160px;
-    color: #5bc0de;
-
+.logo-msh {
+    width: 7%;
+    margin-bottom: 2vh;
 }
 
 .nav_container {
@@ -668,9 +660,10 @@ input[type=number] {
         left: 35vw;
     }
 
-    .brand p {
-        top: 55%;
-        left: 30vw;
+    .logo-msh {
+        width: 30%;
+        margin-bottom: 1vh;
+        margin-left: 10vw;
     }
 
     .nav_container {display: none;}

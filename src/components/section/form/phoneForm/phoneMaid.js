@@ -1,5 +1,6 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table } from 'react-bootstrap'
+import { Form, Button, Table, Popover, Modal } from 'react-bootstrap'
+import { Input } from 'reactstrap'
 import { FirebaseContext, auth, db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -10,15 +11,18 @@ import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
+import { set } from 'date-fns'
 
 const PhoneMaid = ({user, userDB}) =>{
 
-    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
+    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: null, reason: "", state: ""})
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
+    const [newRoom, setNewRoom] = useState(false)
+    const [newState, setNewState] = useState(false)
 
     const handleChange = (event) =>{
         event.persist()
@@ -60,6 +64,28 @@ const PhoneMaid = ({user, userDB}) =>{
         })      
       }
 
+    const handleUpdateRoom = (demandId) => {
+        setFormValue("")
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('roomChange')
+            .doc(demandId)
+            .update({
+                toRoom: formValue.toRoom,
+            })
+    }
+
+    const handleUpdateRoomState = (demandId) => {
+        setFormValue("")
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('roomChange')
+            .doc(demandId)
+            .update({
+                state: formValue.state
+            })
+    }
+
     useEffect(() => {
         const toolOnAir = () => {
             return db.collection('hotels')
@@ -86,6 +112,8 @@ const PhoneMaid = ({user, userDB}) =>{
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
 
+     console.log("TOROOM", formValue.toRoom)
+
     return(
         
         <div className="phone_container">
@@ -101,12 +129,12 @@ const PhoneMaid = ({user, userDB}) =>{
                         maxWidth: "90vw"}}>
                     <thead className="bg-dark text-center text-light">
                         <tr>
-                        <th>Client</th>
+                        {expand && <th>Client</th>}
                         <th>Ch. initiale</th>
                         <th>Ch. finale</th>
                         {expand && <th>Motif</th>}
+                        <th>Etat</th>
                         <th>Statut</th>
-                        {expand && <th>Etat</th>}
                         {expand && <th>Details</th>}
                         {expand && <td>Date</td>}
                         {expand && <th>Photo</th>}
@@ -117,9 +145,12 @@ const PhoneMaid = ({user, userDB}) =>{
                     <tbody>
                         {info.map(flow =>(
                             <tr key={flow.id}>
-                            <td>{flow.client}</td>
+                            {expand && <td>{flow.client}</td>}
                             <td>{flow.fromRoom}</td>
-                            <td>{flow.toRoom}</td>
+                            {flow.toRoom === "" ? 
+                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => setNewRoom(true)}>Attribuer</Button></td> : 
+                                <td>{flow.toRoom}</td>}
+                            <td>{flow.state}</td>
                             {expand && <td>{flow.reason}</td>}
                             <td>
                             <Switch
@@ -128,7 +159,6 @@ const PhoneMaid = ({user, userDB}) =>{
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             </td>
-                            {expand && <td>{flow.state}</td>}
                             {expand && <td>{flow.details}</td>}
                             {expand && <td>{moment(flow.markup).format('L')}</td>}
                             {expand && <td style={{cursor: "pointer"}} onClick={() => {
@@ -148,6 +178,25 @@ const PhoneMaid = ({user, userDB}) =>{
                                     console.log(error);
                                 });
                             }}>Supprimer</Button></td>}
+                            <Modal show={newRoom}
+                                size="sm"
+                                aria-labelledby="contained-modal-title-vcenter"
+                                centered
+                                onHide={() => setNewRoom(false)}
+                                >
+                                <Modal.Body>
+                                    <Input 
+                                        type="text"
+                                        placeholder="Entrer un n° de chambre"
+                                        value={formValue.toRoom}
+                                        name="toRoom"
+                                        onChange={(e) => setFormValue({toRoom: e.target.value})}
+                                    />
+                                </Modal.Body>
+                                <Modal.Footer>
+                                    <Button variant="success" size="sm" style={{width: "100%"}} onClick={() => handleUpdateRoom(flow.id)}>Valider</Button>
+                                </Modal.Footer>
+                            </Modal>
                             </tr>
                         ))}
                     </tbody>

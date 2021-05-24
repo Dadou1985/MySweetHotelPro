@@ -1,5 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover } from 'react-bootstrap'
+import { Input } from 'reactstrap'
 import ChangeRoom from '../../../svg/logout.png'
 import {  db, auth } from '../../../Firebase'
 import moment from 'moment'
@@ -60,6 +61,28 @@ const Maid = ({userDB, user}) =>{
             status: false
             })
         .then(handleClose)
+    }
+
+    const handleUpdateRoom = (demandId) => {
+        setFormValue("")
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('roomChange')
+            .doc(demandId)
+            .update({
+                toRoom: formValue.toRoom,
+            })
+    }
+
+    const handleUpdateRoomState = (demandId) => {
+        setFormValue("")
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection('roomChange')
+            .doc(demandId)
+            .update({
+                state: formValue.state
+            })
     }
 
     const changeDemandStatus = (document) => {
@@ -137,6 +160,7 @@ const Maid = ({userDB, user}) =>{
                     aria-labelledby="contained-modal-title-vcenter"
                     centered
                     onHide={handleClose}
+                    enforceFocus={false}
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
@@ -253,9 +277,63 @@ const Maid = ({userDB, user}) =>{
                                         <tr key={flow.id}>
                                         <td>{flow.client}</td>
                                         <td>{flow.fromRoom}</td>
-                                        <td>{flow.toRoom}</td>
+                                        {flow.toRoom === "" ? 
+                                        <td><OverlayTrigger
+                                            trigger="click"
+                                            placement="top"
+                                            overlay={
+                                            <Popover 
+                                                id="popover-positioned-top">
+                                                <Popover.Title as="h3">
+                                                    <Input 
+                                                        placeholder="Entrer un n° de chambre"
+                                                        value={formValue.toRoom}
+                                                        name="toRoom"
+                                                        onChange={(e) => setFormValue({toRoom: e.target.value})}
+                                                        />
+                                                </Popover.Title>
+                                                <Popover.Content className="text-center">
+                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id)}>Valider</Button>
+                                                </Popover.Content>
+                                            </Popover>
+                                            }
+                                        >
+                                            <Button variant="warning" size="sm" style={{width: "5vw"}}>A attribuer</Button>
+                                        </OverlayTrigger>
+                                                </td> : <td>{flow.toRoom}</td>}
                                         <td>{flow.reason}</td>
-                                        <td>{flow.state}</td>
+                                        {flow.state === "" ? 
+                                            <td>
+                                                <OverlayTrigger
+                                                    trigger="click"
+                                                    placement="top"
+                                                    overlay={
+                                                    <Popover 
+                                                        id="popover-positioned-top">
+                                                        <Popover.Title as="h3" className="text-center">
+                                                        <h6>Etat de la chambre</h6>
+                                                        <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                                                            style={{width: "5vw", 
+                                                            height: "100%", 
+                                                            border: "1px solid lightgrey", 
+                                                            borderRadius: "3px",
+                                                            backgroundColor: "white", 
+                                                            paddingLeft: "1vw"}}>
+                                                                <option></option>
+                                                                <option>Sale</option>
+                                                                <option>Propre</option>
+                                                            </select>
+                                                        </Popover.Title>
+                                                        <Popover.Content className="text-center">
+                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoomState(flow.id)}>Valider</Button>
+                                                        </Popover.Content>
+                                                    </Popover>
+                                                    }
+                                                >
+                                            <Button variant="warning" size="sm" style={{width: "5vw"}}>A vérifier</Button>
+                                        </OverlayTrigger>
+                                            </td> : 
+                                            <td>{flow.state}</td>}
                                         <td>{flow.details}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {

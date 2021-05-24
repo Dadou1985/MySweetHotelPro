@@ -3,6 +3,7 @@ import { Jumbotron, Modal } from 'react-bootstrap'
 import { FirebaseContext, db, auth } from '../Firebase'
 import Register from '../components/section/form/register'
 import { navigate } from 'gatsby'
+import Logo from '../svg/logo-msh-pro.png'
 
 
 const Connection = () =>{
@@ -39,8 +40,7 @@ const Connection = () =>{
     return (
         <div className="connection_container">
             <div id="jumbo" fluid className="bg-info">
-            <h2 className="connection_title">My<br/>Sweet<br/>Hotel</h2>
-            <h2 className="connection_title_firstWord">Pro</h2>
+            <img src={Logo} style={{width: "20%"}} />
             </div>
             <form 
               method="post"
