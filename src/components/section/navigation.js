@@ -19,7 +19,7 @@ import Notifications from './notifications'
 import { FirebaseContext, db, auth } from '../../Firebase'
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
-import Logo from '../../svg/mini-logo-msh-pro.png'
+import Logo from '../../svg/new-mini-logo-msh-pro2.png'
 
 const Navigation = ({user, userDB}) =>{
 
