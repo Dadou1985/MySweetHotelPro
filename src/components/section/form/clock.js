@@ -176,7 +176,7 @@ const Clock = ({userDB, user}) =>{
                                         <Form.Group>
                                         <MuiPickersUtilsProvider utils={DateFnsUtils}>
                                         <KeyboardDateTimePicker
-                                            variant="inline"
+                                            variant="dialog"
                                             ampm={false}
                                             label="Date et Heure de réservation"
                                             value={formValue.date}

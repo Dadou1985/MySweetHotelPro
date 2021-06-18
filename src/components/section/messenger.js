@@ -20,7 +20,7 @@ import { FirebaseContext, db, auth, storage } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 
-const Messenger = () =>{
+const Messenger = ({filterDate}) =>{
 
     const [note, setNote] = useState('')
     const [title, setTitle] = useState("")
@@ -109,7 +109,7 @@ const Messenger = () =>{
         }
     }
 
-    const addNote = (marker) => {
+    const addNote = (marker, url) => {
         return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('note')
@@ -118,8 +118,9 @@ const Messenger = () =>{
             author: user.displayName,
             text: note,
             status: status,
-            date: startDate,
-            img: url,
+            date: moment(startDate).format('LL'),
+            hour: moment(startDate).format('LT'),
+            img: url === undefined ? "" : url,
             markup: marker,
             userId: user.uid
             }).then(function(docRef){
@@ -141,14 +142,14 @@ const Messenger = () =>{
     const handleSubmit = (event) =>{
         event.preventDefault()
         if(img !== null) {
-            const uploadTask = storage.ref(`msh-photo-user/${img.name}`).put(img)
+            const uploadTask = storage.ref(`msh-photo-note/${img.name}`).put(img)
         uploadTask.on(
           "state_changed",
           snapshot => {},
           error => {console.log(error)},
           () => {
             storage
-              .ref("msh-photo-user")
+              .ref("msh-photo-note")
               .child(img.name)
               .getDownloadURL()
               .then(url => {
@@ -159,19 +160,19 @@ const Messenger = () =>{
                         
                     if(moment(startDate).format('L') !== moment(new Date()).format('L')) {
                         const notif = "Votre note a bien été enregistrée pour le " + moment(startDate).format('L') 
-                        addNote(marker)
+                        addNote(marker, url)
                         addNotification(notif)
                         setStartDate(new Date)
                         handleHideDrawer()
                        return setShowModal(false)
                     }else{
-                        addNote(marker)
+                        addNote(marker, url)
                         handleHideDrawer()
                         setShowModal(false)
                     }
                     
                 }
-                  return setUrl(url, uploadTask())})
+                  return setImg("", uploadTask())})
           }
         )
         }else{
@@ -181,13 +182,13 @@ const Messenger = () =>{
                 
             if(moment(startDate).format('L') !== moment(new Date()).format('L')) {
                 const notif = "Votre message a bien été enregistré pour le " + moment(startDate).format('L') 
-                addNote(marker)
+                addNote(marker, null)
                 addNotification(notif)
                 setStartDate(new Date)
                 handleHideDrawer()
                 return setShowModal(false)
             }else{
-                addNote(marker)
+                addNote(marker, null)
                 handleHideDrawer()
                 setShowModal(false)
             }
@@ -209,8 +210,8 @@ const Messenger = () =>{
         <div className="messenger_container">
             <PerfectScrollbar className="perfect-scrollbar">
                 <div className="messenger_notebox">
-                    {!!userDB && !!setUserDB &&
-                    <NoteBox />}
+                    {!!userDB && !!setUserDB && !!filterDate &&
+                    <NoteBox filterDate={filterDate} />}
                 </div>
             </PerfectScrollbar>
             <OverlayTrigger
@@ -241,7 +242,6 @@ const Messenger = () =>{
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
                     <div className="modal-note-button-container">
-                        <span className="white-band"></span>
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
                       <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />

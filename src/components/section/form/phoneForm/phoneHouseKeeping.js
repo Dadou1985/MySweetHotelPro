@@ -11,7 +11,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 function PhoneHouseKeeping({user, userDB}) {
     return (
         <div className="phoneCheckList_container">
-            <h3 className="phone_title">Click & Wait</h3>
+            <h3 className="phone_title">Conciergerie</h3>
             <Tab.Container defaultActiveKey="Serviette">
                 <Row>
                     <Col sm={3}>

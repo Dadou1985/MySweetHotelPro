@@ -5,7 +5,7 @@ import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../svg/paper-plane.svg'
 import Plus from '../../svg/plus3.svg'
 import ChatRoom from './chatRoom'
-import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton,Dropdown } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import {
   Accordion,
@@ -21,6 +21,7 @@ import { db, auth } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import Select from 'react-select'
 import firebase from 'firebase'
+import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -31,7 +32,7 @@ export default function CommunIzi({userDB, user}) {
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
-    const [initialFilter, setInitialFilter] = useState('')
+    const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
     const [guestList, setGuestList] = useState([])
     const [deleteListGuestArray, setDeleteListGuestArray] = useState([])
 
@@ -43,7 +44,10 @@ export default function CommunIzi({userDB, user}) {
       setInitialFilter(event.currentTarget.value)
   }
 
-    const handleClose = () => setShowModal(false)
+    const handleClose = () => {
+      setShowModal(false)
+      setInitialFilter('Liste Clients Présents')
+    }
     const handleShow = () => {
       if(window.innerWidth > 480) {
           setShowModal(true)
@@ -80,7 +84,8 @@ export default function CommunIzi({userDB, user}) {
             text: note,
             date: new Date(),
             userId: user.uid,
-            markup: Date.now()
+            markup: Date.now(),
+            title: "host"
           })
     }
 
@@ -273,37 +278,18 @@ export default function CommunIzi({userDB, user}) {
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Input 
-                      type="text" 
-                      placeholder="Entrer le numéro de chambre du client" 
-                      value={initialFilter} 
-                      style={{
-                        borderTop: "none", 
-                        borderLeft: "none", 
-                        borderRight: "none",
-                        marginBottom: "2vh",
-                        width: "65%"}} 
-                      maxLength="60" 
-                      onChange={handleChangeFilter} />
-                      <PerfectScrollbar>
+                      <DropdownButton  id="dropdown-basic-button" title={initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}>
                       {guestList.map(guest => (
-                        <div style={{
-                          display: "flex",
-                          flexFlow: "column",
-                          padding: "2%",
-                          maxHeight: "30vh",
-                          backgroundColor: "#ECECEC",
-                          cursor: "pointer"
-                        }}
+                        <DropdownItem
                         onClick={() => {
                           setExpanded(guest.id)
-                          setInitialFilter(guest.id)}}>{guest.id} - Chambre {guest.room}</div>
+                          setInitialFilter(guest.username)}}>{guest.username} - Chambre {guest.room}</DropdownItem>
                       ))}
-                      </PerfectScrollbar>
+                      </DropdownButton>
                     <Input 
                       type="textarea" 
                       placeholder="Ecrire un message..." 
-                      style={{resize: "none"}}
+                      style={{resize: "none", marginTop: "2vh"}}
                       value={note}  
                       maxLength="60" 
                       onChange={handleChange} />
@@ -312,7 +298,7 @@ export default function CommunIzi({userDB, user}) {
                     <Button variant="success" onClick={(event) => {
                       handleSubmit(event)
                       setShowModal(false)
-                      setInitialFilter('')
+                      setInitialFilter('Liste Clients Présents')
                     }}>Envoyer</Button>
                 </Modal.Footer>
             </Modal>

@@ -117,6 +117,19 @@ const PhoneRepair = ({user, userDB}) =>{
            
      },[])
 
+     const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+      }
+
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
 
@@ -166,6 +179,7 @@ const PhoneRepair = ({user, userDB}) =>{
                             }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : "Aucune"}</td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                handleDeleteImg(flow.img)
                                 return db.collection('hotels')
                                 .doc(userDB.hotelId)
                                 .collection("maintenance")

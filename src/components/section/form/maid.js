@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import ChangeRoom from '../../../svg/logout.png'
-import {  db, auth } from '../../../Firebase'
+import {  db, auth, storage } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Switch from '@material-ui/core/Switch';
@@ -63,15 +63,23 @@ const Maid = ({userDB, user}) =>{
         .then(handleClose)
     }
 
-    const handleUpdateRoom = (demandId) => {
-        setFormValue("")
-        return db.collection('hotels')
+    const handleUpdateRoom = async(demandId, guestId) => {
+        await db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
             .update({
                 toRoom: formValue.toRoom,
             })
+
+        return db.collection('guestUsers')
+            .doc(`${guestId}`)
+            .update({
+                room: formValue.toRoom
+            })
+            .then(() => 
+                setFormValue("")
+            )
     }
 
     const handleUpdateRoomState = (demandId) => {
@@ -140,6 +148,20 @@ const Maid = ({userDB, user}) =>{
                 return unsubscribe
            
      },[])
+
+     const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+      }
+  
 
     return(
         <div>
@@ -293,7 +315,7 @@ const Maid = ({userDB, user}) =>{
                                                         />
                                                 </Popover.Title>
                                                 <Popover.Content className="text-center">
-                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id)}>Valider</Button>
+                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id, flow.userId)}>Valider</Button>
                                                 </Popover.Content>
                                             </Popover>
                                             }
@@ -350,6 +372,7 @@ const Maid = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                            handleDeleteImg(flow.img)
                                             return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("roomChange")

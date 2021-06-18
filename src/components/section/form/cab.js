@@ -240,7 +240,7 @@ const Cab = ({userDB, user}) =>{
                                     <Form.Row>
                                         <Form.Group controlId="description7">
                                         <Form.Label>Adresse de destination</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 16 avenue Paul Cézanne, 78990 Elancourt" style={{width: "23vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
+                                        <Form.Control type="text" placeholder="ex: 16 avenue Paul Cézanne, 78990 Elancourt" style={{width: "28vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     </>}

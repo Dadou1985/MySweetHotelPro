@@ -73,6 +73,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'ja':
                                 return <Message 
@@ -82,6 +83,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'ko':
                                 return <Message 
@@ -91,6 +93,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'pt':
                                 return <Message 
@@ -100,6 +103,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'ar':
                                 return <Message 
@@ -109,6 +113,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'it':
                                 return <Message 
@@ -118,6 +123,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'es':
                                 return <Message 
@@ -127,6 +133,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             case 'zh':
                                 return <Message 
@@ -136,6 +143,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                             default:
                                 return <Message 
@@ -145,6 +153,7 @@ console.log(chatRoom)
                                user={user}
                                userDB={userDB}
                                photo={flow.photo}
+                               title={flow.title}
                                 />
                         }
                     }
@@ -156,12 +165,15 @@ console.log(chatRoom)
                                 text={flow.text}
                                 markup={flow.markup}
                                 user={user}
+                                title={flow.title}
                             />
+                    }else{
+                        if(flow.translated){
+                            return renderSwitch()
+                         }
                     }
 
-                    if(flow.translated){
-                       return renderSwitch()
-                    }
+                    
                 })}
             </PerfectScrollbar>
         </div>

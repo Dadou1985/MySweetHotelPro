@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Maintenance from '../../../svg/repair.svg'
-import { db, auth } from '../../../Firebase'
+import { db, auth, storage } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Switch from '@material-ui/core/Switch';
@@ -116,6 +116,19 @@ const Repair = ({userDB, user}) =>{
                 return unsubscribe
            
      },[])
+
+     const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+      }
 
     return(
         <div>
@@ -236,6 +249,7 @@ const Repair = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                            handleDeleteImg(flow.img)
                                             return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("maintenance")

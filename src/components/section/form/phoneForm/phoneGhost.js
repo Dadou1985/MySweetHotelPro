@@ -5,7 +5,23 @@ import { paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_fr
 import { Input } from 'reactstrap'
 
 export default function PhoneGhost({user, userDB, setUserDB}) {
-    const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: ""})
+    const [formValue, setFormValue] = useState({
+        username: "", 
+        email: "", 
+        region: "", 
+        departement: "", 
+        city: "", 
+        standing: "", 
+        phone: "", 
+        room: 0, 
+        code_postal: "", 
+        adress: "", 
+        website: "", 
+        mail: "", 
+        hotelId: "", 
+        hotelName: "", 
+        country: "", 
+        classement: ""})
     const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
@@ -67,12 +83,18 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         .update({   
         hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",
         hotelName: "Bates Motel",
-        hotelRegion: "MilkyWay",
-        hotelDept: "zone51",
+        hotelRegion: "NOWHERE",
+        hotelDept: "EVERYWHERE",
         city: "Gotham",
         classement: "infinity",
         room: "99",
-        code_postal: "99999"
+        code_postal: "99999",
+        country: "FRANCE",
+        mail: "david.simba1985@gmail.com",
+        partnership: true,
+        phone: "0659872884",
+        website: "https://mysweethotelpro.com/",
+        adresse: "11 allée de la Loire"
         }) 
     }
 
@@ -160,7 +182,12 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                             city: details.city,
                             code_postal: details.code_postal,
                             country: details.country,
-                            room: details.room
+                            room: details.room,
+                            partnership: details.partnership,
+                            phone: details.phone,
+                            website: details.website,
+                            adresse: details.adresse,
+                            mail: details.mail
                         })
                         setHotelName(details.hotelName)
                         }}>{details.hotelName}</Dropdown.Item>

@@ -13,7 +13,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { FirebaseContext, db, auth } from '../../Firebase'
 
 
-const NoteBox = () => {
+const NoteBox = ({filterDate}) => {
 
     const [messages, setMessages] = useState([])
     const [dayDate, setDayDate] = useState(new Date())
@@ -50,8 +50,8 @@ const NoteBox = () => {
         return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('note')
-          .where("markup", "<", nextDay)
-          .orderBy("markup", "desc")
+          .where("date", "==", moment(filterDate).format('LL'))
+          .orderBy('markup', "desc")
       }
 
         let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
@@ -67,17 +67,14 @@ const NoteBox = () => {
                 });
                 return unsubscribe
            
-     },[])
+     },[filterDate])
 
-
+     console.log(filterDate)
 
     return (
         <Accordion allowZeroExpanded className="accordion-note">
                 {messages.map((flow, index) => {
-                       console.log("$$$$$$", moment(flow.markup).format('LT'))
-
-                  return moment(flow.markup).format('L') === moment(new Date()).format('L') ? 
-                  <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
+                  return <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
                     <AccordionItemHeading style={{
                       padding: "2%",
                       backgroundColor: flow.status,
@@ -123,55 +120,7 @@ const NoteBox = () => {
                             <img src={flow.img} style={{width: "100%", backgroundSize: "cover", marginBottom: "1vh"}} />
                         </span>}
                       {flow.text}
-                    <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.hour).format('LT')}</i></div>
-                    </AccordionItemPanel>
-                  </AccordionItem> 
-                  :
-                  <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="old_User_Message">
-                    <AccordionItemHeading style={{
-                      padding: "2%",
-                      filter: "grayscale(100%)",
-                      borderBottom: "1px solid lightgrey"
-                      }}>
-                        <AccordionItemButton style={{
-                            display: "flex",
-                            flexFlow: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            outline: "none"}}>
-                         <div>
-                         <Avatar 
-                            round={true}
-                            name={flow.author}
-                            size="30"
-                            color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                            style={{marginRight: "1vw"}} />
-                            <b>{flow.id}</b>
-                         </div>
-                         <div style={{
-                            display:"flex",
-                            flexflow: "row",
-                            alignItems: "center"
-                          }}>
-                          <Checkbox
-                            color="green"
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                          />
-                            <i style={{color: "black", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
-                          </div>                        
-                        </AccordionItemButton>
-                    </AccordionItemHeading>
-                    <AccordionItemPanel style={{
-                        display: "flex",
-                        flexFlow: "column",
-                        padding: "2%",
-                        width: "100%"}}>
-                          {flow.img &&
-                        <span>
-                            <img src={flow.img} style={{width: "100%", backgroundSize: "cover", marginBottom: "1vh"}} />
-                        </span>}
-                      {flow.text}
-                      <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.hour).format('LT')}</i></div>
+                    <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.markup).format('LT')}</i></div>
                     </AccordionItemPanel>
                   </AccordionItem> 
                 })}

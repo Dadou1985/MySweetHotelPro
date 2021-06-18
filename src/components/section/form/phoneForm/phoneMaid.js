@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Table, Popover, Modal } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
+import { FirebaseContext, auth, db, storage } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -109,10 +109,24 @@ const PhoneMaid = ({user, userDB}) =>{
            
      },[])
 
+     const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+      }
+
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
 
      console.log("TOROOM", formValue.toRoom)
+     
 
     return(
         
@@ -167,6 +181,7 @@ const PhoneMaid = ({user, userDB}) =>{
                             }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : "Aucune"}</td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                handleDeleteImg(flow.img)
                                 return db.collection('hotels')
                                 .doc(userDB.hotelId)
                                 .collection("roomChange")

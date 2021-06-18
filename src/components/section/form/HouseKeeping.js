@@ -188,7 +188,7 @@ const HouseKeeping = ({userDB}) =>{
                 placement="right"
                 overlay={
                 <Tooltip id="title">
-                    Click & Wait
+                    Conciergerie                
                 </Tooltip>
                 }>
                         <img src={Maid} alt="todolist" onClick={handleShow} style={{width: "4vw"}} />
@@ -203,7 +203,7 @@ const HouseKeeping = ({userDB}) =>{
                 onHide={handleClose}>
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Click & Wait
+                Conciergerie
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body

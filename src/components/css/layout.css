@@ -596,6 +596,7 @@ input[type=number] {
     font-size: small;
     margin-right: 1%;
     width: 30%;
+    z-index: 100;
 }
 
 .shuttDown_button {
@@ -676,6 +677,7 @@ input[type=number] {
         display: flex;
         width: 5vw;
         border-radius: 50px;
+        z-index: 10;
     }
 }
 
@@ -697,6 +699,7 @@ input[type=number] {
     text-align: center;
     padding: 1%; 
     margin-bottom: 3%;
+    margin-right: 2vw;
 }
 
 .sticker_img {
@@ -851,10 +854,10 @@ input[type=number] {
 
 .modal-note-file-input {
     position: absolute; 
-    width: 1%;
+    width: 5%;
     height: 8vh;
-    z-index: 2;
-    right: 31%; 
+    z-index: 20;
+    right: -3%; 
     opacity: 0;
     margin-right: 12vw;
     cursor: pointer;
@@ -982,10 +985,10 @@ input[type=number] {
     
     .modal-note-file-input {
         position: absolute; 
-        width: 1%;
+        width: 8%;
         height: 4vh;
         z-index: 2;
-        left: 5%; 
+        left: 13%; 
         opacity: 0;
         cursor: pointer;
         border: 1px solid black;
@@ -2165,6 +2168,8 @@ input[type=number] {
     height: 4%;
     position: absolute;
     filter: drop-shadow(1px 1px 1px);
+    bottom: 11vh;
+
 }
 
 .old_avatar_chat {

@@ -5,10 +5,10 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import 'moment/locale/fr';
 
-  const MessageCommunizi = ({author, text, date, email, user, translation, photo}) =>{
+  const MessageCommunizi = ({author, text, date, email, user, translation, photo, title}) =>{
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
-    if(author === user.displayName){
+    if(title === "host"){
       return (
         <span className="darkTextUser">
           <span className="user_avatar_chat_label">{author}</span>
@@ -36,7 +36,7 @@ import 'moment/locale/fr';
       )
     }
   }else{
-    if(author === user.displayName){
+    if(title === "host"){
       return (
         <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
           <span className="old_user_avatar_chat_label">{author}</span>

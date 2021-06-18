@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
@@ -16,7 +16,7 @@ import Ghost from '../../svg/ghost.svg'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
 import '../css/navigation.css'
 import Notifications from './notifications'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext, db, auth, storage } from '../../Firebase'
 import Divider from '@material-ui/core/Divider';
 import List from '@material-ui/core/List';
 import Logo from '../../svg/new-mini-logo-msh-pro2.png'
@@ -25,6 +25,7 @@ const Navigation = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
     const [activate, setActivate] = useState(false)
+    const [oldNote, setOldNote] = useState([])
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -38,7 +39,65 @@ const Navigation = ({user, userDB}) =>{
 
     const handleMove = () => navigate('/singlePage')
 
-    console.log("///////", userDB)
+    let previousDays = Date.now() - 123274000
+
+    useEffect(() => {
+        const handleDeleteImgNote = () => {
+            return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .collection("note")
+            .where("markup", "<", previousDays)
+        }
+
+        let unsubscribe = handleDeleteImgNote().onSnapshot(function(snapshot) {
+            const snapMessages = []
+            snapshot.forEach(function(doc) {          
+                snapMessages.push({
+                    id: doc.id,
+                    ...doc.data()
+                })        
+                });
+                console.log(snapMessages)
+                setOldNote(snapMessages)
+            });
+            return unsubscribe
+    }, [])
+
+
+    const listImg = oldNote.filter(note => note.img)
+
+    const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+      }
+
+    const handleDeleteImgNoteDB = (noteId) => {
+        return db.collection('hotels')
+        .doc(userDB.hotelId)
+        .collection('note')
+        .doc(noteId)
+        .update({
+            img: ""
+        })
+    }
+
+    if(listImg.length > 0) {
+        listImg.forEach(function(note){
+            handleDeleteImgNoteDB(note.id)
+            .then(handleDeleteImg(note.img))
+        })
+    }
+
+    console.log("///////", listImg)
+
 
     return(
         <div className="shadow-lg bg-white">

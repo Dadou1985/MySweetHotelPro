@@ -44,7 +44,7 @@ const CheckListTable = ({shift}) => {
             .collection(shift)
             .add({
             task: formValue.task,
-            status: formValue.status,
+            status: false,
             markup: Date.now()
             })
     }
