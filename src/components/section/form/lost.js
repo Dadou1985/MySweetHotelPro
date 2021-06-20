@@ -28,10 +28,21 @@ const Lost = ({userDB, user}) =>{
         }))
       }
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .add({
@@ -48,7 +59,7 @@ const Lost = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .orderBy("markup", "asc")
@@ -190,7 +201,7 @@ const Lost = ({userDB, user}) =>{
                                         <td>{flow.details}</td>
                                         <td>{flow.author}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("lostAndFound")
                                             .doc(flow.id)

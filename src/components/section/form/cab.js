@@ -47,11 +47,22 @@ const Cab = ({userDB, user}) =>{
         },
       }))(Badge);
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
     const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter une demande de réservation de taxi à la liste !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("cab")
             .add({
@@ -71,7 +82,7 @@ const Cab = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("cab")
           .doc(document)
@@ -83,7 +94,7 @@ const Cab = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("cab")
             .orderBy("markup", "asc")
@@ -105,7 +116,7 @@ const Cab = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("cab")
             .where("status", "==", true)
@@ -279,7 +290,7 @@ const Cab = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("cab")
                                             .doc(flow.id)

@@ -39,10 +39,21 @@ const PhoneLost = ({user, userDB}) =>{
 
       const handleChangeExpand = () => setExpand(!expand)
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const addLostObject = (event, photo) => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .add({
@@ -85,7 +96,7 @@ const PhoneLost = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .orderBy("markup", "asc")
@@ -146,7 +157,7 @@ const PhoneLost = ({user, userDB}) =>{
                         {expand && <td>{flow.details}</td>}
                         {expand && <td>{flow.author}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('hotels')
+                            return db.collection('hotel')
                             .doc(userDB.hotelId)
                             .collection('lostAndFound')
                             .doc(flow.id)
@@ -218,12 +229,12 @@ const PhoneLost = ({user, userDB}) =>{
                       <Form.Control as="textarea" rows="2" name="details" value={formValue.details} onChange={handleChange}  />
                   </Form.Group>
               </Form.Row>
-              <Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+              {/*<Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
                 <input type="file" className="phone-camera-icon"
                     onChange={handleImgChange} />
                 <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
                 <span style={{marginLeft: "2vw"}}>Ajouter une photo</span>
-              </Form.Row>
+                </Form.Row>*/}
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)

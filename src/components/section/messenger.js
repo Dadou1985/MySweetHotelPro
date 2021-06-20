@@ -110,7 +110,7 @@ const Messenger = ({filterDate}) =>{
     }
 
     const addNote = (marker, url) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('note')
             .doc(`${title}`)

@@ -25,12 +25,23 @@ const Caisse = () =>{
         }))
       }
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
+        const notif = "Vous venez d'effectuer un rapport de caisse !" 
+        addNotification(notif)
         let caisse = document.getElementById("montant").value
         handleReset()
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('safe')
             .add({
@@ -114,7 +125,7 @@ const Caisse = () =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('safe')
             .orderBy("markup", "asc")
@@ -195,7 +206,7 @@ const Caisse = () =>{
                         }
                     }}>
                             <Tab eventKey="Caisse du shift" title="Caisse du shift">
-                            <Table striped bordered hover variant="dark" size="sm" className="text-center" ref={componentRef}>
+                            <Table striped bordered hover variant="dark" size="sm" className="text-center">
                                 <thead fixed="top">
                                     <tr>
                                     <th>Valeur</th>
@@ -338,7 +349,7 @@ const Caisse = () =>{
                                 </Table>
                             </Tab>
                             <Tab eventKey="Journal des caisses" title="Journal des caisses">
-                            <Table striped bordered hover size="sm" className="text-center">
+                            <Table striped bordered hover size="sm" className="text-center" ref={componentRef}>
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
                                     <th>Nom du collaborateur</th>
@@ -356,7 +367,7 @@ const Caisse = () =>{
                                         <td>{flow.shift}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("safe")
                                             .doc(flow.id)
@@ -379,7 +390,7 @@ const Caisse = () =>{
                             <Button variant="success" onClick={handleSubmit}>Enregistrer</Button>
                             <Button variant="outline-primary" onClick={handleReset} style={{width: "7vw"}}>Reset</Button>
                         </>}
-                        {!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>}
+                        {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}
                     </Modal.Footer>
                     </form>
                 </Modal>

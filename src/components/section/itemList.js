@@ -15,7 +15,7 @@ const ItemList = ({item}) => {
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('housekeeping')
             .doc("item")
@@ -60,7 +60,7 @@ const ItemList = ({item}) => {
                         <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('hotels')
+                               return db.collection('hotel')
                                .doc(userDB.hotelId)
                                .collection('housekeeping')
                                .doc("item")

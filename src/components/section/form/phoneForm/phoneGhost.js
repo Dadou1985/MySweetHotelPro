@@ -35,8 +35,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
 
     useEffect(() => {
         const getHotel = () => {
-            return db.collection("hotels")
-                .where("code_postal", "==", filter)
+            return db.collection("hotel")
             }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
@@ -148,7 +147,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         }}>
             <h4 style={{marginBottom: "5vh", fontWeight: "bold"}}>Ghost Host</h4>
             <div style={{width: "90%", display: "flex", flexFlow: "column", alignItems: "center"}}>
-            <Form.Row>
+            {/*<Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -163,7 +162,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                     pattern=".{5,}"
                      />
                 </Form.Group>
-            </Form.Row>
+            </Form.Row>*/}
 
             <Form.Row>
                 <Form.Group style={{

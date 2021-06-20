@@ -42,10 +42,21 @@ const Maid = ({userDB, user}) =>{
         },
       }))(Badge);
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
@@ -64,7 +75,7 @@ const Maid = ({userDB, user}) =>{
     }
 
     const handleUpdateRoom = async(demandId, guestId) => {
-        await db.collection('hotels')
+        await db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -84,7 +95,7 @@ const Maid = ({userDB, user}) =>{
 
     const handleUpdateRoomState = (demandId) => {
         setFormValue("")
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -94,7 +105,7 @@ const Maid = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
           .collection('roomChange')
           .doc(document)
@@ -105,7 +116,7 @@ const Maid = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .orderBy("markup", "asc")
@@ -128,7 +139,7 @@ const Maid = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .where("status", "==", true)
@@ -373,7 +384,7 @@ const Maid = ({userDB, user}) =>{
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             handleDeleteImg(flow.img)
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("roomChange")
                                             .doc(flow.id)

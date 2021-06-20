@@ -47,11 +47,22 @@ const Clock = ({userDB, user}) =>{
         },
       }))(Badge);
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
     const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter une demande de réveil !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
@@ -68,7 +79,7 @@ const Clock = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
@@ -80,7 +91,7 @@ const Clock = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
@@ -103,7 +114,7 @@ const Clock = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .where("status", "==", true)
@@ -123,6 +134,7 @@ const Clock = ({userDB, user}) =>{
                 return unsubscribe
            
      },[])
+
 
     return(
         <div>
@@ -233,7 +245,7 @@ const Clock = ({userDB, user}) =>{
                                         </td>
                                     <td>{flow.author}</td>
                                     <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)

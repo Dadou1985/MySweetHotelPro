@@ -71,7 +71,7 @@ export default function CallCenter({user, userDB}) {
                 markup: Date.now(),
                 status: true,
                 classement: userDB.classement,
-                code_postal: userDB.codePostal,
+                code_postal: userDB.code_postal,
                 room: userDB.room,
                 city: userDB.city,
                 hotelDept: userDB.hotelDept,

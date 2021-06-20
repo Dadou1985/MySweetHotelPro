@@ -12,7 +12,7 @@ export default function BadgeMaker({item, children}) {
 
     useEffect(() => {
         const listOnAir = () => {
-          return db.collection('hotels')
+          return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection('housekeeping')
           .doc("item")

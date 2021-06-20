@@ -33,8 +33,7 @@ export default function PhoneMagic({user, userDB}) {
 
     useEffect(() => {
         const getHotel = () => {
-            return db.collection("hotels")
-                .where("code_postal", "==", filter)
+            return db.collection("hotel")
             }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
@@ -62,7 +61,7 @@ export default function PhoneMagic({user, userDB}) {
 
     const getPartner = () => {
         const notif = `${hotelName} a été activé avec succès !`
-            return db.collection("hotels")
+            return db.collection("hotel")
                 .doc(formValue.hotelId)
                 .update({
                     partnership: true
@@ -71,7 +70,7 @@ export default function PhoneMagic({user, userDB}) {
         }
 
     const createHotel = () => {
-        return db.collection("hotels")
+        return db.collection("hotel")
             .add({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
@@ -140,7 +139,7 @@ export default function PhoneMagic({user, userDB}) {
             textAlign: "center"
         }}>
             <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Magic Box</h4>
-            <Form.Row>
+            {/*<Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -154,7 +153,7 @@ export default function PhoneMagic({user, userDB}) {
                     className="text-center"
                     pattern=".{5,}" />
                 </Form.Group>
-            </Form.Row>
+            </Form.Row>*/}
 
             <Form.Row>
                 <Form.Group style={{
@@ -189,12 +188,12 @@ export default function PhoneMagic({user, userDB}) {
                 paddingTop: "5vh",
                 borderTop: "1px solid lightgrey"
             }}>
-                <Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => {
+                {/*<Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => {
                     getPartner()
                     setFilter('')
                     setFormValue("" || 0)
                     setHotelName("Sélectionner un hôtel")
-                    }}>Activer un hôtel</Button>
+                    }}>Activer un hôtel</Button>*/}
                 <Button variant="outline-info" style={{marginBottom: "2vh"}} onClick={() => setActivateAdminMaker(true)}>Créér un administrateur</Button>
                 <Button variant="outline-dark" style={{marginBottom: "2vh"}} onClick={() => setActivateCreateHotel(true)}>Créér un hôtel</Button>
             </div>

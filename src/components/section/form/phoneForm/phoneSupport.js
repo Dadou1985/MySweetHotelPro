@@ -26,7 +26,7 @@ export default function PhoneSupport({user, userDB}) {
 
     useEffect(() => {
         const getMessages = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)
@@ -49,7 +49,7 @@ export default function PhoneSupport({user, userDB}) {
     }, [])
 
     const getChatRoom = () => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)
@@ -66,7 +66,7 @@ export default function PhoneSupport({user, userDB}) {
 
 
     const createRoomnameSubmit = () => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)
@@ -78,7 +78,7 @@ export default function PhoneSupport({user, userDB}) {
       }
 
     const updateRoomnameSubmit = () => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)
@@ -90,7 +90,7 @@ export default function PhoneSupport({user, userDB}) {
 
     const sendMessage = () => {
         setNote("")
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)

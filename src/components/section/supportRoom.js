@@ -10,9 +10,7 @@ export default function SupportRoom({user, userDB, title}) {
 
     useEffect(() => {
         const chatRoomOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+            return db.collection('assistance')
             .doc(title)
             .collection("chatRoom")
             .orderBy("markup", "desc")

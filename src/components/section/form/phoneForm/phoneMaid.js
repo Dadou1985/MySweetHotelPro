@@ -34,10 +34,21 @@ const PhoneMaid = ({user, userDB}) =>{
 
       const handleChangeExpand = () => setExpand(!expand)
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
@@ -55,7 +66,7 @@ const PhoneMaid = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection('roomChange')
           .doc(document)
@@ -66,7 +77,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     const handleUpdateRoom = (demandId) => {
         setFormValue("")
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -77,7 +88,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     const handleUpdateRoomState = (demandId) => {
         setFormValue("")
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -88,7 +99,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .orderBy("markup", "asc")
@@ -182,7 +193,7 @@ const PhoneMaid = ({user, userDB}) =>{
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                 handleDeleteImg(flow.img)
-                                return db.collection('hotels')
+                                return db.collection('hotel')
                                 .doc(userDB.hotelId)
                                 .collection("roomChange")
                                 .doc(flow.id)

@@ -10,7 +10,7 @@ function ChatOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotels')
+          return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('chat')
             .where("status", "==", true)

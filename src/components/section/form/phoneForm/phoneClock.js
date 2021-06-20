@@ -36,11 +36,22 @@ const PhoneClock = ({user, userDB}) =>{
 
       const handleChangeExpand = () => setExpand(!expand)
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter une demande de réveil !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
@@ -56,7 +67,7 @@ const PhoneClock = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
@@ -67,7 +78,7 @@ const PhoneClock = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
@@ -132,7 +143,7 @@ const PhoneClock = ({user, userDB}) =>{
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)

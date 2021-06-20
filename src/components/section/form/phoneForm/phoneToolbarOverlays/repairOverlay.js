@@ -10,7 +10,7 @@ function RepairOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotels')
+          return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('clock')
             .where("status", "==", true)

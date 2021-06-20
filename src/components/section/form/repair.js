@@ -42,10 +42,21 @@ const Repair = ({userDB, user}) =>{
         },
       }))(Badge);
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        return db.collection('hotels')
+        const notif = "Vous venez d'ajouter un signalement technique à la liste !" 
+        addNotification(notif)
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .add({
@@ -62,7 +73,7 @@ const Repair = ({userDB, user}) =>{
     }
 
     const changeIssueStatus = (document) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
           .collection('maintenance')
           .doc(document)
@@ -73,7 +84,7 @@ const Repair = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .orderBy("markup", "asc")
@@ -96,7 +107,7 @@ const Repair = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .where("status", "==", true)
@@ -250,7 +261,7 @@ const Repair = ({userDB, user}) =>{
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             handleDeleteImg(flow.img)
-                                            return db.collection('hotels')
+                                            return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("maintenance")
                                             .doc(flow.id)

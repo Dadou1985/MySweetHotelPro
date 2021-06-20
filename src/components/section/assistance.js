@@ -58,9 +58,7 @@ export default function Assistance({userDB, user}) {
 }
 
 const changeAdminSpeakStatus = (roomName) => {
-  return db.collection('hotels')
-    .doc(userDB.hotelId)
-    .collection('assistance')
+  return db.collection('assistance')
     .doc(roomName)
     .update({
       adminSpeak: true,
@@ -70,9 +68,7 @@ const changeAdminSpeakStatus = (roomName) => {
     const handleSubmit = async(event) =>{
         event.preventDefault()
         await changeAdminSpeakStatus(expanded)
-        return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('assistance')
+        return db.collection('assistance')
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
@@ -89,9 +85,7 @@ const changeAdminSpeakStatus = (roomName) => {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection('assistance')
+      return db.collection('assistance')
         .doc(roomName)
         .update({
           status: false,
@@ -104,9 +98,7 @@ const changeAdminSpeakStatus = (roomName) => {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+        return db.collection('assistance')
             .orderBy("markup")
         }
 

@@ -19,7 +19,7 @@ const CheckListTable = ({shift}) => {
       }
 
     const handleCheckboxChange = (taskId, currentStatus) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('checkList')
             .doc("lists")
@@ -37,7 +37,7 @@ const CheckListTable = ({shift}) => {
     const handleSubmit = event => {
         event.preventDefault()
         setFormValue({task: ""})
-        return db.collection('hotels')
+        return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('checkList')
             .doc("lists")
@@ -51,7 +51,7 @@ const CheckListTable = ({shift}) => {
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("checkList")
             .doc("lists")
@@ -104,7 +104,7 @@ const CheckListTable = ({shift}) => {
                         </td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('hotels')
+                               return db.collection('hotel')
                                .doc(userDB.hotelId)
                                .collection("checkList")
                                .doc("lists")

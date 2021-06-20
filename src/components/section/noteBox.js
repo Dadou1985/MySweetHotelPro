@@ -47,7 +47,7 @@ const NoteBox = ({filterDate}) => {
 
     useEffect(() => {
       const noteOnAir = () => {
-        return db.collection('hotels')
+        return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection('note')
           .where("date", "==", moment(filterDate).format('LL'))

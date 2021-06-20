@@ -9,7 +9,7 @@ function CallCenterOverlay({user, userDB}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotels')
+          return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("assistance")
         }
@@ -29,7 +29,7 @@ function CallCenterOverlay({user, userDB}) {
      },[])
 
      const updateAdminSpeakStatus = () => {
-      return db.collection('hotels')
+      return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('assistance')
             .doc(userDB.hotelName)

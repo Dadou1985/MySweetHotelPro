@@ -22,11 +22,22 @@ const Annuaire = () =>{
         }))
       }
 
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
     const handleSubmit = event => {
     event.preventDefault()
     setFormValue("")
+    const notif = "Vous venez d'ajouter un nouveau nom à l'annuaire !" 
+    addNotification(notif)
     let marker = Date.now()
-    return db.collection('hotels')
+    return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('contact')
             .add({
@@ -40,7 +51,7 @@ const Annuaire = () =>{
 
     useEffect(() => {
         const contactOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('contact')
             .orderBy("name")

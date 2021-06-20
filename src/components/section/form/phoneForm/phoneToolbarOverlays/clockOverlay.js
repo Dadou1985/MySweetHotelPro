@@ -10,7 +10,7 @@ function ClockOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotels')
+          return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .where("status", "==", true)

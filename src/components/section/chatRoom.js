@@ -12,7 +12,7 @@ export default function ChatRoom({user, userDB, title}) {
 
     useEffect(() => {
         const chatRoomOnAir = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("chat")
             .doc(title)
@@ -36,7 +36,7 @@ export default function ChatRoom({user, userDB, title}) {
 
      useEffect(() => {
         const getChatRoom = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("chat")
             .where("title", "==", title)

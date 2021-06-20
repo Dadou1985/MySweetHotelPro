@@ -61,7 +61,7 @@ export default function CommunIzi({userDB, user}) {
   }
 
   const updateAdminSpeakStatus = () => {
-    return db.collection('hotels')
+    return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection('chat')
           .doc(`${expanded}`)
@@ -74,7 +74,7 @@ export default function CommunIzi({userDB, user}) {
         event.preventDefault()
         setNote("")
         let date = startDate.yyyymmdd()
-        return db.collection('hotels')
+        return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection("chat")
           .doc(`${expanded}`)
@@ -90,7 +90,7 @@ export default function CommunIzi({userDB, user}) {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('hotels')
+      return db.collection('hotel')
         .doc(userDB.hotelId)
         .collection("chat")
         .doc(roomName)
@@ -105,7 +105,7 @@ export default function CommunIzi({userDB, user}) {
 
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('hotels')
+        return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection("chat")
           .orderBy("markup", "asc")
@@ -196,6 +196,15 @@ export default function CommunIzi({userDB, user}) {
 
     }, [])
 
+    const addNotification = (notification) => {
+      return db.collection('notifications')
+          .add({
+          content: notification,
+          hotelId: userDB.hotelId,
+          markup: Date.now()})
+          .then(doc => console.log('nouvelle notitfication'))
+  }
+
 
     return (
         <div className="communizi-container">
@@ -278,11 +287,11 @@ export default function CommunIzi({userDB, user}) {
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                      <DropdownButton  id="dropdown-basic-button" title={initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}>
+                      <DropdownButton id="dropdown-basic-button" title={initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}>
                       {guestList.map(guest => (
                         <DropdownItem
                         onClick={() => {
-                          setExpanded(guest.id)
+                          setExpanded(guest.username)
                           setInitialFilter(guest.username)}}>{guest.username} - Chambre {guest.room}</DropdownItem>
                       ))}
                       </DropdownButton>
@@ -296,6 +305,8 @@ export default function CommunIzi({userDB, user}) {
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
                     <Button variant="success" onClick={(event) => {
+                      const notif = "Votre message a bien été envoyé !" 
+                      addNotification(notif)
                       handleSubmit(event)
                       setShowModal(false)
                       setInitialFilter('Liste Clients Présents')
@@ -349,6 +360,8 @@ export default function CommunIzi({userDB, user}) {
                       onChange={handleChange} />
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
+                      const notif = "Votre message a bien été envoyé !" 
+                      addNotification(notif)
                       handleSubmit(event)
                       setShowModal(false)
                       setInitialFilter('')

@@ -43,7 +43,7 @@ const Navigation = ({user, userDB}) =>{
 
     useEffect(() => {
         const handleDeleteImgNote = () => {
-            return db.collection('hotels')
+            return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection("note")
             .where("markup", "<", previousDays)
@@ -80,7 +80,7 @@ const Navigation = ({user, userDB}) =>{
       }
 
     const handleDeleteImgNoteDB = (noteId) => {
-        return db.collection('hotels')
+        return db.collection('hotel')
         .doc(userDB.hotelId)
         .collection('note')
         .doc(noteId)
