@@ -26,9 +26,7 @@ export default function PhoneSupport({user, userDB}) {
 
     useEffect(() => {
         const getMessages = () => {
-            return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+            return db.collection('assistance')
             .doc(userDB.hotelName)
             .collection("chatRoom")
             .orderBy("markup", "desc")
@@ -49,9 +47,7 @@ export default function PhoneSupport({user, userDB}) {
     }, [])
 
     const getChatRoom = () => {
-        return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+        return db.collection('assistance')
             .doc(userDB.hotelName)
             .get()
             .then((doc) => {
@@ -66,9 +62,7 @@ export default function PhoneSupport({user, userDB}) {
 
 
     const createRoomnameSubmit = () => {
-        return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+        return db.collection('assistance')
             .doc(userDB.hotelName)
             .set({
                 adminSpeakStatus: false,
@@ -78,9 +72,7 @@ export default function PhoneSupport({user, userDB}) {
       }
 
     const updateRoomnameSubmit = () => {
-        return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+        return db.collection('assistance')
             .doc(userDB.hotelName)
             .update({
                 status: true,
@@ -90,9 +82,7 @@ export default function PhoneSupport({user, userDB}) {
 
     const sendMessage = () => {
         setNote("")
-        return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+        return db.collection('assistance')
             .doc(userDB.hotelName)
             .collection("chatRoom")
             .add({
@@ -126,8 +116,8 @@ export default function PhoneSupport({user, userDB}) {
                             return (
                             <span className="darkTextUser">
                                 <span className="user_avatar_chat_label">{message.autor}</span>
-                                <div className="darkTextBodyUser">
-                                <span style={{marginBottom: "2%", color: "lightskyblue"}}>{message.text}</span>
+                                <div className="darkTextBodyUser" style={{backgroundColor:"lightblue"}}>
+                                <span style={{marginBottom: "2%", color: "white"}}>{message.text}</span>
                                 <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(message.markup).startOf('hour').fromNow()}</i></span>
                                 </div>
                                 <Avatar alt="user-profile-photo" 
@@ -140,7 +130,7 @@ export default function PhoneSupport({user, userDB}) {
                             <span className="darkTextOther">
                                 <span className="customer_avatar_chat_label">{message.author}</span>
                                 <div className="darkTextBodyOther">
-                                <span style={{marginBottom: "2%", color: "lightskyblue"}}>{message.text}</span>
+                                <span style={{marginBottom: "2%", color: "white"}}>{message.text}</span>
                                 <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(message.markup).startOf('hour').fromNow()}</i></span>
                                 </div>
                                 <Avatar alt="user-profile-photo" 
@@ -182,7 +172,7 @@ export default function PhoneSupport({user, userDB}) {
                 </div>
                 </PerfectScrollbar>
             <div>
-                <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%"}}>
+                <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder="Ecrire un message..." onChange={handleChange} required />
                     <img src={Send} alt="sendIcon" style={{width: "10%", borderRadius: "50px"}} onClick={async() => {
                     await getChatRoom()

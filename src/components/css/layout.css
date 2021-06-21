@@ -1802,6 +1802,12 @@ input[type=number] {
     border-radius: 20px;
 }
 
+#dark_message_contact {
+    width: 98%;
+    background-color: #ECECEC;
+    border-radius: 20px;
+}
+
 #dark_story {
     width: 98%;
     z-index: 5;
@@ -2066,7 +2072,6 @@ input[type=number] {
     border-top-left-radius: 15px;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    background-color: rgb(30, 52, 107);
     padding: 15px;
     color: black;
     filter: drop-shadow(2px 2px 2px)

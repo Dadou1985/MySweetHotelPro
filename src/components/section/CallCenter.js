@@ -187,8 +187,8 @@ export default function CallCenter({user, userDB}) {
                               return (
                                 <span className="darkTextUser">
                                   <span className="user_avatar_chat_label">{message.autor}</span>
-                                  <div className="darkTextBodyUser">
-                                  <span style={{marginBottom: "2%", color: "lightskyblue"}}>{message.text}</span>
+                                  <div className="darkTextBodyUser" style={{backgroundColor:"lightblue"}}>
+                                  <span style={{marginBottom: "2%", color: "white"}}>{message.text}</span>
                                     <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(message.markup).startOf('hour').fromNow()}</i></span>
                                   </div>
                                   <Avatar alt="user-profile-photo" 
@@ -201,7 +201,7 @@ export default function CallCenter({user, userDB}) {
                                 <span className="darkTextOther">
                                   <span className="customer_avatar_chat_label">{message.author}</span>
                                   <div className="darkTextBodyOther">
-                                  <span style={{marginBottom: "2%", color: "lightskyblue"}}>{message.text}</span>
+                                  <span style={{marginBottom: "2%", color: "white"}}>{message.text}</span>
                                     <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(message.markup).startOf('hour').fromNow()}</i></span>
                                   </div>
                                   <Avatar alt="user-profile-photo" 
@@ -245,7 +245,26 @@ export default function CallCenter({user, userDB}) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%"}}>
-                        <Form.Control style={{width: "90%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder="Ecrire un message..." onChange={handleChange} required />
+                        <Form.Control 
+                        style={{width: "90%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} 
+                        value={note} 
+                        name="note" 
+                        type="text" 
+                        placeholder="Ecrire un message..." 
+                        onChange={handleChange}
+                        onKeyDown={async(e) => {
+                          if(e.key === "Enter") {
+                            await getChatRoom()
+                        if(chatRoom !== null) {
+                            return updateRoomnameSubmit()
+                            .then(sendMessage())
+                        }else{
+                            return createRoomnameSubmit()
+                            .then(sendMessage())
+                        }
+                          }
+                        }} 
+                        required />
                         <img src={Send} alt="sendIcon" style={{width: "5%", borderRadius: "50px"}} onClick={async() => {
                         await getChatRoom()
                         if(chatRoom !== null) {

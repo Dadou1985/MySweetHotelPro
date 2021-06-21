@@ -23,10 +23,20 @@ const AdminRegister = ({hide, user, userDB}) => {
     const createUser = functions.httpsCallable('createUser')
 
     let newUid = userDB.hotelId + Date.now()
+
+    const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
  
     const handleSubmit = async(event) => {
         event.preventDefault()
         //setFormValue("")
+        const notif = "Vous venez de créer un compte collaborateur !" 
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(formValue.username)
@@ -47,7 +57,10 @@ const AdminRegister = ({hide, user, userDB}) => {
         country: userDB.country,
         code_postal: userDB.code_postal
         }) 
-        .then(hide())
+        .then(() => {
+            hide()
+            addNotification(notif)
+        })
       }
 
       console.log("$$$$$", user)

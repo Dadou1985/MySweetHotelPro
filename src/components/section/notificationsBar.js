@@ -23,6 +23,7 @@ export default function NotificationsBar({message, markup}) {
 
     return (
         <Snackbar
+        style={{textAlign: "center"}}
         open={visible}
         onClose={removeNotifications}
         message={message}

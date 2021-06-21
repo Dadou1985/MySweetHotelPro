@@ -12,8 +12,8 @@ import 'moment/locale/fr';
       return (
         <span className="darkTextUser">
           <span className="user_avatar_chat_label">{author}</span>
-          <div className="darkTextBodyUser">
-          <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>
+          <div className="darkTextBodyUser" style={{backgroundColor: author === user.displayName ? "lightblue" : "rgb(30, 52, 107)"}}>
+          <span style={{marginBottom: "2%", color: author === user.displayName ? "black" : "white"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
@@ -26,7 +26,7 @@ import 'moment/locale/fr';
         <span className="darkTextOther">
           <span className="customer_avatar_chat_label">{author}</span>
           <div className="darkTextBodyOther">
-          <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>
+          <span style={{marginBottom: "2%", color: "white"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 

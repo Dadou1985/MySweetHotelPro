@@ -31,6 +31,15 @@ function PhoneAdmin({user, userDB}) {
         });
     }
 
+    const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
+
     const createUser = functions.httpsCallable('createUser')
     const deleteUser = functions.httpsCallable('deleteUser')
     let newUid = userDB.hotelId + Date.now()
@@ -38,6 +47,8 @@ function PhoneAdmin({user, userDB}) {
     const handleSubmit = async(event) => {
         event.preventDefault()
         //setFormValue("")
+        const notif = "Vous venez de créer un compte collaborateur !" 
+        addNotification(notif)
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(formValue.username)

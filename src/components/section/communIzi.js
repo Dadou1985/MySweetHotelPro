@@ -35,6 +35,7 @@ export default function CommunIzi({userDB, user}) {
     const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
     const [guestList, setGuestList] = useState([])
     const [deleteListGuestArray, setDeleteListGuestArray] = useState([])
+    const [list, setList] = useState(false)
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -73,7 +74,6 @@ export default function CommunIzi({userDB, user}) {
     const handleSubmit = (event) =>{
         event.preventDefault()
         setNote("")
-        let date = startDate.yyyymmdd()
         return db.collection('hotel')
           .doc(userDB.hotelId)
           .collection("chat")
@@ -205,6 +205,10 @@ export default function CommunIzi({userDB, user}) {
           .then(doc => console.log('nouvelle notitfication'))
   }
 
+  const handleShowList = () => setList(true)
+
+  const handleHideList = () => setList(false)
+
 
     return (
         <div className="communizi-container">
@@ -258,6 +262,12 @@ export default function CommunIzi({userDB, user}) {
                     <Input type="text" placeholder="Répondre au client..."  
                     value={note}
                     onChange={handleChange}
+                    onKeyDown={(e) => {
+                      if(e.key === "Enter") {
+                        handleSubmit(e)
+                        updateAdminSpeakStatus()
+                      }
+                    }}
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
@@ -318,53 +328,50 @@ export default function CommunIzi({userDB, user}) {
               <div id="drawer-container" style={{
                   display: "flex",
                   flexFlow: "column", 
-                  justifyContent: "flex-end",
+                  justifyContent: "space-between",
                   padding: "5%", 
-                  maxHeight: "30vh"}}>
-                  <h4 style={{textAlign: "center", marginBottom: "2vh"}}>Contacter un client</h4>
-                  <Input 
-                      type="text" 
-                      placeholder="Entrer le numéro de chambre du client" 
-                      value={initialFilter} 
-                      style={{
-                        borderTop: "none", 
-                        borderLeft: "none", 
-                        borderRight: "none", 
-                      marginBottom: "2vh"}} 
-                      maxLength="60" 
-                      onChange={handleChangeFilter} />
+                  maxHeight: "90vh"}}>
+                  <div style={{
+                    marginBottom: list ? "2vh" : "6vh"
+                  }}>
+                    <h4>Contacter un client</h4>
+                    <Button onClick={handleShowList}>{initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}</Button>
+                  </div>
+                    {list && <div style={{
+                      marginBottom: "7vh"
+                    }}>
                       <PerfectScrollbar>
                       {guestList.map(guest => (
-                        <div style={{
-                          display: "flex",
-                          flexFlow: "column",
-                          padding: "2%",
-                          maxHeight: "30vh",
-                          backgroundColor: "#ECECEC",
-                          cursor: "pointer"
-                        }}
+                        <DropdownItem
+                        style={{borderBottom: "1px solid lightgrey"}}
                         onClick={() => {
-                          setExpanded(guest.id)
-                          setInitialFilter(guest.id)}}>{guest.id} - Chambre {guest.room}</div>
+                          setExpanded(guest.username)
+                          setInitialFilter(guest.username)
+                          handleHideList()}}>{guest.username} - Chambre {guest.room}</DropdownItem>
                       ))}
                       </PerfectScrollbar>
+                    </div>}
+                   <div style={{
+                     position: "absolute", 
+                     backgroundColor: "white",
+                     width: "90%",
+                     bottom: "8vh"
+                   }}>
                     <Input 
-                      type="text" 
-                      placeholder="Ecrire un message..." 
-                      value={note} 
-                      style={{
-                        borderTop: "none", 
-                        borderLeft: "none", 
-                        borderRight: "none"}} 
-                      maxLength="60" 
-                      onChange={handleChange} />
+                        type="text" 
+                        placeholder="Ecrire un message..." 
+                        value={note}  
+                        maxLength="60" 
+                        onChange={handleChange}
+                        id="dark_message_contact" />
+                   </div>
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
                       const notif = "Votre message a bien été envoyé !" 
                       addNotification(notif)
                       handleSubmit(event)
-                      setShowModal(false)
-                      setInitialFilter('')
+                      setActivate(false)
+                      setInitialFilter("Liste Clients Présents")
                     }}>Envoyer</Button>
             </Drawer>
         </div>

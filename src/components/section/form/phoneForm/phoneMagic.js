@@ -70,6 +70,7 @@ export default function PhoneMagic({user, userDB}) {
         }
 
     const createHotel = () => {
+        const notif = "Vous venez de créer un hôtel !"
         return db.collection("hotel")
             .add({
                 hotelName: formValue.hotelName,
@@ -90,6 +91,7 @@ export default function PhoneMagic({user, userDB}) {
             .then(()=>{
                 setFormValue("" || 0)
                 setActivateCreateHotel(false)
+                addNotification(notif)
             }) 
         }
     
@@ -101,6 +103,7 @@ export default function PhoneMagic({user, userDB}) {
     const adminMaker = async(event) => {
         event.preventDefault()
         //setFormValue("")
+        const notif = "Vous venez de créer un super-administrateur !"
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(formValue.username)
@@ -115,7 +118,7 @@ export default function PhoneMagic({user, userDB}) {
         createdAt: Date.now(),
         userId: newUid,
         classement: formValue.classement,
-        code_postal: formValue.codePostal,
+        code_postal: formValue.code_postal,
         country: formValue.country,
         city: formValue.city,
         room: formValue.room,
@@ -124,6 +127,7 @@ export default function PhoneMagic({user, userDB}) {
         .then(()=>{
             setFormValue("" || 0)
             setActivateAdminMaker(false)
+            addNotification(notif)
         }) 
     }
 

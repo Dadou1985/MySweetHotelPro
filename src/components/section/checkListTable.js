@@ -105,6 +105,11 @@ const CheckListTable = ({shift}) => {
                 value={formValue.task}
                 name="task"
                 onChange={handleChange}
+                onKeyDown={(e) => {
+                    if(e.key === "Enter") {
+                        handleSubmit(e)
+                    }
+                }}
                 />
                 <InputGroup.Append>
                 <Button variant="outline-success" onClick={handleSubmit}>Valider</Button>
