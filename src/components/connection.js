@@ -54,7 +54,7 @@ const Connection = () =>{
                 className="form-control mb-4" 
                 placeholder="Nom d'utilisateur"
                 onChange={handleChange}
-            required /> */ } 
+            required />*/}   
 
             <input 
                 value={formValue.email}
