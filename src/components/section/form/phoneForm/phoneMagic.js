@@ -106,8 +106,9 @@ export default function PhoneMagic({user, userDB}) {
         const notif = "Vous venez de créer un super-administrateur !"
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
-        .doc(formValue.username)
+        .doc(newUid)
         .set({   
+        username: formValue.username, 
         adminStatus: true, 
         email: formValue.email,
         password: "password",

@@ -47,14 +47,14 @@ const Connection = () =>{
               className="text-center p-5"
               onSubmit={(event) => handleSubmit(event)}>
 
-            <input 
+            {/*<input 
                 value={formValue.username}
                 type="text" 
                 name="username" 
                 className="form-control mb-4" 
                 placeholder="Nom d'utilisateur"
                 onChange={handleChange}
-                required />   
+            required /> */ } 
 
             <input 
                 value={formValue.email}

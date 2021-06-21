@@ -5,12 +5,12 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import 'moment/locale/fr';
 
-  const MessageCommunizi = ({author, text, date, email, user, translation, photo, title}) =>{
+  const MessageCommunizi = ({author, text, date, email, user, translation, photo, title, key}) =>{
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(title === "host"){
       return (
-        <span className="darkTextUser">
+        <span key={key} className="darkTextUser">
           <span className="user_avatar_chat_label">{author}</span>
           <div className="darkTextBodyUser" style={{backgroundColor: author === user.displayName ? "lightblue" : "rgb(30, 52, 107)"}}>
           <span style={{marginBottom: "2%", color: author === user.displayName ? "black" : "white"}}>{translation || text}</span>
@@ -23,7 +23,7 @@ import 'moment/locale/fr';
       )
     }else{
       return (
-        <span className="darkTextOther">
+        <span key={key} className="darkTextOther">
           <span className="customer_avatar_chat_label">{author}</span>
           <div className="darkTextBodyOther">
           <span style={{marginBottom: "2%", color: "white"}}>{translation || text}</span>
@@ -38,7 +38,7 @@ import 'moment/locale/fr';
   }else{
     if(title === "host"){
       return (
-        <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
+        <span key={key} className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
           <span className="old_user_avatar_chat_label">{author}</span>
           <div className="oldDarkTextBodyUser">
           <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>
@@ -51,7 +51,7 @@ import 'moment/locale/fr';
       )
     }else{
       return (
-        <span className="oldDarkTextOther" style={{fontWeight: "bolder"}}>
+        <span key={key} className="oldDarkTextOther" style={{fontWeight: "bolder"}}>
           <span className="customer_old_user_avatar_chat_label">{author}</span>
           <div className="oldDarkTextBodyOther">
           <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>

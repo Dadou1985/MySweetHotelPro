@@ -3,12 +3,18 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
+import DateFnsUtils from '@date-io/date-fns';
+import {
+  MuiPickersUtilsProvider,
+  DatePicker
+} from '@material-ui/pickers';
+
 
 const NotebookPage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
-
+  const [filterDate, setFilterDate] = useState(new Date())
 
   useEffect(() => {
         
@@ -34,6 +40,10 @@ const NotebookPage = () => {
     return unsubscribe
 }, [])
 
+const handleDateChange = (date) => {
+  setFilterDate(date);
+};
+
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
@@ -44,8 +54,19 @@ const NotebookPage = () => {
             <Navigation user={user} userDB={userDB} />}  
         <div id="iziChat" className="dark_messenger_communizi_container">
             <h5 className="font-weight-bolder dark_messenger_title">Note de service</h5>
-            {!!userDB && !!user&&
-            <Notebook userDB={userDB} user={user} />}
+            <MuiPickersUtilsProvider utils={DateFnsUtils}>
+              <DatePicker
+                  variant="dialog"
+                  ampm={false}
+                  value={filterDate}
+                  onChange={handleDateChange}
+                  onError={console.log}
+                  format="dd/MM/yyyy"
+                  autoOk
+              />                                        
+              </MuiPickersUtilsProvider>
+            {!!userDB && !!user && !!filterDate &&
+            <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
         </div>
     </FirebaseContext.Provider>
   )

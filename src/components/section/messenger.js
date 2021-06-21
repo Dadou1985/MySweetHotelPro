@@ -113,8 +113,8 @@ const Messenger = ({filterDate}) =>{
         return db.collection('hotel')
             .doc(userDB.hotelId)
             .collection('note')
-            .doc(`${title}`)
-            .set({
+            .add({
+            title: title,
             author: user.displayName,
             text: note,
             status: status,

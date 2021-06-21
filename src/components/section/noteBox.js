@@ -94,7 +94,7 @@ const NoteBox = ({filterDate}) => {
                             size="30"
                             color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
                             style={{marginRight: "1vw"}} />
-                            <b>{flow.id}</b>
+                            <b>{flow.title}</b>
                          </div>
                           <div style={{
                             display:"flex",

@@ -61,12 +61,13 @@ console.log(chatRoom)
     return (
         <div>
             <PerfectScrollbar>
-                {user&& userDB&& messages.map(flow => {
+                {user&& userDB&& messages.map((flow, index) => {
                     let language = userDB.language
                     const renderSwitch = () => {
                         switch(language) {
                             case 'en':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.en}
                                 date={flow.markup}
@@ -77,6 +78,7 @@ console.log(chatRoom)
                                 />
                             case 'ja':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.ja}
                                 date={flow.markup}
@@ -87,6 +89,7 @@ console.log(chatRoom)
                                 />
                             case 'ko':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.ko}
                                 date={flow.markup}
@@ -97,6 +100,7 @@ console.log(chatRoom)
                                 />
                             case 'pt':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.pt}
                                 date={flow.markup}
@@ -107,6 +111,7 @@ console.log(chatRoom)
                                 />
                             case 'ar':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.ar}
                                 date={flow.markup}
@@ -117,6 +122,7 @@ console.log(chatRoom)
                                 />
                             case 'it':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.it}
                                 date={flow.markup}
@@ -127,6 +133,7 @@ console.log(chatRoom)
                                 />
                             case 'es':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.es}
                                 date={flow.markup}
@@ -137,6 +144,7 @@ console.log(chatRoom)
                                 />
                             case 'zh':
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.zh}
                                 date={flow.markup}
@@ -147,6 +155,7 @@ console.log(chatRoom)
                                 />
                             default:
                                 return <Message 
+                                key={index}
                                 author={flow.author}
                                 translation={flow.translated.fr}
                                 date={flow.markup}
@@ -159,7 +168,8 @@ console.log(chatRoom)
                     }
 
                     if(userDB.language === chatRoom.guestLanguage) {
-                        return <Message 
+                        return <Message                                 
+                                key={index}
                                 author={flow.author}
                                 photo={flow.photo}
                                 text={flow.text}

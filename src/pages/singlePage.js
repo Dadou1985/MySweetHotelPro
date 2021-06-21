@@ -20,7 +20,7 @@ const SinglePage = () => {
         if (user) {
           await setUser(user)
            await db.collection('businessUsers')
-            .doc(user.displayName)
+            .doc(user.uid)
             .get()
             .then((doc) => {
               if (doc.exists) {

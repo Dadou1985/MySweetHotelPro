@@ -39,8 +39,9 @@ const AdminRegister = ({hide, user, userDB}) => {
         const notif = "Vous venez de créer un compte collaborateur !" 
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
-        .doc(formValue.username)
-        .set({   
+        .doc(newUid)
+        .set({  
+        username: formValue.username, 
         adminStatus: false, 
         email: formValue.email,
         password: "password",

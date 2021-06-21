@@ -338,7 +338,7 @@ export default function CommunIzi({userDB, user}) {
                     <Button onClick={handleShowList}>{initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}</Button>
                   </div>
                     {list && <div style={{
-                      marginBottom: "7vh"
+                      marginBottom: "5vh"
                     }}>
                       <PerfectScrollbar>
                       {guestList.map(guest => (
@@ -352,7 +352,6 @@ export default function CommunIzi({userDB, user}) {
                       </PerfectScrollbar>
                     </div>}
                    <div style={{
-                     position: "absolute", 
                      backgroundColor: "white",
                      width: "90%",
                      bottom: "8vh"
