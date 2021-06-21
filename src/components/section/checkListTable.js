@@ -27,8 +27,10 @@ const CheckListTable = ({shift}) => {
             .doc(taskId)
             .update({
             status: !currentStatus,
-            })
+        })
     }
+
+
  
     const handleIsChecked = () => {
         setIsChecked(!isChecked)
@@ -59,24 +61,42 @@ const CheckListTable = ({shift}) => {
             .orderBy("markup", "asc")
         }
     
-        let unsubscribe = listOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    console.log(snapInfo)
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+    let unsubscribe = listOnAir().onSnapshot(function(snapshot) {
+        const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            console.log(snapInfo)
+            setInfo(snapInfo)
+        });
+        return unsubscribe
            
      },[shift])
 
+    let taskStatus = info.length > 0 && info.filter(status => status.status === true)
+
+    const handleCleanCheckboxes = () => {
+        taskStatus.length > 0 && taskStatus.map(task => {
+            return db.collection('hotel')
+            .doc(userDB.hotelId)
+            .collection('checkList')
+            .doc("lists")
+            .collection(shift)
+            .doc(task.id)
+            .update({
+            status: false,
+        })
+        })
+    }
+
+    console.log(taskStatus)
+
     return (
         <div>
-            {/*<Button variant="outline-info" className="checkList_allSelected_button" block onClick={handleIsChecked}>Tout sélectionner</Button>*/}
+            <Button variant="outline-info" className="checkList_allSelected_button" block onClick={handleCleanCheckboxes}>Tout dé-sélectionner</Button>
             <InputGroup className="mb-3">
                 <FormControl
                 placeholder="Ajouter une tâche"

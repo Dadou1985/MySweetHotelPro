@@ -10,7 +10,6 @@ const CheckList = ({userDB, setUserDB}) =>{
     const [list, setList] = useState(false)
     const [user, setUser] = useState(auth.currentUser)
 
-    
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
 
