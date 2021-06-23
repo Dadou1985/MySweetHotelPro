@@ -27,7 +27,7 @@ const FeedbackBox = ({user, userDB}) =>{
             .doc('category')
             .collection(formValue.categorie)
             .add({
-                author: user.displayName,
+                author: userDB.username,
                 hotelName: userDB.hotelName,
                 hotelRegion: userDB.hotelRegion,
                 hotelDept: userDB.hotelDept,

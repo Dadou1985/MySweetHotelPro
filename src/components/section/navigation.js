@@ -145,7 +145,7 @@ const Navigation = ({user, userDB}) =>{
                         }>
                     <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} onClick={()=>navigate('/doorsStage')} />
                     </OverlayTrigger>
-                    <div className="username_title"><b>{user.displayName}</b></div>
+                    <div className="username_title"><b>{userDB.username}</b></div>
                     <OverlayTrigger
                         placement="bottom"
                         overlay={

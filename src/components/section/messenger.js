@@ -115,7 +115,7 @@ const Messenger = ({filterDate}) =>{
             .collection('note')
             .add({
             title: title,
-            author: user.displayName,
+            author: userDB.username,
             text: note,
             status: status,
             date: moment(startDate).format('LL'),

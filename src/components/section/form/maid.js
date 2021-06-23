@@ -60,7 +60,7 @@ const Maid = ({userDB, user}) =>{
             .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             date: new Date(),
             details: formValue.details,
             client: formValue.client,

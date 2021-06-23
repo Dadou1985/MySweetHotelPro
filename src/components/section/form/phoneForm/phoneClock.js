@@ -55,7 +55,7 @@ const PhoneClock = ({user, userDB}) =>{
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             client: formValue.client,
             room: formValue.room,
             day: new Date(),

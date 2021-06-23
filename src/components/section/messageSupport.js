@@ -8,7 +8,7 @@ import 'moment/locale/fr';
   const MessageSupport = ({author, text, date, email, user, userDB, photo}) =>{
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
-    if(author === user.displayName){
+    if(author === userDB.username){
       return (
         <span className="darkTextUser">
           <span className="user_avatar_chat_label">{author}</span>
@@ -36,7 +36,7 @@ import 'moment/locale/fr';
       )
     }
   }else{
-    if(author === user.displayName){
+    if(author === userDB.username){
       return (
         <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
           <span className="old_user_avatar_chat_label">{author}</span>

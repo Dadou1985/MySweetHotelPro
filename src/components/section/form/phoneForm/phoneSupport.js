@@ -86,7 +86,7 @@ export default function PhoneSupport({user, userDB}) {
             .doc(userDB.hotelName)
             .collection("chatRoom")
             .add({
-                author: user.displayName,
+                author: userDB.username,
                 date: new Date(),
                 email: user.email,
                 photo: user.photoURL,
@@ -112,7 +112,7 @@ export default function PhoneSupport({user, userDB}) {
                 }}>
                 {messages.map(message => {
                     if(moment(message.markup).format('L') === moment(new Date()).format('L')){
-                        if(message.author === user.displayName){
+                        if(message.author === userDB.username){
                             return (
                             <span className="darkTextUser">
                                 <span className="user_avatar_chat_label">{message.autor}</span>
@@ -140,7 +140,7 @@ export default function PhoneSupport({user, userDB}) {
                             )
                         }
                         }else{
-                        if(message.author === user.displayName){
+                        if(message.author === userDB.username){
                             return (
                             <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
                                 <span className="old_user_avatar_chat_label">{message.author}</span>

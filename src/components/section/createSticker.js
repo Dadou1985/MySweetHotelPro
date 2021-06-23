@@ -43,7 +43,7 @@ const CreateSticker = () => {
             .add({
             title: formValue.title,
             text: formValue.text,
-            author: user.displayName,
+            author: userDB.username,
             markup: Date.now()
             })
       }

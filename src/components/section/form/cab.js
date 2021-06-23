@@ -66,7 +66,7 @@ const Cab = ({userDB, user}) =>{
             .doc(userDB.hotelId)
             .collection("cab")
             .add({
-            author: user.displayName,
+            author: userDB.username,
             destination: formValue.destination,
             client: formValue.client,
             room: formValue.room,

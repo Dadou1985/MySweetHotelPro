@@ -26,6 +26,10 @@ const SinglePage = () => {
               if (doc.exists) {
                 console.log("+++++++", doc.data())
                 setUserDB(doc.data())
+                let userState = JSON.stringify(doc.data())
+                let userAuth = JSON.stringify(user)
+                sessionStorage.setItem("userStorage", userState)
+                sessionStorage.setItem("userAuth", userAuth)
               } else {
                 // doc.data() will be undefined in this case
                 console.log("No such document!")
@@ -36,6 +40,8 @@ const SinglePage = () => {
       })
     return unsubscribe
   }, [])
+
+  console.log("******", user)
   
   return (
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>

@@ -44,7 +44,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
 
     const handleLoadUserDB = () => {
         db.collection('businessUsers')
-            .doc(user.displayName)
+            .doc(user.uid)
             .get()
             .then((doc) => {
               if (doc.exists) {
@@ -62,7 +62,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
         setFormValue({email: ""})
         
         return db.collection('businessUsers')
-            .doc(user.displayName)
+            .doc(user.uid)
             .update({
                 email: field
             })
@@ -74,7 +74,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
         setFormValue({email: ""})
         
         return db.collection('businessUsers')
-            .doc(user.displayName)
+            .doc(user.uid)
             .update({
                 password: field
             })

@@ -63,7 +63,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     
     const ghostIn = () => {
         return db.collection('businessUsers')
-        .doc(user.displayName)
+        .doc(user.uid)
         .update({   
             hotelId: formValue.hotelId,
             hotelName: hotelName,
@@ -78,7 +78,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
 
     const ghostOut = () => {
         return db.collection('businessUsers')
-        .doc(user.displayName)
+        .doc(user.uid)
         .update({   
         hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",
         hotelName: "Bates Motel",
@@ -101,7 +101,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         const notif = `Vous venez d'entrer en mode Ghost Host sur l'hôtel ${hotelName}`
         await ghostIn()
         return db.collection("businessUsers")
-        .doc(user.displayName)
+        .doc(user.uid)
         .get()
         .then((doc) => {
             if (doc.exists) {
@@ -119,7 +119,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         const notif = `Vous venez de sortir du mode Ghost Host sur l'hôtel ${hotelName}`
         await ghostOut()
         return db.collection("businessUsers")
-        .doc(user.displayName)
+        .doc(user.uid)
         .get()
         .then((doc) => {
             if (doc.exists) {

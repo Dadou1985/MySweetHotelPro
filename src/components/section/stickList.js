@@ -23,7 +23,7 @@ const StickList = () => {
                 .collection(userDB.hotelDept)
                 .doc(`${userDB.hotelId}`)
                 .collection('stickers')
-                .where("author", "==", user.displayName)
+                .where("author", "==", userDB.username)
         }
 
         let unsubscribe = stickerOnAir().onSnapshot(function(snapshot) {

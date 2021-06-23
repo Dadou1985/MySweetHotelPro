@@ -45,7 +45,7 @@ const Caisse = () =>{
             .doc(userDB.hotelId)
             .collection('safe')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             date: new Date(),
             amount: caisse,
             shift: formValue.shift,

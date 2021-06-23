@@ -24,7 +24,7 @@ const RoomAvailable = () => {
 
       const handleSubmit = event => {
         event.preventDefault()
-        firebase.updateRoomAvailable({documentId: user.displayName, room: formValue.room}).then(handleClose)
+        firebase.updateRoomAvailable({documentId: userDB.username, room: formValue.room}).then(handleClose)
     }
 
     return (

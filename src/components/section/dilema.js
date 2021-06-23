@@ -24,7 +24,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
 
     
     const handleWorkspace = () => {
-        if(!user.displayName) {
+        if(!userDB.username) {
             if(window.innerWidth > 480) {
                 setShowModal(true)
             }else{
@@ -94,7 +94,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
 
     const handleLoadUserDB = () => {
         db.collection('businessUsers')
-            .doc(user.displayName)
+            .doc(user.uid)
             .get()
             .then((doc) => {
               if (doc.exists) {
@@ -113,7 +113,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         setFormValue({email: ""})
         
         return db.collection('businessUsers')
-        .doc(user.displayName)
+        .doc(user.uid)
         .update({
             email: field
           })
@@ -125,7 +125,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         setFormValue({email: ""})
         
         return db.collection('businessUsers')
-        .doc(user.displayName)
+        .doc(user.uid)
         .update({
             password: field
           })
@@ -212,7 +212,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         style={{ backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})` }}>
                 <div className="profile-container">
                     <h1>
-                        <div style={{color: "#5bc0de", fontWeight: "bold"}}>{flow.id}</div>
+                        <div style={{color: "#5bc0de", fontWeight: "bold"}}>{flow.username}</div>
                         <div style={{fontSize: "15px"}}>{flow.email}</div>
                        { /*<div className="header-profile">
                             <img src={Tips} alt="tips" className="tips" /> 

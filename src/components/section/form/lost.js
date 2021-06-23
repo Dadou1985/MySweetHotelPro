@@ -46,7 +46,7 @@ const Lost = ({userDB, user}) =>{
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             date: new Date(),
             description: formValue.description,
             details: formValue.details,

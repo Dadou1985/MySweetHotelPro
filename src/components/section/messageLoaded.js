@@ -40,7 +40,7 @@ import { FirebaseContext, db, auth } from '../../Firebase'
     }
 
 console.log("$$$$$$", moment(date).format('LL'))
-    if(blueprint === user.displayName){
+    if(blueprint === userDB.username){
       if(moment(date).format('L') === moment(new Date()).format('L')){
         return(
             <Card className="shadow user_Message">

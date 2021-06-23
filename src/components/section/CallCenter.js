@@ -103,7 +103,7 @@ export default function CallCenter({user, userDB}) {
         .doc(userDB.hotelName)
         .collection("chatRoom")
         .add({
-            author: user.displayName,
+            author: userDB.username,
             date: new Date(),
             email: user.email,
             photo: user.photoURL,
@@ -183,12 +183,12 @@ export default function CallCenter({user, userDB}) {
                     }}>
                     {messages.map(message => {
                         if(moment(message.markup).format('L') === moment(new Date()).format('L')){
-                            if(message.author === user.displayName){
+                            if(message.author === userDB.username){
                               return (
                                 <span className="darkTextUser">
                                   <span className="user_avatar_chat_label">{message.autor}</span>
                                   <div className="darkTextBodyUser" style={{backgroundColor:"lightblue"}}>
-                                  <span style={{marginBottom: "2%", color: "white"}}>{message.text}</span>
+                                  <span style={{marginBottom: "2%", color: "black"}}>{message.text}</span>
                                     <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(message.markup).startOf('hour').fromNow()}</i></span>
                                   </div>
                                   <Avatar alt="user-profile-photo" 
@@ -211,7 +211,7 @@ export default function CallCenter({user, userDB}) {
                               )
                             }
                           }else{
-                            if(message.author === user.displayName){
+                            if(message.author === userDB.username){
                               return (
                                 <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
                                   <span className="old_user_avatar_chat_label">{message.author}</span>

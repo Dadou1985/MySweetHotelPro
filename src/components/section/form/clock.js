@@ -66,7 +66,7 @@ const Clock = ({userDB, user}) =>{
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             client: formValue.client,
             room: formValue.room,
             day: Date.now(),

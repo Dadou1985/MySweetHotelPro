@@ -60,7 +60,7 @@ console.log(chatRoom)
 
     return (
         <div>
-            <PerfectScrollbar>
+            <PerfectScrollbar style={{paddingTop: "3vh"}}>
                 {user&& userDB&& messages.map((flow, index) => {
                     let language = userDB.language
                     const renderSwitch = () => {

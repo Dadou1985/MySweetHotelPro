@@ -60,7 +60,7 @@ const Repair = ({userDB, user}) =>{
             .doc(userDB.hotelId)
             .collection('maintenance')
             .add({
-            author: user.displayName,
+            author: userDB.username,
             date: new Date(),
             details: formValue.details,
             client: formValue.client,

@@ -64,7 +64,7 @@ const AdminRegister = ({hide, user, userDB}) => {
         })
       }
 
-      console.log("$$$$$", user)
+      console.log("$$$$$", formValue)
 
     return (
         <div>

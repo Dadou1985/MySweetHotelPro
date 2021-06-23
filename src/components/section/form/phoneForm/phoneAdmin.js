@@ -122,7 +122,7 @@ function PhoneAdmin({user, userDB}) {
                 <tbody>
                 {info.map(flow =>(
                     <tr key={flow.markup}>
-                    <td>{flow.id}</td>
+                    <td>{flow.username}</td>
                     <td>
                         <Switch
                             checked={flow.adminStatus}

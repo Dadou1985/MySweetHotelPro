@@ -72,7 +72,7 @@ const changeAdminSpeakStatus = (roomName) => {
           .doc(`${expanded}`)
           .collection('chatRoom')
           .add({
-            author: user.displayName,
+            author: userDB.username,
             text: note,
             date: new Date(),
             userId: user.uid,
