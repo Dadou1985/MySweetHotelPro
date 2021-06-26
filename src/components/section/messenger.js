@@ -7,7 +7,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import Send from '../../svg/paper-plane.svg'
 import Calendar from '../../svg/calendar.svg'
 import Plus from '../../svg/plus3.svg'
-import { OverlayTrigger, Tooltip, Modal } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap'
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import YellowCircle from '../../svg/yellow-circle.svg'
@@ -118,6 +118,7 @@ const Messenger = ({filterDate}) =>{
             author: userDB.username,
             text: note,
             status: status,
+            isChecked: false,
             date: moment(startDate).format('LL'),
             hour: moment(startDate).format('LT'),
             img: url === undefined ? "" : url,
@@ -214,6 +215,7 @@ const Messenger = ({filterDate}) =>{
                     <NoteBox filterDate={filterDate} />}
                 </div>
             </PerfectScrollbar>
+            {typeof window !== `undefined` && window.innerWidth > 480 ?
             <OverlayTrigger
                 placement="top"
                 overlay={
@@ -221,11 +223,13 @@ const Messenger = ({filterDate}) =>{
                     Ajouter une note
                     </Tooltip>
                 }>
-                <div className="icon-add-note-container"  onClick={handleShow}>
+                 
+                <div className="icon-add-note-container" onClick={handleShow}>
                     <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
-                </div>
-            </OverlayTrigger>
-            
+                </div> 
+            </OverlayTrigger> :
+            <Button size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Ajouter une note de service</Button>}
+
             <Modal show={showModal} 
             size="lg"
             onHide={handleClose}

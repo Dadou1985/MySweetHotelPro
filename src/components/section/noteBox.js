@@ -11,7 +11,9 @@ import 'moment/locale/fr';
 import Avatar from 'react-avatar'
 import Checkbox from '@material-ui/core/Checkbox';
 import { FirebaseContext, db, auth } from '../../Firebase'
-
+import { withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 const NoteBox = ({filterDate}) => {
 
@@ -69,6 +71,26 @@ const NoteBox = ({filterDate}) => {
            
      },[filterDate])
 
+    const handleChangeCheckboxStatus = (noteId, status) => {
+      return db.collection('hotel')
+          .doc(userDB.hotelId)
+          .collection('note')
+          .doc(noteId)
+          .update({
+            isChecked: status
+          })
+    }
+
+    const GreenCheckbox = withStyles({
+      root: {
+        color: green[400],
+        '&$checked': {
+          color: green[600],
+        },
+      },
+      checked: {},
+    })((props) => <Checkbox color="default" {...props} />);
+
      console.log(filterDate)
 
     return (
@@ -93,7 +115,7 @@ const NoteBox = ({filterDate}) => {
                             name={flow.author}
                             size="30"
                             color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                            style={{marginRight: "1vw"}} />
+                            style={{marginRight: "2vw"}} />
                             <b>{flow.title}</b>
                          </div>
                           <div style={{
@@ -101,10 +123,10 @@ const NoteBox = ({filterDate}) => {
                             flexflow: "row",
                             alignItems: "center"
                           }}>
-                          <Checkbox
-                            color="primary"
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                          />
+                            <GreenCheckbox 
+                              checked={flow.isChecked} 
+                              onChange={(event) => handleChangeCheckboxStatus(flow.id, event.target.checked)}
+                            />
                             <i style={{color: "black", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
                           </div>
                         </AccordionItemButton>

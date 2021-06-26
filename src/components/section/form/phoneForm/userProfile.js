@@ -181,7 +181,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     height: "50vh",
                     backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})`,
                     backgroundSize: "cover",
-                    filter: "blur(3px) grayscale(90%)" 
+                    filter: "blur(2px) grayscale(90%)" 
                 }}>
                     
                 </div>
@@ -196,7 +196,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     padding: "5%",
                     }}>
                 <h1>
-                    <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center"}}>{flow.id}</div>
+                    <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center"}}>{flow.username}</div>
                     <div style={{fontSize: "15px", textAlign: "center"}}>{flow.email}</div>
                     {/*<div className="header-profile">
                         <img src={Tips} alt="tips" className="tips" /> 

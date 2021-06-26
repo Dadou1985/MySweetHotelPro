@@ -23,6 +23,9 @@ const PhoneMaid = ({user, userDB}) =>{
     const [imgFrame, setImgFrame] = useState(false)
     const [newRoom, setNewRoom] = useState(false)
     const [newState, setNewState] = useState(false)
+    const [roomState, setRoomState] = useState(false)
+    const [currentRoom, setCurrentRoom] = useState("")
+    const [guestId, setGuestId] = useState("")
 
     const handleChange = (event) =>{
         event.persist()
@@ -173,9 +176,17 @@ const PhoneMaid = ({user, userDB}) =>{
                             {expand && <td>{flow.client}</td>}
                             <td>{flow.fromRoom}</td>
                             {flow.toRoom === "" ? 
-                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => setNewRoom(true)}>Attribuer</Button></td> : 
+                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
+                                    setCurrentRoom(flow.id)
+                                    setGuestId(flow.userId)
+                                    setNewRoom(true)}}>Attribuer</Button></td> : 
                                 <td>{flow.toRoom}</td>}
-                            <td>{flow.state}</td>
+                            {flow.state === "" ? 
+                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
+                                    setRoomState(true)
+                                    setCurrentRoom(flow.id)
+                                }}>A vérifier</Button></td>
+                                : <td>{flow.state}</td>}
                             {expand && <td>{flow.reason}</td>}
                             <td>
                             <Switch
@@ -204,25 +215,7 @@ const PhoneMaid = ({user, userDB}) =>{
                                     console.log(error);
                                 });
                             }}>Supprimer</Button></td>}
-                            <Modal show={newRoom}
-                                size="sm"
-                                aria-labelledby="contained-modal-title-vcenter"
-                                centered
-                                onHide={() => setNewRoom(false)}
-                                >
-                                <Modal.Body>
-                                    <Input 
-                                        type="text"
-                                        placeholder="Entrer un n° de chambre"
-                                        value={formValue.toRoom}
-                                        name="toRoom"
-                                        onChange={(e) => setFormValue({toRoom: e.target.value})}
-                                    />
-                                </Modal.Body>
-                                <Modal.Footer>
-                                    <Button variant="success" size="sm" style={{width: "100%"}} onClick={() => handleUpdateRoom(flow.id)}>Valider</Button>
-                                </Modal.Footer>
-                            </Modal>
+                            
                             </tr>
                         ))}
                     </tbody>
@@ -297,6 +290,45 @@ const PhoneMaid = ({user, userDB}) =>{
                         setActivate(false)
                         }}>Déloger maintenant</Button>
                     </div>
+                </Drawer>
+
+                <Drawer anchor="bottom" open={newRoom} onClose={() => setNewRoom(false)}  className="phone_container_drawer">
+                    <div className="phone_container_drawer">
+                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>Attribuer un numéro chambre</h6>
+                        <Input
+                        style={{margin: "2%"}} 
+                            placeholder="Entrer un n° de chambre"
+                            value={formValue.toRoom}
+                            name="toRoom"
+                            onChange={(e) => setFormValue({toRoom: e.target.value})}
+                        />
+                    </div>
+                    <Button variant="success" size="md" onClick={() => {
+                        handleUpdateRoom(currentRoom, guestId)
+                        setNewRoom(false)}}>Valider</Button>
+                </Drawer>
+
+                <Drawer anchor="bottom" open={roomState} onClose={() => setRoomState(false)}  className="phone_container_drawer">
+                    <div className="phone_container_drawer">
+                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>Etat de la chambre</h6>
+                        <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                            style={{width: "100%", 
+                            height: "100%", 
+                            border: "1px solid lightgrey", 
+                            borderRadius: "3px",
+                            backgroundColor: "white", 
+                            padding: "1vw",
+                            marginBottom: "2vh", 
+                            marginTop: "2vh"}}>
+                                <option></option>
+                                <option>Sale</option>
+                                <option>Propre</option>
+                        </select>
+                        </div>
+                    <Button variant="success" onClick={() => {
+                            handleUpdateRoomState(currentRoom)
+                            setRoomState(false)
+                    }}>Valider</Button>
                 </Drawer>
             </div>
                             
