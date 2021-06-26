@@ -19,8 +19,6 @@ import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
 import { db, auth } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
-import Select from 'react-select'
-import firebase from 'firebase'
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
 export default function CommunIzi({userDB, user}) {
@@ -256,7 +254,7 @@ export default function CommunIzi({userDB, user}) {
               </Accordion>
             </div>
             </PerfectScrollbar>
-            <div>
+            <div className={typeof window !== `undefined` && window.innerWidth < 480 && "communizi_form_input_div"}>
                 <Form inline className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
                     <Input type="text" placeholder="Répondre au client..."  

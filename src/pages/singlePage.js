@@ -41,7 +41,7 @@ const SinglePage = () => {
     return unsubscribe
   }, [])
 
-  console.log("******", user)
+  console.log("******", navigator.platform)
   
   return (
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>

@@ -69,7 +69,7 @@ function PhoneFeedback({user, userDB}) {
                 value={formValue.feedback} name="feedback" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
-            <Button variant="outline-success" className="phone_submitButton" onClick={handleSubmitFeedback}>Envoyer maintenant</Button>
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} className="phone_submitButton" onClick={handleSubmitFeedback}>Envoyer maintenant</Button>
         </div>
     )
 }

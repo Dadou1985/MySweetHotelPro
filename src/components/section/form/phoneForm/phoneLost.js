@@ -184,7 +184,7 @@ const PhoneLost = ({user, userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-              <Button variant="outline-success" className="phone_submitButton" onClick={handleShow}>Enregistrer un objet trouvé</Button>
+              <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Enregistrer un objet trouvé</Button>
           
               <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">

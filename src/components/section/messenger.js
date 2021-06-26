@@ -5,6 +5,7 @@ import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Send from '../../svg/paper-plane.svg'
+import Close from '../../svg/close.svg'
 import Calendar from '../../svg/calendar.svg'
 import Plus from '../../svg/plus3.svg'
 import { OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap'
@@ -228,7 +229,7 @@ const Messenger = ({filterDate}) =>{
                     <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
                 </div> 
             </OverlayTrigger> :
-            <Button size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Ajouter une note de service</Button>}
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Ajouter une note de service</Button>}
 
             <Modal show={showModal} 
             size="lg"
@@ -342,6 +343,9 @@ const Messenger = ({filterDate}) =>{
                     justifyContent: "flex-end",
                     padding: "5%", 
                     maxHeight: "90vh"}}>
+                        <div style={{width: "100%",}}>
+                            <img src={Close} style={{width: "5%", float: "right"}} onClick={handleHideDrawer} />
+                        </div>
                     <h4 style={{textAlign: "center", marginBottom: "3vh"}}>Ecrire une note de service</h4>
                     <div><Input type="text" name="title" placeholder="Titre de la note" className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
                     <div><Input type="text" placeholder="Rédiger une note..." value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>

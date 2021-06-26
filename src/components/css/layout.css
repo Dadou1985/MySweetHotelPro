@@ -1726,6 +1726,14 @@ input[type=number] {
     margin-top: 2vh;
 }
 
+.communizi_form_input_div {
+    position: absolute; 
+    bottom: 0;
+    left: 0; 
+    width: 100%; 
+    padding: 3%;
+}
+
 .communizi_form_input_container {
     display: flex;
     flex-flow: row;
@@ -1901,7 +1909,7 @@ input[type=number] {
 }
 
 .darkDrawer_icons {
-    width: 8vw;
+    width: 8%;
 }
 
 .fom-icon {filter: invert();
