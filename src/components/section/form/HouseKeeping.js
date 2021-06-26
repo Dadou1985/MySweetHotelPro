@@ -191,7 +191,7 @@ const HouseKeeping = ({userDB}) =>{
                     Conciergerie                
                 </Tooltip>
                 }>
-                        <img src={Maid} alt="todolist" onClick={handleShow} style={{width: "4vw"}} />
+                        <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "4vw"}} />
             </OverlayTrigger>
         </StyledBadge>
 

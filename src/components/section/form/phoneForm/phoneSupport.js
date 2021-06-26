@@ -104,7 +104,7 @@ export default function PhoneSupport({user, userDB}) {
         <div className="communizi-container">
             <h4 style={{padding: "2vh", textAlign: "center", fontWeight: 'bold'}}>Assistance technique</h4>
 
-            <PerfectScrollbar className="sassistance-scrollbar">
+            <PerfectScrollbar className="assistance-scrollbar">
             <div style={{
                     display: "flex",
                     flexFlow: "column",

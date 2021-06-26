@@ -1968,6 +1968,7 @@ input[type=number] {
     .communizi-button-container {
         width: 25%;
         justify-content: space-around;
+        margin-bottom: 2vh
     }
 
     .communizi-file-button {
@@ -2655,4 +2656,7 @@ input[type=number] {
 
 /*PhoneSupport*/
 
-.assistance-scrollbar {height: 70vh !important;}
+.assistance-scrollbar {
+    height: 75vh !important;
+    padding-top: 3vh;
+}

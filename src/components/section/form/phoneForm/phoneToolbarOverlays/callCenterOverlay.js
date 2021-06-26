@@ -9,9 +9,7 @@ function CallCenterOverlay({user, userDB}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection("assistance")
+          return db.collection("assistance")
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -29,9 +27,7 @@ function CallCenterOverlay({user, userDB}) {
      },[])
 
      const updateAdminSpeakStatus = () => {
-      return db.collection('hotel')
-            .doc(userDB.hotelId)
-            .collection('assistance')
+      return db.collection('assistance')
             .doc(userDB.hotelName)
             .update({
                 adminSpeak: false,
@@ -39,11 +35,7 @@ function CallCenterOverlay({user, userDB}) {
     }
 
     return (
-        <div style={{
-          display: "flex",
-          flexFlow: "row",
-          justifyContent: "center"
-        }}>
+        <div>
           <img src={Assistance} alt="Support" className="drawer_icons" onClick={()=>{
             updateAdminSpeakStatus()
             navigate("/assistance")
