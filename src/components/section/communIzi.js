@@ -164,7 +164,8 @@ export default function CommunIzi({userDB, user}) {
           console.log("info",snapInfo)
           snapInfo.map(doc => setPayload({
             token: doc.token,
-            logo: doc.logo
+            logo: doc.logo,
+            language: doc.language
           }))
           
         });
