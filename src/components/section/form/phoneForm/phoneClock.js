@@ -120,6 +120,7 @@ const PhoneClock = ({user, userDB}) =>{
                                 <th>Chambre</th>
                                 <th>Date</th>
                                 <th>Heure</th>
+                                <th>N° de tel.</th>
                                 <th>Statut</th>
                                 {expand && <th>Date</th>}
                                 {expand && <th>Collaborateur</th>}
@@ -133,6 +134,7 @@ const PhoneClock = ({user, userDB}) =>{
                                     <td>{flow.room}</td>
                                     <td>{flow.date}</td>
                                     <td>{flow.hour}</td>
+                                    <td>{flow.phoneNumber}</td>
                                     <td>
                                         <Switch
                                             checked={flow.status}

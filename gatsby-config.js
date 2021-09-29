@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `IziShift`,
+    title: `mysweethotelpro`,
     description: `An optimized communication tool for hotel personal staff.`,
     author: `David Simba`,
-    url: `https://izishift.com`
+    url: `https://mysweethotelpro.com`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -19,13 +19,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `gatsby-starter-default`,
-        short_name: `starter`,
+        name: `mysweethotelpro`,
+        short_name: `mshpro`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `src/images/pen.png`, // This path is relative to the root of the site.
+        icon: `src/svg/new-mini-logo-msh-pro2.png`, // This path is relative to the root of the site.
       },
     },
     {

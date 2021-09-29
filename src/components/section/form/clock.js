@@ -224,6 +224,7 @@ const Clock = ({userDB, user}) =>{
                                 <th>Chambre</th>
                                 <th>Date</th>
                                 <th>Heure</th>
+                                <th>N° de tel.</th>
                                 <th>Statut</th>
                                 <th>Collaborateur</th>
                                 <th className="bg-dark"></th>
@@ -236,6 +237,7 @@ const Clock = ({userDB, user}) =>{
                                     <td>{flow.room}</td>
                                     <td>{flow.date}</td>
                                     <td>{flow.hour}</td>
+                                    <td>{flow.phoneNumber}</td>
                                     <td>
                                         <Switch
                                             checked={flow.status}

@@ -104,7 +104,7 @@ export default function PhoneSupport({user, userDB}) {
         <div className="communizi-container">
             <h4 style={{padding: "2vh", textAlign: "center", fontWeight: 'bold'}}>Assistance technique</h4>
 
-            <PerfectScrollbar className="assistance-scrollbar">
+            <PerfectScrollbar style={{paddingTop: "3vh"}}>
             <div style={{
                     display: "flex",
                     flexFlow: "column",
@@ -171,7 +171,7 @@ export default function PhoneSupport({user, userDB}) {
                         })}
                 </div>
                 </PerfectScrollbar>
-            <div>
+            <div className={typeof window !== `undefined` && window.innerWidth < 480 && "communizi_form_input_div"}>
                 <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder="Ecrire un message..." onChange={handleChange} required />
                     <img src={Send} alt="sendIcon" style={{width: "10%", borderRadius: "50px"}} onClick={async() => {

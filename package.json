@@ -1,9 +1,9 @@
 {
-  "name": "gatsby-starter-default",
+  "name": "mysweethotelpro",
   "private": true,
-  "description": "A simple starter to get up and developing quickly with Gatsby",
+  "description": "An optimized communication tool for hotel personal staff.",
   "version": "0.1.0",
-  "author": "Kyle Mathews <mathews.kyle@gmail.com>",
+  "author": "David Simba <david.simba@mysweethotel.com>",
   "dependencies": {
     "@date-io/date-fns": "^1.3.13",
     "@material-ui/core": "^4.11.0",

@@ -108,6 +108,7 @@ export default function CallCenter({user, userDB}) {
             email: user.email,
             photo: user.photoURL,
             text: note,
+            title: "host",
             markup: Date.now(),
         }).then(function(docRef){
             console.log(docRef.id)
@@ -183,7 +184,7 @@ export default function CallCenter({user, userDB}) {
                     }}>
                     {messages.map(message => {
                         if(moment(message.markup).format('L') === moment(new Date()).format('L')){
-                            if(message.author === userDB.username){
+                            if(message.title === "host"){
                               return (
                                 <span className="darkTextUser">
                                   <span className="user_avatar_chat_label">{message.autor}</span>
@@ -211,7 +212,7 @@ export default function CallCenter({user, userDB}) {
                               )
                             }
                           }else{
-                            if(message.author === userDB.username){
+                            if(message.title === "host"){
                               return (
                                 <span className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
                                   <span className="old_user_avatar_chat_label">{message.author}</span>

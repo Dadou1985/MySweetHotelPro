@@ -154,7 +154,7 @@ const changeAdminSpeakStatus = (roomName) => {
               </Accordion>
             </div>
             </PerfectScrollbar>
-            <div>
+            <div className={typeof window !== `undefined` && window.innerWidth < 480 && "communizi_form_input_div"}>
                 <Form inline className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
                     <Input type="text" placeholder="Répondre au client..."  

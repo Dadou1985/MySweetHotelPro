@@ -17,7 +17,7 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, auth } from '../../Firebase'
+import { db, auth, functions } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
@@ -28,12 +28,14 @@ export default function CommunIzi({userDB, user}) {
     const [room, setRoom] = useState('')
     const [startDate, setStartDate] = useState(new Date())
     const [expanded, setExpanded] = useState('')
+    const [guestId, setGuestId] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
     const [guestList, setGuestList] = useState([])
     const [deleteListGuestArray, setDeleteListGuestArray] = useState([])
     const [list, setList] = useState(false)
+    const [payload, setPayload] = useState({})
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -100,6 +102,7 @@ export default function CommunIzi({userDB, user}) {
 
     const handleChangeExpanded = (title) => setExpanded(title)
   
+    const handlePickGuestId = (id) => setGuestId(id)
 
     useEffect(() => {
       const chatOnAir = () => {
@@ -143,7 +146,33 @@ export default function CommunIzi({userDB, user}) {
       return unsubscribe
      },[])
 
-     const deleteGuest = (guest) => {
+     useEffect(() => {
+      const pullData = () => {
+          return db.collection('guestUsers')
+        .where("userId", "==", guestId)
+      }
+  
+      if(guestId !== null) {
+        let unsubscribe = pullData().onSnapshot(function(snapshot) {
+          const snapInfo = []
+        snapshot.forEach(function(doc) {          
+          snapInfo.push({
+              id: doc.id,
+              ...doc.data()
+            })        
+          });
+          console.log("info",snapInfo)
+          snapInfo.map(doc => setPayload({
+            token: doc.token,
+            logo: doc.logo
+          }))
+          
+        });
+      return unsubscribe
+      }
+    }, [guestId])
+
+     {/*const deleteGuest = (guest) => {
       return db.collection('guestUsers')
       .doc(guest)
       .update({
@@ -192,7 +221,7 @@ export default function CommunIzi({userDB, user}) {
       let unsubscribe = deleteListGuest()
        return unsubscribe
 
-    }, [])
+    }, [])*/}
 
     const addNotification = (notification) => {
       return db.collection('notifications')
@@ -207,6 +236,9 @@ export default function CommunIzi({userDB, user}) {
 
   const handleHideList = () => setList(false)
 
+  const sendPushNotification = functions.httpsCallable('sendPushNotification')
+
+  console.log('testUser', payload)
 
     return (
         <div className="communizi-container">
@@ -216,7 +248,9 @@ export default function CommunIzi({userDB, user}) {
             <Accordion allowZeroExpanded>
                 {info.map((flow) => (
                   flow.status &&
-                  <AccordionItem key={flow.id} onClick={() => handleChangeExpanded(flow.id)}>
+                  <AccordionItem key={flow.id} onClick={() => {
+                    handleChangeExpanded(flow.id)
+                    handlePickGuestId(flow.userId)}}>
                     <AccordionItemHeading style={{
                       backgroundColor: "rgb(33, 35, 39)", 
                       padding: "2%",
@@ -264,6 +298,7 @@ export default function CommunIzi({userDB, user}) {
                       if(e.key === "Enter") {
                         handleSubmit(e)
                         updateAdminSpeakStatus()
+                        sendPushNotification({payload: payload})
                       }
                     }}
                     id="dark_message_note" />
@@ -281,6 +316,7 @@ export default function CommunIzi({userDB, user}) {
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                           handleSubmit(event)
                           updateAdminSpeakStatus()
+                          sendPushNotification({payload: payload})
                         }} />          
                     </div>
                 </Form>
