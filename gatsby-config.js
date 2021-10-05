@@ -1,9 +1,9 @@
 module.exports = {
   siteMetadata: {
-    title: `mysweethotelpro`,
+    title: `My Sweet Hotel Pro`,
     description: `An optimized communication tool for hotel personal staff.`,
     author: `David Simba`,
-    url: `https://mysweethotelpro.com`
+    url: `mysweethotelpro.com`
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
@@ -19,12 +19,12 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `mysweethotelpro`,
-        short_name: `mshpro`,
+        name: `My Sweet Hotel`,
+        short_name: `My Sweet Hotel Pro`,
         start_url: `/`,
         background_color: `#663399`,
         theme_color: `#663399`,
-        display: `minimal-ui`,
+        display: `standalone`,
         icon: `src/svg/new-mini-logo-msh-pro2.png`, // This path is relative to the root of the site.
       },
     },
@@ -83,6 +83,13 @@ module.exports = {
         ],
         display: 'swap'
       }
+    },
+    {
+      resolve: "@sentry/gatsby",
+      options: {
+        dsn: "https://1a9f3c36b4664949b6e9ef27b2182905@o1024943.ingest.sentry.io/5992588",
+        sampleRate: 0.7,
+      },
     },
   ],
 }

@@ -120,6 +120,11 @@ const Caisse = () =>{
     }
 
     const handleReset = () =>{
+        let montant = document.getElementById("montant")
+        let total = document.getElementById('total')
+
+        montant.innerHTML = 0
+        total.innerHTML = 0
         return document.getElementById("moneyBoxes").reset()
     }
 

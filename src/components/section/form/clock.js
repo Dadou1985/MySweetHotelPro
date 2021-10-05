@@ -163,7 +163,7 @@ const Clock = ({userDB, user}) =>{
                     </Modal.Header>
                     <Modal.Body>
                     
-                    <Tabs defaultActiveKey="Programmer un réveil" id="uncontrolled-tab-example"onSelect={(eventKey) => {
+                    <Tabs defaultActiveKey="Programmer un réveil" id="uncontrolled-tab-example" onSelect={(eventKey) => {
                         if(eventKey === 'Liste des réveils'){
                             return setFooterState(false)
                         }else{

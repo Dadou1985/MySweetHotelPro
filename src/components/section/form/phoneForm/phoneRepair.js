@@ -190,7 +190,9 @@ const PhoneRepair = ({user, userDB}) =>{
                             }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : "Aucune"}</td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                handleDeleteImg(flow.img)
+                                if(flow.img){
+                                    handleDeleteImg(flow.img)
+                                }
                                 return db.collection('hotel')
                                 .doc(userDB.hotelId)
                                 .collection("maintenance")

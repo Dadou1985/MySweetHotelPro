@@ -42,7 +42,15 @@ function CallCenterOverlay({user, userDB}) {
             }} />
             {chatRoomQty.map(status => {
                   if(status.adminSpeak) {
-                    return <img src={Bubble} style={{width: "20%"}} />
+                    return <img src={Bubble} style={{
+                      borderRadius: "50%", 
+                      backgroundColor: "red", 
+                      position: "absolute", 
+                      width: "17%", 
+                      height: "6%", 
+                      color: "white", 
+                      textAlign: "center", 
+                      fontSize: "12px"}} />
                   }
                 })}
         </div>

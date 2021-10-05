@@ -18,7 +18,7 @@ const PhoneLost = ({user, userDB}) =>{
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
-    const [newImg, setNewImg] = useState("")
+    const [newImg, setNewImg] = useState(null)
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
@@ -64,7 +64,7 @@ const PhoneLost = ({user, userDB}) =>{
             place: formValue.place,
             markup: Date.now(),
             type: formValue.type,
-            img: photo
+            //img: photo
             })
     }
 

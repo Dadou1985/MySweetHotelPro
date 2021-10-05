@@ -60,7 +60,7 @@ function HousekeepingOverlay({user, userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('toilet-paper').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('toiletPaper').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -76,7 +76,7 @@ function HousekeepingOverlay({user, userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('hair-dryer').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('hairDryer').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -140,7 +140,7 @@ function HousekeepingOverlay({user, userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('baby-bed').onSnapshot(function(snapshot) {
+        let unsubscribe = itemList('babyBed').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({

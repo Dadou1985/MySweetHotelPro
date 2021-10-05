@@ -85,7 +85,7 @@ const Annuaire = () =>{
                 Annuaire
               </Tooltip>
             }>
-                <img src={Contact} className="icon" alt="contact" onClick={handleShow} style={{width: "40%"}} />
+                <img src={Contact} className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
             </OverlayTrigger>
 
 
@@ -117,7 +117,18 @@ const Annuaire = () =>{
                                             <p><i>Mobile : {flow.mobile}</i> 
                                             <br /><i>Fixe : {flow.fix}</i></p>
                                         </div>
-                                            <Button variant="outline-danger" size="sm" onClick={()=>db.deleteDocument({hotelId: userDB.hotelId, region: userDB.hotelRegion, departement: userDB.hotelDept, collection: "contact", document: flow.id})}>Supprimer</Button>
+                                            <Button variant="outline-danger" size="sm" onClick={() => {
+                                                return db.collection('hotel')
+                                                .doc(userDB.hotelId)
+                                                .collection("contact")
+                                                .doc(flow.id)
+                                                .delete()
+                                                .then(function() {
+                                                console.log("Document successfully deleted!");
+                                                }).catch(function(error) {
+                                                    console.log(error);
+                                                })
+                                            }}>Supprimer</Button>
                                     </div>
                                 ))}
                             </Tab>

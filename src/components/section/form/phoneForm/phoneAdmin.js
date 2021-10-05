@@ -11,6 +11,7 @@ function PhoneAdmin({user, userDB}) {
     const [activate, setActivate] = useState(false)
     const [info, setInfo] = useState([])
     const [expand, setExpand] = useState(false)
+    const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
 
     const handleChange = (event) =>{
         event.persist()
@@ -67,7 +68,8 @@ function PhoneAdmin({user, userDB}) {
         country: userDB.country,
         room: userDB.room,
         classement: userDB.classement,
-        code_postal: userDB.codePostal
+        code_postal: userDB.code_postal,
+        language: language.substring(0, 2)
         }) 
         .then(handleHide())
       }

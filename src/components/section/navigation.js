@@ -121,7 +121,7 @@ const Navigation = ({user, userDB}) =>{
                         fontWeight: "bolder",
                         fontSize: "XXL"
                     }}>{user.displayName}</div>}*/}
-                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171624285328731" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
+                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
                     <div className="nav_container">
                     <div className="icon_container">
                     {/*!!user &&

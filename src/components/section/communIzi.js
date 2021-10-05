@@ -165,7 +165,10 @@ export default function CommunIzi({userDB, user}) {
           snapInfo.map(doc => setPayload({
             token: doc.token,
             logo: doc.logo,
-            language: doc.language
+            language: doc.language,
+            hotelName: doc.hotelName,
+            hotelId: doc.hotelId,
+            isChatting: doc.isChatting
           }))
           
         });
@@ -355,6 +358,8 @@ export default function CommunIzi({userDB, user}) {
                       handleSubmit(event)
                       setShowModal(false)
                       setInitialFilter('Liste Clients Présents')
+                      updateAdminSpeakStatus()
+                      sendPushNotification({payload: payload})
                     }}>Envoyer</Button>
                 </Modal.Footer>
             </Modal>
@@ -406,6 +411,8 @@ export default function CommunIzi({userDB, user}) {
                       handleSubmit(event)
                       setActivate(false)
                       setInitialFilter("Liste Clients Présents")
+                      updateAdminSpeakStatus()
+                      sendPushNotification({payload: payload})
                     }}>Envoyer</Button>
             </Drawer>
         </div>

@@ -5,6 +5,7 @@ import { db, auth, functions } from '../../../Firebase'
 const AdminRegister = ({hide, user, userDB}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
+    const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
 
     const handleChange = (event) =>{
         event.persist()
@@ -56,7 +57,8 @@ const AdminRegister = ({hide, user, userDB}) => {
         language: userDB.language,
         room: userDB.room,
         country: userDB.country,
-        code_postal: userDB.code_postal
+        code_postal: userDB.code_postal,
+        language: language.substring(0, 2)
         }) 
         .then(() => {
             hide()

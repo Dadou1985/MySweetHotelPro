@@ -260,7 +260,9 @@ const Repair = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            handleDeleteImg(flow.img)
+                                            if(flow.img){
+                                                handleDeleteImg(flow.img)
+                                            }
                                             return db.collection('hotel')
                                             .doc(userDB.hotelId)
                                             .collection("maintenance")

@@ -26,7 +26,7 @@ const CheckList = ({userDB, setUserDB}) =>{
                 Check-list
               </Tooltip>
             }>
-                <img src={TodoList} className="icon" alt="todolist" onClick={handleShow} style={{width: "40%"}} />
+                <img src={TodoList} className="icon" alt="todolist" onClick={handleShow} style={{width: "25%"}} />
         </OverlayTrigger>
 
             <Modal
