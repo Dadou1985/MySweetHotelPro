@@ -1,12 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
+import { db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -14,7 +11,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
-const PhoneClock = ({user, userDB}) =>{
+const PhoneClock = ({userDB}) =>{
 
     const [formValue, setFormValue] = useState({room: "", client: "", hour: new Date(), date: new Date()})
     const [info, setInfo] = useState([])
@@ -34,8 +31,6 @@ const PhoneClock = ({user, userDB}) =>{
         setFormValue({date: date});
       };
 
-      const handleChangeExpand = () => setExpand(!expand)
-
       const addNotification = (notification) => {
         return db.collection('notifications')
             .add({
@@ -51,7 +46,7 @@ const PhoneClock = ({user, userDB}) =>{
         setStep(false)
         const notif = "Vous venez d'ajouter une demande de réveil !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
@@ -67,7 +62,7 @@ const PhoneClock = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
@@ -78,7 +73,7 @@ const PhoneClock = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
@@ -145,7 +140,7 @@ const PhoneClock = ({user, userDB}) =>{
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)

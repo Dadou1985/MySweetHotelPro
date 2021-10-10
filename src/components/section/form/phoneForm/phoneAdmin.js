@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { auth, db, functions } from '../../../../Firebase'
+import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 
-function PhoneAdmin({user, userDB}) {
+function PhoneAdmin({userDB}) {
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [activate, setActivate] = useState(false)
     const [info, setInfo] = useState([])
@@ -21,16 +19,8 @@ function PhoneAdmin({user, userDB}) {
         }))
       }
 
-      const handleChangeExpand = () => setExpand(!expand)
-
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
-
-    const resetPassword = () => {
-        return auth.sendPasswordResetEmail(formValue.email).then(function() {
-        }).catch(function(error) {
-        });
-    }
 
     const addNotification = (notification) => {
         return db.collection('notifications')

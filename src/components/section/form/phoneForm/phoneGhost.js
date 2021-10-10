@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Table, DropdownButton, Dropdown } from 'react-bootstrap'
-import { auth, db, functions } from '../../../../Firebase'
-import { paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur } from "../../../../../hotels"
+import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
+import { db } from '../../../../Firebase'
 import { Input } from 'reactstrap'
 
 export default function PhoneGhost({user, userDB, setUserDB}) {
@@ -27,15 +26,14 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
 
-    const deptDetails = [paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur]
-
     const handleChangeInitialfilter = event =>{
         setInitialFilter(event.currentTarget.value)
     }
 
     useEffect(() => {
         const getHotel = () => {
-            return db.collection("hotel")
+            return db.collection("hotels")
+            .where("code_postal", "==", filter)
             }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
@@ -147,7 +145,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         }}>
             <h4 style={{marginBottom: "5vh", fontWeight: "bold"}}>Ghost Host</h4>
             <div style={{width: "90%", display: "flex", flexFlow: "column", alignItems: "center"}}>
-            {/*<Form.Row>
+            <Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -162,7 +160,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                     pattern=".{5,}"
                      />
                 </Form.Group>
-            </Form.Row>*/}
+            </Form.Row>
 
             <Form.Row>
                 <Form.Group style={{

@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Contact from '../../../svg/contacts.svg'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { FirebaseContext, db } from '../../../Firebase'
 
 const Annuaire = () =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
-    const {userDB, user} = useContext(FirebaseContext)
+    const {userDB} = useContext(FirebaseContext)
 
 
     const handleClose = () => setList(false)
@@ -36,8 +36,7 @@ const Annuaire = () =>{
     setFormValue("")
     const notif = "Vous venez d'ajouter un nouveau nom à l'annuaire !" 
     addNotification(notif)
-    let marker = Date.now()
-    return db.collection('hotel')
+    return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('contact')
             .add({
@@ -51,7 +50,7 @@ const Annuaire = () =>{
 
     useEffect(() => {
         const contactOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('contact')
             .orderBy("name")
@@ -118,7 +117,7 @@ const Annuaire = () =>{
                                             <br /><i>Fixe : {flow.fix}</i></p>
                                         </div>
                                             <Button variant="outline-danger" size="sm" onClick={() => {
-                                                return db.collection('hotel')
+                                                return db.collection('hotels')
                                                 .doc(userDB.hotelId)
                                                 .collection("contact")
                                                 .doc(flow.id)

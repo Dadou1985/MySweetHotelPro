@@ -1,16 +1,12 @@
-import React, { useState, useContext, useEffect } from 'react'
-import { Jumbotron, Modal } from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../Firebase'
-import Register from '../components/section/form/register'
+import React, { useState } from 'react'
+import { auth } from '../Firebase'
 import { navigate } from 'gatsby'
 import Logo from '../svg/new-logo-msh-pro2.png'
 
 
-const Connection = () =>{
+const Connection = () => {
 
-  const [list, setList] = useState(false)
   const [formValue, setFormValue] = useState ({username: "", email: "", password: ""})
-  
      
       const handleChange = (event) =>{
         event.persist()
@@ -33,9 +29,6 @@ const Connection = () =>{
           }else{}
         })
       }   
-
-    const handleShow = () => setList(true)
-    const handleClose = () => setList(false)
     
     return (
         <div className="connection_container">

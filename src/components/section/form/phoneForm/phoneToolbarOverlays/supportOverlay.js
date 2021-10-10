@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Support from '../../../../../svg/support.svg'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
 function SupportOverlay() {

@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useContext } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Safe from '../../../svg/vault.svg'
 import { useReactToPrint } from 'react-to-print';
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { FirebaseContext, db } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 
@@ -11,7 +11,7 @@ const Caisse = () =>{
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
     const [formValue, setFormValue] = useState({shift: "matin"})
-    const {userDB, user} = useContext(FirebaseContext)
+    const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
 
     const handleClose = () => setList(false)
@@ -41,7 +41,7 @@ const Caisse = () =>{
         addNotification(notif)
         let caisse = document.getElementById("montant").value
         handleReset()
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('safe')
             .add({
@@ -130,7 +130,7 @@ const Caisse = () =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('safe')
             .orderBy("markup", "asc")
@@ -365,14 +365,14 @@ const Caisse = () =>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {info.map(flow =>(
-                                        <tr key={flow.id}>
+                                    {info.map((flow, key) =>(
+                                        <tr key={key}>
                                         <td>{flow.author}</td>
                                         <td>{flow.amount} euros</td>
                                         <td>{flow.shift}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("safe")
                                             .doc(flow.id)

@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Feedback from '../../../svg/feedbackBox.svg'
-import { db, auth } from '../../../Firebase'
+import { db } from '../../../Firebase'
 
-const FeedbackBox = ({user, userDB}) =>{
+const FeedbackBox = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
@@ -81,12 +81,13 @@ const FeedbackBox = ({user, userDB}) =>{
                                 <h4>Pour une meilleure expérience utilisateur</h4>
                                 </Form.Group>
                             </Form.Row>
-                            <Form.Row>
-                                <Form.Group controlId="exampleForm.SelectCustom">
+                            <Form.Row style={{width: "100%"}}>
+                                <Form.Group controlId="exampleForm.SelectCustom" style={{width: "100%"}}>
                                 <select class="selectpicker" 
                                 value={formValue.categorie} name="categorie" onChange={handleChange} 
-                                    style={{width: "35vw", 
-                                    height: "6vh", 
+                                    style={{
+                                    width: "100%", 
+                                    height: "3vh", 
                                     border: "1px solid lightgrey", 
                                     borderRadius: "3px",
                                     backgroundColor: "white", 
@@ -96,11 +97,11 @@ const FeedbackBox = ({user, userDB}) =>{
                                     </select>
                                 </Form.Group>
                                 </Form.Row>
-                            <Form.Row>
-                                <Form.Group controlId="description">
+                            <Form.Row style={{width: "100%"}}>
+                                <Form.Group controlId="description" style={{width: "100%"}}>
                                 <Form.Control as="textarea" type="text" 
                                 placeholder="Faites-nous un retour de votre expérience..." 
-                                style={{width: "35vw", height: "30vh", resize: "none"}} 
+                                style={{width: "100%", height: "30vh", resize: "none"}} 
                                 value={formValue.feedback} name="feedback" onChange={handleChange} />
                                 </Form.Group>
                             </Form.Row>

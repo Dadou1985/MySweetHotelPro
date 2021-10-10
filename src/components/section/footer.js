@@ -1,6 +1,6 @@
 import React, {useContext} from 'react'
 import Notifications from './notifications'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 
 const Footer = () =>{
     const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)

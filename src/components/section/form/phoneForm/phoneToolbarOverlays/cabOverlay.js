@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Taxi from '../../../../../svg/taxi.svg'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
 function CabOverlay({userDB, user}) {
@@ -10,7 +8,7 @@ function CabOverlay({userDB, user}) {
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
               .doc(userDB.hotelId)
               .collection('cab')
               .where("status", "==", true)

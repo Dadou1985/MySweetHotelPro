@@ -9,7 +9,6 @@ function AdminBoard() {
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
   
-  
     useEffect(() => {
           
       let unsubscribe = auth.onAuthStateChanged(async(user) => {
@@ -28,7 +27,6 @@ function AdminBoard() {
                 }
               })
               return setHide("none")
-  
           }
         })
       return unsubscribe

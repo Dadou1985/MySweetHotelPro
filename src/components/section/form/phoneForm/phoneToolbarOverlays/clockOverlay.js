@@ -1,18 +1,16 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Timer from '../../../../../svg/timer.svg'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
-function ClockOverlay({userDB, user}) {
+function ClockOverlay({userDB}) {
     const [demandQty, setDemandQty] = useState([])
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotel')
+          return db.collection('hotels')
             .doc(userDB.hotelId)
-            .collection('maintenance')
+            .collection('clock')
             .where("status", "==", true)
         }
 

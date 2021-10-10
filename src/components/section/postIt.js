@@ -1,7 +1,7 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import Stick from '../../svg/paper-color.svg'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext, db } from '../../Firebase'
 import Avatar from 'react-avatar'
 import  '../css/post-it.css'
 
@@ -9,7 +9,7 @@ const PostIt = ({title, text, markup, assignee}) => {
 
     const [visible, setVisible] = useState(false)
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+    const { userDB } = useContext(FirebaseContext)
 
     const showSticker = () => {
         setVisible(true)

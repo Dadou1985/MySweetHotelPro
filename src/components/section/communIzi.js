@@ -1,11 +1,11 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../svg/paper-plane.svg'
 import Plus from '../../svg/plus3.svg'
 import ChatRoom from './chatRoom'
-import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton,Dropdown } from 'react-bootstrap'
+import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton, Alert } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import {
   Accordion,
@@ -17,7 +17,7 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, auth, functions } from '../../Firebase'
+import { db, functions } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
@@ -25,25 +25,19 @@ export default function CommunIzi({userDB, user}) {
     
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
-    const [room, setRoom] = useState('')
-    const [startDate, setStartDate] = useState(new Date())
     const [expanded, setExpanded] = useState('')
-    const [guestId, setGuestId] = useState(null)
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
     const [guestList, setGuestList] = useState([])
-    const [deleteListGuestArray, setDeleteListGuestArray] = useState([])
     const [list, setList] = useState(false)
-    const [payload, setPayload] = useState({})
+    const [payload, setPayload] = useState({token:{}, logo:"", language:"", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting:""})
+    const [showAlert, setShowAlert] = useState(false)
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
+        setShowAlert(false)
     }
-
-    const handleChangeFilter = event =>{
-      setInitialFilter(event.currentTarget.value)
-  }
 
     const handleClose = () => {
       setShowModal(false)
@@ -55,14 +49,14 @@ export default function CommunIzi({userDB, user}) {
       }else{
           setActivate(true)
       }
-  }
+    }
 
   const handleHideDrawer = () => {
     setActivate(false)
   }
 
   const updateAdminSpeakStatus = () => {
-    return db.collection('hotel')
+    return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('chat')
           .doc(`${expanded}`)
@@ -74,7 +68,7 @@ export default function CommunIzi({userDB, user}) {
     const handleSubmit = (event) =>{
         event.preventDefault()
         setNote("")
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
           .doc(`${expanded}`)
@@ -90,7 +84,7 @@ export default function CommunIzi({userDB, user}) {
     }
 
     const changeRoomStatus = (roomName) => {
-      return db.collection('hotel')
+      return db.collection('hotels')
         .doc(userDB.hotelId)
         .collection("chat")
         .doc(roomName)
@@ -102,11 +96,9 @@ export default function CommunIzi({userDB, user}) {
 
     const handleChangeExpanded = (title) => setExpanded(title)
   
-    const handlePickGuestId = (id) => setGuestId(id)
-
     useEffect(() => {
       const chatOnAir = () => {
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
           .orderBy("markup", "asc")
@@ -148,11 +140,13 @@ export default function CommunIzi({userDB, user}) {
 
      useEffect(() => {
       const pullData = () => {
-          return db.collection('guestUsers')
-        .where("userId", "==", guestId)
+          return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection("chat")
+          .where("title", "==", expanded)
       }
   
-      if(guestId !== null) {
+      if(expanded !== null) {
         let unsubscribe = pullData().onSnapshot(function(snapshot) {
           const snapInfo = []
         snapshot.forEach(function(doc) {          
@@ -164,68 +158,17 @@ export default function CommunIzi({userDB, user}) {
           console.log("info",snapInfo)
           snapInfo.map(doc => setPayload({
             token: doc.token,
-            logo: doc.logo,
-            language: doc.language,
-            hotelName: doc.hotelName,
-            hotelId: doc.hotelId,
+            logo: doc.hotelLogo,
+            language: doc.guestLanguage,
+            hotelName: userDB.hotelName,
+            hotelId: userDB.hotelId,
             isChatting: doc.isChatting
           }))
           
         });
       return unsubscribe
       }
-    }, [guestId])
-
-     {/*const deleteGuest = (guest) => {
-      return db.collection('guestUsers')
-      .doc(guest)
-      .update({
-        checkoutDate: "",
-        hotelId: "",
-        hotelName: "",
-        hotelDept: "",
-        hotelRegion: "",
-        room: "",
-        phone: "",
-        city: "",
-        classement: "",
-        babyBed: false,
-        blanket: false,
-        hairDryer: false,
-        iron: false,
-        pillow: false,
-        toiletPaper: false,
-        towel: false,
-        soap: false
-      })
-     }
-
-     useEffect(() => {
-      const deleteListGuest = () => {
-       let checkoutHour = new Date().getHours()
-       if(checkoutHour >= 14) {
-         return db.collection('guestUsers')
-           .where("checkoutDate", "==", moment(new Date()).format('LL'))
-           .onSnapshot(function(snapshot) {
-            const snapInfo = []
-              snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                  })        
-                });
-                console.log(snapInfo)
-                return snapInfo.map(guest => {
-                  return deleteGuest(guest.id)
-                })
-              });
-       }
-      }
-
-      let unsubscribe = deleteListGuest()
-       return unsubscribe
-
-    }, [])*/}
+    }, [expanded])
 
     const addNotification = (notification) => {
       return db.collection('notifications')
@@ -254,7 +197,10 @@ export default function CommunIzi({userDB, user}) {
                   flow.status &&
                   <AccordionItem key={flow.id} onClick={() => {
                     handleChangeExpanded(flow.id)
-                    handlePickGuestId(flow.userId)}}>
+                    if(showAlert) {
+                      return setShowAlert(false)
+                    }
+                    }}>
                     <AccordionItemHeading style={{
                       backgroundColor: "rgb(33, 35, 39)", 
                       padding: "2%",
@@ -292,17 +238,25 @@ export default function CommunIzi({userDB, user}) {
               </Accordion>
             </div>
             </PerfectScrollbar>
-            <div className={typeof window !== `undefined` && window.innerWidth < 480 && "communizi_form_input_div"}>
+            <div className={typeof window !== `undefined` && window.innerWidth < 480 ? "communizi_form_input_div" : "none"}>
                 <Form inline className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
                     <Input type="text" placeholder="Répondre au client..."  
                     value={note}
                     onChange={handleChange}
-                    onKeyDown={(e) => {
-                      if(e.key === "Enter") {
-                        handleSubmit(e)
-                        updateAdminSpeakStatus()
-                        sendPushNotification({payload: payload})
+                    onKeyPress={(e) => {
+                      if(expanded) {
+                        if(e.key === "Enter" && note) {
+                          handleSubmit(e)
+                          updateAdminSpeakStatus()
+                          sendPushNotification({payload: payload})
+                          setShowAlert(false)
+                        }
+                      }else{
+                        if(e.key === "Enter") {
+                          e.preventDefault()
+                          return setShowAlert(true)
+                        }
                       }
                     }}
                     id="dark_message_note" />
@@ -318,9 +272,18 @@ export default function CommunIzi({userDB, user}) {
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
                      </OverlayTrigger>
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
-                          handleSubmit(event)
-                          updateAdminSpeakStatus()
-                          sendPushNotification({payload: payload})
+                          if(expanded) {
+                            if(note) {
+                              handleSubmit(event)
+                              updateAdminSpeakStatus()
+                              sendPushNotification({payload: payload})
+                              if(showAlert) {
+                                showAlert(false)
+                              }
+                            }
+                          }else{
+                            return setShowAlert(true)
+                          }
                         }} />          
                     </div>
                 </Form>
@@ -336,8 +299,9 @@ export default function CommunIzi({userDB, user}) {
                 </Modal.Header>
                 <Modal.Body>
                       <DropdownButton id="dropdown-basic-button" title={initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}>
-                      {guestList.map(guest => (
+                      {guestList.map((guest, key) => (
                         <DropdownItem
+                        key={key}
                         onClick={() => {
                           setExpanded(guest.username)
                           setInitialFilter(guest.username)}}>{guest.username} - Chambre {guest.room}</DropdownItem>
@@ -415,6 +379,9 @@ export default function CommunIzi({userDB, user}) {
                       sendPushNotification({payload: payload})
                     }}>Envoyer</Button>
             </Drawer>
+            {showAlert && <Alert variant="danger" style={{width: "20vw"}}>
+              Vous devez d'abord choisir une conversation !
+            </Alert>}
         </div>
     )
 }

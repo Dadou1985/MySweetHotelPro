@@ -1,14 +1,9 @@
-import React, {useState, useEffect } from 'react'
-import { Button, Modal, InputGroup, FormControl, Form, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
+import React from 'react'
+import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../../itemList'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
 import StyleBadge from '../../common/badgeMaker'
-import moment from 'moment'
-import 'moment/locale/fr';
-import PerfectScrollbar from 'react-perfect-scrollbar'
 
-function PhoneHouseKeeping({user, userDB}) {
+function PhoneHouseKeeping() {
     return (
         <div className="phoneCheckList_container">
             <h3 className="phone_title">Conciergerie</h3>

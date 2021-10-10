@@ -1,9 +1,6 @@
-import React, {useContext, useState} from 'react'
-import StickList from './stickList'
+import React, {useState} from 'react'
 import CoolBar from './coolBar'
 import '../css/memo.css'
-import Divider from '@material-ui/core/Divider'
-import { FirebaseContext, db, auth } from '../../Firebase'
 import Messenger from './messenger'
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -13,7 +10,6 @@ import {
 
 
 const Memo =()=>{
-    const { userDB, setUserDB } = useContext(FirebaseContext)
     const [filterDate, setFilterDate] = useState(new Date())
 
     const handleDateChange = (date) => {

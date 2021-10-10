@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Assistance from '../../../../../svg/support-technique.svg'
-import { db, auth } from '../../../../../Firebase'
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
 
-function CallCenterOverlay({user, userDB}) {
+function CallCenterOverlay({userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
 
     useEffect(() => {

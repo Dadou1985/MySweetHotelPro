@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-bootstrap'
+import React, { useState } from 'react'
+import { Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-bootstrap'
 import Connection from '../../../svg/employee.svg'
 import AdminRegister from './adminRegister'
 import UserList from './userList'

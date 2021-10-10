@@ -4,7 +4,7 @@ import CheckList from './form/checkList'
 import '../css/memo.css'
 import CallCenter from './CallCenter'
 import Caisse from './form/caisse'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 
 
 const CoolBar = () => {

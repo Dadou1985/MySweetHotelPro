@@ -1,14 +1,13 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import LostOnes from '../../../svg/lost-items.svg'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
-import BootstrapInput from '../common/button/selectButton'
-import { db, auth } from '../../../Firebase'
+import { db } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
 
-const Lost = ({userDB, user}) =>{
+const Lost = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -42,7 +41,7 @@ const Lost = ({userDB, user}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .add({
@@ -59,7 +58,7 @@ const Lost = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .orderBy("markup", "asc")
@@ -201,7 +200,7 @@ const Lost = ({userDB, user}) =>{
                                         <td>{flow.details}</td>
                                         <td>{flow.author}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("lostAndFound")
                                             .doc(flow.id)

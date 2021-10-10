@@ -1,18 +1,17 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import ChangeRoom from '../../../svg/logout.png'
-import {  db, auth, storage } from '../../../Firebase'
+import {  db, storage } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Switch from '@material-ui/core/Switch';
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
 
-const Maid = ({userDB, user}) =>{
+const Maid = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -56,7 +55,7 @@ const Maid = ({userDB, user}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
@@ -75,7 +74,7 @@ const Maid = ({userDB, user}) =>{
     }
 
     const handleUpdateRoom = async(demandId, guestId) => {
-        await db.collection('hotel')
+        await db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -95,7 +94,7 @@ const Maid = ({userDB, user}) =>{
 
     const handleUpdateRoomState = (demandId) => {
         setFormValue("")
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -105,7 +104,7 @@ const Maid = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
           .collection('roomChange')
           .doc(document)
@@ -116,7 +115,7 @@ const Maid = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .orderBy("markup", "asc")
@@ -139,7 +138,7 @@ const Maid = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .where("status", "==", true)
@@ -248,7 +247,7 @@ const Maid = ({userDB, user}) =>{
                                     }}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
                                         <Form.Label>Pour quel motif ?</Form.Label><br/>
-                                        <select class="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
+                                        <select className="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
                                         style={{width: "10vw", 
                                         height: "60%", 
                                         border: "1px solid lightgrey", 
@@ -386,7 +385,7 @@ const Maid = ({userDB, user}) =>{
                                             if(flow.img) {
                                                 handleDeleteImg(flow.img)
                                             }
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("roomChange")
                                             .doc(flow.id)

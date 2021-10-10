@@ -1,24 +1,17 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger, Modal, Badge } from 'react-bootstrap'
-import Assistance from '../../../../svg/support-technique.svg'
+import { Form } from 'react-bootstrap'
 import Send from '../../../../svg/paper-plane.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { db, auth } from '../../../../Firebase'
+import { db } from '../../../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../../../svg/profile.png"
-import Bubble from "../../../../svg/bubble.svg"
-
 
 export default function PhoneSupport({user, userDB}) {
-    const [list, setList] = useState(false)
     const [note, setNote] = useState("")
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)
-    const [adminSpeakStatus, setAdminSpeakStatus] = useState([])
-    const handleClose = () => setList(false)
-    const handleShow = () => setList(true)
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -30,6 +23,7 @@ export default function PhoneSupport({user, userDB}) {
             .doc(userDB.hotelName)
             .collection("chatRoom")
             .orderBy("markup", "desc")
+            .limit(50)
         }
 
         let unsubscribe = getMessages().onSnapshot(function(snapshot) {

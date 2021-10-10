@@ -1,17 +1,11 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState } from 'react'
 import { Snackbar } from '@material-ui/core'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { db } from '../../Firebase'
 
 
 export default function NotificationsBar({message, markup}) {
 
     const [visible, setVisible] = useState(true)
-
-    const { userDB, setUserDB, user } = useContext(FirebaseContext)
-    
-    const showNotification = () => {
-        setVisible(true)
-      }
 
     const removeNotifications = () => {
         setVisible(false)
@@ -19,7 +13,6 @@ export default function NotificationsBar({message, markup}) {
             .doc(markup)
             .delete()
     }
-
 
     return (
         <Snackbar

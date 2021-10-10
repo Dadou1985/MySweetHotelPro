@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import Chat from '../../../../../svg/chat.png'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
-function ChatOverlay({userDB, user}) {
+function ChatOverlay({userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotel')
+          return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('chat')
             .where("status", "==", true)

@@ -1,11 +1,10 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import React from 'react'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import 'moment/locale/fr';
 
-  const MessageCommunizi = ({author, text, date, email, user, userDB, translation, photo, title, key}) =>{
+  const MessageCommunizi = ({author, text, date, userDB, translation, photo, title, key}) =>{
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(title === "host"){

@@ -1,13 +1,11 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar'
 import DefaultProfile from "../../../../svg/profile.png"
-import Home from '../../../../svg/home.svg'
-import { navigate } from 'gatsby'
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import { FirebaseContext, auth, db, storage } from '../../../../Firebase'
+import { auth, db, storage } from '../../../../Firebase'
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
@@ -19,10 +17,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const [listPassword, setListPassword] = useState(false)
     const [confModal, setConfModal] = useState(true)
     const [url, setUrl] = useState("")
-
-    const handleHideDrawer = () => {
-        setActivate(false)
-    }
 
     const handleChange = (event) =>{
         event.persist()
@@ -36,10 +30,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
         if (event.target.files[0]){
             setImg(event.target.files[0])
         }
-    }
-
-    const handleShow = () => {
-            setActivate(true)
     }
 
     const handleLoadUserDB = () => {
@@ -114,7 +104,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const handleShowUpdatePassword = () => setListPassword(true)
 
     const handleCloseUpdatePhoto = () => setConfModal(false)
-    const handleShowUpdatePhoto = () => setConfModal(true)
 
       console.log("$$$$$$", img)
 

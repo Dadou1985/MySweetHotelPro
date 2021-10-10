@@ -1,8 +1,7 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import Message from './messageSupport'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { FirebaseContext, db, auth } from '../../Firebase'
-
+import { db } from '../../Firebase'
 
 export default function SupportRoom({user, userDB, title}) {
 
@@ -29,8 +28,6 @@ export default function SupportRoom({user, userDB, title}) {
                 });
                 return unsubscribe
      },[])
-
-
 
     return (
         <div>

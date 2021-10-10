@@ -1,12 +1,11 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Timer from '../../../svg/timer.svg'
-import { db, auth } from '../../../Firebase'
+import { db } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Badge from '@material-ui/core/Badge'
 import Switch from '@material-ui/core/Switch';
-import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -14,7 +13,7 @@ import {
     KeyboardDateTimePicker
   } from '@material-ui/pickers';
 
-const Clock = ({userDB, user}) =>{
+const Clock = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -62,7 +61,7 @@ const Clock = ({userDB, user}) =>{
         setStep(false)
         const notif = "Vous venez d'ajouter une demande de réveil !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('clock')
             .add({
@@ -79,7 +78,7 @@ const Clock = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
           .collection('clock')
           .doc(document)
@@ -91,7 +90,7 @@ const Clock = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('clock')
             .orderBy("markup", "asc")
@@ -114,7 +113,7 @@ const Clock = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('clock')
             .where("status", "==", true)
@@ -247,7 +246,7 @@ const Clock = ({userDB, user}) =>{
                                         </td>
                                     <td>{flow.author}</td>
                                     <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("clock")
                                             .doc(flow.id)

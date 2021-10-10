@@ -3,7 +3,7 @@ import { db } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 
-export default function GuestTerminator({user, userDB}) {
+export default function GuestTerminator({userDB}) {
     const [guest, setGuest] = useState([])
     let checkoutHour = new Date().getHours() > 14
 

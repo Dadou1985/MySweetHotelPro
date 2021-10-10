@@ -5,7 +5,6 @@ import Divider from '@material-ui/core/Divider';
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Lost from '../../../svg/lost-items.svg'
 import CheckList from '../../../svg/todoList.svg'
-import CallCenter from '../../../svg/call-center.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'
 import Notifications from '../notifications'
@@ -20,7 +19,6 @@ import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
 import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
 import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
 import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
-import FeedbackBox from '../form/feedbackBox';
 import Connection from '../../../svg/employee.svg'
 
 

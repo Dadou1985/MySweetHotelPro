@@ -1,14 +1,13 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext, db } from '../../Firebase'
 
 const CheckListTable = ({shift}) => {
 
     const [info, setInfo] = useState([])
-    const [isChecked, setIsChecked] = useState(false)
     const [formValue, setFormValue] = useState({task: "", status: false})
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+    const { userDB } = useContext(FirebaseContext)
 
     const handleChange = (event) =>{
         event.persist()
@@ -19,7 +18,7 @@ const CheckListTable = ({shift}) => {
       }
 
     const handleCheckboxChange = (taskId, currentStatus) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('checkList')
             .doc("lists")
@@ -30,16 +29,10 @@ const CheckListTable = ({shift}) => {
         })
     }
 
-
- 
-    const handleIsChecked = () => {
-        setIsChecked(!isChecked)
-    }
-
     const handleSubmit = event => {
         event.preventDefault()
         setFormValue({task: ""})
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('checkList')
             .doc("lists")
@@ -53,7 +46,7 @@ const CheckListTable = ({shift}) => {
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("checkList")
             .doc("lists")
@@ -80,7 +73,7 @@ const CheckListTable = ({shift}) => {
 
     const handleCleanCheckboxes = () => {
         taskStatus.length > 0 && taskStatus.map(task => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('checkList')
             .doc("lists")
@@ -129,7 +122,7 @@ const CheckListTable = ({shift}) => {
                         </td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('hotel')
+                               return db.collection('hotels')
                                .doc(userDB.hotelId)
                                .collection("checkList")
                                .doc("lists")

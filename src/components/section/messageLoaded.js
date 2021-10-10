@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import {Card} from 'react-bootstrap'
 import {Button} from 'reactstrap'
 import Avatar from 'react-avatar'
@@ -16,9 +16,6 @@ import { FirebaseContext, db, auth } from '../../Firebase'
   const MessageLoaded = ({author, text, hour, title, blueprint, date, key}) =>{
 
     const [expanded, setExpanded] = useState('')
-    const { user, firebase } = useContext(FirebaseContext)
-    const [user, setUser] = useState(auth.currentUser)
-
     const { userDB, setUserDB } = useContext(FirebaseContext)
 
     const handleChangeExpanded = (title) => setExpanded(title)

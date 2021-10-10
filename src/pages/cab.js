@@ -9,7 +9,6 @@ export default function Cab() {
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
   
-  
     useEffect(() => {
           
       let unsubscribe = auth.onAuthStateChanged(async(user) => {
@@ -28,12 +27,10 @@ export default function Cab() {
                 }
               })
               return setHide("none")
-  
           }
         })
       return unsubscribe
   }, [])
-
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 

@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { db, auth, functions } from '../../../Firebase'
+import { db, functions } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
 
 
-const UserList = ({user, userDB}) => {
+const UserList = ({userDB}) => {
     const [info, setInfo] = useState([])
 
     useEffect(() => {
@@ -49,8 +49,8 @@ const UserList = ({user, userDB}) => {
                     </tr>
                 </thead>
                 <tbody>
-                {info.map(flow =>(
-                    <tr key={flow.markup}>
+                {info.map((flow, key) =>(
+                    <tr key={key}>
                     <td>{flow.username}</td>
                     <td>{flow.email}</td>
                     <td>

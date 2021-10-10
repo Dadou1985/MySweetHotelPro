@@ -1,12 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Taxi from '../../../svg/taxi.svg'
-import { db, auth } from '../../../Firebase'
+import { db } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Switch from '@material-ui/core/Switch';
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -14,7 +13,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
-const Cab = ({userDB, user}) =>{
+const Cab = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -62,7 +61,7 @@ const Cab = ({userDB, user}) =>{
         setStep(false)
         const notif = "Vous venez d'ajouter une demande de réservation de taxi à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("cab")
             .add({
@@ -82,7 +81,7 @@ const Cab = ({userDB, user}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("cab")
           .doc(document)
@@ -94,7 +93,7 @@ const Cab = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("cab")
             .orderBy("markup", "asc")
@@ -116,7 +115,7 @@ const Cab = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("cab")
             .where("status", "==", true)
@@ -213,7 +212,7 @@ const Cab = ({userDB, user}) =>{
                                     }}>
                                         <Form.Group controlId="description">
                                         <Form.Label>Nom du client</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "10vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "10vw"}} value={formValue.client} name="client" onChange={handleChange} required />
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description2">
@@ -290,7 +289,7 @@ const Cab = ({userDB, user}) =>{
                                         />
                                         </td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("cab")
                                             .doc(flow.id)

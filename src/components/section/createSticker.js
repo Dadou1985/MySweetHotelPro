@@ -1,9 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
-import Avatar from 'react-avatar'
-import PostIt from '../../svg/paper.svg'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Plus from '../../svg/plus3.svg'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext, db } from '../../Firebase'
 
 
 const CreateSticker = () => {
@@ -12,7 +10,7 @@ const CreateSticker = () => {
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+    const { userDB } = useContext(FirebaseContext)
 
     const showSticker = () => {
         setVisible(true)
@@ -26,7 +24,7 @@ const CreateSticker = () => {
     }))
     }
     
-    const handleSubmit = (event) => {
+    const handleSubmit = () => {
         setVisible(false)
         setFormValue({title: "", text: ""})
         return db.collection('mySweetHotel')

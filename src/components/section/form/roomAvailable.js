@@ -1,5 +1,5 @@
 import React, { useContext, useState} from 'react'
-import { Form, FormControl, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { FormControl, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import { FirebaseContext } from '../../../Firebase'
 import Bed from '../../../svg/bed.svg'
 

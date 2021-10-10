@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import Fom from '../../svg/fom.svg'
 import { navigate } from 'gatsby'
-import { Form, Button, Tabs, Tab, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import DefaultProfile from "../../svg/profile.png"
 import AddPhotoURL from '../../svg/camera.svg'
 import Avatar from '@material-ui/core/Avatar';
@@ -33,23 +33,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         }else{
             navigate('/singlePage')
         }
-    }
-
-    const handleShowDetails = () =>{
-        let arrowTop = document.getElementById("arrowTop")
-        const sentence = document.getElementById('dilema-sentence')
-      if(arrowTop.style.transform === "rotate(0turn)"){
-        setShowDetails(!showDetails)
-        sentence.style.display = "none"
-          return arrowTop.style.transform = "rotate(0.5turn)"
-      }
-      if(arrowTop.style.transform === "rotate(0.5turn)"){
-        setShowDetails(!showDetails)
-        sentence.style.display = "block"
-          return arrowTop.style.transform = "rotate(0turn)"
-      }
-      
-  }  
+    }  
 
   const handleChangePhotoUrl = (event) => {
     event.preventDefault()
@@ -132,10 +116,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
         .then(handleLoadUserDB())
     }
 
-
-    const handleClose = () => setShowModal(false)
-    const handleShow = () => setShowModal(true)
-
     const handleCloseUpdateEmail = () => setListEmail(false)
     const handleShowUpdateEmail = () => setListEmail(true)
 
@@ -143,13 +123,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const handleShowUpdatePassword = () => setListPassword(true)
 
     const handleCloseUpdatePhoto = () => setConfModal(false)
-    const handleShowUpdatePhoto = () => setConfModal(true)
-
-
-    const hideDialog = () => {
-        setShowDialog(false)
-    }
-
 
     useEffect(() => {
         const iziUserOnAir2 = () => {
@@ -206,9 +179,9 @@ const Dilema = ({user, userDB, setUserDB}) => {
     console.log(user.password)
 
     return (
-        info.map(flow => (
+        info.map((flow, key) => (
 
-        <div className="global-container"
+        <div key={key} className="global-container"
         style={{ backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})` }}>
                 <div className="profile-container">
                     <h1>

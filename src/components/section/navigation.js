@@ -1,12 +1,9 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar, OverlayTrigger, Tooltip, Modal, Button } from 'react-bootstrap'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import AdminBoard from './form/adminBoard'
 import FeedbackBox from './form/feedbackBox'
-import CallCenter from './CallCenter'
-import Avatar from 'react-avatar'
-import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Drawer from './common/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
 import Fom from '../../svg/fom.svg'
@@ -16,8 +13,7 @@ import Ghost from '../../svg/ghost.svg'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
 import '../css/navigation.css'
 import Notifications from './notifications'
-import { FirebaseContext, db, auth, storage } from '../../Firebase'
-import Divider from '@material-ui/core/Divider';
+import { db, auth, storage } from '../../Firebase'
 import List from '@material-ui/core/List';
 import Logo from '../../svg/new-mini-logo-msh-pro2.png'
 
@@ -43,7 +39,7 @@ const Navigation = ({user, userDB}) =>{
 
     useEffect(() => {
         const handleDeleteImgNote = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("note")
             .where("markup", "<", previousDays)
@@ -80,7 +76,7 @@ const Navigation = ({user, userDB}) =>{
       }
 
     const handleDeleteImgNoteDB = (noteId) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
         .doc(userDB.hotelId)
         .collection('note')
         .doc(noteId)
@@ -157,14 +153,14 @@ const Navigation = ({user, userDB}) =>{
                     </OverlayTrigger>
                 </div>
             </Navbar>
-            <Modal show={list} onHide={handleClose}>
+            <Modal show={list} centered onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-sm">
                     Voulez-vous quitter l'application ?
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Button variant="danger" onClick={handleLogout}>Quitter</Button>
+                    <Button variant="danger" style={{width: "100%"}} onClick={handleLogout}>Quitter</Button>
                 </Modal.Body>
             </Modal>
             {!!userDB && !!user&&

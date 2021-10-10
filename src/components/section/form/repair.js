@@ -1,18 +1,17 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Maintenance from '../../../svg/repair.svg'
-import { db, auth, storage } from '../../../Firebase'
+import { db, storage } from '../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Switch from '@material-ui/core/Switch';
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
 
 
-const Repair = ({userDB, user}) =>{
+const Repair = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -56,7 +55,7 @@ const Repair = ({userDB, user}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter un signalement technique à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .add({
@@ -73,7 +72,7 @@ const Repair = ({userDB, user}) =>{
     }
 
     const changeIssueStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
           .collection('maintenance')
           .doc(document)
@@ -84,7 +83,7 @@ const Repair = ({userDB, user}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .orderBy("markup", "asc")
@@ -107,7 +106,7 @@ const Repair = ({userDB, user}) =>{
 
      useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .where("status", "==", true)
@@ -263,7 +262,7 @@ const Repair = ({userDB, user}) =>{
                                             if(flow.img){
                                                 handleDeleteImg(flow.img)
                                             }
-                                            return db.collection('hotel')
+                                            return db.collection('hotels')
                                             .doc(userDB.hotelId)
                                             .collection("maintenance")
                                             .doc(flow.id)

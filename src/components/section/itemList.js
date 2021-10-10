@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react'
-import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { Button, Table } from 'react-bootstrap'
+import { FirebaseContext, db } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 
@@ -8,14 +8,11 @@ const ItemList = ({item}) => {
 
     const [info, setInfo] = useState([])
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
-    const [expand, setExpand] = useState(false)
-
-    const handleChangeExpand = () => setExpand(!expand)
+    const { userDB } = useContext(FirebaseContext)
 
     useEffect(() => {
         const listOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('housekeeping')
             .doc("item")
@@ -60,7 +57,7 @@ const ItemList = ({item}) => {
                         <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                         <td className="bg-light">
                             <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('hotel')
+                               return db.collection('hotels')
                                .doc(userDB.hotelId)
                                .collection('housekeeping')
                                .doc("item")

@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
+import { db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 import DateFnsUtils from '@date-io/date-fns';
 import {
@@ -14,7 +11,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 
-const PhoneCab = ({user, userDB}) =>{
+const PhoneCab = ({userDB}) =>{
 
     const [formValue, setFormValue] = useState({room: "", client: "", date: new Date(), hour: new Date(), passenger:"", model:"", destination: ""})
     const [info, setInfo] = useState([])
@@ -43,15 +40,13 @@ const PhoneCab = ({user, userDB}) =>{
             .then(doc => console.log('nouvelle notitfication'))
     }
 
-      const handleChangeExpand = () => setExpand(!expand)
-
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
         setStep(false)
         const notif = "Vous venez d'ajouter une demande de réservation de taxi à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('cab')
             .add({
@@ -69,7 +64,7 @@ const PhoneCab = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('cab')
           .doc(document)
@@ -80,7 +75,7 @@ const PhoneCab = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('cab')
             .orderBy("markup", "asc")
@@ -146,7 +141,7 @@ const PhoneCab = ({user, userDB}) =>{
                         {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('hotel')
+                            return db.collection('hotels')
                             .doc(userDB.hotelId)
                             .collection("cab")
                             .doc(flow.id)

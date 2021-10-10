@@ -1,7 +1,6 @@
-import React, { useContext, useEffect } from 'react'
+import React from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
 
 const PhoneCheckList = ({user, userDB}) =>{
 

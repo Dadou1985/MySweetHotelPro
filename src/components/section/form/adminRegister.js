@@ -1,8 +1,8 @@
-import React, { useState, useContext } from 'react'
+import React, { useState } from 'react'
 import {Form, Button, Modal} from 'react-bootstrap'
-import { db, auth, functions } from '../../../Firebase'
+import { db, functions } from '../../../Firebase'
 
-const AdminRegister = ({hide, user, userDB}) => {
+const AdminRegister = ({hide, userDB}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
@@ -14,12 +14,6 @@ const AdminRegister = ({hide, user, userDB}) => {
           [event.target.name]: event.target.value
         }))
       }
-
-    const resetPassword = () => {
-        return auth.sendPasswordResetEmail(formValue.email).then(function() {
-        }).catch(function(error) {
-        });
-    }
 
     const createUser = functions.httpsCallable('createUser')
 

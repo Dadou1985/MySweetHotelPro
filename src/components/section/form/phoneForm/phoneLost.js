@@ -1,18 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { auth, db, storage } from '../../../../Firebase'
+import { db, storage } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
 
 
-const PhoneLost = ({user, userDB}) =>{
+const PhoneLost = ({userDB}) =>{
 
     const [formValue, setFormValue] = useState({type: "", place: "", details: "", description: "", url: ""})
     const [info, setInfo] = useState([])
@@ -53,7 +50,7 @@ const PhoneLost = ({user, userDB}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .add({
@@ -96,7 +93,7 @@ const PhoneLost = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('lostAndFound')
             .orderBy("markup", "asc")
@@ -157,7 +154,7 @@ const PhoneLost = ({user, userDB}) =>{
                         {expand && <td>{flow.details}</td>}
                         {expand && <td>{flow.author}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('hotel')
+                            return db.collection('hotels')
                             .doc(userDB.hotelId)
                             .collection('lostAndFound')
                             .doc(flow.id)

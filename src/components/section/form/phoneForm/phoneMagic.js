@@ -3,10 +3,7 @@ import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
-import Divider from '@material-ui/core/Divider'
 import Close from '../../../../svg/close.svg'
-
-import { paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur } from "../../../../../hotels"
 
 export default function PhoneMagic({user, userDB}) {
     const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: ""})
@@ -16,8 +13,6 @@ export default function PhoneMagic({user, userDB}) {
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
-
-    const deptDetails = [paris_arrondissement, ile_de_france, auvergne_rhone_alpes, bourgogne_franche_comte, bretagne, centre_val_de_loire, corse, grand_est, hauts_de_france, normandie, nouvelle_aquitaine, occitanie, pays_de_la_loire,provence_alpes_cote_d_azur]
 
     const handleChange = (event) =>{
         event.persist()
@@ -33,7 +28,8 @@ export default function PhoneMagic({user, userDB}) {
 
     useEffect(() => {
         const getHotel = () => {
-            return db.collection("hotel")
+            return db.collection("hotels")
+            .where("code_postal", "==", filter)
             }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
@@ -61,7 +57,7 @@ export default function PhoneMagic({user, userDB}) {
 
     const getPartner = () => {
         const notif = `${hotelName} a été activé avec succès !`
-            return db.collection("hotel")
+            return db.collection("hotels")
                 .doc(formValue.hotelId)
                 .update({
                     partnership: true
@@ -71,7 +67,7 @@ export default function PhoneMagic({user, userDB}) {
 
     const createHotel = () => {
         const notif = "Vous venez de créer un hôtel !"
-        return db.collection("hotel")
+        return db.collection("hotels")
             .add({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
@@ -144,7 +140,7 @@ export default function PhoneMagic({user, userDB}) {
             textAlign: "center"
         }}>
             <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Magic Box</h4>
-            {/*<Form.Row>
+            <Form.Row>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -158,7 +154,7 @@ export default function PhoneMagic({user, userDB}) {
                     className="text-center"
                     pattern=".{5,}" />
                 </Form.Group>
-            </Form.Row>*/}
+            </Form.Row>
 
             <Form.Row>
                 <Form.Group style={{
@@ -193,12 +189,12 @@ export default function PhoneMagic({user, userDB}) {
                 paddingTop: "5vh",
                 borderTop: "1px solid lightgrey"
             }}>
-                {/*<Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => {
+                <Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => {
                     getPartner()
                     setFilter('')
                     setFormValue("" || 0)
                     setHotelName("Sélectionner un hôtel")
-                    }}>Activer un hôtel</Button>*/}
+                    }}>Activer un hôtel</Button>
                 <Button variant="outline-info" style={{marginBottom: "2vh"}} onClick={() => setActivateAdminMaker(true)}>Créér un administrateur</Button>
                 <Button variant="outline-dark" style={{marginBottom: "2vh"}} onClick={() => setActivateCreateHotel(true)}>Créér un hôtel</Button>
             </div>

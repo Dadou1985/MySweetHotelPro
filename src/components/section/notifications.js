@@ -1,12 +1,12 @@
 import React, {useState, useEffect, useContext } from 'react'
 import NotificationsBar from './notificationsBar'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext, db } from '../../Firebase'
 
 export default function Notifications() {
 
     const [info, setInfo] = useState([])
 
-    const {userDB, user} = useContext(FirebaseContext)
+    const {userDB} = useContext(FirebaseContext)
 
 
     useEffect(() => {

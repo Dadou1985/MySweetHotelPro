@@ -1,18 +1,15 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { storage, auth, db } from '../../../../Firebase'
+import { storage, db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
 
-const PhoneRepair = ({user, userDB}) =>{
+const PhoneRepair = ({userDB}) =>{
 
     const [formValue, setFormValue] = useState({room: "", client: "", details: "", type: "", url: ""})
     const [info, setInfo] = useState([])
@@ -37,8 +34,6 @@ const PhoneRepair = ({user, userDB}) =>{
         }
     }
 
-      const handleChangeExpand = () => setExpand(!expand)
-
       const addNotification = (notification) => {
         return db.collection('notifications')
             .add({
@@ -53,7 +48,7 @@ const PhoneRepair = ({user, userDB}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter un signalement technique à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .add({
@@ -96,7 +91,7 @@ const PhoneRepair = ({user, userDB}) =>{
     }
 
     const changeIssueStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('maintenance')
           .doc(document)
@@ -107,7 +102,7 @@ const PhoneRepair = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('maintenance')
             .orderBy("markup", "asc")
@@ -193,7 +188,7 @@ const PhoneRepair = ({user, userDB}) =>{
                                 if(flow.img){
                                     handleDeleteImg(flow.img)
                                 }
-                                return db.collection('hotel')
+                                return db.collection('hotels')
                                 .doc(userDB.hotelId)
                                 .collection("maintenance")
                                 .doc(flow.id)

@@ -1,11 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import Maid from '../../../../../svg/maid.svg'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
-function HousekeepingOverlay({user, userDB}) {
+function HousekeepingOverlay({userDB}) {
     const [list, setList] = useState(false)
     const [towel, setTowel] = useState([])
     const [soap, setSoap] = useState([])
@@ -17,7 +15,7 @@ function HousekeepingOverlay({user, userDB}) {
     const [babyBed, setBabyBed] = useState([])
 
     const itemList = (item) => {
-      return db.collection('hotel')
+      return db.collection('hotels')
         .doc(userDB.hotelId)
         .collection('housekeeping')
         .doc("item")

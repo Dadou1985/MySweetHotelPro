@@ -9,7 +9,6 @@ export default function DoorsStage() {
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
   
-  
     useEffect(() => {
           
       let unsubscribe = auth.onAuthStateChanged(async(user) => {
@@ -28,11 +27,11 @@ export default function DoorsStage() {
                 }
               })
               return setHide("none")
-  
           }
         })
       return unsubscribe
   }, [])
+  
     return (
         <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>
             <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 

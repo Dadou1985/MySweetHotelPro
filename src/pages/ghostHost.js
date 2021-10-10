@@ -9,7 +9,6 @@ function GhostHost() {
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
   
-  
     useEffect(() => {
           
       let unsubscribe = auth.onAuthStateChanged(async(user) => {
@@ -28,7 +27,6 @@ function GhostHost() {
                 }
               })
               return setHide("none")
-  
           }
         })
       return unsubscribe

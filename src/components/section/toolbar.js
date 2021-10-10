@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import '../css/toolbar.css'
 import Lost from './form/lost'
 import Cab from './form/cab'
@@ -7,7 +7,7 @@ import Maid from './form/maid'
 import Repair from './form/repair'
 import HouseKeeping from './form/HouseKeeping'
 import GuestTerminator from './guestTerminator'
-import { FirebaseContext, db, auth } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 
 
 const ToolBar = () =>{

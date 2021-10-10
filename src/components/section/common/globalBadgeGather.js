@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext } from 'react'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { FirebaseContext, db } from '../../../Firebase'
 
 
 const GlobalBadge = () => {
     const [data, setData] = useState([])
 
-    const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { userDB } = useContext(FirebaseContext)
 
 
     useEffect(() => {

@@ -1,16 +1,14 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useEffect } from 'react'
 import RoomChange from '../../../../../svg/logout.svg'
-import { db, auth } from '../../../../../Firebase'
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 
-function RoomChangeOverlay({userDB, user}) {
+function RoomChangeOverlay({userDB}) {
     const [demandQty, setDemandQty] = useState([])
 
     useEffect(() => {
         const toolOnAir = () => {
-          return db.collection('hotel')
+          return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .where("status", "==", true)

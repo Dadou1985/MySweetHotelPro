@@ -1,9 +1,7 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { FirebaseContext, db, auth } from '../../Firebase'
-import { zhCN } from 'date-fns/locale'
-
+import { db } from '../../Firebase'
 
 export default function ChatRoom({user, userDB, title}) {
 
@@ -12,12 +10,13 @@ export default function ChatRoom({user, userDB, title}) {
 
     useEffect(() => {
         const chatRoomOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("chat")
             .doc(title)
             .collection("chatRoom")
             .orderBy("markup", "desc")
+            .limit(50)
         }
 
         let unsubscribe = chatRoomOnAir().onSnapshot(function(snapshot) {
@@ -36,7 +35,7 @@ export default function ChatRoom({user, userDB, title}) {
 
      useEffect(() => {
         const getChatRoom = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection("chat")
             .where("title", "==", title)
@@ -61,13 +60,13 @@ console.log(chatRoom)
     return (
         <div>
             <PerfectScrollbar style={{paddingTop: "3vh"}}>
-                {user&& userDB&& messages.map((flow, index) => {
+                {user&& userDB&& messages.map((flow, key) => {
                     let language = userDB.language
                     const renderSwitch = () => {
                         switch(language) {
                             case 'en':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.en}
                                 date={flow.markup}
@@ -78,7 +77,7 @@ console.log(chatRoom)
                                 />
                             case 'ja':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.ja}
                                 date={flow.markup}
@@ -89,7 +88,7 @@ console.log(chatRoom)
                                 />
                             case 'ko':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.ko}
                                 date={flow.markup}
@@ -100,7 +99,7 @@ console.log(chatRoom)
                                 />
                             case 'pt':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.pt}
                                 date={flow.markup}
@@ -111,7 +110,7 @@ console.log(chatRoom)
                                 />
                             case 'ar':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.ar}
                                 date={flow.markup}
@@ -122,7 +121,7 @@ console.log(chatRoom)
                                 />
                             case 'it':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.it}
                                 date={flow.markup}
@@ -133,7 +132,7 @@ console.log(chatRoom)
                                 />
                             case 'es':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.es}
                                 date={flow.markup}
@@ -144,7 +143,7 @@ console.log(chatRoom)
                                 />
                             case 'zh':
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.zh}
                                 date={flow.markup}
@@ -155,7 +154,7 @@ console.log(chatRoom)
                                 />
                             default:
                                 return <Message 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 translation={flow.translated.fr}
                                 date={flow.markup}
@@ -169,7 +168,7 @@ console.log(chatRoom)
 
                     if(userDB.language === chatRoom.guestLanguage) {
                         return <Message                                 
-                                key={index}
+                                key={key}
                                 author={flow.author}
                                 photo={flow.photo}
                                 text={flow.text}

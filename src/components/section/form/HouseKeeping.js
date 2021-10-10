@@ -26,7 +26,7 @@ const HouseKeeping = ({userDB}) =>{
     const handleShow = () => setList(true)
 
     const itemList = (item) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
         .doc(userDB.hotelId)
         .collection('housekeeping')
         .doc("item")

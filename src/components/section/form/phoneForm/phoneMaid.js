@@ -1,19 +1,15 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table, Popover, Modal } from 'react-bootstrap'
+import { Form, Button, Table } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { FirebaseContext, auth, db, storage } from '../../../../Firebase'
+import { db, storage } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import PerfectScrollbar from 'react-perfect-scrollbar'
-import Left from '../../../../svg/arrow-left.svg'
-import Right from '../../../../svg/arrow-right.svg'
 import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
-import { set } from 'date-fns'
 
-const PhoneMaid = ({user, userDB}) =>{
+const PhoneMaid = ({userDB}) =>{
 
     const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: null, reason: "", state: ""})
     const [info, setInfo] = useState([])
@@ -35,8 +31,6 @@ const PhoneMaid = ({user, userDB}) =>{
         }))
       }
 
-      const handleChangeExpand = () => setExpand(!expand)
-
       const addNotification = (notification) => {
         return db.collection('notifications')
             .add({
@@ -51,7 +45,7 @@ const PhoneMaid = ({user, userDB}) =>{
         setFormValue("")
         const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
         addNotification(notif)
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .add({
@@ -69,7 +63,7 @@ const PhoneMaid = ({user, userDB}) =>{
     }
 
     const changeDemandStatus = (document) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('roomChange')
           .doc(document)
@@ -80,7 +74,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     const handleUpdateRoom = (demandId) => {
         setFormValue("")
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -91,7 +85,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     const handleUpdateRoomState = (demandId) => {
         setFormValue("")
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .doc(demandId)
@@ -102,7 +96,7 @@ const PhoneMaid = ({user, userDB}) =>{
 
     useEffect(() => {
         const toolOnAir = () => {
-            return db.collection('hotel')
+            return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('roomChange')
             .orderBy("markup", "asc")
@@ -206,7 +200,7 @@ const PhoneMaid = ({user, userDB}) =>{
                                 if(flow.img){
                                     handleDeleteImg(flow.img)
                                 }
-                                return db.collection('hotel')
+                                return db.collection('hotels')
                                 .doc(userDB.hotelId)
                                 .collection("roomChange")
                                 .doc(flow.id)

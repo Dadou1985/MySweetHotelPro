@@ -1,17 +1,14 @@
-import React, { useState, useEffect } from 'react'
-import { Form, Button, Table } from 'react-bootstrap'
-import { FirebaseContext, auth, db } from '../../../../Firebase'
-import moment from 'moment'
+import React, { useState } from 'react'
+import { Form, Button } from 'react-bootstrap'
+import { db } from '../../../../Firebase'
 import 'moment/locale/fr';
-import Drawer from '@material-ui/core/Drawer'
 
-function PhoneFeedback({user, userDB}) {
+function PhoneFeedback({userDB}) {
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
 
     const handleClose = () => setList(false)
-    const handleShow = () => setList(true)
 
     const handleChange = (event) =>{
         event.persist()

@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Input } from 'reactstrap'
 import NoteBox from './noteBox'
 import DatePicker from "react-datepicker"
@@ -17,7 +17,7 @@ import BlueCircle from '../../svg/blue-circle.svg'
 import Circle from '../../svg/circle.svg'
 import Upload from '../../svg/plus2.svg'
 import Drawer from '@material-ui/core/Drawer'
-import { FirebaseContext, db, auth, storage } from '../../Firebase'
+import { FirebaseContext, db, storage } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 
@@ -34,7 +34,7 @@ const Messenger = ({filterDate}) =>{
     const [activate, setActivate] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
 
-    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+    const { userDB, setUserDB, user } = useContext(FirebaseContext)
 
     const handleChangeNote = event =>{
         setNote(event.currentTarget.value)
@@ -111,7 +111,7 @@ const Messenger = ({filterDate}) =>{
     }
 
     const addNote = (marker, url) => {
-        return db.collection('hotel')
+        return db.collection('hotels')
             .doc(userDB.hotelId)
             .collection('note')
             .add({
@@ -266,71 +266,78 @@ const Messenger = ({filterDate}) =>{
                         <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
                             display: checked ? "flex" : "none",
                             width: "100%",
-                            flexFlow: "row wrap",
+                            flexFlow: "column",
                             justifyContent: "flex-end",
                             alignItems: "center",
                             }}>
                             <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>Critère d'importance</h5>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        defaut
-                                    </Tooltip>
-                                    }>
-                                    <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                        setStatus("default")
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
+                            <div style={{
+                                display: "flex",
+                                width: "100%",
+                                flexFlow: "row",
+                                justifyContent: "space-around"
+                            }}>
+                                <ListItemIcon button={true}>
+                                    <ListItemIcon>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                        <Tooltip id="title">
+                                            defaut
+                                        </Tooltip>
+                                        }>
+                                        <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                            setStatus("default")
+                                            setChecked(false)}} />
+                                    </OverlayTrigger>
+                                    </ListItemIcon>
                                 </ListItemIcon>
-                            </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        Info
-                                    </Tooltip>
-                                    }>
-                                    <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                        setStatus("lightskyblue")
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
+                                <ListItemIcon button={true}>
+                                    <ListItemIcon>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                        <Tooltip id="title">
+                                            Info
+                                        </Tooltip>
+                                        }>
+                                        <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                            setStatus("lightskyblue")
+                                            setChecked(false)}} />
+                                    </OverlayTrigger>
+                                    </ListItemIcon>
                                 </ListItemIcon>
-                            </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        Important
-                                    </Tooltip>
-                                    }>
-                                    <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
-                                        setStatus('darkgoldenrod')
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
+                                <ListItemIcon button={true}>
+                                    <ListItemIcon>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                        <Tooltip id="title">
+                                            Important
+                                        </Tooltip>
+                                        }>
+                                        <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
+                                            setStatus('darkgoldenrod')
+                                            setChecked(false)}} />
+                                    </OverlayTrigger>
+                                    </ListItemIcon>
                                 </ListItemIcon>
-                            </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        Urgent
-                                    </Tooltip>
-                                    }>
-                                    <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
-                                        setStatus('red')
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
+                                <ListItemIcon button={true}>
+                                    <ListItemIcon>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                        <Tooltip id="title">
+                                            Urgent
+                                        </Tooltip>
+                                        }>
+                                        <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
+                                            setStatus('red')
+                                            setChecked(false)}} />
+                                    </OverlayTrigger>
+                                    </ListItemIcon>
                                 </ListItemIcon>
-                            </ListItemIcon>
+                            </div>
                         </List>
                     </div>
                 </Modal.Footer>

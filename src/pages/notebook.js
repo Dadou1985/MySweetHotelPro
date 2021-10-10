@@ -9,7 +9,6 @@ import {
   DatePicker
 } from '@material-ui/pickers';
 
-
 const NotebookPage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
@@ -34,7 +33,6 @@ const NotebookPage = () => {
               }
             })
             return setHide("none")
-
         }
       })
     return unsubscribe
@@ -43,7 +41,6 @@ const NotebookPage = () => {
 const handleDateChange = (date) => {
   setFilterDate(date);
 };
-
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 

@@ -1,14 +1,12 @@
-import React, {useState, useContext } from 'react'
-import { Button, Modal, InputGroup, FormControl, Form, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
+import React, {useState } from 'react'
+import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../checkListTable'
 import TodoList from '../../../svg/todoList.svg'
-import { db, auth } from '../../../Firebase'
 
 
-const CheckList = ({userDB, setUserDB}) =>{
+const CheckList = () =>{
 
     const [list, setList] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

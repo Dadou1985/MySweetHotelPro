@@ -1,12 +1,11 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../svg/paper-plane.svg'
 import Plus from '../../svg/plus3.svg'
 import SupportRoom from './supportRoom'
-import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton, Dropdown } from 'react-bootstrap'
-import Avatar from 'react-avatar'
+import { OverlayTrigger, Tooltip, Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
   Accordion,
   AccordionItem,
@@ -17,15 +16,13 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, auth } from '../../Firebase'
+import { db } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
-import Select from 'react-select'
 
 export default function Assistance({userDB, user}) {
     
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
-    const [room, setRoom] = useState('')
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)

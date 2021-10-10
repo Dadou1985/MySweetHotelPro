@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from 'react'
-import { FirebaseContext, db, auth } from '../../../Firebase'
+import { FirebaseContext, db } from '../../../Firebase'
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 
@@ -12,7 +12,7 @@ export default function BadgeMaker({item, children}) {
 
     useEffect(() => {
         const listOnAir = () => {
-          return db.collection('hotel')
+          return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('housekeeping')
           .doc("item")
