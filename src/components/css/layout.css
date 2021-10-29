@@ -737,7 +737,7 @@ input[type=number] {
     display: flex;
     flex-flow: column;
     width: 7%;
-    height: 82vh;
+    height: 85vh;
     margin: 1%;
     border-right: 1px solid lightgrey;
     justify-content: space-around;

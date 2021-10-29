@@ -59,7 +59,9 @@ function PhoneAdmin({userDB}) {
         room: userDB.room,
         classement: userDB.classement,
         code_postal: userDB.code_postal,
-        language: language.substring(0, 2)
+        language: language.substring(0, 2),
+        logo: userDB.logo,
+        appLink: userDB.appLink
         }) 
         .then(handleHide())
       }

@@ -52,7 +52,9 @@ const AdminRegister = ({hide, userDB}) => {
         room: userDB.room,
         country: userDB.country,
         code_postal: userDB.code_postal,
-        language: language.substring(0, 2)
+        language: language.substring(0, 2),
+        logo: userDB.logo,
+        appLink: userDB.appLink
         }) 
         .then(() => {
             hide()

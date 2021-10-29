@@ -6,7 +6,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
 
 export default function PhoneMagic({user, userDB}) {
-    const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: ""})
+    const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: "", logo: "", appLink: ""})
     const [activateAdminMaker, setActivateAdminMaker] = useState(false)
     const [activateCreateHotel, setActivateCreateHotel] = useState(false)
     const [info, setInfo] = useState([])
@@ -68,7 +68,7 @@ export default function PhoneMagic({user, userDB}) {
     const createHotel = () => {
         const notif = "Vous venez de créer un hôtel !"
         return db.collection("hotels")
-            .add({
+            .set({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
                 classement: formValue.standing,
@@ -119,7 +119,9 @@ export default function PhoneMagic({user, userDB}) {
         country: formValue.country,
         city: formValue.city,
         room: formValue.room,
-        language: userDB.language
+        language: userDB.language,
+        logo: formValue.logo,
+        appLink: formValue.appLink
         }) 
         .then(()=>{
             setFormValue("" || 0)
@@ -173,7 +175,9 @@ export default function PhoneMagic({user, userDB}) {
                             city: details.city,
                             code_postal: details.code_postal,
                             country: details.country,
-                            room: details.room
+                            room: details.room,
+                            logo: details.logo,
+                            appLink: details.appLink
                         })
                         setHotelName(details.hotelName)
                         }}>{details.hotelName}</Dropdown.Item>
