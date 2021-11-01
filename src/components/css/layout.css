@@ -570,14 +570,13 @@ input[type=number] {
 
 .brand {
     position: absolute;
-    left: 5vw;
+    left: 2vw;
     cursor: pointer;
     
 }
 
 .logo-msh {
-    width: 7%;
-    margin-top: 1%;
+    width: 8%;
 }
 
 .nav_container {
@@ -663,8 +662,7 @@ input[type=number] {
 
     .logo-msh {
         width: 30%;
-        margin-top: 1vh;
-        margin-left: 10vw;
+        margin-left: 6vw;
     }
 
     .nav_container {display: none;}

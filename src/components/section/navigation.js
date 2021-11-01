@@ -15,7 +15,7 @@ import '../css/navigation.css'
 import Notifications from './notifications'
 import { db, auth, storage } from '../../Firebase'
 import List from '@material-ui/core/List';
-import Logo from '../../svg/new-mini-logo-msh-pro2.png'
+import Logo from '../../svg/mshPro-newLogo-transparent.png'
 
 const Navigation = ({user, userDB}) =>{
 

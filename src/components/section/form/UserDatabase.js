@@ -37,8 +37,10 @@ const UserDatabase = ({userDB}) =>{
 
     useEffect(() => {
         const guestOnAir = () => {
-          return db.collection('guestUsers')
-          .orderBy("username", "asc")
+          return db.collection('hotels')
+          .doc(userDB.hotelId)
+          .collection("chat")
+          .orderBy("title", "asc")
           }
   
         let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
@@ -133,13 +135,13 @@ const UserDatabase = ({userDB}) =>{
                     {Info.map(flow => (
                     <Nav variant="pills" className="flex-column" style={{borderBottom: "1px solid lightgrey"}}>
                         <Nav.Item>
-                            <Nav.Link eventKey={flow.username} onClick={() => setselectedUser(flow)} style={{
+                            <Nav.Link eventKey={flow.title} onClick={() => setselectedUser(flow)} style={{
                                 color: "black", 
                                 fontWeight: "bolder",}}>
                                     {flow.checkoutDate ? <StyledBadge badgeContent="" color="primary">
-                                        <div style={{width: "11vw"}}>{flow.username}</div>
+                                        <div style={{width: "11vw"}}>{flow.title}</div>
                                     </StyledBadge> : 
-                                        <div style={{width: "11vw"}}>{flow.username}</div>}
+                                        <div style={{width: "11vw"}}>{flow.title}</div>}
                                     </Nav.Link>
                             {sendingMail && <Form.Group controlId="formBasicCheckbox" style={{display: "flex"}}>
                                 <Form.Check type="checkbox" onChange={() => handleChangeCheckbox(flow.email)} /> Envoyer le mail
@@ -153,7 +155,7 @@ const UserDatabase = ({userDB}) =>{
                     <Col sm={9}>
                     {selectedUser ? <PerfectScrollbar style={{height: "65vh"}}>
                     <Tab.Content>
-                        <Tab.Pane eventKey={selectedUser.username} style={{
+                        <Tab.Pane eventKey={selectedUser.title} style={{
                             display: "flex",
                             flexFlow: "column",
                             alignItems: "center"
@@ -171,7 +173,7 @@ const UserDatabase = ({userDB}) =>{
                                         borderBottom: "1px solid black", 
                                         width: "100%", 
                                         textAlign: "center", 
-                                        paddingBottom: "1vh"}}>{selectedUser.username}{renderSwitchFlag(selectedUser.localLanguage)}</Card.Title>
+                                        paddingBottom: "1vh"}}>{selectedUser.title}{renderSwitchFlag(selectedUser.guestLanguage)}</Card.Title>
                                     <Card.Text style={{paddingLeft: "1vw"}}>
                                         <img src={Mail} style={{width: "5%", marginRight: "1vw"}} />
                                     {selectedUser.email}
