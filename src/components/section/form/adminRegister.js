@@ -48,13 +48,14 @@ const AdminRegister = ({hide, userDB}) => {
         userId: newUid,
         city: userDB.city,
         classement: userDB.classement,
-        language: userDB.language,
         room: userDB.room,
         country: userDB.country,
         code_postal: userDB.code_postal,
         language: language.substring(0, 2),
         logo: userDB.logo,
-        appLink: userDB.appLink
+        appLink: userDB.appLink,
+        adresse: userDB.adresses,
+        website: userDB.website
         }) 
         .then(() => {
             hide()

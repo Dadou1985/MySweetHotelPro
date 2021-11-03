@@ -20,7 +20,9 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         hotelId: "", 
         hotelName: "", 
         country: "", 
-        classement: ""})
+        classement: "",
+        appLink: "",
+        logo: ""})
     const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
@@ -33,7 +35,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     useEffect(() => {
         const getHotel = () => {
             return db.collection("hotels")
-            .where("code_postal", "==", filter)
+            .where("partnership", "==", true)
             }
 
         let unsubscribe = getHotel().onSnapshot(function(snapshot) {
@@ -71,6 +73,8 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
             code_postal: formValue.code_postal,
             city: formValue.city,
             room: formValue.room,
+            appLink: formValue.appLink,
+            logo: formValue.logo
         }) 
     }
 
@@ -88,10 +92,11 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         code_postal: "99999",
         country: "FRANCE",
         mail: "david.simba1985@gmail.com",
-        partnership: true,
         phone: "0659872884",
         website: "https://mysweethotelpro.com/",
-        adresse: "11 allée de la Loire"
+        adresse: "11 allée de la Loire",
+        appLink: "https://mysweethotel.eu/?url=https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png&hotelId=06nOvemBre198524SEptEMbrE201211noVEMbre2017&hotelName=Bates%20Motel",
+        logo: "https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png"
         }) 
     }
 
@@ -184,7 +189,9 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                             phone: details.phone,
                             website: details.website,
                             adresse: details.adresse,
-                            mail: details.mail
+                            mail: details.mail,
+                            appLink: details.appLink,
+                            logo: details.logo
                         })
                         setHotelName(details.hotelName)
                         }}>{details.hotelName}</Dropdown.Item>

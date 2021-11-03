@@ -17,8 +17,13 @@ import Room from '../../../images/room2.png'
 import Phone from '../../../images/phone.png'
 import Birthday from '../../../images/calendar.png'
 import SendMail from '../../../images/mail.png'
+import Category from '../../../images/categories.png'
+import CheckoutDate from '../../../images/checkout.png'
 import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
+import Loader from "react-loader-spinner"
+import '../../css/loader.css'
+
 
 const UserDatabase = ({userDB}) =>{
 
@@ -27,6 +32,7 @@ const UserDatabase = ({userDB}) =>{
     const [selectedUser, setselectedUser] = useState(null)
     const [sendingMail, setSendingMail] = useState(false)
     const [guestMail, setguestMail] = useState([])
+    const [IsLoading, setIsLoading] = useState(false)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -59,6 +65,18 @@ const UserDatabase = ({userDB}) =>{
 
     const sendCheckinMail = functions.httpsCallable('sendCheckinMail')
 
+    const handleMailSent = () => {
+        setIsLoading(true)
+        return sendCheckinMail({hotelName: userDB.hotelName, emails: guestMail, logo: userDB.logo, appLink: userDB.appLink})
+    }
+
+    const handleMailSended = () => {
+        setSendingMail(false)
+        setIsLoading(false)
+        setguestMail([])
+        return addNotification("Les e-mails ont bien été envoyés !")
+    }
+
     const StyledBadge = withStyles((theme) => ({
         badge: {
           right: -3,
@@ -67,6 +85,15 @@ const UserDatabase = ({userDB}) =>{
           padding: '0 4px',
         },
       }))(Badge);
+      
+      const addNotification = (notification) => {
+        return db.collection('notifications')
+            .add({
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(doc => console.log('nouvelle notitfication'))
+    }
     
     const renderSwitchFlag = (country) => {
         switch(country) {
@@ -143,7 +170,7 @@ const UserDatabase = ({userDB}) =>{
                                     </StyledBadge> : 
                                         <div style={{width: "11vw"}}>{flow.title}</div>}
                                     </Nav.Link>
-                            {sendingMail && <Form.Group controlId="formBasicCheckbox" style={{display: "flex"}}>
+                            {sendingMail && <Form.Group controlId="formBasicCheckbox" style={{display: "flex", marginTop: "1vh"}}>
                                 <Form.Check type="checkbox" onChange={() => handleChangeCheckbox(flow.email)} /> Envoyer le mail
                             </Form.Group>} 
                         </Nav.Item>
@@ -178,9 +205,17 @@ const UserDatabase = ({userDB}) =>{
                                         <img src={Mail} style={{width: "5%", marginRight: "1vw"}} />
                                     {selectedUser.email}
                                     </Card.Text>
+                                    <Card.Text style={{paddingLeft: "1vw"}}>
+                                        <img src={Category} style={{width: "5%", marginRight: "1vw"}} />
+                                    {selectedUser.category}
+                                    </Card.Text>
                                     {selectedUser.room ? <Card.Text style={{paddingLeft: "1vw"}}>
                                     <img src={Room} style={{width: "5%", marginRight: "1vw"}} />
                                     {selectedUser.room}
+                                    </Card.Text> : <></>}
+                                    {selectedUser.checkoutDate ? <Card.Text style={{paddingLeft: "1vw"}}>
+                                    <img src={CheckoutDate} style={{width: "5%", marginRight: "1vw"}} />
+                                    {selectedUser.checkoutDate}
                                     </Card.Text> : <></>}
                                     {selectedUser.phone ? <Card.Text style={{paddingLeft: "1vw"}}>
                                     <img src={Phone} style={{width: "5%", marginRight: "1vw"}} />
@@ -188,7 +223,7 @@ const UserDatabase = ({userDB}) =>{
                                     </Card.Text> : <></>}
                                     <Card.Text style={{paddingLeft: "1vw"}}>
                                     <img src={Birthday} style={{width: "5%", marginRight: "1vw"}} />
-                                    {moment(selectedUser.lastTimeConnected).format('LL')}
+                                    {moment(selectedUser.firstTimeConnected).format('LL')}
                                     </Card.Text>
                                 </Card.Body>
                             </Card>
@@ -226,13 +261,15 @@ const UserDatabase = ({userDB}) =>{
             </Tab.Container>
             </Modal.Body>
             <Modal.Footer>
-                {sendingMail ? <span>
-                    <Button variant="outline-danger" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>Annuler</Button>
-                    <Button variant="success" onClick={async() => {
-                    await sendCheckinMail({hotelName: userDB.hotelName, emails: guestMail, logo: userDB.logo, appLink: userDB.appLink})
-                    setSendingMail(false)
-                    return setguestMail([])}}>Envoyer</Button>
-                </span> : <Button variant="outline-info" onClick={() => setSendingMail(true)}>Envoyer un e-mail de bienvenue</Button>}
+                {sendingMail ? 
+                IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
+                <Button variant="outline-danger" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>Annuler</Button>
+                <Button variant="success" onClick={async() => {
+                await handleMailSent()
+                return handleMailSended()
+                }}>Envoyer</Button>
+            </span>
+                 : <Button variant="outline-info" onClick={() => setSendingMail(true)}>Envoyer un e-mail de bienvenue</Button>}
             </Modal.Footer>
             </Modal>
     </div>
