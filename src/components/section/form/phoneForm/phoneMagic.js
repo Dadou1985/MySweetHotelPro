@@ -1,18 +1,40 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Form, Button, DropdownButton, Dropdown, ButtonGroup, ToggleButton } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
 
 export default function PhoneMagic({user, userDB}) {
-    const [formValue, setFormValue] = useState({username: "", email: "", region: "", departement: "", city: "", standing: "", phone: "", room: 0, code_postal: "", adress: "", website: "", mail: "", hotelId: "", hotelName: "", country: "", classement: "", logo: "", appLink: ""})
+    const [formValue, setFormValue] = useState({
+        username: "", 
+        email: "", 
+        region: "", 
+        departement: "", 
+        city: "", 
+        standing: "", 
+        phone: "", 
+        room: null, 
+        code_postal: "", 
+        adress: "", 
+        website: "", 
+        mail: "", 
+        hotelId: "",
+        hotelName: "", 
+        country: "", 
+        classement: null, 
+        logo: "", 
+        appLink: "",
+        pricing: "",
+    })
     const [activateAdminMaker, setActivateAdminMaker] = useState(false)
     const [activateCreateHotel, setActivateCreateHotel] = useState(false)
     const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
+    const [hotelUsers, setHotelUsers] = useState([])
+    const [radioValue, setRadioValue] = useState('Freemium');
 
     const handleChange = (event) =>{
         event.persist()
@@ -21,6 +43,11 @@ export default function PhoneMagic({user, userDB}) {
           [event.target.name]: event.target.value
         }))
       }
+
+      const radios = [
+        { name: 'Freemium', value: 'Freemium' },
+        { name: 'Premium', value: 'Premium' },
+      ];
 
     const handleChangeInitialfilter = event =>{
         setInitialFilter(event.currentTarget.value)
@@ -46,6 +73,28 @@ export default function PhoneMagic({user, userDB}) {
         return unsubscribe
     }, [filter])
 
+    useEffect(() => {
+            if(formValue.hotelId) {
+                const getHotelUsers = () => {
+                    return db.collection("businessUsers")
+                    .where("hotelId", "==", formValue.hotelId)
+                    }
+        
+                let unsubscribe = getHotelUsers().onSnapshot(function(snapshot) {
+                    const snapInfo = []
+                  snapshot.forEach(function(doc) {          
+                    snapInfo.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    });
+                    console.log(snapInfo)
+                    setHotelUsers(snapInfo)
+                });
+                return unsubscribe
+            }
+    }, [formValue.hotelId])
+
     const addNotification = (notification) => {
         return db.collection('notifications')
             .add({
@@ -55,14 +104,29 @@ export default function PhoneMagic({user, userDB}) {
             .then(doc => console.log('nouvelle notitfication'))
     }
 
-    const getPartner = () => {
-        const notif = `${hotelName} a été activé avec succès !`
-            return db.collection("hotels")
+    const handleChangeUserPricingModel = (userId, newPricingModel) => {
+        return db.collection('businessUsers')
+            .doc(userId)
+            .update({pricingModel: newPricingModel})
+    }
+
+    const getPartner = async(pricingModel) => {
+        const notif = `${hotelName} a été activé avec succès en compte ${pricingModel} !`
+            await db.collection("hotels")
                 .doc(formValue.hotelId)
                 .update({
-                    partnership: true
-                })
+                    partnership: true,
+                    pricingModel: pricingModel
+                })                
                 .then(addNotification(notif))
+
+                if(hotelUsers.length > 0) {
+                    return hotelUsers.map(user => {
+                        return handleChangeUserPricingModel(user.id, pricingModel)
+                    })
+                }
+
+            
         }
 
     const createHotel = () => {
@@ -76,16 +140,17 @@ export default function PhoneMagic({user, userDB}) {
                 region: formValue.region,
                 city: formValue.city,
                 code_postal: formValue.code_postal,
-                room: formValue.room,
+                room: `${formValue.room} étoiles`,
                 website: formValue.website,
                 phone: formValue.phone,
                 mail: formValue.mail,
                 markup: Date.now(),
                 partnership: true,
-                country: userDB.country
+                country: userDB.country,
+                pricingModel: radioValue
             })
             .then(()=>{
-                setFormValue({username: "", email: ""})
+                setFormValue("" || 0)
                 setActivateCreateHotel(false)
                 addNotification(notif)
             }) 
@@ -96,10 +161,10 @@ export default function PhoneMagic({user, userDB}) {
 
     let newUid = userDB.hotelId + Date.now()
     
-    const adminMaker = async(event, userPricingModel, notifType) => {
+    const adminMaker = async(event) => {
         event.preventDefault()
         //setFormValue("")
-        const notif = notifType
+        const notif = "Vous venez de créer un super-administrateur !"
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(newUid)
@@ -122,7 +187,7 @@ export default function PhoneMagic({user, userDB}) {
         language: userDB.language,
         logo: formValue.logo,
         appLink: formValue.appLink,
-        pricingModel: userPricingModel
+        pricingModel: formValue.pricing
         }) 
         .then(()=>{
             setFormValue("" || 0)
@@ -131,7 +196,6 @@ export default function PhoneMagic({user, userDB}) {
         }) 
     }
 
-            
 
     return (
         <div style={{
@@ -178,7 +242,8 @@ export default function PhoneMagic({user, userDB}) {
                             country: details.country,
                             room: details.room,
                             logo: details.logo,
-                            appLink: details.appLink
+                            appLink: details.appLink,
+                            pricing: details.pricingModel
                         })
                         setHotelName(details.hotelName)
                         }}>{details.hotelName}</Dropdown.Item>
@@ -194,13 +259,20 @@ export default function PhoneMagic({user, userDB}) {
                 paddingTop: "5vh",
                 borderTop: "1px solid lightgrey"
             }}>
-                <Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => {
-                    getPartner()
-                    setFilter('')
-                    setFormValue("" || 0)
-                    setHotelName("Sélectionner un hôtel")
-                    }}>Activer un hôtel</Button>
-                <Button variant="outline-info" style={{marginBottom: "2vh"}} onClick={() => setActivateAdminMaker(true)}>Créér un administrateur</Button>
+                <div style={{
+                    width: "90vw",
+                    display: "flex",
+                    flexFlow: "row wrap",
+                    justifyContent: "space-around", 
+                    borderBottom: "1px solid lightgrey",
+                    marginBottom: "5vh",
+                    paddingBottom: "3vh"
+                }}>
+                    <h3 style={{width: "100%"}}>Activer un hôtel</h3>
+                    <Button variant="outline-success" style={{marginBottom: "2vh"}} onClick={() => getPartner("Freemium")}>Freemium</Button>
+                    <Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => getPartner("Premium")}>Premium</Button>
+                </div>
+                <Button variant="outline-info" style={{marginBottom: "5vh"}} onClick={() => setActivateAdminMaker(true)}>Créér un administrateur</Button>
                 <Button variant="outline-dark" style={{marginBottom: "2vh"}} onClick={() => setActivateCreateHotel(true)}>Créér un hôtel</Button>
             </div>
             <Drawer anchor="bottom" open={activateAdminMaker} onClose={() => setActivateAdminMaker(false)}  className="phone_container_drawer">
@@ -220,8 +292,7 @@ export default function PhoneMagic({user, userDB}) {
                         <Form.Control style={{width: "80vw"}} value={formValue.email} name="email" type="text" placeholder="E-mail du collaborateur" onChange={handleChange} required />
                     </Form.Group>
 
-                    <Button variant="outline-info" style={{marginBottom: "1vh"}} onClick={(event) => adminMaker(event, "Freemium", "Vous venez de créer un Super-Administrateur Freemium !")}>Créér un administrateur Freemium</Button>
-                    <Button variant="success" onClick={(event) => adminMaker(event, "Premium", "Vous venez de créer un Super-Administrateur Premium !")}>Créér un administrateur Premium</Button>
+                    <Button variant="success" onClick={adminMaker}>Créér un administrateur maintenant</Button>
                 </div>
             </Drawer>
             <Drawer anchor="bottom" open={activateCreateHotel} onClose={() => setActivateCreateHotel(false)}  className="phone_container_drawer">
@@ -253,7 +324,7 @@ export default function PhoneMagic({user, userDB}) {
                             <Form.Control style={{width: "80vw"}} value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "80vw"}} value={formValue.standing} name="standing" type="text" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control style={{width: "80vw"}} value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
                             <Form.Control style={{width: "80vw"}} value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
@@ -269,6 +340,24 @@ export default function PhoneMagic({user, userDB}) {
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
                             <Form.Control style={{width: "80vw"}} value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <ButtonGroup className="mb-2">
+                                {radios.map((radio, idx) => (
+                                <ToggleButton
+                                    key={idx}
+                                    id={`radio-${idx}`}
+                                    type="radio"
+                                    variant="secondary"
+                                    name="radio"
+                                    value={radio.value}
+                                    checked={radioValue === radio.value}
+                                    onChange={(e) => setRadioValue(e.currentTarget.value)}
+                                >
+                                    {radio.name}
+                                </ToggleButton>
+                                ))}
+                            </ButtonGroup>
                         </Form.Group>
                         <Button variant="success" onClick={createHotel}>Créér un hôtel maintenant</Button>
                 </div>            

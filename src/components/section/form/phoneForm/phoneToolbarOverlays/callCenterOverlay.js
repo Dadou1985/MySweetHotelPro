@@ -25,6 +25,7 @@ function CallCenterOverlay({userDB}) {
                 });
                 return unsubscribe
      },[])
+     
 
      const updateAdminSpeakStatus = () => {
       return db.collection('assistance')

@@ -124,7 +124,7 @@ const changeAdminSpeakStatus = (roomName) => {
                   flow.status &&
                   <AccordionItem key={flow.id} onClick={() => handleChangeExpanded(flow.id)}>
                     <AccordionItemHeading style={{
-                      backgroundColor: "lightblue", 
+                      backgroundColor: flow.pricingModel === "Premium" ? "darkgoldenrod" : "lightblue", 
                       padding: "2%",
                       borderTopLeftRadius: "5px",
                       borderTopRightRadius: "5px",

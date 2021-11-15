@@ -77,7 +77,8 @@ export default function CallCenter({user, userDB}) {
                 city: userDB.city,
                 hotelDept: userDB.hotelDept,
                 hotelRegion: userDB.hotelRegion,
-                country: userDB.country
+                country: userDB.country,
+                pricingModel: userDB.pricingModel
             })      
       }
 
@@ -86,7 +87,8 @@ export default function CallCenter({user, userDB}) {
         .doc(userDB.hotelName)
         .update({
             status: true,
-            markup: Date.now()
+            markup: Date.now(),
+            pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
         })      
       }
 

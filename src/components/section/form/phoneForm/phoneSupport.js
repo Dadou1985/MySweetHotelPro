@@ -59,19 +59,30 @@ export default function PhoneSupport({user, userDB}) {
         return db.collection('assistance')
             .doc(userDB.hotelName)
             .set({
-                adminSpeakStatus: false,
+                adminSpeak: false,
+                hotelId: userDB.hotelId,
+                hotelName: userDB.hotelName,
                 markup: Date.now(),
-                status: true
+                status: true,
+                classement: userDB.classement,
+                code_postal: userDB.code_postal,
+                room: userDB.room,
+                city: userDB.city,
+                hotelDept: userDB.hotelDept,
+                hotelRegion: userDB.hotelRegion,
+                country: userDB.country,
+                pricingModel: userDB.pricingModel
             })      
       }
 
     const updateRoomnameSubmit = () => {
         return db.collection('assistance')
-            .doc(userDB.hotelName)
-            .update({
-                status: true,
-                markup: Date.now()
-            })      
+        .doc(userDB.hotelName)
+        .update({
+            status: true,
+            markup: Date.now(),
+            pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
+        })      
       }
 
     const sendMessage = () => {
