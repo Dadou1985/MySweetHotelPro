@@ -102,7 +102,7 @@ const Messenger = ({filterDate}) =>{
 
     const handleClose = () => setShowModal(false)
     const handleShow = () => {
-        if(window.innerWidth > 480) {
+        if(window.innerWidth > 768) {
             setShowModal(true)
         }else{
             setActivate(true)
@@ -216,7 +216,7 @@ const Messenger = ({filterDate}) =>{
                     <NoteBox filterDate={filterDate} />}
                 </div>
             </PerfectScrollbar>
-            {typeof window !== `undefined` && window.innerWidth > 480 ?
+            {typeof window !== `undefined` && window.innerWidth > 768 ?
             <OverlayTrigger
                 placement="top"
                 overlay={
@@ -229,7 +229,7 @@ const Messenger = ({filterDate}) =>{
                     <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
                 </div> 
             </OverlayTrigger> :
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Ajouter une note de service</Button>}
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Ajouter une note de service</Button>}
 
             <Modal show={showModal} 
             size="lg"

@@ -200,7 +200,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                 <Avatar alt="user-profile-photo" 
                     src={user.photoURL ? user.photoURL : DefaultProfile}
                     style={{
-                        display: typeof window && window.innerWidth > 480 ? "none" : "flex",
+                        display: typeof window && window.innerWidth > 768 ? "none" : "flex",
                         position: "absolute",
                         top: "30vh",
                         left: "28vw",

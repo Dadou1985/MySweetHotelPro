@@ -25,7 +25,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     
     const handleWorkspace = () => {
         if(!userDB.username) {
-            if(window.innerWidth > 480) {
+            if(window.innerWidth > 768) {
                 setShowModal(true)
             }else{
                 setShowDialog(true)
@@ -271,7 +271,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         <Avatar alt="user-profile-photo" 
         src={user.photoURL ? user.photoURL : DefaultProfile}
         style={{
-            display: typeof window && window.innerWidth > 480 ? "none" : "flex",
+            display: typeof window && window.innerWidth > 768 ? "none" : "flex",
             position: "absolute",
             top: "35vh",
             left: "28vw",

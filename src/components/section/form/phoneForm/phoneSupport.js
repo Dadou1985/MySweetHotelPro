@@ -176,10 +176,10 @@ export default function PhoneSupport({user, userDB}) {
                         })}
                 </div>
                 </PerfectScrollbar>
-            <div className={typeof window !== `undefined` && window.innerWidth < 480 && "communizi_form_input_div"}>
+            <div className={typeof window !== `undefined` && window.innerWidth < 768 && "communizi_form_input_div"}>
                 <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder="Ecrire un message..." onChange={handleChange} required />
-                    <img src={Send} alt="sendIcon" style={{width: "10%", borderRadius: "50px"}} onClick={async() => {
+                    <img src={Send} alt="sendIcon" style={{width: "7vw", borderRadius: "100%"}} onClick={async() => {
                     await getChatRoom()
                     if(chatRoom !== null) {
                         return updateRoomnameSubmit()

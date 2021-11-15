@@ -637,6 +637,7 @@ input[type=number] {
 
 .drawer_title {
     text-align: center;
+    border-bottom: 1px solid lightgrey;
 }
 
 .drawer_icons {
@@ -657,11 +658,11 @@ input[type=number] {
     }
 
     .brand {
-        left: 35vw;
+        left: 37vw;
     }
 
     .logo-msh {
-        width: 30%;
+        width: 15vw;
         margin-left: 6vw;
     }
 
@@ -1640,7 +1641,7 @@ input[type=number] {
 }
 
 .drawer_icons {
-    width: 7vw;
+    width: 5vw;
 }
 
 #drawer_icons2 {
@@ -1968,12 +1969,12 @@ input[type=number] {
     }
 
     .communizi-file-button {
-        width: 30%;
+        width: 5vw;
         filter: drop-shadow(2px 2px 2px)
     }
     
     .communizi-send-button {
-        width: 40%;
+        width: 7vw;
         border-radius: 50px;
     }
 

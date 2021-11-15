@@ -44,7 +44,7 @@ export default function CommunIzi({userDB, user}) {
       setInitialFilter('Liste Clients Présents')
     }
     const handleShow = () => {
-      if(window.innerWidth > 480) {
+      if(window.innerWidth > 768) {
           setShowModal(true)
       }else{
           setActivate(true)
@@ -216,7 +216,7 @@ export default function CommunIzi({userDB, user}) {
                               size="30"
                               color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
                               style={{marginRight: "1vw"}} />
-                              {typeof window && window.innerWidth > 480 ? flow.id : null}
+                              {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>
                           <div style={{display: "flex", alignItems: "center"}}>Chambre {flow.room}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
@@ -238,8 +238,8 @@ export default function CommunIzi({userDB, user}) {
               </Accordion>
             </div>
             </PerfectScrollbar>
-            <div className={typeof window !== `undefined` && window.innerWidth < 480 ? "communizi_form_input_div" : "none"}>
-                <Form inline className="communizi_form">
+            <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
+                <Form className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
                     <Input type="text" placeholder="Répondre au client..."  
                     value={note}

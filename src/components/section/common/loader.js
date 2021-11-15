@@ -8,7 +8,7 @@ const ShiftLoader = ({hide}) => {
   return (
     <div className="Loader-container" style={{display: hide}}>
         <div className="Loader-box">
-        {typeof window !== `undefined` && window.innerWidth > 480 ?
+        {typeof window !== `undefined` && window.innerWidth > 768 ?
           <Loader
                 type="Puff"
                 color="rgb(25,23,25)"
