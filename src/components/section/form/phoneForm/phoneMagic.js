@@ -68,7 +68,7 @@ export default function PhoneMagic({user, userDB}) {
     const createHotel = () => {
         const notif = "Vous venez de créer un hôtel !"
         return db.collection("hotels")
-            .set({
+            .add({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
                 classement: formValue.standing,
@@ -85,7 +85,7 @@ export default function PhoneMagic({user, userDB}) {
                 country: userDB.country
             })
             .then(()=>{
-                setFormValue("" || 0)
+                setFormValue({username: "", email: ""})
                 setActivateCreateHotel(false)
                 addNotification(notif)
             }) 
@@ -96,10 +96,10 @@ export default function PhoneMagic({user, userDB}) {
 
     let newUid = userDB.hotelId + Date.now()
     
-    const adminMaker = async(event) => {
+    const adminMaker = async(event, userPricingModel, notifType) => {
         event.preventDefault()
         //setFormValue("")
-        const notif = "Vous venez de créer un super-administrateur !"
+        const notif = notifType
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(newUid)
@@ -121,7 +121,8 @@ export default function PhoneMagic({user, userDB}) {
         room: formValue.room,
         language: userDB.language,
         logo: formValue.logo,
-        appLink: formValue.appLink
+        appLink: formValue.appLink,
+        pricingModel: userPricingModel
         }) 
         .then(()=>{
             setFormValue("" || 0)
@@ -219,7 +220,8 @@ export default function PhoneMagic({user, userDB}) {
                         <Form.Control style={{width: "80vw"}} value={formValue.email} name="email" type="text" placeholder="E-mail du collaborateur" onChange={handleChange} required />
                     </Form.Group>
 
-                    <Button variant="success" onClick={adminMaker}>Créér un administrateur maintenant</Button>
+                    <Button variant="outline-info" style={{marginBottom: "1vh"}} onClick={(event) => adminMaker(event, "Freemium", "Vous venez de créer un Super-Administrateur Freemium !")}>Créér un administrateur Freemium</Button>
+                    <Button variant="success" onClick={(event) => adminMaker(event, "Premium", "Vous venez de créer un Super-Administrateur Premium !")}>Créér un administrateur Premium</Button>
                 </div>
             </Drawer>
             <Drawer anchor="bottom" open={activateCreateHotel} onClose={() => setActivateCreateHotel(false)}  className="phone_container_drawer">

@@ -55,7 +55,8 @@ const AdminRegister = ({hide, userDB}) => {
         logo: userDB.logo,
         appLink: userDB.appLink,
         adresse: userDB.adresses,
-        website: userDB.website
+        website: userDB.website,
+        pricingModel: userDB.pricingModel
         }) 
         .then(() => {
             hide()
