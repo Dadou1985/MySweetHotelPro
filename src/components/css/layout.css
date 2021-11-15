@@ -514,7 +514,7 @@ input[type=number] {
     cursor: pointer;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .connection_container {
         height: 99vh;
     }
@@ -553,7 +553,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .register_input {
         width: 70vw;
     }
@@ -651,7 +651,7 @@ input[type=number] {
     display: none;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .menu{
         visibility: visible;
     }
@@ -722,7 +722,7 @@ input[type=number] {
     border: transparent; 
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .memo_container {
         display: none;
     }
@@ -742,7 +742,7 @@ input[type=number] {
     align-items: center;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .toolbar_container {
         display: none;
     }
@@ -899,7 +899,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .messenger_container {
         width: 100%;
         height: 75vh;
@@ -1066,7 +1066,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     
     .user_Message {
         width: 100%;
@@ -1093,7 +1093,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .footer_container {
         display: none;
     }
@@ -1426,7 +1426,7 @@ input[type=number] {
     opacity: 0;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .space-container {
         position: absolute;
         display: flex;
@@ -1648,7 +1648,7 @@ input[type=number] {
     width: 100%;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .menu{
         visibility: visible;
     }
@@ -1919,7 +1919,7 @@ input[type=number] {
 
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .dark_messenger_communizi_container {
         display: block;
         width: 100vw;
@@ -2049,7 +2049,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .footer_container {
         display: none;
     }
@@ -2191,7 +2191,7 @@ input[type=number] {
     bottom: 11vh;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .user_avatar_chat_label {
         margin-right: 12vw;
     }
@@ -2288,7 +2288,7 @@ input[type=number] {
     display: none;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     
 }
 
@@ -2424,7 +2424,7 @@ input[type=number] {
 
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
 
     .toggleDisplay-relative-container {
         width: 100%;
@@ -2560,7 +2560,7 @@ input[type=number] {
 }
 
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     
     .store-title {font-size: 30px;}
 
@@ -2600,7 +2600,7 @@ input[type=number] {
 
 /*userProfile*/
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     
     .header-toggle-container {
         justify-content: space-around;

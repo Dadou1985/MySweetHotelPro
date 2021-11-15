@@ -268,7 +268,7 @@ export default function PhoneMagic({user, userDB}) {
                     marginBottom: "5vh",
                     paddingBottom: "3vh"
                 }}>
-                    <h3 style={{width: "100%"}}>Activer un hôtel</h3>
+                    <h5 style={{width: "100%"}}>Activer un hôtel</h5>
                     <Button variant="outline-success" style={{marginBottom: "2vh"}} onClick={() => getPartner("Freemium")}>Freemium</Button>
                     <Button variant="outline-primary" style={{marginBottom: "2vh"}} onClick={() => getPartner("Premium")}>Premium</Button>
                 </div>
