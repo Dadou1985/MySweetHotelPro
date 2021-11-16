@@ -247,8 +247,7 @@ const Messenger = ({filterDate}) =>{
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
                     <div className="modal-note-button-container">
-                        <input type="file" className="modal-note-file-input"
-                          onChange={handleImgChange} />
+                        <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
                       <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
                          <DatePicker
                             id="calendar"

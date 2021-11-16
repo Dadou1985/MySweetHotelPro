@@ -17,7 +17,7 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, functions } from '../../Firebase'
+import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 
@@ -33,6 +33,8 @@ export default function CommunIzi({userDB, user}) {
     const [list, setList] = useState(false)
     const [payload, setPayload] = useState({token:{}, logo:"", language:"", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting:""})
     const [showAlert, setShowAlert] = useState(false)
+    const [img, setImg] = useState(null)
+    const [url, setUrl] = useState("")
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -51,6 +53,12 @@ export default function CommunIzi({userDB, user}) {
       }
     }
 
+    const handleImgChange = (event) => {
+      if (event.target.files[0]){
+          setImg(event.target.files[0])
+      }
+  }
+
   const handleHideDrawer = () => {
     setActivate(false)
   }
@@ -65,9 +73,8 @@ export default function CommunIzi({userDB, user}) {
           })      
   }
 
-    const handleSubmit = (event) =>{
+    const addMessage = (event, url) =>{
         event.preventDefault()
-        setNote("")
         return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
@@ -79,9 +86,40 @@ export default function CommunIzi({userDB, user}) {
             date: new Date(),
             userId: user.uid,
             markup: Date.now(),
-            title: "host"
+            title: "host",
+            img: url
           })
     }
+
+    const handleSubmit = (event) =>{
+      event.preventDefault()
+      if(img !== null) {
+          const uploadTask = storage.ref(`msh-photo-chat/${img.name}`).put(img)
+      uploadTask.on(
+        "state_changed",
+        snapshot => {},
+        error => {console.log(error)},
+        () => {
+          storage
+            .ref("msh-photo-chat")
+            .child(img.name)
+            .getDownloadURL()
+            .then(url => {
+              const uploadTask = () => { 
+                      addMessage(url)
+                      handleHideDrawer()
+                     return setShowModal(false)
+              }
+                return setImg("", uploadTask())})
+        }
+      )
+      }else{
+            addMessage(null)
+            handleHideDrawer()
+            return setShowModal(false)
+      }
+      
+  }
 
     const changeRoomStatus = (roomName) => {
       return db.collection('hotels')
@@ -262,15 +300,15 @@ export default function CommunIzi({userDB, user}) {
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
-                     <OverlayTrigger
+                    {/*<OverlayTrigger
                         placement="top"
                         overlay={
                           <Tooltip id="title">
-                            Créer une conversation
+                            Ajouter une photo
                           </Tooltip>
                         }>
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-                     </OverlayTrigger>
+                      </OverlayTrigger>*/}
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                           if(expanded) {
                             if(note) {

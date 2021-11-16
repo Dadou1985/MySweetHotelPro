@@ -9,6 +9,9 @@ import HouseKeeping from './form/HouseKeeping'
 import UserDatabase from './form/UserDatabase'
 import GuestTerminator from './guestTerminator'
 import { FirebaseContext } from '../../Firebase'
+import LostOnes from '../../svg/lost-items.svg'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { navigate } from 'gatsby'
 
 
 const ToolBar = () =>{
@@ -26,8 +29,15 @@ const ToolBar = () =>{
                 <Clock userDB={userDB} user={user}  />}
             {userDB && user &&
                 <Repair userDB={userDB} user={user}  />}
-            {userDB && user &&
-                <Lost userDB={userDB} user={user}  />}
+            <OverlayTrigger
+            placement="right"
+            overlay={
+              <Tooltip id="title">
+                Objets trouvés
+              </Tooltip>
+            }>
+                <img src={LostOnes} className="icon" alt="contact" onClick={() => navigate("/Lost")} style={{width: "40%", marginRight: "10%"}} />
+            </OverlayTrigger>
             {userDB && user &&
                 <UserDatabase userDB={userDB} user={user}  />}
 
