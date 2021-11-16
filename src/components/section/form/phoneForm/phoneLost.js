@@ -61,7 +61,8 @@ const PhoneLost = ({userDB}) =>{
             place: formValue.place,
             markup: Date.now(),
             type: formValue.type,
-            //img: photo
+            img: photo,
+            status: false
             })
     }
 
@@ -226,12 +227,12 @@ const PhoneLost = ({userDB}) =>{
                       <Form.Control as="textarea" rows="2" name="details" value={formValue.details} onChange={handleChange}  />
                   </Form.Group>
               </Form.Row>
-              {/*<Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+              <Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
                 <input type="file" className="phone-camera-icon"
                     onChange={handleImgChange} />
                 <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
                 <span style={{marginLeft: "2vw"}}>Ajouter une photo</span>
-                </Form.Row>*/}
+                </Form.Row>
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)

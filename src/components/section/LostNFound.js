@@ -104,7 +104,7 @@ const LostNFound = ({userDB}) =>{
             }}>
                 <div style={{
                     width: "75%",
-                    padding: "1%"
+                    padding: "1%",
                 }}>
                 <Tabs defaultActiveKey="High Tech" id="uncontrolled-tab-example" onSelect={(eventKey) => {
                     if(eventKey === "High Tech") {return setFilter("High Tech")}
@@ -117,7 +117,7 @@ const LostNFound = ({userDB}) =>{
                     <Tab eventKey="Vêtements" title="Vêtements"></Tab>
                     <Tab eventKey="Autres" title="Autres"></Tab>
                 </Tabs>
-                    <PerfectScrollbar style={{height: "70vh"}}>
+                    <PerfectScrollbar style={{maxHeight: "70vh"}}>
                         <Table striped bordered hover size="sm" className="text-center" style={{maxHeight: "80vh"}}>
                             <thead className="bg-dark text-center text-light">
                                 <tr>
