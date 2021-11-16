@@ -226,9 +226,8 @@ export default function CommunIzi({userDB, user}) {
   console.log('testUser', payload)
 
     return (
-        <div className="communizi-container">
-          
-            <PerfectScrollbar>
+        <div className="communizi-container">  
+          <PerfectScrollbar>
             <div className="communizi_notebox">
             <Accordion allowZeroExpanded>
                 {info.map((flow) => (

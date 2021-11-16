@@ -38,7 +38,7 @@ const AdminBoard = ({user, userDB}) =>{
                         </Modal.Header>
                         <Modal.Body>
                         
-                        <Tabs defaultActiveKey="Créer" id="uncontrolled-tab-example" style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "45%"}}>
+                        <Tabs defaultActiveKey="Créer" id="uncontrolled-tab-example" style={{display: "flex", flexFlow: "row", justifyContent: "space-around"}} variant="dark">
                                 <Tab eventKey="Créer" title="Créer un utilisateur">
                                     {!!user && !!userDB &&
                                     <AdminRegister user={user} userDB={userDB} hide={handleCloseTab} /> }  

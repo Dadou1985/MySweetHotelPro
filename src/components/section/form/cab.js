@@ -309,10 +309,10 @@ const Cab = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         {step && <>
-                            <Button variant="outline-info" onClick={() => setStep(false)}>Retour</Button>
-                            <Button variant="success" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="outline-dark" onClick={() => setStep(false)}>Retour</Button>
+                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
                         </>}
-                        {!step && <Button variant="outline-info" onClick={() => setStep(true)}>Poursuivre</Button>}
+                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>Poursuivre</Button>}
                     </Modal.Footer>}
                 </Modal>
         </div>

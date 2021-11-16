@@ -9,6 +9,7 @@ const Annuaire = () =>{
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
     const {userDB} = useContext(FirebaseContext)
+    const [footerState, setFooterState] = useState(true)
 
 
     const handleClose = () => setList(false)
@@ -101,7 +102,13 @@ const Annuaire = () =>{
                     </Modal.Header>
                     <Modal.Body>
                     
-                    <Tabs defaultActiveKey="Ajouter un contact" id="annuaire">
+                    <Tabs defaultActiveKey="Ajouter un contact" id="annuaire" onSelect={(eventKey) => {
+                        if(eventKey === 'Répertoire'){
+                            return setFooterState(false)
+                        }else{
+                            return setFooterState(true)
+                        }
+                    }}>
                             <Tab eventKey="Répertoire" title="Répertoire" style={{overflow: "auto"}}>
                                 {info.map(flow =>(
                                     <div style={{
@@ -167,7 +174,9 @@ const Annuaire = () =>{
                         </Tabs>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="outline-success" onClick={handleSubmit}>Enregistrer</Button>
+                        {footerState && <Modal.Footer>
+                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                        </Modal.Footer>}
                     </Modal.Footer>
                 </Modal>
         </div>

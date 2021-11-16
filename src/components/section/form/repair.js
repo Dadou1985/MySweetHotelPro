@@ -292,7 +292,7 @@ const Repair = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="outline-success" onClick={handleSubmit}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
                     </Modal.Footer>}
                 </Modal>
 

@@ -431,8 +431,8 @@ const Caisse = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <>
-                            <Button variant="success" onClick={handleSubmit}>Enregistrer</Button>
-                            <Button variant="outline-primary" onClick={handleReset} style={{width: "7vw"}}>Reset</Button>
+                            <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>Reset</Button>
+                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
                         </>}
                         {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}
                     </Modal.Footer>

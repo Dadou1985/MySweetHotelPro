@@ -118,7 +118,7 @@ const LostNFound = ({userDB}) =>{
                     <Tab eventKey="Autres" title="Autres"></Tab>
                 </Tabs>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
-                        <Table striped bordered hover size="sm" className="text-center" style={{maxHeight: "80vh"}}>
+                        <Table striped bordered hover size="sm" className="text-center" style={{maxHeight: "70vh"}}>
                             <thead className="bg-dark text-center text-light">
                                 <tr>
                                     <th>Photo</th>
@@ -136,7 +136,7 @@ const LostNFound = ({userDB}) =>{
                                         {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
                                         setImg(flow.img)
                                         setImgFrame(true)
-                                        }}><img src={flow.img} style={{width: "5vw", height: "5vh", borderRadius: "5%"}} /></td> : 
+                                        }}><img src={flow.img} style={{width: "5vw", borderRadius: "5%"}} /></td> : 
                                         <td><img src={Picture} style={{width: "1vw"}} /></td>}
                                         <td>{flow.type}</td>
                                         <td>{flow.description}</td>
@@ -160,9 +160,8 @@ const LostNFound = ({userDB}) =>{
                             </tbody>
                         </Table>
                     </PerfectScrollbar>
-                    <div style={{cursor: "pointer"}} onClick={handleShow}>
-                        <img src={Plus} className="icon" alt="contact" style={{width: "1%", marginLeft: "85%"}} />
-                        <span style={{marginLeft: "1vw"}}>Ajouter un objet trouvé</span>
+                    <div style={{display: "flex", justifyContent: "flex-end"}}>
+                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>Ajouter un client</Button>
                     </div>
 
 
@@ -174,7 +173,7 @@ const LostNFound = ({userDB}) =>{
                         >
                         <Modal.Header closeButton className="bg-light">
                             <Modal.Title id="contained-modal-title-vcenter">
-                            Objets trouvés
+                            Ajouter un objet trouvé
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -236,20 +235,20 @@ const LostNFound = ({userDB}) =>{
                                         </Form.Row>
                                     </div>
                         </Modal.Body>
-                        {footerState && <Modal.Footer>
-                            <Button variant="outline-success" onClick={handleSubmit}>Enregistrer</Button>
-                        </Modal.Footer>}
+                        <Modal.Footer>
+                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                        </Modal.Footer>
                     </Modal>
                 </div>
                 <div style={{width: "25%", padding: "3%"}}>
                 <Card style={{ width: '100%', borderRadius: "5px", textAlign: "center" }}>
                     <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%"}} />
                     <Card.Body>
-                        <Card.Title style={{fontWeight: "bolder"}}>{item.description}</Card.Title>
+                        <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid lightgrey", paddingBottom: "1vh"}}>{item.description}</Card.Title>
                         <Card.Text>
                         {item.details}
                         </Card.Text>
-                        <Button variant="primary">Contacter le propriétaire</Button>
+                        <Button variant="outline-dark">Contacter le propriétaire</Button>
                     </Card.Body>
                 </Card>
                 </div>

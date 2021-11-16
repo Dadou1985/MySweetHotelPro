@@ -185,7 +185,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         style={{ backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})` }}>
                 <div className="profile-container">
                     <h1>
-                        <div style={{color: "#5bc0de", fontWeight: "bold"}}>{flow.username}</div>
+                        <div style={{color: "black", fontWeight: "bold"}}>{flow.username}</div>
                         <div style={{fontSize: "15px"}}>{flow.email}</div>
                        { /*<div className="header-profile">
                             <img src={Tips} alt="tips" className="tips" /> 

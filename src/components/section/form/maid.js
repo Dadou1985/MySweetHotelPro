@@ -310,7 +310,7 @@ const Maid = ({userDB}) =>{
                                         <td>{flow.client}</td>
                                         <td>{flow.fromRoom}</td>
                                         {flow.toRoom === "" ? 
-                                        <td><OverlayTrigger
+                                        <td className="bg-dark"><OverlayTrigger
                                             trigger="click"
                                             placement="top"
                                             overlay={
@@ -330,12 +330,12 @@ const Maid = ({userDB}) =>{
                                             </Popover>
                                             }
                                         >
-                                            <Button variant="warning" size="sm" style={{width: "5vw"}}>A attribuer</Button>
+                                            <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>A attribuer</Button>
                                         </OverlayTrigger>
                                                 </td> : <td>{flow.toRoom}</td>}
                                         <td>{flow.reason}</td>
                                         {flow.state === "" ? 
-                                            <td>
+                                            <td className="bg-dark">
                                                 <OverlayTrigger
                                                     trigger="click"
                                                     placement="top"
@@ -362,7 +362,7 @@ const Maid = ({userDB}) =>{
                                                     </Popover>
                                                     }
                                                 >
-                                            <Button variant="warning" size="sm" style={{width: "5vw"}}>A vérifier</Button>
+                                            <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>A vérifier</Button>
                                         </OverlayTrigger>
                                             </td> : 
                                             <td>{flow.state}</td>}
@@ -415,7 +415,7 @@ const Maid = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="outline-success" onClick={handleSubmit}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
                     </Modal.Footer>}
                 </Modal>
         </div>

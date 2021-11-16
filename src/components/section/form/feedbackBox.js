@@ -108,7 +108,7 @@ const FeedbackBox = ({userDB}) =>{
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="outline-success" onClick={handleSubmitFeedback}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmitFeedback}>Enregistrer</Button>
                     </Modal.Footer>
                 </Modal>
         </div>

@@ -31,7 +31,7 @@ export default function ChatRoom({user, userDB, title}) {
                     setMessages(snapInfo)
                 });
                 return unsubscribe
-     },[])
+     },[title])
 
      useEffect(() => {
         const getChatRoom = () => {

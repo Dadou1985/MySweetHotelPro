@@ -96,7 +96,7 @@ const AdminRegister = ({hide, userDB}) => {
             </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-success" onClick={handleSubmit}>Enregistrer</Button>
+                <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
             </Modal.Footer>
          </div>
     )
