@@ -106,7 +106,7 @@ const Navigation = ({user, userDB}) =>{
                 <Drawer className="drawer" user={user} userDB={userDB} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
-                        <img src={Logo} className="logo-msh" /></Navbar.Brand>
+                        <img src={userDB.logo} className="logo-msh" /></Navbar.Brand>
                     {/*{!!user &&
                     <div style={{
                         display: "flex",

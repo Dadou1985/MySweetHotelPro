@@ -108,14 +108,16 @@ export default function CommunIzi({userDB, user}) {
               const uploadTask = () => { 
                       addMessage(url)
                       handleHideDrawer()
+                      setNote('')
                      return setShowModal(false)
               }
                 return setImg("", uploadTask())})
         }
       )
       }else{
-            addMessage(null)
+            addMessage(event, null)
             handleHideDrawer()
+            setNote('')
             return setShowModal(false)
       }
       

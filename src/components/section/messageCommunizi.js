@@ -2,6 +2,7 @@ import React from 'react'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
+import DefaultImg from "../../images/avatar-client.png"
 import 'moment/locale/fr';
 
   const MessageCommunizi = ({author, text, date, userDB, translation, photo, title, key}) =>{
@@ -29,7 +30,7 @@ import 'moment/locale/fr';
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
-            src={photo ? photo : DefaultProfile}
+            src={photo ? photo : DefaultImg}
             className="avatar_chat" />
         </span>
       )
@@ -57,7 +58,7 @@ import 'moment/locale/fr';
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
           <Avatar alt="user-profile-photo" 
-            src={photo ? photo : DefaultProfile}
+            src={photo ? photo : DefaultImg}
             className="old_avatar_chat" />
         </span>
       )

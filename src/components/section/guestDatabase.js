@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton } from 'react-bootstrap'
-import { db, functions } from '../../Firebase'
+import { db, functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Picture from '../../svg/picture.svg'
@@ -40,7 +40,7 @@ const GuestDatabase = ({user, userDB}) =>{
     const [filter, setFilter] = useState("High Tech")
     const [item, setItem] = useState({
         img: LostOnes,
-        title: "Profil du client",
+        username: "Profil du client",
         details: "Cliquez sur un élément du tableau pour afficher plus de détails sur le client !"
     })
     const [selectedUser, setselectedUser] = useState(null)
@@ -103,10 +103,8 @@ const GuestDatabase = ({user, userDB}) =>{
 
     useEffect(() => {
         const guestOnAir = () => {
-          return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection("chat")
-          .orderBy("title", "asc")
+          return db.collection('guestUsers')
+          .where("hotelVisitedArray", "array-contains", userDB.hotelId)
           }
   
         let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
@@ -122,6 +120,14 @@ const GuestDatabase = ({user, userDB}) =>{
         });
         return unsubscribe
        },[])
+
+    const handleDeleteGuest = (guestId) => {
+        return db.collection("guestUsers")
+            .doc(guestId)
+            .update({
+                hotelVisitedArray: specialFirestoreOptions.arrayRemove(userDB.hotelId)
+            })
+    }
 
     const sendCheckinMail = functions.httpsCallable('sendCheckinMail')
 
@@ -217,13 +223,13 @@ const GuestDatabase = ({user, userDB}) =>{
                                         </td>}
                                         <td>
                                             <span style={{display: "flex", flexFlow: "column", justifyContent: "center", paddingTop: "1vh"}}>
-                                                <span style={{fontWeight: "bolder"}}>{flow.title}</span>
+                                                <span style={{fontWeight: "bolder"}}>{flow.username}</span>
                                                 {flow.email && <span style={{fontSize: "12px"}}>{flow.email}</span>}
                                             </span>
                                         </td>
-                                        <td style={{width: "5vw"}}>{flow.guestLanguage && renderSwitchFlag(flow.guestLanguage)}</td>
+                                        <td style={{width: "5vw"}}>{flow.language && renderSwitchFlag(flow.language)}</td>
                                         <td style={{paddingTop: "3vh"}}>{flow.guestCategory && flow.guestCategory}</td>
-                                        {flow.checkoutDate ? 
+                                        {flow.hotelId === userDB.hotelId ? 
                                             <td style={{paddingTop: "3vh"}}><StyledBadge badgeContent="" color="primary">.</StyledBadge></td>
                                          : <td style={{paddingTop: "3vh"}}><StyledBadge badgeContent="" color="secondary">.</StyledBadge></td>}
                                         {sendingMail ? 
@@ -231,17 +237,13 @@ const GuestDatabase = ({user, userDB}) =>{
                                             <Form.Check type="checkbox" onChange={() => handleChangeCheckbox(flow.email)} style={{marginRight: "1vw"}} /> Envoyer le mail
                                         </Form.Group> : <td style={{paddingTop: "3vh"}}>
                                             <Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("chat")
-                                            .doc(flow.title)
-                                            .delete()
-                                            .then(function() {
-                                                console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
-                                        }}>Supprimer</Button>
+                                                handleDeleteGuest(flow.id)
+                                                setItem({
+                                                    img: LostOnes,
+                                                    username: "Profil du client",
+                                                    details: "Cliquez sur un élément du tableau pour afficher plus de détails sur le client !"
+                                                })
+                                            }}>Supprimer</Button>
                                         </td>}
                                     </tr>
                                 ))}
@@ -251,8 +253,8 @@ const GuestDatabase = ({user, userDB}) =>{
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
                         {sendingMail ? 
                             IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
-                            <Button variant="outline-danger" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>Annuler</Button>
-                            <Button variant="success" onClick={async() => {
+                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>Annuler</Button>
+                            <Button variant="dark" onClick={async() => {
                             await handleMailSent()
                             return handleMailSended()
                             }}>Envoyer les emails</Button>
@@ -375,7 +377,7 @@ const GuestDatabase = ({user, userDB}) =>{
                                             borderBottom: "1px solid lightgrey", 
                                             width: "100%", 
                                             textAlign: "center", 
-                                            paddingBottom: "1vh"}}>{item.title}</Card.Title>
+                                            paddingBottom: "1vh"}}>{item.username}</Card.Title>
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
                                 <img src={Mail} style={{width: "5%", marginRight: "1vw"}} />
                             {item.email}
@@ -394,7 +396,7 @@ const GuestDatabase = ({user, userDB}) =>{
                             </Card.Text>}
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
                             <img src={Birthday} style={{width: "5%", marginRight: "1vw"}} />
-                            {moment(item.firstTimeConnected).format('LL')}
+                            {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%"}}>
                                 <Button variant="outline-dark">Contacter le client</Button>
@@ -410,7 +412,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 {showChat && <div style={{width: "25%", padding: "2%"}}>
                     <h3 style={{textAlign: "center", borderBottom: "1px solid lightgrey"}}>Fil de discussion</h3>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
-                        <Chat user={user} userDB={userDB} title={item.title} />
+                        <Chat user={user} userDB={userDB} title={item.username} />
                     </PerfectScrollbar>
                 </div>}
             </div>

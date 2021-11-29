@@ -21,5 +21,6 @@ const db = firebase.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();
 const functions = firebase.functions();
+const specialFirestoreOptions = firebase.firestore.FieldValue
 
-export { db, auth, functions, storage }
+export { db, auth, functions, storage, specialFirestoreOptions }

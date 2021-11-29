@@ -161,7 +161,7 @@ const LostNFound = ({userDB}) =>{
                         </Table>
                     </PerfectScrollbar>
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
-                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>Ajouter un client</Button>
+                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>Ajouter un objet</Button>
                     </div>
 
 
