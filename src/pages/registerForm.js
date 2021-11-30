@@ -1,12 +1,18 @@
-import React, {useState, useEffect } from 'react'
-import { Form, Button, Alert, DropdownButton, Dropdown } from 'react-bootstrap'
+import React, {useState, useEffect, useRef } from 'react'
+import { Form, Button, Alert, DropdownButton, Dropdown, Spinner } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { db, functions, storage } from '../Firebase'
+import { auth, db, functions, storage } from '../Firebase'
 import HotelLogo from '../svg/hotel.svg'
+import Sticker from '../components/section/sticker'
+import Flyer from '../components/section/flyer'
+import Band from '../components/section/band'
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
+
 export default function RegisterForm() {
     const [stepOne, setStepOne] = useState(true)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
+    const [finalStep, setFinalStep] = useState(false)
     const [alert, setAlert] = useState(false)
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
@@ -14,6 +20,7 @@ export default function RegisterForm() {
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
     const [newImg, setNewImg] = useState(null)
+    const [isLoading, setIsLoading] = useState(false)
     const [formValue, setFormValue] = useState({
         firstName: "",
         lastName: "",
@@ -32,8 +39,6 @@ export default function RegisterForm() {
         mail: "", 
         hotelId: "",
         hotelName: "", 
-        country: "", 
-        classement: null, 
         appLink: "",
         pricing: "",
     })
@@ -58,9 +63,25 @@ export default function RegisterForm() {
 
     let newHotelId = "mshPro" + formValue.hotelName + Date.now()
 
+    const pdfExportRef = useRef(null)
+
+    const exportPDF = () => {
+        if (pdfExportRef.current) {
+            pdfExportRef.current.save();
+        }
+      };
+
+    const getPartner = () => {
+            return db.collection("hotels")
+                .doc(formValue.hotelId)
+                .update({
+                    partnership: true,
+                }) 
+        }
+
     const createHotel = () => {
         return db.collection("hotels")
-            .doc(newHotelId)
+            .doc(newHotelId.trim())
             .set({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
@@ -72,13 +93,13 @@ export default function RegisterForm() {
                 room: `${formValue.room} étoiles`,
                 website: formValue.website,
                 phone: formValue.phone,
-                mail: formValue.mail,
+                mail: formValue.email,
                 markup: Date.now(),
                 partnership: true,
-                country: "France",
+                country: "FRANCE",
                 pricingModel: "Premium",
                 logo: url,
-                appLink: formValue.appLink
+                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`
             })
             .then(()=>{
                 setFormValue("" || 0)
@@ -86,38 +107,40 @@ export default function RegisterForm() {
         }
     
 
-    const createUser = functions.httpsCallable('createUser')
     let newUid = "mshPro" + formValue.firstName + formValue.lastName + formValue.hotelName + Date.now()
 
     const handleCreateUser = () => {
-        createUser({email: formValue.email, password: formValue.password, username: `${formValue.firstName} ${formValue.lastName}`, uid: newUid})
-    }
+        auth.createUserWithEmailAndPassword(formValue.email.trim(), formValue.password.trim())
+          .then((authUser) => {
+              authUser.user.updateProfile({
+                  displayName: `${formValue.firstName} ${formValue.lastName}`
+              })
+          })
+      }
     
-    const adminMaker = async(event) => {
-        event.preventDefault()
-        //setFormValue("")
+    const adminMaker = async() => {
         return db.collection('businessUsers')
-        .doc(newUid)
+        .doc(newUid.trim())
         .set({   
-        username: formValue.username, 
+        username: `${formValue.firstName} ${formValue.lastName}`, 
         adminStatus: true, 
         email: formValue.email,
         password: "password",
-        hotelId: formValue.hotelId,
+        hotelId: formValue.hotelId !== "" ? formValue.hotelId : newHotelId,
         hotelName: formValue.hotelName,
         hotelRegion: formValue.region,
         hotelDept: formValue.departement,
         createdAt: Date.now(),
-        userId: newUid,
-        classement: formValue.classement,
+        userId: newUid.trim(),
+        classement: formValue.standing,
         code_postal: formValue.code_postal,
-        country: formValue.country,
+        country: "FRANCE",
         city: formValue.city,
         room: formValue.room,
         language: "fr",
         logo: url,
         appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`,
-        pricingModel: formValue.pricing
+        pricingModel: "Premium",
         }) 
         .then(()=>{
             setFormValue("" || 0)
@@ -144,17 +167,18 @@ export default function RegisterForm() {
         return unsubscribe
     }, [filter])
 
-    const handleUploadLogo = (event) =>{
-        event.preventDefault()
+    const handleUploadLogo = () =>{
         if(newImg !== null) {
-            const uploadTask = storage.ref(`msh-photo-hotel-logo/${newImg.name}`).put(newImg)
+            const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
+            const newLogoName = newImg.name.slice(0, -4)
+            const imgType = newImg.name.slice(-3)
         uploadTask.on(
           "state_changed",
           snapshot => {},
           error => {console.log(error)},
           () => {
             storage
-              .ref("msh-photo-hotel-logo")
+              .ref("msh-hotel-logo")
               .child(newImg.name)
               .getDownloadURL()
               .then(url => {
@@ -163,10 +187,11 @@ export default function RegisterForm() {
                       setAlert(false)
                   }, 5000);
                   return setUrl(url)})
-          }
-        )
+                }
+            )
         }
     }
+
 
     return (
         <div style={{
@@ -367,8 +392,10 @@ export default function RegisterForm() {
                         padding: "5%",
                         borderRadius: "5%",
                         width: "30vw"
-                    }} onClick={handleUploadLogo}>
+                    }}>
                         <h4>Téléverser le logo de votre hôtel ici</h4>
+                        <input type="file" className="phone-camera-icon"
+                            onChange={handleImgChange} />
                         <img src={HotelLogo} style={{width: "50%"}} />
                     </div>
                     <div style={{
@@ -382,15 +409,44 @@ export default function RegisterForm() {
                                 setStepThree(false)
                                 setStepTwo(true)
                             }} style={{marginTop: "3vh"}}>Etape précédente</Button>
-                            <Button variant="success" onClick={() => {
+                            {isLoading ? <Spinner animation="grow" /> : <Button variant="success" onClick={() => {
                                 setStepTwo(false)
                                 setStepThree(true)
-                            }} style={{marginTop: "3vh"}}>Valider mon formulaire</Button>
+                            }} style={{marginTop: "3vh"}} onClick={async() => {
+                                await setIsLoading(true)
+                                await handleCreateUser()
+                                await handleUploadLogo()
+                                await auth.onAuthStateChanged((user) => {
+                                    if(user) {
+                                        adminMaker().then(() => {
+                                            if(formValue.hotelId !== "") {
+                                                getPartner()
+                                            }else{
+                                                createHotel()
+                                            }
+                                        })
+                                    }
+                                })
+                                await setStepThree(false)
+                                return setFinalStep(true)
+                            }}>Valider mon formulaire</Button>}
                         </div>
                         {alert && <Alert variant="success" style={{marginTop: "3vh"}}>
                             Votre logo a été téléversé avec succès !
                         </Alert>}
                 </div>}
+                {finalStep && <div>
+                <PDFExport ref={pdfExportRef} paperSize="auto" margin={40} fileName="Sticker">
+                    <Sticker url={`https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={url} />
+                </PDFExport>
+                <PDFExport ref={pdfExportRef} paperSize="auto" margin={40} fileName="Flyer">
+                    <Flyer url={`https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={url} />
+                </PDFExport>
+                <PDFExport ref={pdfExportRef} paperSize="auto" margin={40} fileName="Band">
+                    <Band url={`https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={url} />
+                </PDFExport>
+                <Button variant="outline-success" onClick={exportPDF}>Télécharger les visuels de l'application</Button>
+               </div> }
             </div>
         </div>
     )
