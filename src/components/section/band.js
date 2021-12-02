@@ -31,7 +31,7 @@ export default function Band({url, logo}) {
                 alignItems: "center"
             }}>
                 <img src={logo} style={{width: "280px", marginTop: "10vh", filter: "drop-shadow(1px 1px 1px)"}} />
-                <img src={logo} style={{width: "120px", height: "85px", marginTop: "17vh", marginRight: "12px"}} />
+                <img src={logo} style={{width: "120px", height: "85px", marginTop: "16vh", marginRight: "12px"}} />
             </div>
             <div style={{
                 display: "flex",
@@ -49,8 +49,6 @@ export default function Band({url, logo}) {
                     <QRCode 
                     value={url} 
                     size={192}
-                    logoWidth="50"
-                    logoHeight="50"
                     />
                     <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
                 </div>

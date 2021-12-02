@@ -8,19 +8,21 @@ import Flyer from './flyer'
 import Band from './band'
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
+import { sha256, sha224 } from 'js-sha256';
 
 export default function RegisterFormSteps() {
-    const [stepOne, setStepOne] = useState(false)
+    const [stepOne, setStepOne] = useState(true)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
     const [stepFour, setStepFour] = useState(false)
-    const [finalStep, setFinalStep] = useState(true)
+    const [finalStep, setFinalStep] = useState(false)
     const [alert, setAlert] = useState({success: false, danger: false})
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [info, setInfo] = useState([])
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
+    const [baseUrl, setBaseUrl] = useState("")
     const [newImg, setNewImg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
@@ -62,6 +64,7 @@ export default function RegisterFormSteps() {
                 setAlert({success :false})
             }, 5000);
             setNewImg(event.target.files[0])
+            handleFileInputChange(event)
         }
     }
 
@@ -69,7 +72,9 @@ export default function RegisterFormSteps() {
         setInitialFilter(event.currentTarget.value)
     }
 
-    let newHotelId = "mshPro" + formValue.hotelName + Date.now()
+
+
+    let newHotelId = "mshPro" + Date.now() + sha256(formValue.hotelName)
 
     const stickerPdfRef = useRef(null)
     const flyerPdfRef = useRef(null)
@@ -93,7 +98,7 @@ export default function RegisterFormSteps() {
 
     const createHotel = (url) => {
         return db.collection("hotels")
-            .doc(newHotelId.trim())
+            .doc(newHotelId)
             .set({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
@@ -115,9 +120,6 @@ export default function RegisterFormSteps() {
             })
         }
     
-
-    let newUid = "mshPro" + formValue.firstName + formValue.lastName + formValue.hotelName + Date.now()
-
     const handleCreateUser = (newUrl) => {
         setIsLoading(true)
         return auth.createUserWithEmailAndPassword(formValue.email.trim(), formValue.password.trim())
@@ -125,7 +127,7 @@ export default function RegisterFormSteps() {
               authUser.user.updateProfile({
                   displayName: `${formValue.firstName} ${formValue.lastName}`
               })
-              handleFirestoreNewData(newUrl, authUser.user.uid)
+              handleFirestoreNewData(newUrl)
               return setStepThree(false)
 
           })
@@ -138,13 +140,13 @@ export default function RegisterFormSteps() {
         username: `${formValue.firstName} ${formValue.lastName}`, 
         adminStatus: true, 
         email: formValue.email,
-        password: "password",
+        password: formValue.password,
         hotelId: formValue.hotelId !== "" ? formValue.hotelId : newHotelId,
         hotelName: formValue.hotelName,
         hotelRegion: formValue.region,
         hotelDept: formValue.departement,
         createdAt: Date.now(),
-        userId: newUid.trim(),
+        userId: userId,
         classement: formValue.standing,
         code_postal: formValue.code_postal,
         country: "FRANCE",
@@ -181,7 +183,7 @@ export default function RegisterFormSteps() {
         console.log("SHORTENURL", shortenUrl)
         return auth.onAuthStateChanged((user) => {
             if(user) {
-                adminMaker(shortenUrl).then(() => {
+                adminMaker(shortenUrl, user.uid).then(() => {
                     if(formValue.hotelId !== "") {
                         getPartner(shortenUrl)
                     }else{
@@ -214,7 +216,44 @@ export default function RegisterFormSteps() {
         }
     }
 
-    console.log('SHORTENURL', data && data)
+    const getBase64 = file => {
+        return new Promise(resolve => {
+          let fileInfo;
+          let baseURL = "";
+          // Make new FileReader
+          let reader = new FileReader();
+    
+          // Convert the file to base64 text
+          reader.readAsDataURL(file);
+    
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            console.log("Called", reader);
+            baseURL = reader.result;
+            console.log(baseURL);
+            resolve(baseURL);
+          };
+          console.log(fileInfo);
+        });
+      };
+
+      const handleFileInputChange = e => {
+        console.log(e.target.files[0]);    
+        const file = e.target.files[0];
+    
+        getBase64(file)
+          .then(result => {
+            file["base64"] = result;
+            console.log("File Is", file);
+            setBaseUrl(result);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      };
+
+    console.log('SHORTENURL', formValue.hotelName.replace(/ /g,''))
 
     return (
         <div style={{
@@ -247,7 +286,7 @@ export default function RegisterFormSteps() {
                     justifyContent: "space-around",
                     width: "70%",
                 }}>
-                    <Form.Group controlId="description">
+                    <Form.Group controlId="description1">
                     <Form.Label>Prénom</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane" style={{width: "10vw"}} value={formValue.firstName} name="firstName" onChange={handleChange} required />
                     </Form.Group>
@@ -257,7 +296,7 @@ export default function RegisterFormSteps() {
                     <Form.Control type="text" placeholder="ex: Doe" style={{width: "10vw"}} value={formValue.lastName} name="lastName" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
-                    <Form.Group controlId="description">
+                    <Form.Group controlId="description3">
                     <Form.Label>E-mail</Form.Label>
                     <Form.Control type="email" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
@@ -268,12 +307,12 @@ export default function RegisterFormSteps() {
                     justifyContent: "space-around",
                     width: "70%",
                 }}>
-                    <Form.Group controlId="description">
+                    <Form.Group controlId="description4">
                     <Form.Label>Mot de passe</Form.Label>
                     <Form.Control type="password" placeholder="ex: jAnedOe2021!" style={{width: "20vw"}} value={formValue.password} name="password" onChange={handleChange} required />
                     </Form.Group>
             
-                    <Form.Group controlId="description2">
+                    <Form.Group controlId="description5">
                     <Form.Label>Confirmer le mot de passe</Form.Label>
                     <Form.Control type="password" placeholder="ex: jAnedOe2021" style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
@@ -508,7 +547,7 @@ export default function RegisterFormSteps() {
                     <div>
                         <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
                             <PDFExport ref={stickerPdfRef} paperSize="auto" margin={40} fileName="Sticker">
-                                <Sticker url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={data && data.link} />
+                                <Sticker url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(stickerPdfRef)}>Télécharger le sticker</Button>
@@ -516,7 +555,7 @@ export default function RegisterFormSteps() {
                     <div> 
                         <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
                             <PDFExport ref={flyerPdfRef} paperSize="auto" margin={40} fileName="Flyer">
-                                <Flyer url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={data && data.long_url} />
+                                <Flyer url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(flyerPdfRef)}>Télécharger l'affiche</Button>
@@ -524,7 +563,7 @@ export default function RegisterFormSteps() {
                     <div>
                         <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
                             <PDFExport ref={bandPdfRef} paperSize="auto" margin={40} fileName="Band">
-                                <Band url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={data && data.link} />
+                                <Band url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(bandPdfRef)}>Télécharger la banderolle</Button>

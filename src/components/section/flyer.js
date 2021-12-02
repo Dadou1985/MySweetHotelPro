@@ -4,6 +4,7 @@ import Divider from '@material-ui/core/Divider';
 import AppVisual from '../../images/msh-front-app.png'
 
 export default function Flyer({url, logo}) {
+    
     return (
         <div style={{
             width: 794,
@@ -31,10 +32,7 @@ export default function Flyer({url, logo}) {
             <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                 <QRCode 
                 value={url} 
-                logoImage={logo}
                 size={192}
-                logoWidth="50"
-                logoHeight="50"
                 />
                 <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
             </div>
