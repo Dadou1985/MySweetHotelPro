@@ -5,42 +5,28 @@ import HousekkepingLogo from '../../svg/maid.svg'
 import RepairLogo from '../../svg/repair.svg'
 import TimerLogo from '../../svg/timer.svg'
 import CabLogo from '../../svg/taxi.svg'
+import '../css/sticker.css'
 
 export default function Sticker({url, logo}) {
       console.log('STICKERURL', logo)
     return (
-        <div style={{
-            width: 378,
-            height: 378,
-            display: "flex",
-            flexFlow: "column",
-            alignItems: "center",
-            justifyContent: "space-around",
-            padding: "5%",
-            borderRadius: "1%",
-            backgroundColor: "white"
-        }}>
-            <div style={{
-                display: "flex",
-                flexFlow: "row",
-                justifyContent: "space-between",
-                width: "55%",
-            }}>
-                <img src={ChatLogo} style={{width: "1vw"}} />
-                <img src={HousekkepingLogo} style={{width: "1vw"}} />
-                <img src={CabLogo} style={{width: "1vw"}} />
-                <img src={TimerLogo} style={{width: "1vw"}} />
-                <img src={RepairLogo} style={{width: "1vw"}} />
+        <div className="sticker_container">
+            <div className="sticker_logo_container">
+                <img src={ChatLogo} className="sticker_logo" />
+                <img src={HousekkepingLogo} className="sticker_logo" />
+                <img src={CabLogo} className="sticker_logo" />
+                <img src={TimerLogo} className="sticker_logo" />
+                <img src={RepairLogo} className="sticker_logo" />
             </div>
             <QRCode 
-            value={url} 
+            value={url.replace(/ /g,'%20')} 
             logoImage={logo}
             size={192}
             logoWidth="50"
             logoHeight="50"
             />
-            <h5 style={{marginBottom: 0, filter: "drop-shadow(1px 1px 1px)"}}>Tous nos services en</h5>
-            <h3 style={{marginTop: -10, filter: "drop-shadow(1px 1px 1px)"}}>une seule app</h3>
+            <h5 className="sticker_bottom_up">Tous nos services en</h5>
+            <h3 className="sticker_bottom_down">une seule app</h3>
         </div>
     )
 }

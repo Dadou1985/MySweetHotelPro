@@ -2662,16 +2662,3 @@ input[type=number] {
 }
 
 
-/*RegisterFormSteps*/
-
-.steps-camera-icon{
-    position: absolute; 
-    width: 30%;
-    height: 35vh;
-    z-index: 5;
-    left: 28%; 
-    opacity: 0;
-    cursor: pointer;
-    margin-left: 7vw;
-    border: 1px solid black;
-}

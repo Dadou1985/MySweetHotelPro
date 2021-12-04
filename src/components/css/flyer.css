@@ -1,0 +1,137 @@
+div {
+    font-family: "DejaVu Sans", "Arial", sans-serif;
+    font-size: 12px;
+}
+
+/*
+The example loads the DejaVu Sans from the Kendo UI CDN.
+Other fonts have to be hosted from your application.
+The official site of the Deja Vu Fonts project is
+https://dejavu-fonts.github.io/.
+*/
+@font-face {
+    font-family: "DejaVu Sans";
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-weight: bold;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-style: italic;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "DejaVu Sans";
+    font-weight: bold;
+    font-style: italic;
+    src: url("https://kendo.cdn.telerik.com/2017.2.621/styles/fonts/DejaVu/DejaVuSans-Oblique.ttf") format("truetype");
+}
+
+
+/********************************************************/
+
+.flyer_container {
+    width: 794px;
+    height: 1123px;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    justify-content: space-around;
+    padding: 5%;
+    border-radius: 1px;
+    background-color: white;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-size: 20vw;
+    background-position: center;
+}
+
+.flyer_title {
+    font-size: 4em; 
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.flyer_divider {
+    width: 100%; 
+    margin-bottom: 2vh; 
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.flyer_subtittle {
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.flyer_logo {
+    width: 120px;
+    height: 85px; 
+    margin-bottom: 11vh;
+}
+
+.flyer_qr_code_container {
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.flyer_bottom {
+    margin-top: 0;
+}
+
+
+
+/************************MEDIA QUERIES***************************/
+
+
+@media screen and (max-width: 768px) {
+    .flyer_container {
+        width: 794px;
+        height: 1123px;
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-around;
+        padding: 5%;
+        border-radius: 1px;
+        background-color: white;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-size: 40vw;
+        background-position: center;
+    }
+    
+    .flyer_title {
+        font-size: 3em; 
+        filter: drop-shadow(1px 1px 1px);
+    }
+    
+    .flyer_divider {
+        width: 100%; 
+        margin-bottom: 6vh; 
+        filter: drop-shadow(1px 1px 1px);
+    }
+    
+    .flyer_subtittle {
+        margin-top: 2vh;
+        font-size: 1em;
+        filter: drop-shadow(1px 1px 1px);
+    }
+    
+    .flyer_logo {
+        width: 120px;
+        height: 85px; 
+        margin-bottom: 11vh;
+    }
+    
+    .flyer_qr_code_container {
+        filter: drop-shadow(1px 1px 1px);
+    }
+
+    .flyer_bottom {
+        font-size: 1em;
+        margin-top: 0;
+    }
+}

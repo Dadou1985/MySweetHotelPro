@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useRef } from 'react'
-import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal } from 'react-bootstrap'
+import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal, ProgressBar } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import { auth, db, storage } from '../../Firebase'
 import HotelLogo from '../../svg/hotel.svg'
@@ -9,6 +9,12 @@ import Band from './band'
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
 import { sha256, sha224 } from 'js-sha256';
+import Divider from '@material-ui/core/Divider';
+import MshLogo from '../../svg/msh-newLogo-transparent.png'
+import MshLogoPro from '../../svg/mshPro-newLogo-transparent.png'
+import Fom from '../../svg/fom.svg'
+import Drawer from '@material-ui/core/Drawer'
+import '../css/registerFormSteps.css'
 
 export default function RegisterFormSteps() {
     const [stepOne, setStepOne] = useState(true)
@@ -22,10 +28,14 @@ export default function RegisterFormSteps() {
     const [info, setInfo] = useState([])
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
+    const [now, setNow] = useState(0)
     const [baseUrl, setBaseUrl] = useState("")
     const [newImg, setNewImg] = useState(null)
     const [isLoading, setIsLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
+    const [showFindHotelDrawer, setShowFindHotelDrawer] = useState(false)
+    const [findHotelForm, setfindHotelForm] = useState(false)
+    const [showCreateHotelDrawer, setShowCreateHotelDrawer] = useState(false)
     const { loading, error, data } = useShortenUrl(url);
     const [formValue, setFormValue] = useState({
         firstName: "",
@@ -72,9 +82,10 @@ export default function RegisterFormSteps() {
         setInitialFilter(event.currentTarget.value)
     }
 
-
+    
 
     let newHotelId = "mshPro" + Date.now() + sha256(formValue.hotelName)
+    let hotelNameForUrl = formValue.hotelName.replace(/ /g,'%20')
 
     const stickerPdfRef = useRef(null)
     const flyerPdfRef = useRef(null)
@@ -92,7 +103,8 @@ export default function RegisterFormSteps() {
                 .update({
                     partnership: true,
                     logo: url,
-                    appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`
+                    base64Url: baseUrl,
+                    appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`
                 }) 
         }
 
@@ -102,12 +114,12 @@ export default function RegisterFormSteps() {
             .set({
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
-                classement: formValue.standing,
+                classement: `${formValue.standing} étoiles`,
                 departement: formValue.departement,
                 region: formValue.region,
                 city: formValue.city,
                 code_postal: formValue.code_postal,
-                room: `${formValue.room} étoiles`,
+                room: formValue.room,
                 website: formValue.website,
                 phone: formValue.phone,
                 mail: formValue.email,
@@ -116,7 +128,8 @@ export default function RegisterFormSteps() {
                 country: "FRANCE",
                 pricingModel: "Premium",
                 logo: url,
-                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`
+                base64Url: baseUrl,
+                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`
             })
         }
     
@@ -147,14 +160,14 @@ export default function RegisterFormSteps() {
         hotelDept: formValue.departement,
         createdAt: Date.now(),
         userId: userId,
-        classement: formValue.standing,
+        classement: `${formValue.standing} étoiles`,
         code_postal: formValue.code_postal,
         country: "FRANCE",
         city: formValue.city,
         room: formValue.room,
         language: "fr",
         logo: url,
-        appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`,
+        appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
         pricingModel: "Premium",
         }) 
     }
@@ -253,54 +266,42 @@ export default function RegisterFormSteps() {
           });
       };
 
-    console.log('SHORTENURL', formValue.hotelName.replace(/ /g,''))
+    console.log('SHORTENURL', hotelNameForUrl.replace(/ /g,'%20'))
 
-    return (
-        <div style={{
-            display: "flex",
-            flexFlow: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            padding: "5%"
-        }}>
-            <div style={{
-                textAlign: "center"
-            }}>
-                <h1><b>Formulaire d'inscription</b></h1>
-                {stepOne && <h3 style={{marginBottom: "5vh"}}>Première étape</h3>}
-                {stepTwo && <h3 style={{marginBottom: "5vh"}}>Deuxième étape</h3>}
-                {stepThree && <h3 style={{marginBottom: "5vh"}}>Troisième étape</h3>}
-                {stepFour && <h3 style={{marginBottom: "5vh"}}>Récapitulatif</h3>}
-                {stepOne && <form style={{
-                    display: "flex",
-                    flexFlow: "column",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    width: "50vw",
-                    marginTop: "10vh"
-                }}>
-                <Form.Row style={{
-                    display: "flex",
-                    flexFlow: "row",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    width: "70%",
-                }}>
+    return (<div className="register_form_container">
+            <div style={{textAlign: "center"}}>
+                <div>
+                <div className="register_logo_container">
+                    <img src={MshLogo} className="register_form_logo" />
+                    <img src={MshLogoPro} className="register_form_logo" />
+                </div>
+                {finalStep ? <h1 className="form_title"><b>Welcome to the Smart Hospitality</b></h1> : <h1 className="form_title"><b>Formulaire d'inscription</b></h1>}
+                </div>
+                {stepOne && <h3 className="step_title">Première étape</h3>}
+                {stepTwo && <h3 className="step_title">Deuxième étape</h3>}
+                {stepThree && <h3 className="step_title">Troisième étape</h3>}
+                {stepFour && <h3 className="step_title">Récapitulatif</h3>}
+                {finalStep && <h3 className="step_title">Félicitations !<br/> Vous venez de prendre 2 ans d'avance sur la concurrence !</h3>}
+                {finalStep ? <div className="progress_container"><ProgressBar className="progress_bar" now={now} label={`${now}%`} /></div> : <ProgressBar now={now} label={`${now}%`} />}
+                
+                {stepOne && <form className="stepOne_container">
+                <h5 className="stepOne_title"><b>Créer un compte administrateur</b></h5>
+                <Form.Row className="stepOne_form_name_input">
                     <Form.Group controlId="description1">
-                    <Form.Label>Prénom</Form.Label>
-                    <Form.Control type="text" placeholder="ex: Jane" style={{width: "10vw"}} value={formValue.firstName} name="firstName" onChange={handleChange} required />
+                    {typeof window && window.innerWidth > 768 && <Form.Label>Prénom</Form.Label>}
+                    <Form.Control type="text" placeholder={typeof window && window.innerWidth > 768 ? "ex: Jane" : "Prénom"} className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
                     </Form.Group>
                 
                     <Form.Group controlId="description2">
-                    <Form.Label>Nom</Form.Label>
-                    <Form.Control type="text" placeholder="ex: Doe" style={{width: "10vw"}} value={formValue.lastName} name="lastName" onChange={handleChange} />
+                    {typeof window && window.innerWidth > 768 && <Form.Label>Nom</Form.Label>}
+                    <Form.Control type="text" placeholder={typeof window && window.innerWidth > 768 ? "ex: Doe" : "Nom"} className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                     <Form.Group controlId="description3">
-                    <Form.Label>E-mail</Form.Label>
-                    <Form.Control type="email" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} required />
+                    {typeof window && window.innerWidth > 768 && <Form.Label>E-mail</Form.Label>}
+                    <Form.Control type="email" placeholder={typeof window && window.innerWidth > 768 ? "ex: jane.doe@msh.com" : "E-mail"} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
-                    <Form.Row style={{
+                <Form.Row style={{
                     display: "flex",
                     flexFlow: "column",
                     alignItems: "center",
@@ -308,16 +309,16 @@ export default function RegisterFormSteps() {
                     width: "70%",
                 }}>
                     <Form.Group controlId="description4">
-                    <Form.Label>Mot de passe</Form.Label>
-                    <Form.Control type="password" placeholder="ex: jAnedOe2021!" style={{width: "20vw"}} value={formValue.password} name="password" onChange={handleChange} required />
+                    {typeof window && window.innerWidth > 768 && <Form.Label>Mot de passe</Form.Label>}
+                    <Form.Control type="password" placeholder={typeof window && window.innerWidth > 768 ? "ex: jAnedOe2021!" : "Mot de passe"} className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
                     </Form.Group>
             
                     <Form.Group controlId="description5">
-                    <Form.Label>Confirmer le mot de passe</Form.Label>
-                    <Form.Control type="password" placeholder="ex: jAnedOe2021" style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
+                    {typeof window && window.innerWidth > 768 && <Form.Label>Confirmer le mot de passe</Form.Label>}
+                    <Form.Control type="password" placeholder={typeof window && window.innerWidth > 768 ? "ex: jAnedOe2021" : "Confirmer le mot de passe"} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
                 </Form.Row>
-                <Button variant="outline-success" style={{marginTop: "3vh"}}onClick={() => {
+                <Button variant="success" className="stepOne_validation_button" onClick={() => {
                     if(formValue.password !== formValue.confPassword){
                         setAlert({danger: true})
                         setTimeout(() => {
@@ -326,157 +327,127 @@ export default function RegisterFormSteps() {
                     }else{
                         setStepOne(false)
                         setStepTwo(true)
+                        setNow(25)
                     }
                 }}>Passer à l'étape suivante</Button>
-                {alert.danger && <Alert variant="danger" style={{marginTop: "3vh"}}>
+                {alert.danger && <Alert variant="danger" className="stepOne_alert">
                     Attention ! Veuillez confirmer à nouveau votre mot de passe s'il vous plaît !
                 </Alert>}
                 </form>}
-                {stepTwo && <div>
-                    <div style={{
-                        display: "flex",
-                        flexFlow: 'row',
-                        justifyContent: "center",
-                        marginTop: "5vh"
-                    }}>
-                    <Form.Row>
-                        <Form.Group style={{
-                            display: "flex",
-                            flexFlow: "column",
-                            alignItems: "center",
-                            
-                        }}>
-                        <Input 
-                            style={{width: "25vw"}}
-                            type="text" 
-                            placeholder="Enter le code postal de votre hôtel" 
-                            value={initialFilter} 
-                            onChange={handleChangeInitialfilter}
-                            className="text-center"
-                            pattern=".{5,}" />
-                        </Form.Group>
-                    </Form.Row>
+                {stepTwo && <div className="stepTwo_container">
+                        {findHotelForm ? <Button variant="outline-info" className="stepTwo_find_button" onClick={() => setfindHotelForm(false)}>Trouver mon hôtel avec le code postal</Button> : <div className="stepTwo_find_container">
+                        <h5 className="stepTwo_title"><b>Entrez le code postal de votre établissement</b></h5>
+                        <Form.Row>
+                            <Form.Group className="stepTwo_find_input_container">
+                            <Input 
+                                type="text" 
+                                placeholder="Code postal" 
+                                value={initialFilter} 
+                                onChange={handleChangeInitialfilter}
+                                className="text-center stepTwo_find_input"
+                                pattern=".{5,}" />
+                            </Form.Group>
+                        </Form.Row>
 
-                    <Form.Row>
-                        <Form.Group style={{
-                            display: "flex",
-                            flexFlow: "column",
-                            alignItems: "center"
-                        }}>
-                        <DropdownButton id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
-                        {info.map(details => {
-                            return <Dropdown.Item  onClick={()=>{
-                                setFormValue({
-                                    hotelId: details.id,
-                                    departement: details.departement,
-                                    region: details.region,
-                                    classement: details.classement,
-                                    city: details.city,
-                                    code_postal: details.code_postal,
-                                    country: details.country,
-                                    room: details.room,
-                                    hotelName: details.hotelName
-                                })
-                                }}>{details}</Dropdown.Item>
-                            })}
-                        </DropdownButton>
-                        </Form.Group>
-                    </Form.Row>
-                    </div>
-                    <div style={{
-                        display: "flex",
-                        flexFlow: "column wrap",
-                        justifyContent: "space-around",
-                        alignItems: "center",
-                        padding: "5%",
-                        textAlign: "center"
-                    }}>
+                        <Form.Row>
+                            <Form.Group className="stepTwo_find_dropdown_container">
+                            {typeof window && window.innerWidth > 768 ? <DropdownButton id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
+                            {info.map(details => {
+                                return <Dropdown.Item  onClick={()=>{
+                                    setFormValue({
+                                        hotelId: details.id,
+                                        departement: details.departement,
+                                        region: details.region,
+                                        classement: details.classement,
+                                        city: details.city,
+                                        code_postal: details.code_postal,
+                                        country: details.country,
+                                        room: details.room,
+                                        hotelName: details.hotelName
+                                    })
+                                    }}>{details.hotelName}</Dropdown.Item>
+                                })}
+                            </DropdownButton> : <Button variant="dark" className="stepTwo_find_dropdown_container" onClick={() => {
+                                setFilter(initialFilter)
+                                return setShowFindHotelDrawer(true)
+                                }}>Valider</Button>}
+                            </Form.Group>
+                        </Form.Row>
+                        <div className="stepTwo_hotel_name_container"><b>{formValue.hotelName && formValue.hotelName}</b></div>
+                        </div>}
+                        <div className="stepTwo_separation">ou</div>
+                    {findHotelForm ? <div className="stepTwo_create_hotel_container">
+                        <h5 style={{marginBottom: "3vh"}}><b>Enregistrer mon établissement</b></h5>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.hotelName} name="hotelName" type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.region} name="region" type="text" placeholder="Région" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder="Région" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.departement} name="departement" type="text" placeholder="Département" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder="Département" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.city} name="city" type="text" placeholder="Ville" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder="Ville" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.adress} name="adress" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adress} name="adress" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control style={{width: "30vw"}} value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
                         </Form.Group>
-                        <div style={{
-                            display: "flex",
-                            flexFlow: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%"
-                        }}>
+                    </div> : <Button variant="outline-dark" style={{marginTop: "3vh"}} onClick={() => {
+                        if(typeof window && window.innerWidth > 768) {
+                            setfindHotelForm(true)
+                        }else{
+                            setShowCreateHotelDrawer(true)
+                        }
+                        
+                        }}>Je ne trouve pas mon établissement</Button>}
+                    <div className="stepTwo_button_container">
                             <Button variant="outline-info" onClick={() => {
                                 setStepTwo(false)
                                 setStepOne(true)
-                            }} style={{marginTop: "3vh"}}>Etape précédente</Button>
-                            <Button variant="outline-success" onClick={() => {
-                                setStepTwo(false)
-                                setStepThree(true)
-                            }} style={{marginTop: "3vh"}}>Etape suivante</Button>
-                        </div>
-                    </div>    
-                </div>}
-                {stepThree && <div>
-                    <div style={{
-                        display: "flex",
-                        flexFlow: "column", 
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginTop: "5vh",
-                        marginBottom: "5vh",
-                        cursor: "pointer",
-                        border: "3px dashed black", 
-                        padding: "5%",
-                        borderRadius: "5%",
-                        width: "30vw"
-                    }}>
-                        <h4>Téléverser le logo de votre hôtel ici</h4>
-                        <input type="file" className="steps-camera-icon"
-                            onChange={handleImgChange} />
-                        <img src={HotelLogo} style={{width: "50%", marginTop: "2vh"}} />
-                    </div>
-                    <div>{newImg && newImg.name}</div>
-                    <div style={{
-                            display: "flex",
-                            flexFlow: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                            width: "100%"
-                        }}>
-                            <Button variant="outline-info" onClick={() => {
-                                setStepThree(false)
-                                setStepTwo(true)
-                            }} style={{marginTop: "3vh"}}>Etape précédente</Button>
+                                setNow(0)
+                            }} className="stepTwo_button">Etape précédente</Button>
                             <Button variant="success" onClick={() => {
                                 setStepTwo(false)
                                 setStepThree(true)
-                            }} style={{marginTop: "3vh"}} onClick={() => {
+                                setNow(50)
+                            }} className="stepTwo_button">Etape suivante</Button>
+                        </div>
+                </div>}
+                {stepThree && <div>
+                    <h5 className="stepThree_title"><b>Téléverser le logo de votre hôtel ici</b></h5>
+                    <div className="stepThree_upload_container">
+                        <input type="file" className="steps-camera-icon"
+                            onChange={handleImgChange} />
+                        <img src={HotelLogo} className="stepThree_upload_logo" />
+                    </div>
+                    <div>{newImg && newImg.name}</div>
+                    <div className="stepThree_button_container">
+                            <Button variant="outline-info" onClick={() => {
+                                setStepThree(false)
+                                setStepTwo(true)
+                                setNow(25)
+                            }} className="stepThree_button">Etape précédente</Button>
+                            <Button variant="success" className="stepThree_button" onClick={() => {
                                 if(newImg !== null) {
                                     handleUploadLogo()
-                                    setStepThree(false)                                    
+                                    setStepThree(false) 
+                                    setNow(75)                                   
                                     return setStepFour(true)
                                 }else{
                                     setAlert({danger: true})
@@ -486,24 +457,26 @@ export default function RegisterFormSteps() {
                                 }
                             }}>Etape suivante</Button>
                         </div>
-                        {alert.success && <Alert variant="success" style={{marginTop: "3vh"}}>
+                        {alert.success && <Alert variant="success" className="stepThree_alert">
                             Votre logo a été téléversé avec succès !
                         </Alert>}
-                        {alert.danger && <Alert variant="danger" style={{marginTop: "3vh"}}>
+                        {alert.danger && <Alert variant="danger" className="stepThree_alert">
                             Vous devez téléverser une image avant de valider le formulaire !
                         </Alert>}
                 </div>}
                 {stepFour && 
                 <div>
-                    <div style={{display: "flex", flexFlow: "column", alignItems: "center", marginBottom: "5vh"}}>
-                        <img src={url} style={{width: "5vw", marginBottom: "1vh"}} />
+                    <div className="stepFour_logo_contaner">
+                        <img src={MshLogo} className="stepFour_logo_img" />
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
-                            setStepOne(true)
+                            setStepThree(true)
+                            setNow(50)
                         }}>Revenir à cette étape</Button>
                     </div>
-                    <div style={{marginBottom: "5vh"}}>
-                        <h3 style={{marginBottom: "2vh"}}>Etablissement hôtelier</h3>
+                    <Divider className="stepFour_divider" />
+                    <div className="stepFour_hotel_data_container">
+                        <h4 className="stepFour_hotel_data_title"><b>Etablissement hôtelier</b></h4>
                         <div>
                             <p><b>Nom:</b> {formValue.hotelName}</p>
                             <p><b>Adresse:</b> {formValue.adress}</p>
@@ -518,62 +491,71 @@ export default function RegisterFormSteps() {
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
                             setStepTwo(true)
+                            setNow(25)
                         }}>Revenir à cette étape</Button>
                     </div>
-                    <div style={{marginBottom: "5vh"}}>
-                        <h3 style={{marginBottom: "2vh"}}>Responsable des opérations au sein de l'établissement</h3>
+                    <Divider className="stepFour_divider" />
+                    <div className="stepFour_manager_data_container">
+                        <h4 className="stepFour_manager_data_title"><b>Responsable des opérations</b></h4>
                         <p><b>Nom:</b> {formValue.firstName} {formValue.lastName}</p>
                         <p><b>E-mail:</b> {formValue.email}</p>
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
-                            setStepThree(true)
+                            setStepOne(true)
+                            setNow(0)
                         }}>Revenir à cette étape</Button>
                     </div>
-                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" size="lg" style={{paddingLeft: "5vw", paddingRight: "5vw"}} onClick={() => {
+                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" size="lg" className="stepFour_button" onClick={() => {
                             handleCreateUser(data.link)
                             setStepFour(false)
+                            setNow(100)
                             return setFinalStep(true)
                         }}>Valider mon formulaire</Button>}
                 </div>
                 }
                 {finalStep && 
-                <div style={{
-                    display: "flex",
-                    flexFlow: "column",
-                    justifyContent: "space-around",
-                    alignItems: "center",
-                    height: "3500px"
-                }}>
-                    <div>
-                        <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
+                <div className="finalStep_container">
+                    <div className="finalStep_greeting_message_container">
+                        <p>Vous pouvez désormais jouir de nos services gratuitement et ce, durant toute la phase de pré-lancement qui s'étendra jusqu'en mai 2022.</p>
+                        <p>Vous pouvez dès maintenant accéder à notre solution développée pour le personnel en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
+                        {typeof window && window.innerWidth > 1080 ? <p>Les visuels ci-dessous ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.</p> : 
+                        <p><b>Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.<br/>
+                        Vous pouvez les télécharger depuis l'application web en allant dans la section "Profil".</b></p>}
+                        <p>Toute l'équipe de <i>My Sweet Hotel</i> vous remercie pour la confiance que vous nous avez accordée !</p>
+                    </div>
+                    <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>Revenir sur le site web</b></a>
+                    {typeof window && window.innerWidth > 1080 && <div>
+                        <div className="finalStep_visual_container">
                             <PDFExport ref={stickerPdfRef} paperSize="auto" margin={40} fileName="Sticker">
                                 <Sticker url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(stickerPdfRef)}>Télécharger le sticker</Button>
-                    </div>
-                    <div> 
-                        <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
+                    </div>}
+                    {typeof window && window.innerWidth > 1080 && <Divider className="finalStep_divider" />}
+                    {typeof window && window.innerWidth > 1080 && <div> 
+                        <div className="finalStep_visual_container">
                             <PDFExport ref={flyerPdfRef} paperSize="auto" margin={40} fileName="Flyer">
                                 <Flyer url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(flyerPdfRef)}>Télécharger l'affiche</Button>
-                    </div>
-                    <div>
-                        <div style={{border: "1px solid lightgray", marginBottom: "2vh", borderRadius: "1px", filter: "drop-shadow(2px 2px 2px)"}}>
+                    </div>}
+                    {typeof window && window.innerWidth > 1080 && <Divider className="finalStep_divider" />}
+                    {typeof window && window.innerWidth > 1080 && <div>
+                        <div className="finalStep_visual_container">
                             <PDFExport ref={bandPdfRef} paperSize="auto" margin={40} fileName="Band">
                                 <Band url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
                             </PDFExport>
                         </div>
                         <Button variant="dark" size="lg" onClick={() => exportPDF(bandPdfRef)}>Télécharger la banderolle</Button>
-                    </div>
+                    </div>}
                </div> }
                <Modal show={showModal} centered size="lg" onHide={() => setShowModal(false)}>
                     <Modal.Header closeButton>
                     <Modal.Title>Etes-vous sûr.e de vouloir sélectionner cette image ?</Modal.Title>
                     </Modal.Header>
-                    <Modal.Body style={{padding: "2vw", textAlign: "center"}}>{newImg && newImg.name}</Modal.Body>
+                    <Modal.Body className="finalStep_modal">{newImg && newImg.name}</Modal.Body>
                     <Modal.Footer>
                     <Button variant="outline-dark" onClick={() => {
                         setNewImg(null)
@@ -585,6 +567,108 @@ export default function RegisterFormSteps() {
                     </Button>
                     </Modal.Footer>
                 </Modal>
+
+                <Drawer anchor="bottom" open={showFindHotelDrawer} onClose={() => setShowFindHotelDrawer(false)}>
+                    <div style={{
+                        position: "fixed", 
+                        backgroundColor: "white", 
+                        width: "100vw",
+                        display: "flex",
+                        flexFlow: "column",
+                        alignItems: "center"
+                        }}>
+                        <h5 style={{textAlign: "center", paddingTop: "2vh"}}><b>Liste des hôtels trouvés</b></h5>
+                        <Divider style={{width: "90vw", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
+                    </div>
+                    <div id="drawer-container" style={{
+                        display: "flex",
+                        flexFlow: "column", 
+                        justifyContent: "space-between",
+                        padding: "5%", 
+                        maxHeight: "70vh",
+                        marginBottom: "10vh", 
+                        marginTop: "8vh"}}>
+                            {info.map(details => {
+                                return <div style={{
+                                    padding: "2vw", 
+                                    fontSize: "1.3em", 
+                                    width: "100%", 
+                                    border: "1px solid lightgray", 
+                                    borderRadius: "5px", 
+                                    marginBottom: "1vh",
+                                }}  
+                                    onClick={()=>{
+                                    setFormValue({
+                                        hotelId: details.id,
+                                        departement: details.departement,
+                                        region: details.region,
+                                        classement: details.classement,
+                                        city: details.city,
+                                        code_postal: details.code_postal,
+                                        country: details.country,
+                                        room: details.room,
+                                        hotelName: details.hotelName
+                                    })
+                                    setShowFindHotelDrawer(false)
+                                }}>{details.hotelName}</div>
+                            })}
+                    </div>
+                </Drawer>
+
+                <Drawer anchor="bottom" open={showCreateHotelDrawer} onClose={() => setShowCreateHotelDrawer(false)}  className="phone_container_drawer">
+                <div style={{
+                        position: "fixed", 
+                        backgroundColor: "white", 
+                        width: "100vw",
+                        display: "flex",
+                        flexFlow: "column",
+                        alignItems: "center"
+                        }}>
+                        <h5 style={{textAlign: "center", paddingTop: "2vh", fontSize: "1.5em"}}><b>Enregistrer mon établissement</b></h5>
+                        <Divider style={{width: "90vw", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
+                    </div>
+                <div id="drawer-container" style={{
+                        display: "flex",
+                        flexFlow: "column", 
+                        justifyContent: "space-between",
+                        padding: "5%", 
+                        maxHeight: "100vh",
+                        marginBottom: "15vh", 
+                        marginTop: "8vh"
+                    }}>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder="Région" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder="Département" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder="Ville" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adress} name="adress" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                        </Form.Group>
+                        <Form.Group controlId="formGroupName">
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
+                        </Form.Group>
+                </div>
+                <Button variant="success" style={{position: "fixed", bottom: "0", width: "100%", borderRadius: "0"}} onClick={() => setShowCreateHotelDrawer(false)}>Valider </Button>            
+            </Drawer>
             </div>
         </div>
     )

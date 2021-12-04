@@ -2,8 +2,10 @@ import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
 import AppVisual from '../../images/msh-front-app.png'
+import '../css/band.css'
 
 export default function Band({url, logo}) {
+    
     return (
         <div style={{
             width: 1920,
@@ -47,7 +49,7 @@ export default function Band({url, logo}) {
                 </div>
                 <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                     <QRCode 
-                    value={url} 
+                    value={url.replace(/ /g,'%20')} 
                     size={192}
                     />
                     <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
