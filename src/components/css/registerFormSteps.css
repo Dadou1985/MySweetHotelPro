@@ -14,7 +14,7 @@
 }
 
 .register_form_logo {
-    width: 15vw;
+    width: 5vw;
     margin: 0;
 }
 
@@ -69,7 +69,7 @@
 
 .stepOne_validation_button {
     margin-top: 3vh;
-    width: 25vw;
+    width: 30vw;
 }
 
 .stepOne_alert {
@@ -299,7 +299,10 @@
 
 @media screen and (max-width: 768px) {
     
-
+    .register_form_logo {
+        width: 15vw;
+        margin: 0;
+    }
 
     .form_title {
         font-size: 2em;
@@ -523,6 +526,7 @@
         flex-flow: column;
         align-items: center;
         margin-bottom: 5vh;
+        margin-top: 2vh;
     }
 
     .stepFour_logo_img {

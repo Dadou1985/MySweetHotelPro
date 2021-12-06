@@ -13,6 +13,7 @@ import Divider from '@material-ui/core/Divider';
 import MshLogo from '../../svg/msh-newLogo-transparent.png'
 import MshLogoPro from '../../svg/mshPro-newLogo-transparent.png'
 import Fom from '../../svg/fom.svg'
+import Close from '../../svg/close.svg'
 import Drawer from '@material-ui/core/Drawer'
 import '../css/registerFormSteps.css'
 
@@ -22,15 +23,17 @@ export default function RegisterFormSteps() {
     const [stepThree, setStepThree] = useState(false)
     const [stepFour, setStepFour] = useState(false)
     const [finalStep, setFinalStep] = useState(false)
-    const [alert, setAlert] = useState({success: false, danger: false})
+    const [alert, setAlert] = useState({success: false, danger: false, message: ""})
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [info, setInfo] = useState([])
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
     const [now, setNow] = useState(0)
+    const [isRegistrated, setIsRegistrated] = useState(false)
     const [baseUrl, setBaseUrl] = useState("")
     const [newImg, setNewImg] = useState(null)
+    const [hotelId, setHotelId] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [showModal, setShowModal] = useState(false)
     const [showFindHotelDrawer, setShowFindHotelDrawer] = useState(false)
@@ -50,13 +53,9 @@ export default function RegisterFormSteps() {
         phone: "", 
         room: null, 
         code_postal: "", 
-        adress: "", 
+        adresse: "", 
         website: "", 
-        mail: "", 
-        hotelId: "",
         hotelName: "", 
-        appLink: "",
-        pricing: "",
     })
 
     const handleChange = (event) =>{
@@ -67,19 +66,56 @@ export default function RegisterFormSteps() {
         }))
       }
 
-    const handleImgChange = (event) => {
+    const handleDeleteImg = (imgId) => {
+        const storageRef = storage.refFromURL(imgId)
+        const imageRef = storage.ref(storageRef.fullPath)
+
+        imageRef.delete()
+        .then(() => {
+            console.log(`${imgId} has been deleted succesfully`)
+        })
+        .catch((e) => {
+            console.log('Error while deleting the image ', e)
+        })
+    }
+
+    const handleImgChange = async(event) => {
         if (event.target.files[0]){
-            setAlert({success :true})
-            setTimeout(() => {
-                setAlert({success :false})
-            }, 5000);
-            setNewImg(event.target.files[0])
-            handleFileInputChange(event)
+            if(newImg !== null){
+                await handleDeleteImg(url)
+                setAlert({success :true})
+                setTimeout(() => {
+                    setAlert({success :false})
+                }, 5000);
+                setNewImg(event.target.files[0])
+                handleFileInputChange(event)
+            }else{
+                setAlert({success :true})
+                setTimeout(() => {
+                    setAlert({success :false})
+                }, 5000);
+                setNewImg(event.target.files[0])
+                handleFileInputChange(event)
+            }
         }
     }
 
-    const handleChangeInitialfilter = event =>{
+    const handleChangeInitialfilter = event => {
         setInitialFilter(event.currentTarget.value)
+        setIsRegistrated(false)
+        setAlert({danger: false})
+        setFormValue({...formValue,
+            region: "", 
+            departement: "", 
+            city: "", 
+            standing: "", 
+            phone: "", 
+            room: null, 
+            code_postal: "", 
+            adresse: "", 
+            website: "", 
+            hotelName: "", 
+        })
     }
 
     
@@ -99,8 +135,9 @@ export default function RegisterFormSteps() {
 
     const getPartner = (url) => {
             return db.collection("hotels")
-                .doc(formValue.hotelId)
+                .doc(hotelId)
                 .update({
+                    pricingModel: "Premium",
                     partnership: true,
                     logo: url,
                     base64Url: baseUrl,
@@ -113,7 +150,7 @@ export default function RegisterFormSteps() {
             .doc(newHotelId)
             .set({
                 hotelName: formValue.hotelName,
-                adresse: formValue.adress,
+                adresse: formValue.adresse,
                 classement: `${formValue.standing} étoiles`,
                 departement: formValue.departement,
                 region: formValue.region,
@@ -154,7 +191,7 @@ export default function RegisterFormSteps() {
         adminStatus: true, 
         email: formValue.email,
         password: formValue.password,
-        hotelId: formValue.hotelId !== "" ? formValue.hotelId : newHotelId,
+        hotelId: hotelId !== "" ? hotelId : newHotelId,
         hotelName: formValue.hotelName,
         hotelRegion: formValue.region,
         hotelDept: formValue.departement,
@@ -197,7 +234,7 @@ export default function RegisterFormSteps() {
         return auth.onAuthStateChanged((user) => {
             if(user) {
                 adminMaker(shortenUrl, user.uid).then(() => {
-                    if(formValue.hotelId !== "") {
+                    if(hotelId !== "") {
                         getPartner(shortenUrl)
                     }else{
                         createHotel(shortenUrl)
@@ -210,8 +247,6 @@ export default function RegisterFormSteps() {
     const handleUploadLogo = () =>{
         if(newImg !== null) {
             const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
-            const newLogoName = newImg.name.slice(0, -4)
-            const imgType = newImg.name.slice(-3)
         uploadTask.on(
           "state_changed",
           snapshot => {},
@@ -266,7 +301,7 @@ export default function RegisterFormSteps() {
           });
       };
 
-    console.log('SHORTENURL', hotelNameForUrl.replace(/ /g,'%20'))
+    console.log('SHORTENURL', url)
 
     return (<div className="register_form_container">
             <div style={{textAlign: "center"}}>
@@ -284,7 +319,18 @@ export default function RegisterFormSteps() {
                 {finalStep && <h3 className="step_title">Félicitations !<br/> Vous venez de prendre 2 ans d'avance sur la concurrence !</h3>}
                 {finalStep ? <div className="progress_container"><ProgressBar className="progress_bar" now={now} label={`${now}%`} /></div> : <ProgressBar now={now} label={`${now}%`} />}
                 
-                {stepOne && <form className="stepOne_container">
+                {stepOne && <form className="stepOne_container" onSubmit={() => {
+                    if(formValue.password !== formValue.confPassword){
+                        setAlert({danger: true})
+                        setTimeout(() => {
+                            setAlert({danger : false})
+                        }, 3000);
+                    }else{
+                        setStepOne(false)
+                        setStepTwo(true)
+                        setNow(25)
+                    }
+                }}>
                 <h5 className="stepOne_title"><b>Créer un compte administrateur</b></h5>
                 <Form.Row className="stepOne_form_name_input">
                     <Form.Group controlId="description1">
@@ -318,18 +364,7 @@ export default function RegisterFormSteps() {
                     <Form.Control type="password" placeholder={typeof window && window.innerWidth > 768 ? "ex: jAnedOe2021" : "Confirmer le mot de passe"} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
                 </Form.Row>
-                <Button variant="success" className="stepOne_validation_button" onClick={() => {
-                    if(formValue.password !== formValue.confPassword){
-                        setAlert({danger: true})
-                        setTimeout(() => {
-                            setAlert({danger : false})
-                        }, 3000);
-                    }else{
-                        setStepOne(false)
-                        setStepTwo(true)
-                        setNow(25)
-                    }
-                }}>Passer à l'étape suivante</Button>
+                <Button variant="success" className="stepOne_validation_button" type="submit">Passer à l'étape suivante</Button>
                 {alert.danger && <Alert variant="danger" className="stepOne_alert">
                     Attention ! Veuillez confirmer à nouveau votre mot de passe s'il vous plaît !
                 </Alert>}
@@ -354,17 +389,22 @@ export default function RegisterFormSteps() {
                             {typeof window && window.innerWidth > 768 ? <DropdownButton id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
                             {info.map(details => {
                                 return <Dropdown.Item  onClick={()=>{
-                                    setFormValue({
-                                        hotelId: details.id,
+                                    setFormValue({...formValue,
                                         departement: details.departement,
                                         region: details.region,
-                                        classement: details.classement,
+                                        standing: details.classement,
                                         city: details.city,
                                         code_postal: details.code_postal,
-                                        country: details.country,
                                         room: details.room,
-                                        hotelName: details.hotelName
+                                        hotelName: details.hotelName,
+                                        adresse: details.adresse,
+                                        phone: details.phone,
+                                        website: details.website
                                     })
+                                    setHotelId(details.id)
+                                    if(details.pricingModel === "Premium") {
+                                        setIsRegistrated(true)
+                                    }
                                     }}>{details.hotelName}</Dropdown.Item>
                                 })}
                             </DropdownButton> : <Button variant="dark" className="stepTwo_find_dropdown_container" onClick={() => {
@@ -400,7 +440,7 @@ export default function RegisterFormSteps() {
                             <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adress} name="adress" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
                             <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
@@ -423,11 +463,31 @@ export default function RegisterFormSteps() {
                                 setNow(0)
                             }} className="stepTwo_button">Etape précédente</Button>
                             <Button variant="success" onClick={() => {
-                                setStepTwo(false)
-                                setStepThree(true)
-                                setNow(50)
+                                if(isRegistrated) {
+                                    setAlert({
+                                        danger: true,
+                                        message: "Cet établissement bénéficie déjà de nos services ! Pour plus de renseignement, veuillez vous adresser au responsable des opérations de votre équipe."
+                                    })
+                                }else{
+                                    if(formValue.region === "" || formValue.hotelName === "" || formValue.departement === "" || formValue.city === "" || formValue.code_postal === "" || formValue.standing === "" || formValue.room === null || formValue.adresse === "" || formValue.phone === "" || formValue.website === ""){
+                                        setAlert({
+                                            danger: true,
+                                            message: "Vous devez choisir ou enregistrer un établissement !"
+                                        })  
+                                    }else{
+                                        setStepTwo(false)
+                                        setStepThree(true)
+                                        setNow(50)
+                                    }
+                                }
                             }} className="stepTwo_button">Etape suivante</Button>
                         </div>
+                        {alert.danger && <div>
+                            <Alert variant="danger" className="stepThree_alert">
+                                {alert.message}
+                            </Alert>
+                            {isRegistrated && <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>Revenir sur le site web</b></a>}
+                        </div>}
                 </div>}
                 {stepThree && <div>
                     <h5 className="stepThree_title"><b>Téléverser le logo de votre hôtel ici</b></h5>
@@ -467,7 +527,7 @@ export default function RegisterFormSteps() {
                 {stepFour && 
                 <div>
                     <div className="stepFour_logo_contaner">
-                        <img src={MshLogo} className="stepFour_logo_img" />
+                        <img src={url} className="stepFour_logo_img" />
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
                             setStepThree(true)
@@ -479,7 +539,7 @@ export default function RegisterFormSteps() {
                         <h4 className="stepFour_hotel_data_title"><b>Etablissement hôtelier</b></h4>
                         <div>
                             <p><b>Nom:</b> {formValue.hotelName}</p>
-                            <p><b>Adresse:</b> {formValue.adress}</p>
+                            <p><b>Adresse:</b> {formValue.adresse}</p>
                             <p><b>Ville:</b> {formValue.city}</p>
                             <p><b>Département:</b> {formValue.departement}</p>
                             <p><b>Région:</b> {formValue.region}</p>
@@ -497,7 +557,7 @@ export default function RegisterFormSteps() {
                     <Divider className="stepFour_divider" />
                     <div className="stepFour_manager_data_container">
                         <h4 className="stepFour_manager_data_title"><b>Responsable des opérations</b></h4>
-                        <p><b>Nom:</b> {formValue.firstName} {formValue.lastName}</p>
+                        <p><b>Nom: </b>{formValue.firstName} {formValue.lastName}</p>
                         <p><b>E-mail:</b> {formValue.email}</p>
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
@@ -506,22 +566,48 @@ export default function RegisterFormSteps() {
                         }}>Revenir à cette étape</Button>
                     </div>
                     {isLoading ? <Spinner animation="grow" /> : <Button variant="success" size="lg" className="stepFour_button" onClick={() => {
-                            handleCreateUser(data.link)
-                            setStepFour(false)
-                            setNow(100)
-                            return setFinalStep(true)
+                            if(hotelId !== "" || formValue !== {
+                                firstName: "",
+                                lastName: "",
+                                email: "",
+                                password: "",
+                                confPassword: "",
+                                region: "", 
+                                departement: "", 
+                                city: "", 
+                                standing: "", 
+                                phone: "", 
+                                room: null, 
+                                code_postal: "", 
+                                adresse: "", 
+                                website: "", 
+                                hotelName: "", 
+                            }){
+                                handleCreateUser(data.link)
+                                setStepFour(false)
+                                setNow(100)
+                                return setFinalStep(true)
+                            }else{
+                                setAlert({danger: true, message: "Vous n'avez pas rempli tous les champs du formulaire !"})
+                                setTimeout(() => {
+                                    setAlert({danger: false, message: ""})
+                                }, 5000);
+                            }
                         }}>Valider mon formulaire</Button>}
+                        {alert.danger && <Alert variant="danger" className="stepThree_alert">
+                            {alert.message}
+                        </Alert>}
                 </div>
                 }
                 {finalStep && 
                 <div className="finalStep_container">
                     <div className="finalStep_greeting_message_container">
                         <p>Vous pouvez désormais jouir de nos services gratuitement et ce, durant toute la phase de pré-lancement qui s'étendra jusqu'en mai 2022.</p>
-                        <p>Vous pouvez dès maintenant accéder à notre solution développée pour le personnel en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
+                        <p>Vous pouvez dès maintenant accéder à notre solution en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
                         {typeof window && window.innerWidth > 1080 ? <p>Les visuels ci-dessous ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.</p> : 
                         <p><b>Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.<br/>
-                        Vous pouvez les télécharger depuis l'application web en allant dans la section "Profil".</b></p>}
-                        <p>Toute l'équipe de <i>My Sweet Hotel</i> vous remercie pour la confiance que vous nous avez accordée !</p>
+                        Vous pouvez les télécharger depuis la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.</b></p>}
+                        <p>Toute l'équipe de <i><b>My Sweet Hotel</b></i> vous remercie pour la confiance que vous lui avez accordée !</p>
                     </div>
                     <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>Revenir sur le site web</b></a>
                     {typeof window && window.innerWidth > 1080 && <div>
@@ -598,17 +684,22 @@ export default function RegisterFormSteps() {
                                     marginBottom: "1vh",
                                 }}  
                                     onClick={()=>{
-                                    setFormValue({
-                                        hotelId: details.id,
+                                    setFormValue({...formValue,
                                         departement: details.departement,
                                         region: details.region,
-                                        classement: details.classement,
+                                        standing: details.classement,
                                         city: details.city,
                                         code_postal: details.code_postal,
-                                        country: details.country,
                                         room: details.room,
-                                        hotelName: details.hotelName
+                                        hotelName: details.hotelName,
+                                        adresse: details.adresse,
+                                        phone: details.phone,
+                                        website: details.website
                                     })
+                                    setHotelId(details.id)
+                                    if(details.pricingModel === "Premium") {
+                                        setIsRegistrated(true)
+                                    }
                                     setShowFindHotelDrawer(false)
                                 }}>{details.hotelName}</div>
                             })}
@@ -624,10 +715,28 @@ export default function RegisterFormSteps() {
                         flexFlow: "column",
                         alignItems: "center"
                         }}>
-                        <h5 style={{textAlign: "center", paddingTop: "2vh", fontSize: "1.5em"}}><b>Enregistrer mon établissement</b></h5>
+                        <h5 style={{textAlign: "center", paddingTop: "2vh", fontSize: "1.5em"}}>
+                            <b>Enregistrer mon établissement</b>
+                            <img src={Close} style={{width: "5vw", cursor: "pointer", position: "absolute", right: "5%"}} onClick={() => {
+                                setFormValue({...formValue,
+                                    region: "", 
+                                    departement: "", 
+                                    city: "", 
+                                    standing: "", 
+                                    phone: "", 
+                                    room: null, 
+                                    code_postal: "", 
+                                    adresse: "", 
+                                    website: "", 
+                                    hotelName: "",
+                                    phone: "",
+                                    website: ""
+                                })
+                                setShowCreateHotelDrawer(false)}} />
+                        </h5>
                         <Divider style={{width: "90vw", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                     </div>
-                <div id="drawer-container" style={{
+                <form id="drawer-container" style={{
                         display: "flex",
                         flexFlow: "column", 
                         justifyContent: "space-between",
@@ -658,7 +767,7 @@ export default function RegisterFormSteps() {
                             <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adress} name="adress" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
                             <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
@@ -666,8 +775,11 @@ export default function RegisterFormSteps() {
                         <Form.Group controlId="formGroupName">
                             <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
                         </Form.Group>
-                </div>
-                <Button variant="success" style={{position: "fixed", bottom: "0", width: "100%", borderRadius: "0"}} onClick={() => setShowCreateHotelDrawer(false)}>Valider </Button>            
+                        <Button variant="success" style={{position: "fixed", bottom: "0", left: "0", width: "100%", borderRadius: "0"}} onClick={() => {
+                            setHotelId(newHotelId)
+                            setShowCreateHotelDrawer(false)
+                        }}>Valider </Button>            
+                </form>
             </Drawer>
             </div>
         </div>
