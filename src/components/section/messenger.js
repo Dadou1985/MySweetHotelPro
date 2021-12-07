@@ -269,7 +269,7 @@ const Messenger = ({filterDate}) =>{
                             justifyContent: "flex-end",
                             alignItems: "center",
                             }}>
-                            <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>Critère d'importance</h5>
+                            <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>Attribution par équipe</h5>
                             <div style={{
                                 display: "flex",
                                 width: "100%",
@@ -282,7 +282,7 @@ const Messenger = ({filterDate}) =>{
                                         placement="right"
                                         overlay={
                                         <Tooltip id="title">
-                                            defaut
+                                            Général
                                         </Tooltip>
                                         }>
                                         <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
@@ -297,22 +297,7 @@ const Messenger = ({filterDate}) =>{
                                         placement="right"
                                         overlay={
                                         <Tooltip id="title">
-                                            Info
-                                        </Tooltip>
-                                        }>
-                                        <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                            setStatus("lightskyblue")
-                                            setChecked(false)}} />
-                                    </OverlayTrigger>
-                                    </ListItemIcon>
-                                </ListItemIcon>
-                                <ListItemIcon button={true}>
-                                    <ListItemIcon>
-                                    <OverlayTrigger
-                                        placement="right"
-                                        overlay={
-                                        <Tooltip id="title">
-                                            Important
+                                            Réception
                                         </Tooltip>
                                         }>
                                         <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
@@ -327,7 +312,22 @@ const Messenger = ({filterDate}) =>{
                                         placement="right"
                                         overlay={
                                         <Tooltip id="title">
-                                            Urgent
+                                            Ménage
+                                        </Tooltip>
+                                        }>
+                                        <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                            setStatus("lightskyblue")
+                                            setChecked(false)}} />
+                                    </OverlayTrigger>
+                                    </ListItemIcon>
+                                </ListItemIcon>
+                                <ListItemIcon button={true}>
+                                    <ListItemIcon>
+                                    <OverlayTrigger
+                                        placement="right"
+                                        overlay={
+                                        <Tooltip id="title">
+                                            Technique
                                         </Tooltip>
                                         }>
                                         <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
@@ -390,7 +390,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        defaut
+                                        Général
                                     </Tooltip>
                                     }>
                                     <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
@@ -405,22 +405,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Info
-                                    </Tooltip>
-                                    }>
-                                    <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                        setStatus("lightskyblue")
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
-                                </ListItemIcon>
-                            </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        Important
+                                        Réception
                                     </Tooltip>
                                     }>
                                     <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
@@ -435,7 +420,22 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Urgent
+                                        Ménage
+                                    </Tooltip>
+                                    }>
+                                    <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                        setStatus("lightskyblue")
+                                        setChecked(false)}} />
+                                </OverlayTrigger>
+                                </ListItemIcon>
+                            </ListItemIcon>
+                            <ListItemIcon button>
+                                <ListItemIcon>
+                                <OverlayTrigger
+                                    placement="right"
+                                    overlay={
+                                    <Tooltip id="title">
+                                        Technique
                                     </Tooltip>
                                     }>
                                     <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {

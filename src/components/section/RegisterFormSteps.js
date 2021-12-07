@@ -3,12 +3,8 @@ import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal, Progress
 import { Input } from 'reactstrap'
 import { auth, db, storage } from '../../Firebase'
 import HotelLogo from '../../svg/hotel.svg'
-import Sticker from './sticker'
-import Flyer from './flyer'
-import Band from './band'
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
-import { sha256, sha224 } from 'js-sha256';
+import { sha256 } from 'js-sha256';
 import Divider from '@material-ui/core/Divider';
 import MshLogo from '../../svg/msh-newLogo-transparent.png'
 import MshLogoPro from '../../svg/mshPro-newLogo-transparent.png'
@@ -82,7 +78,6 @@ export default function RegisterFormSteps() {
     const handleImgChange = async(event) => {
         if (event.target.files[0]){
             if(newImg !== null){
-                await handleDeleteImg(url)
                 setAlert({success :true})
                 setTimeout(() => {
                     setAlert({success :false})
@@ -123,16 +118,6 @@ export default function RegisterFormSteps() {
     let newHotelId = "mshPro" + Date.now() + sha256(formValue.hotelName)
     let hotelNameForUrl = formValue.hotelName.replace(/ /g,'%20')
 
-    const stickerPdfRef = useRef(null)
-    const flyerPdfRef = useRef(null)
-    const bandPdfRef = useRef(null)
-
-    const exportPDF = (pdf) => {
-        if (pdf.current) {
-            pdf.current.save();
-        }
-      };
-
     const getPartner = (url) => {
             return db.collection("hotels")
                 .doc(hotelId)
@@ -170,17 +155,14 @@ export default function RegisterFormSteps() {
             })
         }
     
-    const handleCreateUser = (newUrl) => {
+    const handleCreateUser = async (newUrl) => {
         setIsLoading(true)
-        return auth.createUserWithEmailAndPassword(formValue.email.trim(), formValue.password.trim())
-          .then((authUser) => {
-              authUser.user.updateProfile({
-                  displayName: `${formValue.firstName} ${formValue.lastName}`
-              })
-              handleFirestoreNewData(newUrl)
-              return setStepThree(false)
-
-          })
+        const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), formValue.password.trim())
+        authUser.user.updateProfile({
+            displayName: `${formValue.firstName} ${formValue.lastName}`
+        })
+        handleFirestoreNewData(newUrl)
+        return setStepThree(false)
       }
     
     const adminMaker = async(url, userId) => {
@@ -204,6 +186,7 @@ export default function RegisterFormSteps() {
         room: formValue.room,
         language: "fr",
         logo: url,
+        base64Url: baseUrl,
         appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
         pricingModel: "Premium",
         }) 
@@ -244,25 +227,17 @@ export default function RegisterFormSteps() {
         })
     }
 
-    const handleUploadLogo = () =>{
-        if(newImg !== null) {
+    const handleUploadLogo = async() =>{
             const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
-        uploadTask.on(
-          "state_changed",
-          snapshot => {},
-          error => {console.log(error)},
-          () => {
-            storage
-              .ref("msh-hotel-logo")
-              .child(newImg.name)
-              .getDownloadURL()
-              .then(url => {
-                  setUrl(url)
-                }
-              )}
-            )
-        }
+            await uploadTask
     }
+
+
+    const handleCreateUrl = async () => {
+        const refImg = storage.ref("msh-hotel-logo").child(`thumbs/${newImg.name.slice(0, -4)}_512x512.png`)
+        const url = await refImg.getDownloadURL()
+        setUrl(url)
+    } 
 
     const getBase64 = file => {
         return new Promise(resolve => {
@@ -300,6 +275,7 @@ export default function RegisterFormSteps() {
             console.log(err);
           });
       };
+
 
     console.log('SHORTENURL', url)
 
@@ -505,10 +481,14 @@ export default function RegisterFormSteps() {
                             }} className="stepThree_button">Etape précédente</Button>
                             <Button variant="success" className="stepThree_button" onClick={() => {
                                 if(newImg !== null) {
-                                    handleUploadLogo()
-                                    setStepThree(false) 
-                                    setNow(75)                                   
-                                    return setStepFour(true)
+                                    handleUploadLogo().then(() => {
+                                        setStepThree(false) 
+                                        setNow(75)                                   
+                                        setStepFour(true)
+                                        return setTimeout(() => {
+                                            handleCreateUrl()
+                                        }, 5000);
+                                    })
                                 }else{
                                     setAlert({danger: true})
                                     setTimeout(() => {
@@ -527,7 +507,7 @@ export default function RegisterFormSteps() {
                 {stepFour && 
                 <div>
                     <div className="stepFour_logo_contaner">
-                        <img src={url} className="stepFour_logo_img" />
+                        <img src={baseUrl} className="stepFour_logo_img" />
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
                             setStepThree(true)
@@ -565,28 +545,12 @@ export default function RegisterFormSteps() {
                             setNow(0)
                         }}>Revenir à cette étape</Button>
                     </div>
-                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" size="lg" className="stepFour_button" onClick={() => {
-                            if(hotelId !== "" || formValue !== {
-                                firstName: "",
-                                lastName: "",
-                                email: "",
-                                password: "",
-                                confPassword: "",
-                                region: "", 
-                                departement: "", 
-                                city: "", 
-                                standing: "", 
-                                phone: "", 
-                                room: null, 
-                                code_postal: "", 
-                                adresse: "", 
-                                website: "", 
-                                hotelName: "", 
-                            }){
-                                handleCreateUser(data.link)
-                                setStepFour(false)
-                                setNow(100)
-                                return setFinalStep(true)
+                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" style={{width: "90vw"}} className="stepFour_button" onClick={() => {
+                            if(formValue.region !== "" || formValue.hotelName !== "" || formValue.departement !== "" || formValue.city !== "" || formValue.code_postal !== "" || formValue.standing !== "" || formValue.room === null || formValue.adresse !== "" || formValue.phone !== "" || formValue.website !== ""){
+                                    handleCreateUser(data.link)
+                                    setStepFour(false)
+                                    setNow(100)
+                                    return setFinalStep(true)
                             }else{
                                 setAlert({danger: true, message: "Vous n'avez pas rempli tous les champs du formulaire !"})
                                 setTimeout(() => {
@@ -606,36 +570,10 @@ export default function RegisterFormSteps() {
                         <p>Vous pouvez dès maintenant accéder à notre solution en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
                         {typeof window && window.innerWidth > 1080 ? <p>Les visuels ci-dessous ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.</p> : 
                         <p><b>Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.<br/>
-                        Vous pouvez les télécharger depuis la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.</b></p>}
+                        Téléchargeable uniquement depuis un ordinateur (portable ou fixe), vous les trouverez dans la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.</b></p>}
                         <p>Toute l'équipe de <i><b>My Sweet Hotel</b></i> vous remercie pour la confiance que vous lui avez accordée !</p>
                     </div>
                     <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>Revenir sur le site web</b></a>
-                    {typeof window && window.innerWidth > 1080 && <div>
-                        <div className="finalStep_visual_container">
-                            <PDFExport ref={stickerPdfRef} paperSize="auto" margin={40} fileName="Sticker">
-                                <Sticker url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
-                            </PDFExport>
-                        </div>
-                        <Button variant="dark" size="lg" onClick={() => exportPDF(stickerPdfRef)}>Télécharger le sticker</Button>
-                    </div>}
-                    {typeof window && window.innerWidth > 1080 && <Divider className="finalStep_divider" />}
-                    {typeof window && window.innerWidth > 1080 && <div> 
-                        <div className="finalStep_visual_container">
-                            <PDFExport ref={flyerPdfRef} paperSize="auto" margin={40} fileName="Flyer">
-                                <Flyer url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
-                            </PDFExport>
-                        </div>
-                        <Button variant="dark" size="lg" onClick={() => exportPDF(flyerPdfRef)}>Télécharger l'affiche</Button>
-                    </div>}
-                    {typeof window && window.innerWidth > 1080 && <Divider className="finalStep_divider" />}
-                    {typeof window && window.innerWidth > 1080 && <div>
-                        <div className="finalStep_visual_container">
-                            <PDFExport ref={bandPdfRef} paperSize="auto" margin={40} fileName="Band">
-                                <Band url={`https://mysweethotel.eu/?url=${data && data.link}&hotelId=${newHotelId}&hotelName=${formValue.hotelName}`} logo={baseUrl} />
-                            </PDFExport>
-                        </div>
-                        <Button variant="dark" size="lg" onClick={() => exportPDF(bandPdfRef)}>Télécharger la banderolle</Button>
-                    </div>}
                </div> }
                <Modal show={showModal} centered size="lg" onHide={() => setShowModal(false)}>
                     <Modal.Header closeButton>
@@ -776,7 +714,6 @@ export default function RegisterFormSteps() {
                             <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
                         </Form.Group>
                         <Button variant="success" style={{position: "fixed", bottom: "0", left: "0", width: "100%", borderRadius: "0"}} onClick={() => {
-                            setHotelId(newHotelId)
                             setShowCreateHotelDrawer(false)
                         }}>Valider </Button>            
                 </form>

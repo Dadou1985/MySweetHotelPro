@@ -1,12 +1,22 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useRef } from 'react'
 import Fom from '../../svg/fom.svg'
 import { navigate } from 'gatsby'
 import { Form, Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import DefaultProfile from "../../svg/profile.png"
+import Email from "../../images/email.png"
+import Password from "../../images/password.png"
+import Visuel from "../../images/visuel.png"
 import AddPhotoURL from '../../svg/camera.svg'
 import Avatar from '@material-ui/core/Avatar';
 import { db, auth, storage } from '../../Firebase'
-
+import Divider from '@material-ui/core/Divider';
+import Sticker from './sticker'
+import Flyer from './flyer'
+import Band from './band'
+import LogoSticker from '../../images/qr_code.png'
+import LogoFlyer from '../../images/flyer.png'
+import LogoBand from '../../images/band.png'
+import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 
 const Dilema = ({user, userDB, setUserDB}) => {
 
@@ -16,12 +26,21 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const [info, setInfo] = useState([])
     const [listEmail, setListEmail] = useState(false)
     const [listPassword, setListPassword] = useState(false)
+    const [listVisuel, setlistVisuel] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
     const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
     
+    const stickerPdfRef = useRef(null)
+    const flyerPdfRef = useRef(null)
+    const bandPdfRef = useRef(null)
 
+    const exportPDF = (pdf) => {
+        if (pdf.current) {
+            pdf.current.save();
+        }
+      };
     
     const handleWorkspace = () => {
         if(!userDB.username) {
@@ -185,7 +204,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         style={{ backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})` }}>
                 <div className="profile-container">
                     <h1>
-                        <div style={{color: "black", fontWeight: "bold"}}>{flow.username}</div>
+                        <div style={{color: "black", fontWeight: "bold", fontSize: "1em"}}>{flow.username}</div>
                         <div style={{fontSize: "15px"}}>{flow.email}</div>
                        { /*<div className="header-profile">
                             <img src={Tips} alt="tips" className="tips" /> 
@@ -193,21 +212,44 @@ const Dilema = ({user, userDB, setUserDB}) => {
                             <img src={Arrow} alt="arrow" style={{width: "1vw", cursor: "pointer", marginLeft: "1vw", transform: "rotate(0turn)"}} id="arrowTop" onClick={handleShowDetails} /> 
                         </div>*/}
                     </h1>
-                        <div className="header-toggle-container">
+                        {typeof window && window.innerWidth < 768 && <div className="header-toggle-container">
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
-                        </div>
-                       
+                        </div>}
+                        <Divider style={{width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
                 </div>
             <div className="space-container">
-            <div className="space-box">
-                <div className="softSkin space-card"
-                    onClick={handleWorkspace}>
-                <h2 style={{textAlign: "center"}}>Espace de travail</h2>
-                <img src={Fom} alt="Fom" className="white-fom-icon" />
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                         onClick={handleShowUpdateEmail}>
+                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon adresse e-mail</h2>
+                    <img src={Email} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                        onClick={handleShowUpdatePassword}>
+                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon mot de passe</h2>
+                    <img src={Password} alt="Fom" className="white-fom-icon" />
+                    </div>
                 </div>
             </div>
-        </div>
+            <div className="space-container">
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                        onClick={() => setlistVisuel(true)}>
+                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer des visuels de communication</h2>
+                    <img src={Visuel} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                        onClick={handleWorkspace}>
+                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Revenir à<br/> l'espace de travail</h2>
+                    <img src={Fom} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+            </div>
         
             <Modal show={listEmail}
             size="lg"
@@ -230,7 +272,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-success" onClick={(event) => {
+                <Button variant="outline-dark" onClick={(event) => {
                     handleUpdateEmail(event, formValue.email)
                     handleChangeEmail(formValue.email)
                     handleCloseUpdateEmail()
@@ -259,12 +301,65 @@ const Dilema = ({user, userDB, setUserDB}) => {
             </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-success" onClick={(event) => {
+                <Button variant="outline-dark" onClick={(event) => {
                     handleUpdatePassword(event, formValue.password)
                     handleChangePassword()
                     handleCloseUpdatePassword()
                 }}>Actualiser maintenant</Button>
             </Modal.Footer>
+        </Modal>
+
+        <Modal show={listVisuel}
+            size="xl"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={() => setlistVisuel(false)}
+            >
+            <Modal.Header closeButton className="bg-light">
+                <Modal.Title id="contained-modal-title-vcenter">
+                Générer des visuels de communication
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+            <div className="visuel_modal_container">
+                <div className="visuel">
+                    <PDFExport ref={stickerPdfRef} paperSize="auto" margin={40} fileName="Sticker">
+                        <Sticker url={userDB.appLink} logo={userDB.base64Url} />
+                    </PDFExport>
+                </div>
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                            onClick={() => exportPDF(stickerPdfRef)}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer un sticker</h2>
+                        <img src={LogoSticker} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+                <div className="visuel">
+                    <PDFExport ref={flyerPdfRef} paperSize="auto" margin={40} fileName="Flyer">
+                        <Flyer url={userDB.appLink} logo={userDB.base64Url} />
+                    </PDFExport>
+                </div>
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                        onClick={() => exportPDF(flyerPdfRef)}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer un flyer</h2>
+                        <img src={LogoFlyer} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+                <div className="visuel">
+                    <PDFExport ref={bandPdfRef} paperSize="auto" margin={40} fileName="Band">
+                        <Band url={userDB.appLink} logo={userDB.base64Url} />
+                    </PDFExport>
+                </div>
+                <div className="space-box">
+                    <div className="softSkin space-card"
+                        onClick={() => exportPDF(bandPdfRef)}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer une banderolle</h2>
+                        <img src={LogoBand} alt="Fom" className="white-fom-icon" />
+                    </div>
+                </div>
+            </div>
+            </Modal.Body>
         </Modal>
         
        
