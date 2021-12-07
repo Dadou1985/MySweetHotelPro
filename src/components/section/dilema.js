@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef } from 'react'
 import Fom from '../../svg/fom.svg'
 import { navigate } from 'gatsby'
-import { Form, Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, Modal, OverlayTrigger, Tooltip, Spinner, Alert } from 'react-bootstrap'
 import DefaultProfile from "../../svg/profile.png"
 import Email from "../../images/email.png"
 import Password from "../../images/password.png"
@@ -16,7 +16,9 @@ import Band from './band'
 import LogoSticker from '../../images/qr_code.png'
 import LogoFlyer from '../../images/flyer.png'
 import LogoBand from '../../images/band.png'
+import LogoHotel from '../../images/hotelLogo.png'
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
+import { useShortenUrl } from 'react-shorten-url';
 
 const Dilema = ({user, userDB, setUserDB}) => {
 
@@ -27,14 +29,20 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const [listEmail, setListEmail] = useState(false)
     const [listPassword, setListPassword] = useState(false)
     const [listVisuel, setlistVisuel] = useState(false)
+    const [listLogo, setListLogo] = useState(false)
     const [showDialog, setShowDialog] = useState(false)
+    const [switchButton, setSwitchButton] = useState(false)
     const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
-    
+    const [baseUrl, setBaseUrl] = useState("")
+    const [newImg, setNewImg] = useState(null)
+    const [alert, setAlert] = useState({success: false, danger: false, message: ""})
+    const [isLoading, setIsLoading] = useState(false)
     const stickerPdfRef = useRef(null)
     const flyerPdfRef = useRef(null)
     const bandPdfRef = useRef(null)
+    const { loading, error, data } = useShortenUrl(url);
 
     const exportPDF = (pdf) => {
         if (pdf.current) {
@@ -53,6 +61,100 @@ const Dilema = ({user, userDB, setUserDB}) => {
             navigate('/singlePage')
         }
     }  
+
+    const hotelNameForUrl = userDB.hotelName
+
+    const handleUpdateAdminAccount = (url) => {
+        return db.collection('businessGuests')
+            .doc(user.uid)
+            .update({
+                logo: url,
+                base64Url: baseUrl,
+                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
+            })
+    }
+
+    const handleUpdateHotel = (url) => {
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
+            .update({
+                logo: url,
+                base64Url: baseUrl,
+                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
+            })
+    }
+
+    const handleFirestoreNewData = (shortenUrl) => {
+        console.log("SHORTENURL", shortenUrl)
+        handleUpdateAdminAccount(shortenUrl)
+        handleUpdateHotel(shortenUrl)   
+        setTimeout(
+            () => window.location.reload(),
+            1000
+        ); 
+    }
+
+    const handleUploadLogo = async() =>{
+            const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
+            await uploadTask
+    }
+
+
+    const handleCreateUrl = async () => {
+        const refImg = storage.ref("msh-hotel-logo").child(`${newImg.name.slice(0, -4)}_512x512.png`)
+        const url = await refImg.getDownloadURL()
+        setUrl(url)
+        setIsLoading(false)
+        setSwitchButton(true)
+    } 
+
+    const getBase64 = file => {
+        return new Promise(resolve => {
+          let fileInfo;
+          let baseURL = "";
+          // Make new FileReader
+          let reader = new FileReader();
+    
+          // Convert the file to base64 text
+          reader.readAsDataURL(file);
+    
+          // on reader load somthing...
+          reader.onload = () => {
+            // Make a fileInfo Object
+            console.log("Called", reader);
+            baseURL = reader.result;
+            console.log(baseURL);
+            resolve(baseURL);
+          };
+          console.log(fileInfo);
+        });
+      };
+
+      const handleFileInputChange = e => {
+        console.log(e.target.files[0]);    
+        const file = e.target.files[0];
+    
+        getBase64(file)
+          .then(result => {
+            file["base64"] = result;
+            console.log("File Is", file);
+            setBaseUrl(result);
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      };
+
+    const handleIconChange = async(event) => {
+        if (event.target.files[0]){
+            setAlert({success :true})
+            setTimeout(() => {
+                setAlert({success :false})
+            }, 5000);
+            setNewImg(event.target.files[0])
+            handleFileInputChange(event)
+        }
+    }
 
   const handleChangePhotoUrl = (event) => {
     event.preventDefault()
@@ -195,7 +297,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     }
 
       
-    console.log(user.password)
+    console.log("eeeeeeeeeeee", newImg)
 
     return (
         info.map((flow, key) => (
@@ -216,40 +318,42 @@ const Dilema = ({user, userDB, setUserDB}) => {
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
                         </div>}
-                        <Divider style={{width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
+                        {typeof window && window.innerWidth > 768 && <Divider style={{width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />}
                 </div>
-            <div className="space-container">
-                <div className="space-box">
-                    <div className="softSkin space-card"
-                         onClick={handleShowUpdateEmail}>
-                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon adresse e-mail</h2>
-                    <img src={Email} alt="Fom" className="white-fom-icon" />
+            {typeof window && window.innerWidth > 768 && <>
+                <div className="space-container">
+                    <div className="space-box">
+                        <div className="softSkin space-card"
+                            onClick={handleShowUpdateEmail}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon adresse e-mail</h2>
+                        <img src={Email} alt="Fom" className="white-fom-icon" />
+                        </div>
+                    </div>
+                    <div className="space-box">
+                        <div className="softSkin space-card"
+                            onClick={handleShowUpdatePassword}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon mot de passe</h2>
+                        <img src={Password} alt="Fom" className="white-fom-icon" />
+                        </div>
                     </div>
                 </div>
-                <div className="space-box">
-                    <div className="softSkin space-card"
-                        onClick={handleShowUpdatePassword}>
-                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon mot de passe</h2>
-                    <img src={Password} alt="Fom" className="white-fom-icon" />
+                <div className="space-container">
+                    <div className="space-box">
+                        <div className="softSkin space-card"
+                            onClick={() => setlistVisuel(true)}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer des visuels de communication</h2>
+                        <img src={Visuel} alt="Fom" className="white-fom-icon" />
+                        </div>
+                    </div>
+                    <div className="space-box">
+                        <div className="softSkin space-card"
+                            onClick={() => setListLogo(true)}>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Téléverser une nouvelle icône</h2>
+                        <img src={LogoHotel} alt="Fom" className="white-fom-icon" />
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div className="space-container">
-                <div className="space-box">
-                    <div className="softSkin space-card"
-                        onClick={() => setlistVisuel(true)}>
-                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer des visuels de communication</h2>
-                    <img src={Visuel} alt="Fom" className="white-fom-icon" />
-                    </div>
-                </div>
-                <div className="space-box">
-                    <div className="softSkin space-card"
-                        onClick={handleWorkspace}>
-                    <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Revenir à<br/> l'espace de travail</h2>
-                    <img src={Fom} alt="Fom" className="white-fom-icon" />
-                    </div>
-                </div>
-            </div>
+            </>}
         
             <Modal show={listEmail}
             size="lg"
@@ -360,6 +464,52 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 </div>
             </div>
             </Modal.Body>
+        </Modal>
+
+        <Modal show={listLogo}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            onHide={() => setListLogo(false)}
+            >
+            <Modal.Header closeButton className="bg-light">
+                <Modal.Title id="contained-modal-title-vcenter">
+                Téléverser une nouvelle icône
+                </Modal.Title>
+            </Modal.Header>
+            <Modal.Body style={{display: "flex", flexFlow: "column", alignItems: 'center'}}>
+            <div className="dilema_upload_container">
+                <input type="file" className="dilema-camera-icon"
+                    onChange={handleIconChange} />
+                <img src={LogoHotel} className="dilema_upload_logo" />
+            </div>
+            {alert.success && <Alert variant="success" className="stepThree_alert">
+                Votre logo a été téléversé avec succès !
+            </Alert>}
+            {alert.danger && <Alert variant="danger" className="stepThree_alert">
+                Vous devez téléverser une image avant de valider le formulaire !
+            </Alert>}
+            </Modal.Body>
+            <Modal.Footer>
+                {switchButton ? <Button variant="dark" onClick={() => {
+                    handleFirestoreNewData(data && data.link)
+                }}>Confirmer le téléversement</Button> :
+                isLoading ? <Spinner animation="grow" /> : <Button variant="outline-dark" onClick={(event) => {
+                    if(newImg !== null) {
+                        setIsLoading(true)
+                        handleUploadLogo().then(() => {
+                            return setTimeout(() => {
+                                handleCreateUrl()
+                            }, 5000);
+                        })
+                    }else{
+                        setAlert({danger: true})
+                        setTimeout(() => {
+                            setAlert({danger : false})
+                        }, 3000);
+                    }
+                }}>Téléverser</Button>}
+            </Modal.Footer>
         </Modal>
         
        

@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import Dilema from '../components/section/dilema'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
+import { ShortenUrlProvider } from 'react-shorten-url';
 
 export default function DoorsStage() {
     const [hide, setHide] = useState("flex")
@@ -40,7 +41,9 @@ export default function DoorsStage() {
             {!!user && !!userDB &&
             <Navigation user={user} userDB={userDB} />}
             {!!user && userDB && !!setUserDB &&
-            <Dilema user={user} userDB={userDB} setUserDB={setUserDB} />}
+              <ShortenUrlProvider config={{ accessToken: '4414aed1636f8815449ff0a59d1b67a513dfc0d1' }}>
+                <Dilema user={user} userDB={userDB} setUserDB={setUserDB} />
+              </ShortenUrlProvider>}
         </FirebaseContext.Provider>
     )
 }

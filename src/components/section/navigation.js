@@ -177,8 +177,8 @@ const Navigation = ({user, userDB}) =>{
                 <h4 className="drawer_title">Super Menu</h4>
                     <List className="drawer_listIcons3">
                     <Support />
-                    <img src={Magician} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/quickPlay")}} />
-                    <img src={Ghost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/ghostHost")}} />
+                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><img src={Magician} alt="Magic box" className="drawer_icons" /></a>
+                    <img src={Ghost} alt="Ghost Host" className="drawer_icons" onClick={()=>{navigate("/ghostHost")}} />
                     </List>
                </div>
             </SuperAdminDrawer>}

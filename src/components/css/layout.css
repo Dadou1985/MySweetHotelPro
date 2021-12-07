@@ -1446,6 +1446,37 @@ input[type=number] {
     opacity: 0;
 }
 
+.dilema_upload_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    cursor: pointer;
+    border: 3px dashed black; 
+    padding: 5%;
+    border-radius: 5%;
+    width: 50%;
+}
+
+.dilema-camera-icon{
+    position: absolute; 
+    width: 50%;
+    height: 30vh;
+    z-index: 5;
+    left: 25%; 
+    opacity: 0;
+    cursor: pointer;
+    margin-left: 0vw;
+    border: 1px solid black;
+}
+
+.dilema_upload_logo {
+    width: 50%;
+    margin-top: 2vh;
+}
+
 @media screen and (max-width: 768px) {
     .space-container {
         position: absolute;

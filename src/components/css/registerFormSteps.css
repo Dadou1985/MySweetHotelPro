@@ -225,6 +225,7 @@
 }
 
 .stepFour_logo_img {
+    margin-top: 5vh;
     width: 5vw; 
     margin-bottom: 1vh;
 }
@@ -236,6 +237,7 @@
 }
 
 .stepFour_hotel_data_container {
+    margin-top: 2vh;
     margin-bottom: 5vh;
 }
 
@@ -244,6 +246,8 @@
 }
 
 .stepFour_manager_data_container {
+    margin-top: 2vh;
+
     margin-bottom: 5vh;
 }
 
@@ -266,7 +270,6 @@
     flex-flow: column;
     justify-content: space-around;
     align-items: center;
-    height: 3500px;
 }
 
 .finalStep_greeting_message_container {
@@ -573,7 +576,8 @@
     .finalStep_container {
         display: flex;
         flex-flow: column;
-        max-height: 55vh;
+        margin-bottom: 15vh;
+
     }
 
     .finalStep_greeting_message_container {

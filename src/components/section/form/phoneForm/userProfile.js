@@ -185,7 +185,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     padding: "5%",
                     }}>
                 <h1>
-                    <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center"}}>{flow.username}</div>
+                    <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center", fontSize: "1em"}}>{flow.username}</div>
                     <div style={{fontSize: "15px", textAlign: "center"}}>{flow.email}</div>
                     {/*<div className="header-profile">
                         <img src={Tips} alt="tips" className="tips" /> 
@@ -193,9 +193,9 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     </div>*/}
                 </h1>
                 <div className="userProfile-header-toggle-container">
-                            <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
-                            <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
-                        </div>
+                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
+                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
+                </div>
                 </div>
                 <Avatar alt="user-profile-photo" 
                     src={user.photoURL ? user.photoURL : DefaultProfile}
