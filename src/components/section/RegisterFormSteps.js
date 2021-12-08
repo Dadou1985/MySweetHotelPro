@@ -304,18 +304,15 @@ export default function RegisterFormSteps() {
                 <h5 className="stepOne_title"><b>Créer un compte administrateur</b></h5>
                 <Form.Row className="stepOne_form_name_input">
                     <Form.Group controlId="description1">
-                    {typeof window && window.innerWidth > 768 && <Form.Label>Prénom</Form.Label>}
-                    <Form.Control type="text" placeholder={typeof window && window.innerWidth > 768 ? "ex: Jane" : "Prénom"} className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
+                    <Form.Control type="text" placeholder="Prénom" className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
                     </Form.Group>
                 
                     <Form.Group controlId="description2">
-                    {typeof window && window.innerWidth > 768 && <Form.Label>Nom</Form.Label>}
-                    <Form.Control type="text" placeholder={typeof window && window.innerWidth > 768 ? "ex: Doe" : "Nom"} className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
+                    <Form.Control type="text" placeholder="Nom" className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                     <Form.Group controlId="description3">
-                    {typeof window && window.innerWidth > 768 && <Form.Label>E-mail</Form.Label>}
-                    <Form.Control type="email" placeholder={typeof window && window.innerWidth > 768 ? "ex: jane.doe@msh.com" : "E-mail"} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
+                    <Form.Control type="email" placeholder="E-mail" className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
                 <Form.Row style={{
                     display: "flex",
@@ -325,13 +322,11 @@ export default function RegisterFormSteps() {
                     width: "70%",
                 }}>
                     <Form.Group controlId="description4">
-                    {typeof window && window.innerWidth > 768 && <Form.Label>Mot de passe</Form.Label>}
-                    <Form.Control type="password" placeholder={typeof window && window.innerWidth > 768 ? "ex: jAnedOe2021!" : "Mot de passe"} className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
+                    <Form.Control type="password" placeholder="Mot de passe" className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
                     </Form.Group>
             
                     <Form.Group controlId="description5">
-                    {typeof window && window.innerWidth > 768 && <Form.Label>Confirmer le mot de passe</Form.Label>}
-                    <Form.Control type="password" placeholder={typeof window && window.innerWidth > 768 ? "ex: jAnedOe2021" : "Confirmer le mot de passe"} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
+                    <Form.Control type="password" placeholder="Confirmer le mot de passe" className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
                 </Form.Row>
                 <Button variant="success" className="stepOne_validation_button" type="submit">Passer à l'étape suivante</Button>
@@ -356,7 +351,7 @@ export default function RegisterFormSteps() {
 
                         <Form.Row>
                             <Form.Group className="stepTwo_find_dropdown_container">
-                            {typeof window && window.innerWidth > 768 ? <DropdownButton id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
+                            <DropdownButton style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
                             {info.map(details => {
                                 return <Dropdown.Item  onClick={()=>{
                                     setFormValue({...formValue,
@@ -377,10 +372,11 @@ export default function RegisterFormSteps() {
                                     }
                                     }}>{details.hotelName}</Dropdown.Item>
                                 })}
-                            </DropdownButton> : <Button variant="dark" className="stepTwo_find_dropdown_container" onClick={() => {
+                            </DropdownButton>  
+                            <Button variant="dark" style={{display: typeof window && window.innerWidth > 768 ? "none" : "flex"}} className="stepTwo_find_dropdown_container" onClick={() => {
                                 setFilter(initialFilter)
                                 return setShowFindHotelDrawer(true)
-                                }}>Valider</Button>}
+                                }}>Valider</Button>
                             </Form.Group>
                         </Form.Row>
                         <div className="stepTwo_hotel_name_container"><b>{formValue.hotelName && formValue.hotelName}</b></div>

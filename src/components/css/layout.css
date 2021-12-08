@@ -1239,7 +1239,6 @@ input[type=number] {
 }
 
 .header-toggle-container{
-    display: flex;
     flex-flow: row;
     justify-content: space-around;
     width: 100%;
@@ -1257,7 +1256,6 @@ input[type=number] {
 }
 
 .space-container {
-    display: flex;
     flex-flow: row wrap;
     width: 40%;
     margin: 2vw;

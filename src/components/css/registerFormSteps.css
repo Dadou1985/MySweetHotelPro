@@ -416,7 +416,6 @@
     }
 
     .stepTwo_find_dropdown_container {
-        display: flex;
         flex-flow: column;
         align-items: center;
         margin-top: 0vh;

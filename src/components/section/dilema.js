@@ -314,14 +314,13 @@ const Dilema = ({user, userDB, setUserDB}) => {
                             <img src={Arrow} alt="arrow" style={{width: "1vw", cursor: "pointer", marginLeft: "1vw", transform: "rotate(0turn)"}} id="arrowTop" onClick={handleShowDetails} /> 
                         </div>*/}
                     </h1>
-                        {typeof window && window.innerWidth < 768 && <div className="header-toggle-container">
+                       <div style={{display: typeof window && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
-                        </div>}
-                        {typeof window && window.innerWidth > 768 && <Divider style={{width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />}
+                        </div>
+                        <Divider style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
                 </div>
-            {typeof window && window.innerWidth > 768 && <>
-                <div className="space-container">
+                <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdateEmail}>
@@ -337,7 +336,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         </div>
                     </div>
                 </div>
-                {userDB.adminStatus && <div className="space-container">
+                {userDB.adminStatus && <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
@@ -353,7 +352,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         </div>
                     </div>
                 </div>}
-            </>}
+            
         
             <Modal show={listEmail}
             size="lg"
