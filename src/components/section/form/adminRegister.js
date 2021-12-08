@@ -54,7 +54,7 @@ const AdminRegister = ({hide, userDB}) => {
         language: language.substring(0, 2),
         logo: userDB.logo,
         appLink: userDB.appLink,
-        adresse: userDB.adresses,
+        adresse: userDB.adresse,
         website: userDB.website,
         pricingModel: userDB.pricingModel
         }) 
