@@ -64,9 +64,9 @@ const Dilema = ({user, userDB, setUserDB}) => {
 
     const hotelNameForUrl = userDB.hotelName
 
-    const handleUpdateAdminAccount = (url) => {
+    const handleUpdateAdminAccount = (userId, url) => {
         return db.collection('businessUsers')
-            .doc(user.uid)
+            .doc(userId)
             .update({
                 logo: url,
                 base64Url: baseUrl,
@@ -84,9 +84,32 @@ const Dilema = ({user, userDB, setUserDB}) => {
             })
     }
 
+    useEffect(() => {
+        const updateStaffData = () => {
+          return db.collection('businessUsers')
+          .where("hotelId", "==", userDB.hotelId)
+          }
+  
+        let unsubscribe = updateStaffData().onSnapshot(function(snapshot) {
+            const snapInfo = []
+          snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+              })        
+            });
+            console.log(snapInfo)
+            if(data){
+                snapInfo.map((user) => {
+                    return handleUpdateAdminAccount(user.userId, data.link)
+                })
+            }
+        });
+        return unsubscribe
+       },[data])
+
     const handleFirestoreNewData = (shortenUrl) => {
         console.log("SHORTENURL", shortenUrl)
-        handleUpdateAdminAccount(shortenUrl)
         handleUpdateHotel(shortenUrl)   
         setTimeout(
             () => window.location.reload(),

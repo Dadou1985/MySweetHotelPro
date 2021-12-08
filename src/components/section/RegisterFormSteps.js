@@ -119,7 +119,7 @@ export default function RegisterFormSteps() {
                     partnership: true,
                     logo: url ? url : null,
                     base64Url: baseUrl ? baseUrl : null,
-                    appLink: `https://mysweethotel.eu/?url=${url ? url : null}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`
+                    appLink: url ? `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}` : `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
                 }) 
         }
 
@@ -144,7 +144,7 @@ export default function RegisterFormSteps() {
                 pricingModel: "Premium",
                 logo: url ? url : null,
                 base64Url: baseUrl ? baseUrl : null,
-                appLink: `https://mysweethotel.eu/?url=${url ? url : null}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`
+                appLink: url ? `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}` : `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
             })
         }
     
@@ -164,6 +164,7 @@ export default function RegisterFormSteps() {
         .set({   
         username: `${formValue.firstName} ${formValue.lastName}`, 
         adminStatus: true, 
+        adresse: formValue.adresse,
         email: formValue.email,
         password: formValue.password,
         hotelId: hotelId !== "" ? hotelId : newHotelId,
@@ -180,7 +181,7 @@ export default function RegisterFormSteps() {
         language: "fr",
         logo: url ? url : null,
         base64Url: baseUrl ? baseUrl : null,
-        appLink: `https://mysweethotel.eu/?url=${url ? url : null}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
+        appLink: url ? `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}` : `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
         pricingModel: "Premium",
         }) 
     }
