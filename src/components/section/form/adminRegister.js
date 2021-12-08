@@ -52,10 +52,10 @@ const AdminRegister = ({hide, userDB}) => {
         country: userDB.country,
         code_postal: userDB.code_postal,
         language: language.substring(0, 2),
-        logo: userDB.logo,
-        appLink: userDB.appLink,
+        logo: userDB.logo ? userDB.logo : null,
+        appLink: userDB.appLink ? userDB.appLink : null,
         adresse: userDB.adresse,
-        website: userDB.website,
+        website: userDB.website ? userDB.website : null,
         pricingModel: userDB.pricingModel
         }) 
         .then(() => {

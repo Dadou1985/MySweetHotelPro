@@ -167,6 +167,7 @@ export default function RegisterFormSteps() {
         adresse: formValue.adresse,
         email: formValue.email,
         password: formValue.password,
+        website: formValue.website,
         hotelId: hotelId !== "" ? hotelId : newHotelId,
         hotelName: formValue.hotelName,
         hotelRegion: formValue.region,
