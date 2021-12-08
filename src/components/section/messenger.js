@@ -277,63 +277,55 @@ const Messenger = ({filterDate}) =>{
                                 justifyContent: "space-around"
                             }}>
                                 <ListItemIcon button={true}>
-                                    <ListItemIcon>
-                                    <OverlayTrigger
-                                        placement="right"
-                                        overlay={
-                                        <Tooltip id="title">
-                                            Général
-                                        </Tooltip>
-                                        }>
-                                        <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                            setStatus("default")
-                                            setChecked(false)}} />
-                                    </OverlayTrigger>
+                                    <ListItemIcon style={{
+                                        display: "flex",
+                                        flexFlow: "column",
+                                        width: "15%",
+                                        alignItems: "center"
+                                    }}>
+                                    <img src={Circle} alt="Général" className="modal-note-list-circle" onClick={() => {
+                                        setStatus("default")
+                                        setChecked(false)}} />
+                                    <h6>Général</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
-                                    <ListItemIcon>
-                                    <OverlayTrigger
-                                        placement="right"
-                                        overlay={
-                                        <Tooltip id="title">
-                                            Réception
-                                        </Tooltip>
-                                        }>
-                                        <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
-                                            setStatus('darkgoldenrod')
-                                            setChecked(false)}} />
-                                    </OverlayTrigger>
+                                    <ListItemIcon style={{
+                                        display: "flex",
+                                        flexFlow: "column",
+                                        width: "15%",
+                                        alignItems: "center"
+                                    }}>
+                                    <img src={YellowCircle} alt="Réception" className="modal-note-list-circle" onClick={() => {
+                                        setStatus('darkgoldenrod')
+                                        setChecked(false)}} />
+                                    <h6>Réception</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
-                                    <ListItemIcon>
-                                    <OverlayTrigger
-                                        placement="right"
-                                        overlay={
-                                        <Tooltip id="title">
-                                            Ménage
-                                        </Tooltip>
-                                        }>
-                                        <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
-                                            setStatus("lightskyblue")
-                                            setChecked(false)}} />
-                                    </OverlayTrigger>
+                                    <ListItemIcon style={{
+                                        display: "flex",
+                                        flexFlow: "column",
+                                        width: "15%",
+                                        alignItems: "center"
+                                    }}>
+                                    <img src={BlueCircle} alt="Ménage" className="modal-note-list-circle" onClick={() => {
+                                        setStatus("lightskyblue")
+                                        setChecked(false)}} />
+                                    <h6>Ménage</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
-                                    <ListItemIcon>
-                                    <OverlayTrigger
-                                        placement="right"
-                                        overlay={
-                                        <Tooltip id="title">
-                                            Technique
-                                        </Tooltip>
-                                        }>
-                                        <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
-                                            setStatus('red')
-                                            setChecked(false)}} />
-                                    </OverlayTrigger>
+                                    <ListItemIcon style={{
+                                        display: "flex",
+                                        flexFlow: "column",
+                                        width: "15%",
+                                        alignItems: "center"
+                                    }}>
+                                    <img src={RedCircle} alt="Technique" className="modal-note-list-circle" onClick={() => {
+                                        setStatus('red')
+                                        setChecked(false)}} />
+                                    <h6>Technique</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                             </div>

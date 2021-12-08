@@ -65,7 +65,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const hotelNameForUrl = userDB.hotelName
 
     const handleUpdateAdminAccount = (url) => {
-        return db.collection('businessGuests')
+        return db.collection('businessUsers')
             .doc(user.uid)
             .update({
                 logo: url,
@@ -91,7 +91,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         setTimeout(
             () => window.location.reload(),
             1000
-        ); 
+        );
     }
 
     const handleUploadLogo = async() =>{
@@ -297,7 +297,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     }
 
       
-    console.log("eeeeeeeeeeee", newImg)
+    console.log("eeeeeeeeeeee", userDB)
 
     return (
         info.map((flow, key) => (
@@ -337,7 +337,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         </div>
                     </div>
                 </div>
-                <div className="space-container">
+                {userDB.adminStatus && <div className="space-container">
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
@@ -352,7 +352,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         <img src={LogoHotel} alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
-                </div>
+                </div>}
             </>}
         
             <Modal show={listEmail}
@@ -483,6 +483,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     onChange={handleIconChange} />
                 <img src={LogoHotel} className="dilema_upload_logo" />
             </div>
+            <div>{newImg && newImg.name}</div>
             {alert.success && <Alert variant="success" className="stepThree_alert">
                 Votre logo a été téléversé avec succès !
             </Alert>}

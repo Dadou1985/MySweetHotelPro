@@ -2,7 +2,9 @@ import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
 import AppVisual from '../../images/msh-front-app.png'
+import MshScreen from "./mshAppScreenBand"
 import '../css/band.css'
+import HotelLogo from '../../images/les-forteresses.png'
 
 export default function Band({url, logo}) {
     
@@ -19,10 +21,8 @@ export default function Band({url, logo}) {
             backgroundColor: "white",
             borderRadius: "1px",
             backgroundColor: "white",
-            backgroundImage: `url(${AppVisual})`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "20vw",
             backgroundPositionX: "13vw",
             backgroundPositionY: "61vh"
         }}>
@@ -30,10 +30,11 @@ export default function Band({url, logo}) {
                 display: "flex",
                 flexFlow: "column",
                 height: "100%",
-                alignItems: "center"
+                alignItems: "center",
+                width: "30%"
             }}>
-                <img src={logo} style={{width: "280px", marginTop: "10vh", filter: "drop-shadow(1px 1px 1px)"}} />
-                <img src={logo} style={{width: "120px", height: "85px", marginTop: "16vh", marginRight: "12px"}} />
+                <img src={logo} style={{width: "50%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
+                <MshScreen logo={logo} />
             </div>
             <div style={{
                 display: "flex",
@@ -50,7 +51,7 @@ export default function Band({url, logo}) {
                 <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                     <QRCode 
                     value={url.replace(/ /g,'%20')} 
-                    size={192}
+                    size={230}
                     />
                     <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
                 </div>

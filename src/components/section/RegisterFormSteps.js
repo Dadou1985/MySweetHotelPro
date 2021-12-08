@@ -471,13 +471,13 @@ export default function RegisterFormSteps() {
                         setStepThree(false) 
                         setNow(75)                                   
                         setStepFour(true)
+                        setIsLoading(false)
                         }}>Je le ferai plus tard</Button>
                     <div className="stepThree_button_container">
                             <Button variant="outline-info" onClick={() => {
                                 setStepThree(false)
                                 setStepTwo(true)
                                 setNow(25)
-                                setIsLoading(false)
                             }} className="stepThree_button">Etape précédente</Button>
                             <Button variant="success" className="stepThree_button" onClick={() => {
                                 if(newImg !== null) {
@@ -545,7 +545,7 @@ export default function RegisterFormSteps() {
                             setNow(0)
                         }}>Revenir à cette étape</Button>
                     </div>
-                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" style={{width: "90vw"}} className="stepFour_button" onClick={() => {
+                    {isLoading ? <Spinner animation="grow" /> : <Button variant="success" className="stepFour_button" onClick={() => {
                             if(formValue.region !== "" || formValue.hotelName !== "" || formValue.departement !== "" || formValue.city !== "" || formValue.code_postal !== "" || formValue.standing !== "" || formValue.room === null || formValue.adresse !== "" || formValue.phone !== "" || formValue.website !== ""){
                                     handleCreateUser(data && data.link)
                                     setStepFour(false)
@@ -568,9 +568,8 @@ export default function RegisterFormSteps() {
                     <div className="finalStep_greeting_message_container" style={{marginTop: "5vh"}}>
                         <p>Vous pouvez désormais jouir de nos services gratuitement et ce, durant toute la phase de pré-lancement qui s'étendra jusqu'en mai 2022.</p>
                         <p>Vous pouvez dès maintenant accéder à notre solution en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
-                        {typeof window && window.innerWidth > 1080 ? <p>Les visuels ci-dessous ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.</p> : 
                         <p><b>Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.<br/>
-                        Téléchargeable uniquement depuis un ordinateur (portable ou fixe), vous les trouverez dans la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.<br/></b></p>}
+                        Téléchargeable uniquement depuis un ordinateur (portable ou fixe), vous les trouverez dans la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.<br/></b></p>
                         {!url && <p><b>Vous pourrez également y téléverser le logo de votre établissement afin que votre marque soit identifiable par vos clients et votre personnel.</b></p>}
                         <p>Toute l'équipe de <i><b>My Sweet Hotel</b></i> vous remercie pour la confiance que vous lui avez accordée !</p>
                     </div>
@@ -581,7 +580,7 @@ export default function RegisterFormSteps() {
                         cursor: "pointer", 
                         color: "black"
                     }}>
-                        <img src={Home} style={{width: "15vw", marginTop: "5vh", marginBottom: "1vh"}} />
+                        <img src={Home} style={{width: "15%", marginTop: "5vh", marginBottom: "1vh"}} />
                         <b>Revenir sur le site</b>
                     </a >
                </div> }

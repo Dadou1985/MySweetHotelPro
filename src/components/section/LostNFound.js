@@ -242,7 +242,7 @@ const LostNFound = ({userDB}) =>{
                 </div>
                 <div style={{width: "25%", padding: "3%"}}>
                 <Card style={{ width: '100%', borderRadius: "5px", textAlign: "center" }}>
-                    <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%"}} />
+                    <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                     <Card.Body>
                         <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid lightgrey", paddingBottom: "1vh"}}>{item.description}</Card.Title>
                         <Card.Text>

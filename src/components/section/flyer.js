@@ -2,6 +2,7 @@ import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
 import AppVisual from '../../images/msh-front-app.png'
+import MshScreen from "./mshAppScreenFlyer"
 import '../css/flyer.css'
 
 export default function Flyer({url, logo}) {
@@ -17,7 +18,6 @@ export default function Flyer({url, logo}) {
             padding: "5%",
             borderRadius: "1px",
             backgroundColor: "white",
-            backgroundImage: `url(${AppVisual})`,
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
             backgroundSize: "20vw",
@@ -28,8 +28,7 @@ export default function Flyer({url, logo}) {
                 <Divider style={{width: "100%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                 <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}>Découvrez notre application web et profitez de nos services<br/>depuis un smartphone ou une tablette</h6>
             </div>
-            <img src={logo} style={{width: "120px", height: "85px", marginBottom: "11vh"}} />
-
+            <MshScreen logo={logo} />
             <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                 <QRCode 
                 value={url.replace(/ /g,'%20')} 

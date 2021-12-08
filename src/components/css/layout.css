@@ -897,6 +897,7 @@ input[type=number] {
 
 .modal-note-list-circle {
     cursor: pointer;
+    margin-bottom: 1vw;
 }
 
 
