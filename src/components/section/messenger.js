@@ -62,7 +62,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Changer de statut
+                Attribuer à une équipe
               </Tooltip>
             }>
             <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -72,7 +72,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Changer de statut
+                Attribuer à une équipe
               </Tooltip>
             }>
             <img src={RedCircle} alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -82,7 +82,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Changer de statut
+                Attribuer à une équipe
               </Tooltip>
             }>
              <img src={BlueCircle} alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -92,7 +92,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Changer de statut
+                Attribuer à une équipe
               </Tooltip>
             }>
              <img src={Circle} alt="default" className="modal-note-circle" onClick={() => setChecked(true)} />
