@@ -16,6 +16,8 @@ import Notifications from './notifications'
 import { db, auth, storage } from '../../Firebase'
 import List from '@material-ui/core/List';
 import Logo from '../../svg/mshPro-newLogo-transparent.png'
+import moment from 'moment'
+import 'moment/locale/fr';
 
 const Navigation = ({user, userDB}) =>{
 
@@ -118,6 +120,7 @@ const Navigation = ({user, userDB}) =>{
                         fontSize: "XXL"
                     }}>{user.displayName}</div>}*/}
                     {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
+                    <div style={{fontSize: "1.5em"}}>{moment().format('LL')}</div>
                     <div className="nav_container">
                     <div className="icon_container">
                     {/*!!user &&
