@@ -120,7 +120,7 @@ const Navigation = ({user, userDB}) =>{
                         fontSize: "XXL"
                     }}>{user.displayName}</div>}*/}
                     {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
-                    <div style={{fontSize: "1.5em"}}>{moment().format('LL')}</div>
+                    <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>
                     <div className="nav_container">
                     <div className="icon_container">
                     {/*!!user &&
