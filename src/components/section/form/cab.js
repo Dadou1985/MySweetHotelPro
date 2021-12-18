@@ -12,6 +12,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const Cab = ({userDB}) =>{
 
@@ -257,53 +258,55 @@ const Cab = ({userDB}) =>{
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des réservations" title="Liste des réservations">
-                            <Table striped bordered hover size="sm" className="text-center">
-                                <thead className="bg-dark text-center text-light">
-                                    <tr>
-                                    <th>Client</th>
-                                    <th>Chambre</th>
-                                    <th>Date</th>
-                                    <th>Heure</th>
-                                    <th>Passagers</th>
-                                    <th>Véhicule</th>
-                                    <th>Destination</th>
-                                    <th>Statut</th>
-                                    <th className="bg-dark"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {info.map(flow =>(
-                                        <tr key={flow.id}>
-                                        <td>{flow.client}</td>
-                                        <td>{flow.room}</td>
-                                        <td>{flow.date}</td>
-                                        <td>{flow.hour}</td>
-                                        <td>{flow.pax}</td>
-                                        <td>{flow.model}</td>
-                                        <td>{flow.destination}</td>
-                                        <td>
-                                        <Switch
-                                            checked={flow.status}
-                                            onChange={() => changeDemandStatus(flow.id)}
-                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                        />
-                                        </td>
-                                        <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("cab")
-                                            .doc(flow.id)
-                                            .delete()
-                                            .then(function() {
-                                              console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
-                                        }}>Supprimer</Button></td>
-                                    </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                            <PerfectScrollbar style={{height: "55vh"}}>
+                                <Table striped bordered hover size="sm" className="text-center">
+                                    <thead className="bg-dark text-center text-light">
+                                        <tr>
+                                        <th>Client</th>
+                                        <th>Chambre</th>
+                                        <th>Date</th>
+                                        <th>Heure</th>
+                                        <th>Passagers</th>
+                                        <th>Véhicule</th>
+                                        <th>Destination</th>
+                                        <th>Statut</th>
+                                        <th className="bg-dark"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {info.map(flow =>(
+                                            <tr key={flow.id}>
+                                            <td>{flow.client}</td>
+                                            <td>{flow.room}</td>
+                                            <td>{flow.date}</td>
+                                            <td>{flow.hour}</td>
+                                            <td>{flow.pax}</td>
+                                            <td>{flow.model}</td>
+                                            <td>{flow.destination}</td>
+                                            <td>
+                                            <Switch
+                                                checked={flow.status}
+                                                onChange={() => changeDemandStatus(flow.id)}
+                                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                            />
+                                            </td>
+                                            <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                                return db.collection('hotels')
+                                                .doc(userDB.hotelId)
+                                                .collection("cab")
+                                                .doc(flow.id)
+                                                .delete()
+                                                .then(function() {
+                                                console.log("Document successfully deleted!");
+                                                }).catch(function(error) {
+                                                    console.log(error);
+                                                });
+                                            }}>Supprimer</Button></td>
+                                        </tr>
+                                        ))}
+                                    </tbody>
+                                </Table>
+                            </PerfectScrollbar>
                             </Tab>
                         </Tabs>
                     </Modal.Body>

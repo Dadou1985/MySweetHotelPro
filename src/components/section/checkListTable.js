@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext, db } from '../../Firebase'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const CheckListTable = ({shift}) => {
 
@@ -108,38 +109,40 @@ const CheckListTable = ({shift}) => {
                 <Button variant="outline-success" onClick={handleSubmit}>Valider</Button>
                 </InputGroup.Append>
             </InputGroup>
-            <Table striped bordered hover size="sm" className="text-center">
-                <tbody>
-                    {info.map(flow =>(
-                        <tr key={flow.id}>
-                        <td>
-                            <Form.Group controlId="formBasicCheckbox">
-                                <Form.Check type="checkbox" checked={flow.status} onChange={() => handleCheckboxChange(flow.id, flow.status)} />
-                            </Form.Group> 
-                        </td>
-                        <td className="checkList_input">
-                            {flow.task}
-                        </td>
-                        <td className="bg-light">
-                            <Button variant="outline-danger" size="sm" onClick={()=>{
-                               return db.collection('hotels')
-                               .doc(userDB.hotelId)
-                               .collection("checkList")
-                               .doc("lists")
-                               .collection(shift)
-                               .doc(flow.id)
-                               .delete()
-                               .then(function() {
-                                 console.log("Document successfully deleted!");
-                               }).catch(function(error) {
-                                   console.log(error);
-                               }); 
-                            }}>Supprimer</Button>
-                        </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </Table>
+            <PerfectScrollbar style={{height: "55vh"}}>
+                <Table striped bordered hover size="sm" className="text-center">
+                    <tbody>
+                        {info.map(flow =>(
+                            <tr key={flow.id}>
+                            <td>
+                                <Form.Group controlId="formBasicCheckbox">
+                                    <Form.Check type="checkbox" checked={flow.status} onChange={() => handleCheckboxChange(flow.id, flow.status)} />
+                                </Form.Group> 
+                            </td>
+                            <td className="checkList_input">
+                                {flow.task}
+                            </td>
+                            <td className="bg-light">
+                                <Button variant="outline-danger" size="sm" onClick={()=>{
+                                return db.collection('hotels')
+                                .doc(userDB.hotelId)
+                                .collection("checkList")
+                                .doc("lists")
+                                .collection(shift)
+                                .doc(flow.id)
+                                .delete()
+                                .then(function() {
+                                    console.log("Document successfully deleted!");
+                                }).catch(function(error) {
+                                    console.log(error);
+                                }); 
+                                }}>Supprimer</Button>
+                            </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </Table>
+            </PerfectScrollbar>
         </div>
     )
 }

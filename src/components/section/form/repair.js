@@ -9,6 +9,7 @@ import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 
 const Repair = ({userDB}) =>{
@@ -223,60 +224,63 @@ const Repair = ({userDB}) =>{
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des problèmes techniques" title="Liste des problèmes techniques">
-                            {!imgFrame ? <Table striped bordered hover size="sm" className="text-center">
-                                <thead className="bg-dark text-center text-light">
-                                    <tr>
-                                    <th>Client</th>
-                                    <th>Chambre</th>
-                                    <th>Catégorie</th>
-                                    <th>Détails</th>
-                                    <th>Date</th>
-                                    <th>Photo</th>
-                                    <th>Collaborateur</th>
-                                    <th>Statut</th>
-                                    <th className="bg-dark"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {info.map(flow =>(
-                                        <tr key={flow.id}>
-                                        <td>{flow.client}</td>
-                                        <td>{flow.room}</td>
-                                        <td>{flow.type}</td>
-                                        <td>{flow.details}</td>
-                                        <td>{moment(flow.markup).format('L')}</td>
-                                        {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
-                                            setImg(flow.img)
-                                            setImgFrame(true)
-                                        }}><img src={Picture} style={{width: "1vw"}} /></td> : 
-                                        <td>Aucune</td>}
-                                        <td>{flow.author}</td>
-                                        <td>
-                                        <Switch
-                                            checked={flow.status}
-                                            onChange={() => changeIssueStatus(flow.id)}
-                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                        />
-                                        </td>
-                                        <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            if(flow.img){
-                                                handleDeleteImg(flow.img)
-                                            }
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("maintenance")
-                                            .doc(flow.id)
-                                            .delete()
-                                            .then(function() {
-                                              console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
-                                        }}>Supprimer</Button></td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </Table> : 
+                            {!imgFrame ? 
+                                <PerfectScrollbar style={{height: "55vh"}}>
+                                    <Table striped bordered hover size="sm" className="text-center">
+                                        <thead className="bg-dark text-center text-light">
+                                            <tr>
+                                            <th>Client</th>
+                                            <th>Chambre</th>
+                                            <th>Catégorie</th>
+                                            <th>Détails</th>
+                                            <th>Date</th>
+                                            <th>Photo</th>
+                                            <th>Collaborateur</th>
+                                            <th>Statut</th>
+                                            <th className="bg-dark"></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {info.map(flow =>(
+                                                <tr key={flow.id}>
+                                                <td>{flow.client}</td>
+                                                <td>{flow.room}</td>
+                                                <td>{flow.type}</td>
+                                                <td>{flow.details}</td>
+                                                <td>{moment(flow.markup).format('L')}</td>
+                                                {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
+                                                    setImg(flow.img)
+                                                    setImgFrame(true)
+                                                }}><img src={Picture} style={{width: "1vw"}} /></td> : 
+                                                <td>Aucune</td>}
+                                                <td>{flow.author}</td>
+                                                <td>
+                                                <Switch
+                                                    checked={flow.status}
+                                                    onChange={() => changeIssueStatus(flow.id)}
+                                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                                />
+                                                </td>
+                                                <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                                    if(flow.img){
+                                                        handleDeleteImg(flow.img)
+                                                    }
+                                                    return db.collection('hotels')
+                                                    .doc(userDB.hotelId)
+                                                    .collection("maintenance")
+                                                    .doc(flow.id)
+                                                    .delete()
+                                                    .then(function() {
+                                                    console.log("Document successfully deleted!");
+                                                    }).catch(function(error) {
+                                                        console.log(error);
+                                                    });
+                                                }}>Supprimer</Button></td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </Table>
+                                </PerfectScrollbar> : 
                             <div style={{
                                 display: "flex",
                                 flexFlow: 'column',

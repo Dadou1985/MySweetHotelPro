@@ -2,6 +2,7 @@ import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 
 const UserList = ({userDB}) => {
@@ -39,45 +40,47 @@ const UserList = ({userDB}) => {
 
     return (
         <div>
-            <Table striped bordered hover className=" text-center">
-                <thead className="bg-dark text-light">
-                    <tr>
-                    <th>Pseudo</th>
-                    <th>E-mail</th>
-                    <th>Admin</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                {info.map((flow, key) =>(
-                    <tr key={key}>
-                    <td>{flow.username}</td>
-                    <td>{flow.email}</td>
-                    <td>
-                        <Switch
-                            checked={flow.adminStatus}
-                            onChange={() => {
-                                let userStatus = !flow.adminStatus
-                                return changeUserStatus(flow.id, userStatus)}}
-                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                        />
-                    </td>
-                    <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
-                        await db.collection('businessUsers')
-                        .doc(flow.id)
-                        .delete()
-                        .then(function() {
-                          console.log("Document successfully deleted!");
-                        }).catch(function(error) {
-                            console.log(error);
-                        })
+            <PerfectScrollbar style={{height: "55vh"}}>
+                <Table striped bordered hover className=" text-center">
+                    <thead className="bg-dark text-light">
+                        <tr>
+                        <th>Pseudo</th>
+                        <th>E-mail</th>
+                        <th>Admin</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {info.map((flow, key) =>(
+                        <tr key={key}>
+                        <td>{flow.username}</td>
+                        <td>{flow.email}</td>
+                        <td>
+                            <Switch
+                                checked={flow.adminStatus}
+                                onChange={() => {
+                                    let userStatus = !flow.adminStatus
+                                    return changeUserStatus(flow.id, userStatus)}}
+                                inputProps={{ 'aria-label': 'secondary checkbox' }}
+                            />
+                        </td>
+                        <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
+                            await db.collection('businessUsers')
+                            .doc(flow.id)
+                            .delete()
+                            .then(function() {
+                            console.log("Document successfully deleted!");
+                            }).catch(function(error) {
+                                console.log(error);
+                            })
 
-                        return deleteUser({uid: flow.userId})
-                    }}>Supprimer</Button></td>
-                </tr>
-                ))}
-                </tbody>
-            </Table>
+                            return deleteUser({uid: flow.userId})
+                        }}>Supprimer</Button></td>
+                    </tr>
+                    ))}
+                    </tbody>
+                </Table>
+            </PerfectScrollbar>
         </div>
     )
 }

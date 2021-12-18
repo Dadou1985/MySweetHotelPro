@@ -122,7 +122,6 @@ const LostNFound = ({userDB}) =>{
                             <thead className="bg-dark text-center text-light">
                                 <tr>
                                     <th>Photo</th>
-                                    <th>Type</th>
                                     <th>Description</th>
                                     <th>Date</th>
                                     <th>Lieu</th>
@@ -138,7 +137,6 @@ const LostNFound = ({userDB}) =>{
                                         setImgFrame(true)
                                         }}><img src={flow.img} style={{width: "5vw", borderRadius: "5%"}} /></td> : 
                                         <td><img src={Picture} style={{width: "1vw"}} /></td>}
-                                        <td>{flow.type}</td>
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td>{flow.place}</td>
@@ -242,7 +240,7 @@ const LostNFound = ({userDB}) =>{
                 </div>
                 <div style={{width: "25%", padding: "3%"}}>
                 <Card style={{ width: '100%', borderRadius: "5px", textAlign: "center" }}>
-                    <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                    <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%", filter: item.img !== LostOnes ? "none" : "grayscale() drop-shadow(1px 1px 1px)"}} />
                     <Card.Body>
                         <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid lightgrey", paddingBottom: "1vh"}}>{item.description}</Card.Title>
                         <Card.Text>

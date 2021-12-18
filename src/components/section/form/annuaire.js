@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Contact from '../../../svg/contacts.svg'
 import { FirebaseContext, db } from '../../../Firebase'
+import PerfectScrollbar from 'react-perfect-scrollbar'
 
 const Annuaire = () =>{
 
@@ -110,6 +111,7 @@ const Annuaire = () =>{
                         }
                     }}>
                             <Tab eventKey="Répertoire" title="Répertoire" style={{overflow: "auto"}}>
+                            <PerfectScrollbar style={{height: "55vh"}}>
                                 {info.map(flow =>(
                                     <div style={{
                                         display: "flex",
@@ -137,6 +139,7 @@ const Annuaire = () =>{
                                             }}>Supprimer</Button>
                                     </div>
                                 ))}
+                                </PerfectScrollbar>
                             </Tab>
                             <Tab eventKey="Ajouter un contact" title="Ajouter un contact">
                             <div style={{
@@ -150,14 +153,14 @@ const Annuaire = () =>{
                                     <Form.Row>
                                         <Form.Group controlId="description">
                                         <Form.Label>Nom du collaborateur</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.name} name="name" onChange={handleChange} />
+                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "25vw"}} value={formValue.name} name="name" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around",
-                                        width: "70%"
+                                        width: "50%"
                                     }}>
                                         <Form.Group controlId="description">
                                         <Form.Label>Numéro de mobile</Form.Label>

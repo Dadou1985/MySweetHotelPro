@@ -210,26 +210,18 @@ const Messenger = ({filterDate}) =>{
     
     return(
         <div className="messenger_container">
+            {typeof window !== `undefined` && window.innerWidth > 768 ?
+                <div className="icon-add-note-container" onClick={handleShow}>
+                    <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
+                </div> 
+            :
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Ajouter une note de service</Button>}
             <PerfectScrollbar className="perfect-scrollbar">
                 <div className="messenger_notebox">
                     {!!userDB && !!setUserDB && !!filterDate &&
                     <NoteBox filterDate={filterDate} />}
                 </div>
             </PerfectScrollbar>
-            {typeof window !== `undefined` && window.innerWidth > 768 ?
-            <OverlayTrigger
-                placement="top"
-                overlay={
-                    <Tooltip id="title">
-                    Ajouter une note
-                    </Tooltip>
-                }>
-                 
-                <div className="icon-add-note-container" onClick={handleShow}>
-                    <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
-                </div> 
-            </OverlayTrigger> :
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Ajouter une note de service</Button>}
 
             <Modal show={showModal} 
             size="lg"
