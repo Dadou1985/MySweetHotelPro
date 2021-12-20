@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { auth } from '../Firebase'
 import { navigate } from 'gatsby'
 import Logo from '../svg/new-logo-msh-pro2.png'
-
+import MshLogo from '../svg/msh-newLogo-transparent.png'
+import MshLogoPro from '../svg/mshPro-newLogo-transparent.png'
 
 const Connection = () => {
 

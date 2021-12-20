@@ -16,6 +16,7 @@ const AdminRegister = ({hide, userDB}) => {
       }
 
     const createUser = functions.httpsCallable('createUser')
+    const sendNewCoworkerAccountMail = functions.httpsCallable('sendNewCoworkerAccountMail')
 
     let newUid = userDB.hotelId + Date.now()
 
@@ -26,6 +27,16 @@ const AdminRegister = ({hide, userDB}) => {
             hotelId: userDB.hotelId,
             markup: Date.now()})
             .then(doc => console.log('nouvelle notitfication'))
+    }
+
+    const sendWelcomeMail = () => {
+        return sendNewCoworkerAccountMail({
+            adminName: userDB.username, 
+            coworkerName: formValue.username, 
+            coworkerMail: formValue.email,
+            mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
+            mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"
+        })
     }
  
     const handleSubmit = async(event) => {
@@ -61,13 +72,14 @@ const AdminRegister = ({hide, userDB}) => {
         .then(() => {
             hide()
             addNotification(notif)
+            sendWelcomeMail()
         })
       }
 
       console.log("$$$$$", formValue)
 
     return (
-        <div>
+        <div> 
             <Modal.Body>
             <div style={{
                     display: "flex",

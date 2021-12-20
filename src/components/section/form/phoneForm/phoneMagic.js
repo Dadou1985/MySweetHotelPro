@@ -4,6 +4,8 @@ import { Input } from 'reactstrap'
 import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
+import MshLogo from '../../../../svg/msh-newLogo-transparent.png'
+import MshLogoPro from '../../../../svg/mshPro-newLogo-transparent.png'
 
 export default function PhoneMagic({user, userDB}) {
     const [formValue, setFormValue] = useState({
@@ -26,6 +28,8 @@ export default function PhoneMagic({user, userDB}) {
         logo: "", 
         appLink: "",
         pricing: "",
+        prospectName: "",
+        prospectMail: ""
     })
     const [activateAdminMaker, setActivateAdminMaker] = useState(false)
     const [activateCreateHotel, setActivateCreateHotel] = useState(false)
@@ -35,6 +39,7 @@ export default function PhoneMagic({user, userDB}) {
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
     const [hotelUsers, setHotelUsers] = useState([])
     const [radioValue, setRadioValue] = useState('Freemium');
+
 
     const handleChange = (event) =>{
         event.persist()
@@ -158,6 +163,7 @@ export default function PhoneMagic({user, userDB}) {
     
 
     const createUser = functions.httpsCallable('createUser')
+    const sendWelcomeMail = functions.httpsCallable('sendWelcomeMail')
 
     let newUid = userDB.hotelId + Date.now()
     
@@ -196,6 +202,17 @@ export default function PhoneMagic({user, userDB}) {
         }) 
     }
 
+    const sendEmail = () => {
+        return sendWelcomeMail({
+            prospectName: formValue.prospectName, 
+            prospectMails: formValue.prospectMail, 
+            mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
+            mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"
+        }).then(() => {
+            setFormValue("" || 0)
+        })
+    }
+
 
     return (
         <div style={{
@@ -206,6 +223,7 @@ export default function PhoneMagic({user, userDB}) {
             padding: "5%",
             textAlign: "center"
         }}>
+
             <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Magic Box</h4>
             <Form.Row>
                 <Form.Group style={{
@@ -275,6 +293,25 @@ export default function PhoneMagic({user, userDB}) {
                 <Button variant="outline-info" style={{marginBottom: "5vh"}} onClick={() => setActivateAdminMaker(true)}>Créér un administrateur</Button>
                 <Button variant="outline-dark" style={{marginBottom: "2vh"}} onClick={() => setActivateCreateHotel(true)}>Créér un hôtel</Button>
             </div>
+
+            <div style={{
+                display: "flex",
+                flexFlow: "column",
+                alignItems: "center",
+                marginTop: "3vh",
+                paddingTop: "5vh",
+                borderTop: "1px solid lightgrey"
+            }}>
+                <h5>Envoyer un e-mail de bienvenue</h5>
+                <Form.Group controlId="formGroupName">
+                    <Form.Control style={{width: "80vw"}} value={formValue.prospectName} name="prospectName" type="text" placeholder="Prénom du prospect" onChange={handleChange} required />
+                </Form.Group>
+                <Form.Group controlId="formGroupRefHotel">
+                    <Form.Control style={{width: "80vw"}} value={formValue.prospectMail} name="prospectMail" type="text" placeholder="E-mail du prospect" onChange={handleChange} required />
+                </Form.Group>
+                <Button variant="outline-success" style={{marginBottom: "2vh"}} onClick={() => sendEmail()}>Envoyer un e-mail</Button>
+            </div>
+
             <Drawer anchor="bottom" open={activateAdminMaker} onClose={() => setActivateAdminMaker(false)}  className="phone_container_drawer">
                 <div style={{
                     display: "flex",
