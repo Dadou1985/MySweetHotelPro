@@ -55,7 +55,7 @@ const Connection = () => {
                 type="email" 
                 name="email" 
                 className="form-control mb-4" 
-                placeholder="Email"
+                placeholder="E-mail"
                 onChange={handleChange}
                 required />
 
@@ -64,13 +64,13 @@ const Connection = () => {
                 type="password" 
                 name="password" 
                 className="form-control mb-4" 
-                placeholder="Password"
+                placeholder="Mot de passe"
                 onChange={handleChange}
                 required />
 
             <div id="warning"></div>
 
-            <button className="btn btn-info btn-block my-4" type="submit">Connecter</button>
+            <button className="btn btn-info btn-block my-4" type="submit">Se connecter</button>
             </form>
             {/*<Modal show={list}
                 size="md"

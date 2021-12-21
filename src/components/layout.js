@@ -10,9 +10,10 @@ import PropTypes from "prop-types"
 import Navigation from './section/navigation'
 import "./css/layout.css"
 import {FirebaseContext} from '../Firebase'
+import { withTrans } from '../../i18n/withTrans'
 
 
-const Layout = ({ children }) => {
+const Layout = ({ children, t, i18n }) => {
 
   const [userDB, setUserDB] = useState(null)
  
@@ -34,4 +35,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default withTrans(Layout)
