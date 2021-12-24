@@ -5,9 +5,11 @@ import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenBand"
 import '../css/band.css'
 import HotelLogo from '../../images/les-forteresses.png'
+import { useTranslation } from "react-i18next"
 
 export default function Band({url, logo}) {
-    
+    const { t, i18n } = useTranslation()
+
     return (
         <div style={{
             width: 1920,

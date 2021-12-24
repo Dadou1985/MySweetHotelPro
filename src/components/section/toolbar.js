@@ -11,10 +11,12 @@ import { FirebaseContext } from '../../Firebase'
 import LostOnes from '../../svg/lost-items.svg'
 import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import { navigate } from 'gatsby'
+import { useTranslation } from "react-i18next"
 
 
 const ToolBar = () =>{
     const { userDB, user } = useContext(FirebaseContext)
+    const { t, i18n } = useTranslation()
 
     return(
         <div className="toolbar_container">
@@ -41,7 +43,7 @@ const ToolBar = () =>{
             placement="right"
             overlay={
               <Tooltip id="title">
-                Objets trouvés
+                C.R.M
               </Tooltip>
             }>
                 <img src={Database} className="icon" alt="contact" onClick={() => navigate("/crm")} style={{width: "40%", marginRight: "10%"}} />

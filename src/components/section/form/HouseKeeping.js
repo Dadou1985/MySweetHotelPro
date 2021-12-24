@@ -6,6 +6,7 @@ import { db, auth } from '../../../Firebase'
 import Badge from '@material-ui/core/Badge'
 import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
+import { useTranslation } from "react-i18next"
 
 
 const HouseKeeping = ({userDB}) =>{
@@ -20,6 +21,7 @@ const HouseKeeping = ({userDB}) =>{
     const [pillow, setPillow] = useState([])
     const [iron, setIron] = useState([])
     const [babyBed, setBabyBed] = useState([])
+    const { t, i18n } = useTranslation()
 
     
     const handleClose = () => setList(false)

@@ -13,12 +13,13 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { FirebaseContext, db } from '../../Firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
+import { useTranslation } from "react-i18next"
 
 const NoteBox = ({filterDate}) => {
 
     const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
-
+    const { t, i18n } = useTranslation()
     const {userDB} = useContext(FirebaseContext)
 
     useEffect(() => {

@@ -18,6 +18,7 @@ import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
 import { db } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
+import { useTranslation } from "react-i18next"
 
 export default function Assistance({userDB, user}) {
     
@@ -27,6 +28,7 @@ export default function Assistance({userDB, user}) {
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
+    const { t, i18n } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)

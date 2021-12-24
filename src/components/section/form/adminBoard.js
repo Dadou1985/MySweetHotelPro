@@ -4,10 +4,12 @@ import Connection from '../../../svg/employee.svg'
 import AdminRegister from './adminRegister'
 import UserList from './userList'
 import Divider from '@material-ui/core/Divider';
+import { useTranslation } from "react-i18next"
 
 const AdminBoard = ({user, userDB}) =>{
 
     const [tab, setTab] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const handleCloseTab = () => setTab(false)
     const handleShowTab = () => setTab(true)

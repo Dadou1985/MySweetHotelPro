@@ -14,13 +14,14 @@ import Close from '../../svg/close.svg'
 import Drawer from '@material-ui/core/Drawer'
 import '../css/registerFormSteps.css'
 import { navigate } from 'gatsby-link'
+import { useTranslation } from "react-i18next"
 
 export default function RegisterFormSteps() {
-    const [stepOne, setStepOne] = useState(true)
+    const [stepOne, setStepOne] = useState(false)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
     const [stepFour, setStepFour] = useState(false)
-    const [finalStep, setFinalStep] = useState(false)
+    const [finalStep, setFinalStep] = useState(true)
     const [alert, setAlert] = useState({success: false, danger: false, message: ""})
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
@@ -55,6 +56,7 @@ export default function RegisterFormSteps() {
         website: "", 
         hotelName: "", 
     })
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

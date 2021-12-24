@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import GuestDatabase from '../components/section/guestDatabase'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 const UserDatabase = () => {
   const [hide, setHide] = useState("flex")
@@ -44,4 +45,4 @@ const UserDatabase = () => {
   )
 }
 
-export default UserDatabase
+export default withTrans(UserDatabase)

@@ -8,6 +8,7 @@ import Picture from '../../svg/picture.svg'
 import Close from '../../svg/close.svg'
 import Plus from '../../svg/plus3.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 
 const LostNFound = ({userDB}) =>{
@@ -24,6 +25,7 @@ const LostNFound = ({userDB}) =>{
         description: "Cliquez sur un élément du tableau",
         details: "Plus de détails sur l'objet s'afficheront ici !"
     })
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

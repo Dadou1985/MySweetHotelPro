@@ -23,6 +23,7 @@ import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
 import Loader from "react-loader-spinner"
 import '../../css/loader.css'
+import { useTranslation } from "react-i18next"
 
 
 const UserDatabase = ({userDB}) =>{
@@ -33,6 +34,7 @@ const UserDatabase = ({userDB}) =>{
     const [sendingMail, setSendingMail] = useState(false)
     const [guestMail, setguestMail] = useState([])
     const [IsLoading, setIsLoading] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

@@ -28,6 +28,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Loader from "react-loader-spinner"
 import '../css/loader.css'
 import Chat from './chatRoom'
+import { useTranslation } from "react-i18next"
 
 const GuestDatabase = ({user, userDB}) =>{
 
@@ -49,6 +50,7 @@ const GuestDatabase = ({user, userDB}) =>{
     const [IsLoading, setIsLoading] = useState(false)
     const [showChat, setShowChat] = useState(false)
     const [radioValueGender, setRadioValueGender] = useState('male');
+    const { t, i18n } = useTranslation()
 
 
     const handleClose = () => setList(false)

@@ -20,6 +20,7 @@ import Drawer from '@material-ui/core/Drawer'
 import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
+import { useTranslation } from "react-i18next"
 
 export default function CommunIzi({userDB, user}) {
     
@@ -35,6 +36,7 @@ export default function CommunIzi({userDB, user}) {
     const [showAlert, setShowAlert] = useState(false)
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
+    const { t, i18n } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -257,7 +259,7 @@ export default function CommunIzi({userDB, user}) {
                               style={{marginRight: "1vw"}} />
                               {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>
-                          <div style={{display: "flex", alignItems: "center"}}>Chambre {flow.room}</div>
+                          <div style={{display: "flex", alignItems: "center"}}>{t('chat.room_maj')} {flow.room}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
@@ -280,7 +282,7 @@ export default function CommunIzi({userDB, user}) {
             <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
                 <Form className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
-                    <Input type="text" placeholder="Répondre au client..."  
+                    <Input type="text" placeholder={t("chat.input_placeholder")}  
                     value={note}
                     onChange={handleChange}
                     onKeyPress={(e) => {
@@ -419,7 +421,7 @@ export default function CommunIzi({userDB, user}) {
                     }}>Envoyer</Button>
             </Drawer>
             {showAlert && <Alert variant="danger" style={{width: "20vw"}}>
-              Vous devez d'abord choisir une conversation !
+              {t('chat.alert')}
             </Alert>}
         </div>
     )

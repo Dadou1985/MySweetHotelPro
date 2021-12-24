@@ -7,11 +7,13 @@ import 'moment/locale/fr';
 import { db } from '../../../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../../../svg/profile.png"
+import { useTranslation } from "react-i18next"
 
 export default function PhoneSupport({user, userDB}) {
     const [note, setNote] = useState("")
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)
+    const { t, i18n } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)

@@ -20,6 +20,7 @@ import Drawer from '@material-ui/core/Drawer'
 import { FirebaseContext, db, storage } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
+import { useTranslation } from "react-i18next"
 
 const Messenger = ({filterDate}) =>{
 
@@ -33,7 +34,7 @@ const Messenger = ({filterDate}) =>{
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [showCalendar, setShowCalendar] = useState(false)
-
+    const { t, i18n } = useTranslation()
     const { userDB, setUserDB, user } = useContext(FirebaseContext)
 
     const handleChangeNote = event =>{

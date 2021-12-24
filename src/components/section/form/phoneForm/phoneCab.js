@@ -10,6 +10,7 @@ import {
   MuiPickersUtilsProvider,
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
+import { useTranslation } from "react-i18next"
 
 const PhoneCab = ({userDB}) =>{
 
@@ -18,6 +19,7 @@ const PhoneCab = ({userDB}) =>{
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

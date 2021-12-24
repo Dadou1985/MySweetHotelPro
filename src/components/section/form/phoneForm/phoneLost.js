@@ -7,6 +7,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
+import { useTranslation } from "react-i18next"
 
 
 const PhoneLost = ({userDB}) =>{
@@ -19,6 +20,7 @@ const PhoneLost = ({userDB}) =>{
     const [url, setUrl] = useState("")
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

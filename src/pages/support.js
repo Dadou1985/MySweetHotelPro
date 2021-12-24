@@ -3,12 +3,15 @@ import Loader from '../components/section/common/loader'
 import Support from '../components/section/assistance'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
+import { useTranslation } from "react-i18next"
 
 function Assistance() {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
-  
+    const { t, i18n } = useTranslation()
+
     useEffect(() => {
           
       let unsubscribe = auth.onAuthStateChanged(async(user) => {
@@ -48,4 +51,4 @@ function Assistance() {
     )
 }
 
-export default Assistance
+export default withTrans(Assistance)

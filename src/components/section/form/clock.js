@@ -12,7 +12,8 @@ import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
   } from '@material-ui/pickers';
-  import PerfectScrollbar from 'react-perfect-scrollbar'
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 const Clock = ({userDB}) =>{
 
@@ -22,6 +23,7 @@ const Clock = ({userDB}) =>{
     const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -190,7 +192,7 @@ const Clock = ({userDB}) =>{
                                         <KeyboardDateTimePicker
                                             variant="dialog"
                                             ampm={false}
-                                            label="Date et Heure de réservation"
+                                            label="Date et Heure de programmation"
                                             value={formValue.date}
                                             onChange={handleDateChange}
                                             onError={console.log}

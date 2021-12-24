@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import PhoneAdmin from '../components/section/form/phoneForm/phoneAdmin'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 function AdminBoard() {
     const [hide, setHide] = useState("flex")
@@ -45,4 +46,4 @@ function AdminBoard() {
     )
 }
 
-export default AdminBoard
+export default withTrans(AdminBoard)

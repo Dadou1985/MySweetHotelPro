@@ -11,6 +11,7 @@ import {
     MuiPickersUtilsProvider,
     DatePicker
   } from '@material-ui/pickers';
+  import { useTranslation } from "react-i18next"
 
 const Caisse = () =>{
 
@@ -20,6 +21,7 @@ const Caisse = () =>{
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const [filterDate, setFilterDate] = useState(new Date())
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -393,6 +395,7 @@ const Caisse = () =>{
                                 </PerfectScrollbar>
                             </Tab>
                             <Tab eventKey="Journal des caisses" title="Journal des caisses">
+                            <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover size="sm" className="text-center" ref={componentRef}>
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
@@ -426,6 +429,7 @@ const Caisse = () =>{
                                     ))}
                                 </tbody>
                             </Table>
+                            </PerfectScrollbar>
                             </Tab>
                         </Tabs>
                     </Modal.Body>

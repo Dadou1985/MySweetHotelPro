@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { db } from '../../../../Firebase'
 import 'moment/locale/fr';
+import { useTranslation } from "react-i18next"
 
 function PhoneFeedback({userDB}) {
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
 

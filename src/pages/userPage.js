@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import UserProfile from '../components/section/form/phoneForm/userProfile'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 const UserPage = () => {
   const [hide, setHide] = useState("flex")
@@ -45,4 +46,4 @@ const UserPage = () => {
   )
 }
 
-export default UserPage
+export default withTrans(UserPage)

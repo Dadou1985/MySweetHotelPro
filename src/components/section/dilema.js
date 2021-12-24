@@ -19,6 +19,7 @@ import LogoBand from '../../images/band.png'
 import LogoHotel from '../../images/hotelLogo.png'
 import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
+import { useTranslation } from "react-i18next"
 
 const Dilema = ({user, userDB, setUserDB}) => {
 
@@ -43,6 +44,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const flyerPdfRef = useRef(null)
     const bandPdfRef = useRef(null)
     const { loading, error, data } = useShortenUrl(url);
+    const { t, i18n } = useTranslation()
 
     const exportPDF = (pdf) => {
         if (pdf.current) {

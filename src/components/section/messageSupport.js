@@ -3,8 +3,10 @@ import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import 'moment/locale/fr';
+import { useTranslation } from "react-i18next"
 
   const MessageSupport = ({author, text, date, userDB, photo}) =>{
+    const { t, i18n } = useTranslation()
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(author === userDB.username){

@@ -4,11 +4,12 @@ import { FirebaseContext, db } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 const ItemList = ({item}) => {
 
     const [info, setInfo] = useState([])
-
+    const { t, i18n } = useTranslation()
     const { userDB } = useContext(FirebaseContext)
 
     useEffect(() => {

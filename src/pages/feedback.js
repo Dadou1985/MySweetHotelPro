@@ -3,8 +3,9 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import PhoneFeedback from '../components/section/form/phoneForm/phoneFeedback'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
-function Feedback() {
+const Feedback = () => {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
@@ -45,4 +46,4 @@ function Feedback() {
     )
 }
 
-export default Feedback
+export default withTrans(Feedback)

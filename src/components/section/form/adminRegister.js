@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import {Form, Button, Modal} from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
+import { useTranslation } from "react-i18next"
 
 const AdminRegister = ({hide, userDB}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

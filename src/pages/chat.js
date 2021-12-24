@@ -3,11 +3,14 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Chat from '../components/section/communIzi'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
+import { useTranslation } from "react-i18next"
 
 const ChatPage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
         
@@ -48,4 +51,4 @@ const ChatPage = () => {
   )
 }
 
-export default ChatPage
+export default withTrans(ChatPage)

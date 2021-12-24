@@ -2,8 +2,11 @@ import React from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../../itemList'
 import StyleBadge from '../../common/badgeMaker'
+import { useTranslation } from "react-i18next"
 
 function PhoneHouseKeeping() {
+    const { t, i18n } = useTranslation()
+
     return (
         <div className="phoneCheckList_container">
             <h3 className="phone_title">Conciergerie</h3>

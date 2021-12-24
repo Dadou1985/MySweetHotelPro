@@ -3,6 +3,7 @@ import { Form, Button, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-b
 import Contact from '../../../svg/contacts.svg'
 import { FirebaseContext, db } from '../../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 const Annuaire = () =>{
 
@@ -11,6 +12,7 @@ const Annuaire = () =>{
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
+    const { t, i18n } = useTranslation()
 
 
     const handleClose = () => setList(false)

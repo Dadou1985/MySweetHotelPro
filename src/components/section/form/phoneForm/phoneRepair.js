@@ -8,6 +8,7 @@ import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
+import { useTranslation } from "react-i18next"
 
 const PhoneRepair = ({userDB}) =>{
 
@@ -19,6 +20,7 @@ const PhoneRepair = ({userDB}) =>{
     const [imgFrame, setImgFrame] = useState(false)
     const [newImg, setNewImg] = useState("")
     const [url, setUrl] = useState("")
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

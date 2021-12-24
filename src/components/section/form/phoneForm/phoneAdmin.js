@@ -3,6 +3,7 @@ import { Form, Button, Table } from 'react-bootstrap'
 import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
+import { useTranslation } from "react-i18next"
 
 function PhoneAdmin({userDB}) {
     const [formValue, setFormValue] = useState({username: "", email: ""})
@@ -10,6 +11,7 @@ function PhoneAdmin({userDB}) {
     const [info, setInfo] = useState([])
     const [expand, setExpand] = useState(false)
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

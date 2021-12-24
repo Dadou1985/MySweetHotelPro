@@ -9,6 +9,7 @@ import { db } from '../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import Bubble from "../../svg/bubble.svg"
+import { useTranslation } from "react-i18next"
 
 
 export default function CallCenter({user, userDB}) {
@@ -19,6 +20,7 @@ export default function CallCenter({user, userDB}) {
     const [adminSpeakStatus, setAdminSpeakStatus] = useState([])
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
+    const { t, i18n } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)

@@ -8,12 +8,15 @@ import {
   MuiPickersUtilsProvider,
   DatePicker
 } from '@material-ui/pickers';
+import { withTrans } from '../../i18n/withTrans'
+import { useTranslation } from "react-i18next"
 
 const NotebookPage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
   const [filterDate, setFilterDate] = useState(new Date())
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
         
@@ -69,4 +72,4 @@ const handleDateChange = (date) => {
   )
 }
 
-export default NotebookPage
+export default withTrans(NotebookPage)

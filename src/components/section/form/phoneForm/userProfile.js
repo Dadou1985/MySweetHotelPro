@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { auth, db, storage } from '../../../../Firebase'
+import { useTranslation } from "react-i18next"
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
@@ -17,6 +18,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const [listPassword, setListPassword] = useState(false)
     const [confModal, setConfModal] = useState(true)
     const [url, setUrl] = useState("")
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

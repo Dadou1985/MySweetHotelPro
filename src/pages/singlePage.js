@@ -6,12 +6,15 @@ import Memo from '../components/section/memo'
 import Navigation from '../components/section/navigation'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Chat from '../components/section/communIzi'
+import { withTrans } from '../../i18n/withTrans'
+import { useTranslation } from "react-i18next"
 
 const SinglePage = () => {
 
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
+  const { t, i18n } = useTranslation()
 
   useEffect(() => {
         
@@ -54,7 +57,7 @@ const SinglePage = () => {
       }}>
           <ToolBar />
           <div className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">Chat Client</h5>
+            <h5 className="font-weight-bolder dark_messenger_title">{t("chat.chat_title")}</h5>
             {!!userDB && !!user&&
             <Chat userDB={userDB} user={user} />}
         </div>
@@ -64,4 +67,4 @@ const SinglePage = () => {
   )
 }
 
-export default SinglePage
+export default withTrans(SinglePage)

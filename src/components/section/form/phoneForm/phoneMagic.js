@@ -6,6 +6,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
 import MshLogo from '../../../../svg/msh-newLogo-transparent.png'
 import MshLogoPro from '../../../../svg/mshPro-newLogo-transparent.png'
+import { useTranslation } from "react-i18next"
 
 export default function PhoneMagic({user, userDB}) {
     const [formValue, setFormValue] = useState({
@@ -39,6 +40,7 @@ export default function PhoneMagic({user, userDB}) {
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
     const [hotelUsers, setHotelUsers] = useState([])
     const [radioValue, setRadioValue] = useState('Freemium');
+    const { t, i18n } = useTranslation()
 
 
     const handleChange = (event) =>{

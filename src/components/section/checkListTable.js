@@ -2,11 +2,13 @@ import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext, db } from '../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 const CheckListTable = ({shift}) => {
 
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({task: "", status: false})
+    const { t, i18n } = useTranslation()
 
     const { userDB } = useContext(FirebaseContext)
 

@@ -2,6 +2,7 @@ import React, { useContext, useState} from 'react'
 import { FormControl, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import { FirebaseContext } from '../../../Firebase'
 import Bed from '../../../svg/bed.svg'
+import { useTranslation } from "react-i18next"
 
 
 const RoomAvailable = () => {
@@ -9,7 +10,8 @@ const RoomAvailable = () => {
     const { user, firebase } = useContext(FirebaseContext)
     const [formValue, setFormValue] = useState({room: ""})
     const [list, setList] = useState(false)
-    
+    const { t, i18n } = useTranslation()
+
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

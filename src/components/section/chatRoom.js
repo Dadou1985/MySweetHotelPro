@@ -2,11 +2,13 @@ import React, {useState, useEffect } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db } from '../../Firebase'
+import { useTranslation } from "react-i18next"
 
 export default function ChatRoom({user, userDB, title}) {
 
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState([])
+    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         const chatRoomOnAir = () => {

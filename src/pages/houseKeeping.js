@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import PhoneHouseKeeping from '../components/section/form/phoneForm/phoneHouseKeeping'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 const HouseKeeping = () => {
   const [hide, setHide] = useState("flex")
@@ -45,5 +46,5 @@ const HouseKeeping = () => {
   )
 }
 
-export default HouseKeeping
+export default withTrans(HouseKeeping)
 

@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import LostNFound from '../components/section/LostNFound'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 const Lost = () => {
   const [hide, setHide] = useState("flex")
@@ -44,4 +45,4 @@ const Lost = () => {
   )
 }
 
-export default Lost
+export default withTrans(Lost)

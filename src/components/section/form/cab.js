@@ -13,6 +13,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 const Cab = ({userDB}) =>{
 
@@ -22,6 +23,7 @@ const Cab = ({userDB}) =>{
     const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

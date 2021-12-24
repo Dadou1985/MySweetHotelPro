@@ -4,8 +4,9 @@ import Dilema from '../components/section/dilema'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
 import { ShortenUrlProvider } from 'react-shorten-url';
+import { withTrans } from '../../i18n/withTrans'
 
-export default function DoorsStage() {
+const DoorsStage = () => {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
@@ -47,3 +48,5 @@ export default function DoorsStage() {
         </FirebaseContext.Provider>
     )
 }
+
+export default withTrans(DoorsStage)

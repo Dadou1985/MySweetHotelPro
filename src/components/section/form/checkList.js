@@ -2,11 +2,13 @@ import React, {useState } from 'react'
 import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../checkListTable'
 import TodoList from '../../../svg/todoList.svg'
+import { useTranslation } from "react-i18next"
 
 
 const CheckList = () =>{
 
     const [list, setList] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

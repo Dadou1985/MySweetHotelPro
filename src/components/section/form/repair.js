@@ -10,6 +10,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 
 const Repair = ({userDB}) =>{
@@ -21,6 +22,7 @@ const Repair = ({userDB}) =>{
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

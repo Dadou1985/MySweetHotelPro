@@ -4,11 +4,15 @@ import { navigate } from 'gatsby'
 import Logo from '../svg/new-logo-msh-pro2.png'
 import MshLogo from '../svg/msh-newLogo-transparent.png'
 import MshLogoPro from '../svg/mshPro-newLogo-transparent.png'
+import { useTranslation } from "react-i18next"
+import { withTrans } from '../../i18n/withTrans'
 
 const Connection = () => {
 
   const [formValue, setFormValue] = useState ({username: "", email: "", password: ""})
      
+  const { t, i18n } = useTranslation()
+
       const handleChange = (event) =>{
         event.persist()
         document.getElementById('warning').innerHTML = ""
@@ -26,7 +30,7 @@ const Connection = () => {
           return navigate('singlePage')})
         .catch(error=>{
           if (error.message !== ""){
-            return document.getElementById('warning').innerHTML = "Vos identifiants sont erronés !"
+            return document.getElementById('warning').innerHTML = t("connexion.warning")
           }else{}
         })
       }   
@@ -55,7 +59,7 @@ const Connection = () => {
                 type="email" 
                 name="email" 
                 className="form-control mb-4" 
-                placeholder="E-mail"
+                placeholder={t('connexion.email_maj')}
                 onChange={handleChange}
                 required />
 
@@ -64,13 +68,13 @@ const Connection = () => {
                 type="password" 
                 name="password" 
                 className="form-control mb-4" 
-                placeholder="Mot de passe"
+                placeholder={t("connexion.password")}
                 onChange={handleChange}
                 required />
 
             <div id="warning"></div>
 
-            <button className="btn btn-info btn-block my-4" type="submit">Se connecter</button>
+            <button className="btn btn-info btn-block my-4" type="submit">{t("connexion.connexion")}</button>
             </form>
             {/*<Modal show={list}
                 size="md"
@@ -90,4 +94,4 @@ const Connection = () => {
     )
 }
 
-export default Connection
+export default withTrans(Connection)

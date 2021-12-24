@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import {Form, Button, Modal} from 'react-bootstrap'
+import { useTranslation } from "react-i18next"
 
 const Register = ({firebase, hide}) => {
 
     const [formValue, setFormValue] = useState({username: "" || undefined, email: "" || undefined, password: "" || undefined, confPassword: "" || undefined})
     const [errorMessage, setErrorMessage] = useState('')
     const [messageError, setMessageError] = useState('')
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

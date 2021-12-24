@@ -1,8 +1,10 @@
 import React from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
+import { useTranslation } from "react-i18next"
 
 const PhoneCheckList = ({user, userDB}) =>{
+    const { t, i18n } = useTranslation()
 
 
     return(

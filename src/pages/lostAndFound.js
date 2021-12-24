@@ -3,6 +3,7 @@ import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import PhoneLost from '../components/section/form/phoneForm/phoneLost'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
 const LostAndFound = () => {
   const [hide, setHide] = useState("flex")
@@ -45,4 +46,4 @@ const LostAndFound = () => {
   )
 }
 
-export default LostAndFound
+export default withTrans(LostAndFound)

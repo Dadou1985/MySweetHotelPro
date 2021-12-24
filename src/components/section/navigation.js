@@ -18,12 +18,14 @@ import List from '@material-ui/core/List';
 import Logo from '../../svg/mshPro-newLogo-transparent.png'
 import moment from 'moment'
 import 'moment/locale/fr';
+import { useTranslation } from "react-i18next"
 
 const Navigation = ({user, userDB}) =>{
 
     const [list, setList] = useState(false)
     const [activate, setActivate] = useState(false)
     const [oldNote, setOldNote] = useState([])
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

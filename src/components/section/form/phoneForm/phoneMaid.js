@@ -8,6 +8,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
+import { useTranslation } from "react-i18next"
 
 const PhoneMaid = ({userDB}) =>{
 
@@ -22,6 +23,7 @@ const PhoneMaid = ({userDB}) =>{
     const [roomState, setRoomState] = useState(false)
     const [currentRoom, setCurrentRoom] = useState("")
     const [guestId, setGuestId] = useState("")
+    const { t, i18n } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()

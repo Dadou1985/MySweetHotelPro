@@ -3,8 +3,9 @@ import Loader from '../components/section/common/loader'
 import PhoneSupport from '../components/section/form/phoneForm/phoneSupport'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
+import { withTrans } from '../../i18n/withTrans'
 
-export default function Assistance() {
+const Assistance = () => {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
@@ -46,3 +47,4 @@ export default function Assistance() {
 }
 
 
+export default withTrans(Assistance)

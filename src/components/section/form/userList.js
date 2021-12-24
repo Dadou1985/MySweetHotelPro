@@ -3,10 +3,12 @@ import { Button, Table } from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import PerfectScrollbar from 'react-perfect-scrollbar'
+import { useTranslation } from "react-i18next"
 
 
 const UserList = ({userDB}) => {
     const [info, setInfo] = useState([])
+    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         const toolOnAir = () => {

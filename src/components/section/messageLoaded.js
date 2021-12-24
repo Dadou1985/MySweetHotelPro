@@ -11,12 +11,14 @@ import {
 } from 'react-accessible-accordion'
 import moment from 'moment'
 import { FirebaseContext, db, auth } from '../../Firebase'
+import { useTranslation } from "react-i18next"
 
 
   const MessageLoaded = ({author, text, hour, title, blueprint, date, key}) =>{
 
     const [expanded, setExpanded] = useState('')
     const { userDB, setUserDB } = useContext(FirebaseContext)
+    const { t, i18n } = useTranslation()
 
     const handleChangeExpanded = (title) => setExpanded(title)
     

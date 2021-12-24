@@ -2,11 +2,13 @@ import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Feedback from '../../../svg/feedbackBox.svg'
 import { db } from '../../../Firebase'
+import { useTranslation } from "react-i18next"
 
 const FeedbackBox = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

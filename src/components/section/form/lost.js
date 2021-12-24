@@ -6,6 +6,7 @@ import moment from 'moment'
 import 'moment/locale/fr';
 import Picture from '../../../svg/picture.svg'
 import Close from '../../../svg/close.svg'
+import { useTranslation } from "react-i18next"
 
 const Lost = ({userDB}) =>{
 
@@ -15,6 +16,7 @@ const Lost = ({userDB}) =>{
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
+    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

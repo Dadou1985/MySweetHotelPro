@@ -4,9 +4,11 @@ import Divider from '@material-ui/core/Divider';
 import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenFlyer"
 import '../css/flyer.css'
+import { useTranslation } from "react-i18next"
 
 export default function Flyer({url, logo}) {
-    
+    const { t, i18n } = useTranslation()
+
     return (
         <div style={{
             width: 794,
