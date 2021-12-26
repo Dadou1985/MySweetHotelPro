@@ -1,503 +1,503 @@
 {
-    "general":{
-        "button": {
-            "next_step": "Poursuivre",
-            "delete": "Supprimer",
-            "send": "Enregistrer",
-            "back": "Retour",
-            "reset": "Reset",
-            "update": "Actualiser maintenant",
-            "upload": "Téléverser",
-            "add_photo": "Ajouter une photo"
+    "msh_general": {
+        "g_button": {
+            "b_next_step": "Continue",
+            "b_delete": "Excluir",
+            "b_send": "Salvar",
+            "b_back": "Voltar",
+            "b_reset": "Reiniciar",
+            "b_update": "Atualizar agora",
+            "b_upload": "Upload",
+            "b_add_photo": "Adicionar uma foto"
         },
-        "table": {
-            "client": "Client",
-            "room": "Chambre",
-            "date": "Date",
-            "time": "Heure",
-            "passenger": "Passagers",
-            "pax": "pax",
-            "type_of_car": "Véhicule",
-            "destination": "Destination",
-            "statut": "Statut",
-            "from": "Ch. initiale",
-            "to": "Ch. finale",
-            "reason": "Motif",
-            "state": "Etat",
-            "details": "Détails",
-            "photo": "Photo",
-            "coworker": "Collaborateur",
-            "phone": "N° de tel.",
-            "category": "Catégorie",
-            "description": "Description",
-            "place": "Lieu",
-            "origin": "Nationalité",
-            "connexion": "Connexion",
-            "value": "Valeur",
-            "quantity": "Quantité",
-            "amount": "Montant",
-            "rolls": "Rouleaux de pièces",
-            "total": "Total",
-            "total_qty": "Total quantité",
-            "shift": "Shift",
-            "username": "Nom",
-            "administrator": "Admin"
+        "g_table": {
+            "t_client": "Cliente",
+            "t_room": "Sala",
+            "t_date": "Data",
+            "t_time": "Hora",
+            "t_passenger": "Passageiros",
+            "t_pax": "pax",
+            "t_type_of_car": "Veículo",
+            "t_destination": "Destino",
+            "t_statut": "Status",
+            "t_from": "Sala inicial",
+            "t_to": "Câmara final",
+            "t_reason": "Razão",
+            "t_state": "Estado",
+            "t_details": "Detalhes",
+            "t_photo": "Foto",
+            "t_coworker": "Colaborador",
+            "t_phone": "Número do telefone",
+            "t_category": "Categoria",
+            "t_description": "Descrição",
+            "t_place": "Local",
+            "t_origin": "Nacionalidade",
+            "t_connexion": "Conexão",
+            "t_value": "Valor",
+            "t_quantity": "Quantidade",
+            "t_amount": "Quantia",
+            "t_rolls": "Rolos de moedas",
+            "t_total": "Total",
+            "t_total_qty": "Quantidade total",
+            "t_shift": "Shift",
+            "t_username": "Nome",
+            "t_administrator": "Administrador"
         }
 
     },
-    "connexion": {
-        "email_maj": "E-mail",
-        "email": "e-mail",
-        "password": "Mot de passe",
-        "connexion" : "Se connecter",
-        "warning": "Vos identifiants sont erronés !"
+    "msh_connexion": {
+        "c_email_maj": "E-mail",
+        "c_email": "e-mail",
+        "c_password": "Senha",
+        "c_connexion": "Conectar",
+        "c_warning": "Seus dados de login estão errados!"
     },
-    "chat" : {
-        "chat_title": "Chat Client",
-        "room": "chambre",
-        "room_maj": "Chambre",
-        "input_placeholder": "Répondre au client...",
-        "send_button": "Envoyer",
-        "notification": "Votre message a bien été envoyé !",
-        "alert": "Vous devez d'abord choisir une conversation !"
+    "msh_chat": {
+        "c_chat_title": "Cliente de bate-papo",
+        "c_room": "room",
+        "c_room_maj": "Sala",
+        "c_input_placeholder": "Responder ao cliente ...",
+        "c_send_button": "Enviar",
+        "c_notification": "Sua mensagem foi enviada!",
+        "c_alert": "Você deve primeiro escolher uma conversa!"
     },
-    "messenger": {
-        "note_big_title": "Note de service",
-        "note_circle_tooltip": "Attribuer à une équipe",
-        "notification": "Votre note a bien été enregistrée pour le ",
-        "add_note": "Ajouter une note de service",
-        "note_title": "Rédiger une note de service",
-        "note_title_placeholder": "Donner un titre à la note...",
-        "note_body_placeholder": "Rédiger une note...",
-        "calendar_title": "Date du jour",
-        "team_choice": "Attribution par équipe",
-        "general_team": "Général",
-        "reception_team": "Réception",
-        "housekeeping_team": "Ménage",
-        "technical_team": "Technique",
-        "drawer_title": "Ecrire une note de service",
-        "drawer_note_title": "Titre de la note",
-        "notif": "Votre note a bien été enregistrée pour le "
+    "msh_messenger": {
+        "m_note_big_title": "Nota de serviço",
+        "m_note_circle_tooltip": "Atribuir a uma equipe",
+        "m_notification": "Sua nota foi salva para",
+        "m_add_note": "Adicionar um memorando",
+        "m_note_title": "Escreva um memorando",
+        "m_note_title_placeholder": "Dê um título à nota ...",
+        "m_note_body_placeholder": "Escreva uma nota ...",
+        "m_calendar_title": "Data de hoje",
+        "m_team_choice": "Alocação de equipe",
+        "m_general_team": "Geral",
+        "m_reception_team": "Recepção",
+        "m_housekeeping_team": "Doméstico",
+        "m_technical_team": "Técnico",
+        "m_drawer_title": "Escreva um memorando",
+        "m_drawer_note_title": "Título da nota",
+        "m_notif": "Sua nota foi salva para o"
     },
-    "toolbar": {
+    "msh_toolbar": {
         "tooltip_conciergerie": "Conciergerie",
-        "tooltip_cab": "Taxi",
-        "tooltip_room_change": "Délogement",
-        "tooltip_alarm": "Réveil",
-        "tooltip_technical": "Maintenance technique",
-        "tooltip_lost_found": "Objets trouvés"
+        "tooltip_cab": "Táxi",
+        "tooltip_room_change": "Relocation",
+        "tooltip_alarm": "Despertador",
+        "tooltip_technical": "Manutenção técnica",
+        "tooltip_lost_found": "Objetos encontrados"
     },
-    "coolbar": {
-        "tooltip_check_list": "Check-list",
-        "tooltip_phone_book": "Annuaire",
-        "tooltip_safe": "Caisse",
-        "tooltip_support": "Assistance technique"
+    "msh_coolbar": {
+        "tooltip_check_list": "Lista de verificação",
+        "tooltip_phone_book": "Diretório",
+        "tooltip_safe": "Check-out",
+        "tooltip_support": "Assistência técnica"
     },
-    "navigation": {
-        "tooltip_admin_board": "Administrateur",
+    "msh_navigation": {
+        "tooltip_admin_board": "Administrador",
         "tooltip_feedbackbox": "Feedbackbox",
-        "tooltip_user_profile": "Profil utilisateur",
-        "tooltip_deconnexion": "Déconnexion",
-        "deconnexion_modal_title": "Voulez-vous quitter l'application ?",
-        "deconnexion_modal_button": "Quitter"
+        "tooltip_user_profile": "Perfil de usuário",
+        "tooltip_deconnexion": "Desconexão",
+        "deconnexion_modal_title": "Deseja encerrar o aplicativo?",
+        "modal_button_disconnection": "Sair"
     },
-    "drawer": {
-        "menu": "menu"
+    "msh_drawer": {
+        "d_menu": "menu"
     },
-    "cab": {
-        "title": "Réservation de taxi",
-        "table_title": "Liste des réservations",
-        "calendar_title": "Date et Heure de réservation",
-        "client": "Nom du client",
-        "room": "Numéro de chambre",
-        "pax": "Nbre de passagers",
-        "vehicule": {
-            "label": "Type de véhicule",
-            "limousin": "Berline",
-            "van": "Van"
+    "msh_cab": {
+        "c_title": "Reserva de táxi",
+        "c_table_title": "Lista de reservas",
+        "c_calendar_title": "Data e hora da reserva",
+        "c_client": "Nome do cliente",
+        "c_room": "Número do quarto",
+        "c_pax": "Número de passageiros",
+        "c_vehicule": {
+            "v_label": "Tipo de veículo",
+            "v_limousin": "Berline",
+            "v_van": "Van"
         },
-        "destination": {
-            "label": "Adresse de destination",
-            "placeholder": "ex: 16 avenue Paul Cézanne, 78990 Elancourt"
+        "c_destination": {
+            "d_label": "Endereço de destino",
+            "d_placeholder": "ex: 16 avenue Paul Cézanne, 78990 Elancourt"
         },
-        "notif": "Vous venez d'ajouter une demande de réservation de taxi à la liste !",
-        "phone_button": {
-            "show_modal": "Réserver un taxi",
-            "validation": "Réserver maintenant"
+        "c_notif": "Você acabou de adicionar um pedido de reserva de táxi à lista!",
+        "c_phone_button": {
+            "b_show_modal": "Reserve um táxi",
+            "b_validation": "Reserve agora"
         }
     },
-    "housekeeping": {
-        "title": "Conciergerie",
-        "towel": "Serviette",
-        "soap": "Savon",
-        "toilet_paper": "Papier toilette",
-        "blanket": "Couverture",
-        "pillow": "Coussin",
-        "hair_dryer": "Sèche-cheveux",
-        "iron": "Fer à repasser",
-        "baby_bed": "Lit bébé"
+    "msh_housekeeping": {
+        "h_title": "Concierge",
+        "h_towel": "Toalha",
+        "h_soap": "Sabonete",
+        "h_toilet_paper": "Papel higiênico",
+        "h_blanket": "Capa",
+        "h_pillow": "Travesseiro",
+        "h_hair_dryer": "Secador de cabelo",
+        "h_iron": "Ferror ",
+        "h_baby_bed": "Berço"
     },
-    "room_change": {
-        "title": "Délogement client",
-        "client": "Nom du client",
-        "from": "Depuis la chambre...",
-        "to": "...vers la chambre",
-        "reason": {
-            "label": "Pour quel motif ?",
-            "paint": "Peinture",
-            "plumbery": "Plomberie",
-            "electricity": "Electricité",
-            "cleaning": "Ménage",
-            "other": "Autres"
+    "msh_room_change": {
+        "r_title": "Remoção do cliente",
+        "r_client": "Nome do cliente",
+        "r_from": "Do quarto ...",
+        "r_to": "... para o quarto",
+        "r_reason": {
+            "r_label": "Por que motivo?",
+            "r_paint": "Pintura",
+            "r_plumbery": "Encanamento",
+            "r_electricity": "Eletricidade",
+            "r_cleaning": "Household",
+            "r_other": "Outros"
         },
-        "state":{
-            "label": "Etat de la chambre",
-            "dirty": "Sale",
-            "clean": "Propre"
+        "r_state": {
+            "s_label": "Status da sala",
+            "s_dirty": "Promoção",
+            "s_clean": "Limpar"
         },
-        "details": "Plus de détails",
-        "phone_button": {
-            "show_modal": "Déloger un client",
-            "validation": "Déloger maintenant"
+        "r_details": "Mais detalhes",
+        "r_phone_button": {
+            "b_show_modal": "Cancelar inscrição de cliente",
+            "b_validation": "Desalojar agora"
         },
-        "notif": "Vous venez d'ajouter une demande de délogement à la liste !"
+        "r_notif": "Você acabou de adicionar um pedido de deslocamento à lista!"
     },
-    "alarm": {
-        "title": "Programmation de réveils",
-        "first_tab_title": "Programmer un réveil",
-        "second_tab_title": "Liste des réveils",
-        "calendar_title": "Date et Heure de programmation",
-        "client": "Nom du client",
-        "room": "Numéro de chambre",
-        "phone_button": {
-            "show_modal": "Programmer un réveil",
-            "validation": "Programmer maintenant"
+    "msh_alarm": {
+        "a_title": "Programando despertadores",
+        "a_first_tab_title": "Programe um despertador",
+        "a_second_tab_title": "Lista de despertadores",
+        "a_calendar_title": "Data e hora da programação",
+        "a_client": "Nome do cliente",
+        "a_room": "Número do quarto",
+        "a_phone_button": {
+            "b_show_modal": "Agende uma chamada de despertar",
+            "b_validation": "Programe agora"
         },
-        "notif": "Vous venez d'ajouter une demande de réveil !"
+        "a_notif": "Você acabou de adicionar um pedido de ativação!"
     },
-    "maintenance": {
-        "title": "Maintenance technique",
-        "first_tab_title": "Signaler un problème techniques",
-        "second_tab_title": "Liste des problèmes techniques",
-        "client": "Nom du client",
-        "room": "Numéro de chambre",
-        "type": {
-            "label": "Type de problème",
-            "paint": "Peinture",
-            "plumbery": "Plomberie",
-            "electricity": "Electricité",
-            "cleaning": "Ménage",
-            "other": "Autres"
+    "msh_maintenance": {
+        "m_title": "Manutenção técnica",
+        "m_first_tab_title": "Comunicar um problema técnico",
+        "m_second_tab_title": "Lista de problemas técnicos",
+        "m_client": "Nome do cliente",
+        "m_room": "Número do quarto",
+        "m_type": {
+            "t_label": "Tipo de problema",
+            "t_paint": "Pintura",
+            "t_plumbery": "Encanamento",
+            "t_electricity": "Eletricidade",
+            "t_cleaning": "Household",
+            "t_other": "Outros"
         },
-        "details":"Plus de détails",
-        "phone_button": {
-            "show_modal": "Signaler un problème",
-            "validation": "Signaler maintenant"
+        "m_details": "Mais detalhes",
+        "m_phone_button": {
+            "b_show_modal": "Comunicar um problema",
+            "b_validation": "Reportar agora"
         },
-        "notif": "Vous venez d'ajouter un signalement technique à la liste !"
+        "m_notif": "Você acabou de adicionar um relatório técnico à lista!"
     },
-    "lost_found": {
-        "title": "Objets trouvés",
-        "first_tab_title": "High Tech",
-        "second_tab_title": "Documents officiels",
-        "third_tab_title": "Vêtements",
-        "fourth_tab_title": "Autres",
-        "type": {
-            "label": "Quel type d'objet ?",
-            "tech": "High Tech",
-            "paper": "Documents officiels",
-            "clothes": "Vêtements",
-            "other": "Autres"
+    "msh_lost_found": {
+        "l_title": "Objetos encontrados",
+        "l_first_tab_title": "Alta tecnologia",
+        "l_second_tab_title": "Documentos oficiais",
+        "l_third_tab_title": "Roupas",
+        "l_fourth_tab_title": "Outros",
+        "l_type": {
+            "t_label": "Que tipo de objeto?",
+            "t_tech": "Alta tecnologia",
+            "t_paper": "Documentos oficiais",
+            "t_clothes": "Roupas",
+            "t_other": "Outros"
         },
-        "place": {
-            "label": "Lieu ?",
-            "hall": "Hall",
-            "restaurant": "Restaurant",
-            "parking": "Parking",
-            "floors": "Etages",
-            "toilet": "Toilettes",
-            "other": "Autres"
+        "l_place": {
+            "p_label": "Local?",
+            "p_hall": "Hall",
+            "p_restaurant": "Restaurante",
+            "p_parking": "Estacionamento",
+            "p_floors": "Pisos",
+            "p_toilet": "Sanitas",
+            "p_other": "Outros"
         },
-        "description": {
-            "label": "Description de l'objet",
-            "placeholder": "ex: un i-phone noir"
+        "l_description": {
+            "d_label": "Descrição do objeto",
+            "d_placeholder": "ex: um i-phone preto"
         },
-        "details":"Plus de détails",
-        "sheet": {
-            "title": "Cliquez sur un élément du tableau",
-            "subtitle": "Plus de détails sur l'objet s'afficheront ici !"
+        "l_details": "Mais detalhes",
+        "l_sheet": {
+            "s_title": "Clique em um elemento da matriz",
+            "s_subtitle": "Mais detalhes do item serão mostrados aqui!"
         },
-        "button": {
-            "add": "Ajouter un objet",
-            "send": "Contacter le propriétaire",
-            "show_modal": "Enregistrer un objet trouvé",
-            "validation": "Enregistrer maintenant"
+        "l_button": {
+            "b_add": "Adicionar um objeto",
+            "b_send": "Contactar o proprietário",
+            "b_show_modal": "Salvar um objeto encontrado",
+            "b_validation": "Registre-se agora"
         },
-        "notif": "Vous venez d'ajouter un objet trouvé au panier !"
+        "l_notif": "Você acabou de adicionar um objeto encontrado à cesta!"
     },
-    "crm": {
-        "title": "Base de données client",
-        "checbox_mail_label": "Envoyer le mail",
-        "sheet": {
-            "title": "Profil du client",
-            "subtitle": "Cliquez sur un élément du tableau pour afficher plus de détails sur le client !"
+    "msh_crm": {
+        "c_title": "Banco de dados do cliente",
+        "c_checbox_mail_label": "Enviar e-mail",
+        "c_sheet": {
+            "s_title": "Perfil do cliente",
+            "s_subtitle": "Clique em um item da tabela para ver mais detalhes sobre o cliente!"
         },
-        "modal_title": "Ajouter un client",
-        "gender": {
-            "man": "Homme",
-            "female": "Femme"
+        "c_modal_title": "Adicionar um cliente",
+        "c_gender": {
+            "g_man": "Masculino",
+            "g_female": "Mulher"
         },
-        "client":"Nom du client",
-        "email": "E-mail du client",
-        "phone": "Numéro de téléphone du client",
-        "origin": {
-            "label": "Origine du client"
+        "c_client": "Nome do cliente",
+        "c_email": "E-mail do cliente",
+        "c_phone": "Número de telefone do cliente",
+        "c_origin": {
+            "o_label": "Origem do cliente"
         },
-        "category": {
-            "label": "Catégorie client",
-            "tourisim": "Tourisme",
-            "business": "Business"
+        "c_category": {
+            "c_label": "Categoria do cliente",
+            "c_tourisim": "Turismo",
+            "c_business": "Negocio"
         },
-        "chat_title": "Fil de discussion",
-        "button": {
-            "add": "Ajouter un client",
-            "send_mail": "Envoyer un e-mail de bienvenue",
-            "contact": "Contacter le client",
-            "chat": "Afficher le chat"
+        "c_chat_title": "Tópico de discussão",
+        "c_button": {
+            "b_add": "Adicionar um cliente",
+            "b_send_mail": "Envie um e-mail de boas-vindas",
+            "b_contact": "Contactar o cliente",
+            "b_chat": "Mostrar bate-papo"
         },
-        "notif": "Vous venez d'ajouter un client à la base de données !"
+        "c_notif": "Você acabou de adicionar um cliente ao banco de dados!"
     },
-    "check_list": {
-        "title": "Check-List",
-        "input_placeholder": "Ajouter une tâche",
-        "button": {
-            "uncheck_all": "Tout dé-sélectionner",
-            "morning_shift": "Matin",
-            "afternoon_shift": "Soir",
-            "night_shift": "Nuit",
-            "validate": "Valider"
+    "msh_check_list": {
+        "c_title": "Lista de verificação",
+        "c_input_placeholder": "Adicionar uma tarefa",
+        "c_button": {
+            "b_uncheck_all": "Desmarcar tudo",
+            "b_morning_shift": "Bom dia",
+            "b_afternoon_shift ":" Noite ",
+            "b_night_shift": "Noite",
+            "b_validate": "Validar"
         }
     },
-    "phone_book": {
-        "title": "Annuaire des contacts",
-        "first_tab_title": "Répertoire",
-        "second_tab_title": "Ajouter un contact",
-        "contact": "Nom du contact",
-        "mobile": "Numéro de mobile",
-        "local": "Numéro de fixe",
-        "notif": "Vous venez d'ajouter un nouveau nom à l'annuaire !"
+    "msh_phone_book": {
+        "p_title": "Diretório de contatos",
+        "p_first_tab_title": "Diretório",
+        "p_second_tab_title": "Adicionar um contato",
+        "p_contact": "Nome do contato",
+        "p_mobile": "Número do celular",
+        "p_local": "Número fixo",
+        "p_notif": "Você acabou de adicionar um novo nome ao diretório!"
     },
-    "Safe": {
-        "title": "Feuille de caisse",
-        "first_tab_title": "Caisse du shift",
-        "second_tab_title": "Journal de caisses",
-        "select": {
-            "label": "Shift",
-            "morning_shift": "Matin",
-            "afternoon_shift": "Soir",
-            "night_shift": "Nuit"
+    "msh_safe": {
+        "s_title": "Folha de caixa",
+        "s_first_tab_title": "Shift checkout",
+        "s_second_tab_title": "Caixa registradora",
+        "s_select": {
+            "s_label": "Shift",
+            "s_morning_shift": "Bom dia",
+            "s_afternoon_shift": "Noite",
+            "s_night_shift": "Noite"
         },
-        "notif": "Vous venez d'effectuer un rapport de caisse !"
+        "s_notif": "Você acabou de fazer um relatório de caixa!"
     },
-    "support": {
-        "title": "Support technique",
-        "input_placeholder": "Ecrire un message..."
+    "msh_support": {
+        "s_title": "Suporte técnico",
+        "s_input_placeholder": "Escreva uma mensagem ..."
     },
-    "admin_board": {
-        "title": "Interface Administrateur",
-        "first_tab_title": "Crééer un utilisateur",
-        "second_tab_title": "Supprimer un utilisateur",
-        "cowoker": "Prénom et nom du collaborateur",
-        "email": "E-mail du collaborateur",
-        "phone_title": "Liste des collaborateurs",
-        "phone_button": {
-            "show_modal": "Ajouter un collaborateur",
-            "validation": "Créer un compte maintenant"
+    "msh_admin_board": {
+        "a_title": "Interface do administrador",
+        "a_first_tab_title": "Crie um usuário",
+        "a_second_tab_title": "Excluir um usuário",
+        "a_cowoker": "Nome e sobrenome do funcionário",
+        "a_email": "E-mail do funcionário",
+        "a_phone_title": "Lista de colaboradores",
+        "a_phone_button": {
+            "b_show_modal": "Adicionar um colaborador",
+            "b_validation": "Crie uma conta agora"
         },
-        "notif": "Vous venez de créer un compte collaborateur !"
+        "a_notif": "Você acabou de criar uma conta de colaborador!"
     },
-    "feedback_box": {
-        "title": "Feedback Box",
-        "subtitle": "Pour une meilleure expérience utilisateur",
-        "comment": {
-            "improvement": "Améliorations",
-            "satisfaction": "Satisfaction"
+    "msh_feedback_box": {
+        "f_title": "Caixa de feedback",
+        "f_subtitle": "Para uma melhor experiência do usuário",
+        "f_comment": {
+            "c_improvement": "Melhorias",
+            "c_satisfaction": "Satisfação"
         },
-        "input_textarea": "Faites-nous un retour de votre expérience...",
-        "phone_button": "Envoyer maintenant",
-        "notif": "La Team MSH vous remercie pour votre contribution !"
+        "f_input_textarea": ​​"Dê-nos um feedback sobre a sua experiência ...",
+        "f_phone_button": "Envie agora",
+        "f_notif": "A equipe MSH agradece sua contribuição!"
     },
-    "user_panel": {
-        "section": {
-            "email": {
-                "label": "Modifier mon adresse e-mail",
-                "input_placeholder": "Entrer une nouvelle adresse e-mail",
-                "notif": "Le changement de votre adresse e-mail a été enregistré avec succès !"
+    "msh_user_panel": {
+        "u_section": {
+            "s_email": {
+                "e_label": "Modificar meu endereço de e-mail",
+                "e_input_placeholder": "Digite um novo endereço de e-mail",
+                "e_notif": "A alteração do seu endereço de e-mail foi salva com sucesso!"
             },
-            "password": {
-                "label": "Modifier mon mot de passe",
-                "input_placeholder": "Entrer un nouveau mot de passe",
-                "notif": "Le changement de votre mot de passe a été enregistré avec succès !"
+            "s_password": {
+                "p_label": "Modificar minha senha",
+                "p_input_placeholder": "Digite uma nova senha",
+                "p_notif": "Sua alteração de senha foi salva com sucesso!"
             },
-            "visuals": {
-                "label": "Générer mes visuels de communication",
-                "sticker": {
-                    "title": "Générer un sticker",
-                    "message": {
-                        "part_one": "Tous nos services en",
-                        "part_two": "une seule app"
+            "s_visuals": {
+                "v_label": "Gerar meus visuais de comunicação",
+                "v_sticker": {
+                    "s_title": "Gerar um adesivo",
+                    "s_message": {
+                        "part_one": "Todos os nossos serviços em",
+                        "part_two": "apenas um aplicativo"
                     }
                 },
-                "flyer": {
-                    "title": "Générer un flyer",
-                    "message":{
-                        "part_one": "Contactez-nous",
-                        "part_two": "en un seul clic",
-                        "part_three": "Découvrez notre application web et profitez de nos services",
-                        "part_four": "depuis un smartphone ou une tablette",
-                        "part_five": "Scannez le qr code ci-dessus"
+                "v_flyer": {
+                    "f_title": "Gerar um flyer",
+                    "f_message": {
+                        "part_one": "Entre em contato",
+                        "part_two": "com um clique",
+                        "part_three": "Descubra nosso aplicativo da web e tire proveito de nossos serviços",
+                        "part_four": "de um smartphone ou tablet",
+                        "part_five": "Digitalize o código qr acima"
                     }
                 },
-                "band": {
-                    "title": "Générer un banderolle",
-                    "message":{
-                        "part_one": "Contactez-nous",
-                        "part_two": "en un seul clic",
-                        "part_three": "Découvrez notre application web et profitez de nos services",
-                        "part_four": "depuis un smartphone ou une tablette",
-                        "part_five": "Scannez le qr code ci-dessus"
+                "v_band": {
+                    "b_title": "Gerar um banner",
+                    "b_message": {
+                        "part_one": "Entre em contato",
+                        "part_two": "com um clique",
+                        "part_three": "Descubra nosso aplicativo da web e tire proveito de nossos serviços",
+                        "part_four": "de um smartphone ou tablet",
+                        "part_five": "Digitalize o código qr acima"
                     }
                 }
             },
-            "logo": {
-                "label": "Téléverser mon logo",
-                "alert": {
-                    "success": "Votre logo a été téléversé avec succès !",
-                    "danger": "Vous devez téléverser une image avant de valider le formulaire !"
+            "s_logo": {
+                "l_label": "Carregar meu logotipo",
+                "l_alert": {
+                    "a_success": "Seu logotipo foi enviado com sucesso!",
+                    "a_danger": "Você deve enviar uma imagem antes de validar o formulário!"
                 },
-                "button_confirmation": "Confirmer le téléversement"
+                "l_button_confirmation": "Confirmar upload"
             }
         },
-        "update_photo": {
-            "tooltip": "Ajouter/Changer la photo de votre profil",
-            "modal": {
-                "title": "Etes-vous sûr.e de vouloir ajouter ou changer votre photo de profil ?",
-                "button":{
-                    "yes": "Oui",
-                    "no": "Non" 
+        "u_update_photo": {
+            "u_tooltip": "Adicionar / alterar sua imagem de perfil",
+            "u_modal": {
+                "m_title": "Tem certeza de que deseja adicionar ou alterar sua foto de perfil?",
+                "m_button": {
+                    "b_yes": "Sim",
+                    "b_no": "Não"
                 }
             }
         }
     },
-    "register_form": {
-        "title": "Formulaire d'inscription",
-        "button": {
-            "next": "Passer à l'étape",
-            "back": "Etape précédente",
-            "find": "Chercher",
-            "create": "Je ne trouve pas mon hôtel",
-            "search": "Trouver mon hôtel avec le code postal",
-            "validation_form": "Valider mon formulaire",
-            "phone_validation": "Valider"
+    "msh_register_form": {
+        "r_title": "Formulário de registro",
+        "r_button": {
+            "b_next": "Vá para a etapa",
+            "b_back": "Etapa anterior",
+            "b_find": "Encontrar",
+            "b_create": "Não consigo encontrar meu hotel",
+            "b_search": "Encontre meu hotel com o código postal",
+            "b_validation_form": "Validar meu formulário",
+            "b_phone_validation": "Validar"
         },
-        "or": "ou",
-        "step": {
-            "first": {
-                "title": "Première étape",
-                "subtitle": "Créer un compte administrateur",
-                "first_name": "Prénom",
-                "last_name": "Nom",
-                "email": "E-mail",
-                "password": "Mot de passe",
-                "confirmation": "Confirmer le mot de passe",
-                "alert": "Attention ! Veuillez confirmer à nouveau votre mot de passe s'il vous plaît !"
+        "r_or": "ou",
+        "r_step": {
+            "s_first": {
+                "f_title": "Primeiro passo",
+                "f_subtitle": "Crie uma conta de administrador",
+                "f_first_name": "Nome",
+                "f_last_name": "Nome",
+                "f_email": "E-mail",
+                "f_password": "Senha",
+                "f_confirmation": "Confirmar senha",
+                "f_alert": "Atenção! Por favor, reconfirme sua senha!"
             },
-            "second": {
-                "title": "Première étape",
-                "subtitle": {
-                    "find": "Entrez le code postal de votre établissement",
-                    "create": "Enregistrer mon établissement"
+            "s_second": {
+                "s_title": "Primeira etapa",
+                "s_subtitle": {
+                    "s_find": "Insira o código postal do seu estabelecimento",
+                    "s_create": "Registrar meu estabelecimento"
                 },
-                "input": {
-                    "find_placeholder": "Code postal",
-                    "hote_name": "Nom de hôtel",
-                    "region": "Region",
-                    "district": "Département",
-                    "city": "Ville",
-                    "code_postal": "Code postal",
-                    "standing": "Classement",
-                    "capacity": "Nombre de chambre",
-                    "address": "Adresse de l'hôtel",
-                    "phone": "Numéro de téléphone",
-                    "web": "Site web"
+                "s_input": {
+                    "i_find_placeholder": "Código postal",
+                    "i_hote_name": "Nome do hotel",
+                    "i_region": "Região",
+                    "i_district": "Departamento",
+                    "i_city": "Cidade",
+                    "i_code_postal": "Código postal",
+                    "i_standing": "Classificação",
+                    "i_capacity": "Número de quartos",
+                    "i_address": "Endereço do hotel",
+                    "i_phone": "Número de telefone",
+                    "i_web": "Site"
                 },
-                "alert": {
-                    "isRegitrated": "Cet établissement bénéficie déjà de nos services ! Pour plus de renseignement, veuillez vous adresser au responsable des opérations de votre équipe.",
-                    "action_required": "Vous devez choisir ou enregistrer un établissement !"
+                "s_alert": {
+                    "a_isRegitrated": "Este estabelecimento já se beneficia de nossos serviços! Para mais informações, entre em contato com o gerente de operações de sua equipe.",
+                    "a_action_required": "Você deve escolher ou registrar um estabelecimento!"
                 },
-                "drawer_list_hotel": "Liste des hôtels trouvés"
+                "s_drawer_list_hotel": "Lista de hotéis encontrados"
             },
-            "third": {
-                "title": "Première étape",
-                "subtitle": "Téléverser le logo de votre hôtel ici",
-                "skip_button": "Je le ferai plus tard",
-                "modal": {
-                    "title": "Etes-vous sûr.e de vouloir sélectionner cette image ?",
-                    "button": {
-                        "yes": "Oui",
-                        "no": "Non"
+            "s_third": {
+                "t_title": "Primeira etapa",
+                "t_subtitle": "Carregue o logotipo do seu hotel aqui",
+                "t_skip_button": "Farei isso mais tarde",
+                "t_modal": {
+                    "m_title": "Tem certeza que deseja selecionar esta imagem?",
+                    "m_button": {
+                        "b_yes": "Sim",
+                        "b_no": "Não"
                     }
                 },
-                "alert": {
-                    "success": "Votre logo a été téléversé avec succès !",
-                    "danger": "Vous devez téléverser une image avant de valider le formulaire !"
+                "t_alert": {
+                    "a_success": "Seu logotipo foi enviado com sucesso!",
+                    "a_danger": "Você deve enviar uma imagem antes de validar o formulário!"
                 }
             },
-            "fourth": {
-                "title": "Première étape",
-                "subtitle": "Récapitulatif",
-                "step_back_button": "Revenir à cette étape",
-                "section": {
-                    "first": {
-                        "title": "Etablissement hôtelier",
-                        "name": "Nom",
-                        "address": "Adresse",
-                        "region": "Region",
-                        "district": "Département",
-                        "city": "Ville",
-                        "code_postal": "Code postal",
-                        "standing": {
-                            "label": "Classement",
-                            "suffix": " étoiles"
+            "s_fourth": {
+                "f_title": "Primeiro passo",
+                "f_subtitle": "Resumo",
+                "f_step_back_button": "Volte para esta etapa",
+                "f_section": {
+                    "s_first": {
+                        "f_title": "Estabelecimento hoteleiro",
+                        "f_name": "Nome",
+                        "f_address": "Endereço",
+                        "f_region": "Região",
+                        "f_district": "Departamento",
+                        "f_city": "Cidade",
+                        "f_code_postal": "Código postal",
+                        "f_standing": {
+                            "s_label": "Classificação",
+                            "s_suffix": "estrelas"
                         },
-                        "capacity": {
-                            "label": "Capacité",
-                            "suffix": " chambres"
+                        "f_capacity": {
+                            "c_label": "Capacidade",
+                            "c_suffix": "quartos"
                         }
                     },
-                    "second": {
-                        "name": "Nom",
-                        "email": "E-mail"
+                    "s_second": {
+                        "s_name": "Nome",
+                        "s_email": "E-mail"
                     }
                 },
-                "alert": "Vous n'avez pas rempli tous les champs du formulaire !"
+                "f_alert": "Você não preencheu todos os campos do formulário!"
             },
-            "final": {
-                "title": "Welcome to the Smart Hospitality",
-                "subtitle": {
-                    "part_one": "Félicitations !",
-                    "part_two": "Vous venez de prendre 2 ans d'avance sur la concurrence !"
+            "s_final": {
+                "f_title": "Bem-vindo à Smart Hospitality",
+                "f_subtitle": {
+                    "part_one": "Parabéns!",
+                    "part_two": "Você acabou de levar 2 anos à frente da competição!"
                 },
-                "message": {
-                    "first_paragraph": "Vous pouvez désormais jouir de nos services gratuitement et ce, durant toute la phase de pré-lancement qui s'étendra jusqu'en mai 2022.",
-                    "second_paragraph": "Vous pouvez dès maintenant accéder à notre solution en cliquant sur le lien suivant :",
+                "f_message": {
+                    "first_paragraph": "Agora você pode desfrutar de nossos serviços gratuitamente durante a fase de pré-lançamento, que decorrerá até maio de 2022.",
+                    "second_paragraph": "Agora você pode acessar nossa solução clicando no seguinte link:",
                     "third_paragraph": {
-                        "part_one": "Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.",
-                        "part_two": "Téléchargeable uniquement depuis un ordinateur (portable ou fixe), vous les trouverez dans la section \nProfil\n de l'application web en cliquant sur l'icône suivante ",
-                        "part_three": " situé dans la barre de navigation."
+                        "part_one": "Os visuais foram desenvolvidos para facilitar a comunicação em torno da solução para os clientes.",
+                        "part_two": "Para download apenas de um computador (laptop ou desktop), você os encontrará na seção \nPerfil\n do aplicativo da web clicando no ícone a seguir",
+                        "part_three ":" localizado na barra de navegação. "
                     },
-                    "fourth_paragraph": "Toute l'équipe de My Sweet Hotel vous remercie pour la confiance que vous lui avez accordée !",
-                    "hidden_paragraph": "Revenir sur le site"
+                    "quarter_paragraph": "Toda a equipe do My Sweet Hotel agradece por confiar nele!",
+                    "hidden_paragraph": "Volte para o site"
                 }
             }
         }
