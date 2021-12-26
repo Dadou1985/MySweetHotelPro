@@ -30,7 +30,7 @@ const Connection = () => {
           return navigate('singlePage')})
         .catch(error=>{
           if (error.message !== ""){
-            return document.getElementById('warning').innerHTML = t("connexion.warning")
+            return document.getElementById('warning').innerHTML = t("msh_connexion.c_warning")
           }else{}
         })
       }   
@@ -59,7 +59,7 @@ const Connection = () => {
                 type="email" 
                 name="email" 
                 className="form-control mb-4" 
-                placeholder={t('connexion.email_maj')}
+                placeholder={t('msh_connexion.c_email_maj')}
                 onChange={handleChange}
                 required />
 
@@ -68,13 +68,13 @@ const Connection = () => {
                 type="password" 
                 name="password" 
                 className="form-control mb-4" 
-                placeholder={t("connexion.password")}
+                placeholder={t("msh_connexion.c_password")}
                 onChange={handleChange}
                 required />
 
             <div id="warning"></div>
 
-            <button className="btn btn-info btn-block my-4" type="submit">{t("connexion.connexion")}</button>
+            <button className="btn btn-info btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
             </form>
             {/*<Modal show={list}
                 size="md"
