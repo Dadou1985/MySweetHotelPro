@@ -62,7 +62,7 @@ const Cab = ({userDB}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        const notif = "Vous venez d'ajouter une demande de réservation de taxi à la liste !" 
+        const notif = t("msh_cab.c_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -146,7 +146,7 @@ const Cab = ({userDB}) =>{
                 placement="right"
                 overlay={
                 <Tooltip id="title">
-                    Taxi
+                    {t("msh_toolbar.tooltip_cab")}
                 </Tooltip>
                 }>
                     <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
@@ -161,7 +161,7 @@ const Cab = ({userDB}) =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Réservation de taxi
+                        {t("msh_cab.c_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -173,7 +173,7 @@ const Cab = ({userDB}) =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Réserver" title="Réserver un taxi">
+                            <Tab eventKey="Réserver" title={t("msh_cab.c_phone_button.b_show_modal")}>
                                 <div  style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -194,7 +194,7 @@ const Cab = ({userDB}) =>{
                                         <KeyboardDateTimePicker
                                             variant="dialog"
                                             ampm={false}
-                                            label="Date et Heure de réservation"
+                                            label={t("msh_cab.c_calendar_title")}
                                             value={formValue.date}
                                             onChange={handleDateChange}
                                             onError={console.log}
@@ -214,12 +214,12 @@ const Cab = ({userDB}) =>{
                                         width: "70%"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Nom du client</Form.Label>
+                                        <Form.Label>{t("msh_cab.c_client")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "10vw"}} value={formValue.client} name="client" onChange={handleChange} required />
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description2">
-                                        <Form.Label>Numéro de chambre</Form.Label>
+                                        <Form.Label>{t("msh_cab.c_room")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 409" style={{width: "10vw"}} value={formValue.room} name="room" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
@@ -231,12 +231,12 @@ const Cab = ({userDB}) =>{
                                         width: "70%"
                                     }}>
                                         <Form.Group controlId="description5">
-                                        <Form.Label>Nbre de passagers</Form.Label>
+                                        <Form.Label>{t("msh_cab.c_pax")}</Form.Label>
                                         <Form.Control type="number" style={{width: "10vw"}} value={formValue.passenger} name="passenger" onChange={handleChange} />
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description6">
-                                        <Form.Label>Type de véhicule</Form.Label><br/>
+                                        <Form.Label>{t("msh_cab.c_vehicule.v_label")}</Form.Label><br/>
                                         <select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
                                         style={{width: "10vw", 
                                         height: "4vh", 
@@ -245,33 +245,33 @@ const Cab = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>Berline</option>
-                                            <option>Van</option>
+                                            <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                                            <option>{t("msh_cab.c_vehicule.v_van")}</option>
                                         </select>
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
                                         <Form.Group controlId="description7">
-                                        <Form.Label>Adresse de destination</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 16 avenue Paul Cézanne, 78990 Elancourt" style={{width: "28vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
+                                        <Form.Label>{t("msh_cab.c_destination.d_label")}</Form.Label>
+                                        <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} style={{width: "28vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     </>}
                                 </div>
                             </Tab>
-                            <Tab eventKey="Liste des réservations" title="Liste des réservations">
+                            <Tab eventKey="Liste des réservations" title={t("msh_cab.c_table_title")}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                                 <Table striped bordered hover size="sm" className="text-center">
                                     <thead className="bg-dark text-center text-light">
                                         <tr>
-                                        <th>Client</th>
-                                        <th>Chambre</th>
-                                        <th>Date</th>
-                                        <th>Heure</th>
-                                        <th>Passagers</th>
-                                        <th>Véhicule</th>
-                                        <th>Destination</th>
-                                        <th>Statut</th>
+                                        <th>{t("msh_general.g_table.t_client")}</th>
+                                        <th>{t("msh_general.g_table.t_room")}</th>
+                                        <th>{t("msh_general.g_table.t_date")}</th>
+                                        <th>{t("msh_general.g_table.t_time")}</th>
+                                        <th>{t("msh_general.g_table.t_passenger")}</th>
+                                        <th>{t("msh_general.g_table.t_type_of_car")}</th>
+                                        <th>{t("msh_general.g_table.t_destination")}</th>
+                                        <th>{t("msh_general.g_table.t_statut")}</th>
                                         <th className="bg-dark"></th>
                                         </tr>
                                     </thead>
@@ -303,7 +303,7 @@ const Cab = ({userDB}) =>{
                                                 }).catch(function(error) {
                                                     console.log(error);
                                                 });
-                                            }}>Supprimer</Button></td>
+                                            }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                         </tr>
                                         ))}
                                     </tbody>
@@ -314,10 +314,10 @@ const Cab = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         {step && <>
-                            <Button variant="outline-dark" onClick={() => setStep(false)}>Retour</Button>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
-                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>Poursuivre</Button>}
+                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                     </Modal.Footer>}
                 </Modal>
         </div>

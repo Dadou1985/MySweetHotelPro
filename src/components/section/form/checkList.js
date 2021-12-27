@@ -23,7 +23,7 @@ const CheckList = () =>{
             placement="right"
             overlay={
               <Tooltip id="title">
-                Check-list
+                {t("msh_check_list.c_title")}
               </Tooltip>
             }>
                 <img src={TodoList} className="icon" alt="todolist" onClick={handleShow} style={{width: "25%"}} />
@@ -37,7 +37,7 @@ const CheckList = () =>{
                 onHide={handleClose}>
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Check-List
+                {t("msh_check_list.c_title")}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body
@@ -47,13 +47,13 @@ const CheckList = () =>{
                     <Col sm={2}>
                     <Nav variant="pills" className="flex-column">
                         <Nav.Item>
-                        <Nav.Link eventKey="matin">Matin</Nav.Link>
+                        <Nav.Link eventKey="matin">{t("msh_check_list.c_button.b_morning_shift")}</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                        <Nav.Link eventKey="soir">Soir</Nav.Link>
+                        <Nav.Link eventKey="soir">{t("msh_check_list.c_button.b_afternoon_shift")}</Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                        <Nav.Link eventKey="nuit">Nuit</Nav.Link>
+                        <Nav.Link eventKey="nuit">{t("msh_check_list.c_button.b_night_shift")}</Nav.Link>
                         </Nav.Item>
                     </Nav>
                     </Col>

@@ -259,7 +259,7 @@ export default function CommunIzi({userDB, user}) {
                               style={{marginRight: "1vw"}} />
                               {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>
-                          <div style={{display: "flex", alignItems: "center"}}>{t('chat.room_maj')} {flow.room}</div>
+                          <div style={{display: "flex", alignItems: "center"}}>{t('msh_chat.c_room_maj')} {flow.room}</div>
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
@@ -282,7 +282,7 @@ export default function CommunIzi({userDB, user}) {
             <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
                 <Form className="communizi_form">
                 <FormGroup  className="communizi_form_input_container"> 
-                    <Input type="text" placeholder={t("chat.input_placeholder")}  
+                    <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
                     value={note}
                     onChange={handleChange}
                     onKeyPress={(e) => {
@@ -358,7 +358,7 @@ export default function CommunIzi({userDB, user}) {
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
                     <Button variant="success" onClick={(event) => {
-                      const notif = "Votre message a bien été envoyé !" 
+                      const notif = t("msh_chat.c_notification") 
                       addNotification(notif)
                       handleSubmit(event)
                       setShowModal(false)
@@ -411,7 +411,7 @@ export default function CommunIzi({userDB, user}) {
                    </div>
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
-                      const notif = "Votre message a bien été envoyé !" 
+                      const notif = t("msh_chat.c_notification") 
                       addNotification(notif)
                       handleSubmit(event)
                       setActivate(false)
@@ -421,7 +421,7 @@ export default function CommunIzi({userDB, user}) {
                     }}>Envoyer</Button>
             </Drawer>
             {showAlert && <Alert variant="danger" style={{width: "20vw"}}>
-              {t('chat.alert')}
+              {t('msh_chat.c_alert')}
             </Alert>}
         </div>
     )

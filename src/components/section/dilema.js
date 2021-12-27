@@ -302,7 +302,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     }
 
      const handleChangeEmail = () => {
-        const notif = "Le changement de votre adresse e-mail a été enregistré avec succès !" 
+        const notif = t("msh_user_panel.u_section.s_email.e_notif") 
 
          auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
@@ -312,7 +312,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
       }
 
       const handleChangePassword = () => {
-        const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
+        const notif = t("msh_user_panel.u_section.s_password.p_notif") 
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
@@ -340,8 +340,8 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         </div>*/}
                     </h1>
                        <div style={{display: typeof window && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
-                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
-                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
+                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
+                            <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
                         </div>
                         <Divider style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
                 </div>
@@ -349,14 +349,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdateEmail}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon adresse e-mail</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_email.e_label")}</h2>
                         <img src={Email} alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdatePassword}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Modifier mon mot de passe</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_password.p_label")}</h2>
                         <img src={Password} alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
@@ -365,14 +365,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer des visuels de communication</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_label")}</h2>
                         <img src={Visuel} alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setListLogo(true)}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Téléverser une nouvelle icône</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_logo.l_label")}</h2>
                         <img src={LogoHotel} alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
@@ -387,14 +387,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
             >
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Modifier mon adresse e-mail
+                {t("msh_user_panel.u_section.s_email.e_label")}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Control type="text" placeholder="Entrer une nouvelle adresse e-mail" style={{width: "30vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
+                <Form.Control type="text" placeholder={t("msh_user_panel.u_section.s_email.e_input_placeholder")} style={{width: "30vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
@@ -404,7 +404,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     handleUpdateEmail(event, formValue.email)
                     handleChangeEmail(formValue.email)
                     handleCloseUpdateEmail()
-                }}>Actualiser maintenant</Button>
+                }}>{t("msh_general.g_button.b_update")}</Button>
             </Modal.Footer>
         </Modal>
 
@@ -416,14 +416,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
             >
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Modifier mon mot de passe
+                {t("msh_user_panel.u_section.s_password.p_label")}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
             <div className="update_modal_container">
             <Form.Row>
                 <Form.Group controlId="description">
-                <Form.Control type="text" placeholder="Entrer un nouveau mot de passe" style={{width: "30vw", textAlign: "center"}} value={formValue.password} name="password" onChange={handleChange} />
+                <Form.Control type="text" placeholder={t("msh_user_panel.u_section.s_password.p_input_placeholder")} style={{width: "30vw", textAlign: "center"}} value={formValue.password} name="password" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
             </div>
@@ -433,7 +433,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     handleUpdatePassword(event, formValue.password)
                     handleChangePassword()
                     handleCloseUpdatePassword()
-                }}>Actualiser maintenant</Button>
+                }}>{t("msh_general.g_button.b_update")}</Button>
             </Modal.Footer>
         </Modal>
 
@@ -445,7 +445,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             >
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Générer des visuels de communication
+                {t("msh_user_panel.u_section.s_visuals.v_label")}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
@@ -458,7 +458,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 <div className="space-box">
                     <div className="softSkin space-card"
                             onClick={() => exportPDF(stickerPdfRef)}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer un sticker</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_sticker.s_title")}</h2>
                         <img src={LogoSticker} alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
@@ -470,7 +470,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 <div className="space-box">
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(flyerPdfRef)}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer un flyer</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_title")}</h2>
                         <img src={LogoFlyer} alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
@@ -482,7 +482,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 <div className="space-box">
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(bandPdfRef)}>
-                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>Générer une banderolle</h2>
+                        <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_band.b_title")}</h2>
                         <img src={LogoBand} alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
@@ -498,7 +498,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             >
             <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="contained-modal-title-vcenter">
-                Téléverser une nouvelle icône
+                {t("msh_user_panel.u_section.s_logo.l_label")}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body style={{display: "flex", flexFlow: "column", alignItems: 'center'}}>
@@ -509,16 +509,16 @@ const Dilema = ({user, userDB, setUserDB}) => {
             </div>
             <div>{newImg && newImg.name}</div>
             {alert.success && <Alert variant="success" className="stepThree_alert">
-                Votre logo a été téléversé avec succès !
+            {t("msh_user_panel.u_section.s_logo.l_alert.a_success")}
             </Alert>}
             {alert.danger && <Alert variant="danger" className="stepThree_alert">
-                Vous devez téléverser une image avant de valider le formulaire !
+            {t("msh_user_panel.u_section.s_logo.l_alert.a_danger")}
             </Alert>}
             </Modal.Body>
             <Modal.Footer>
                 {switchButton ? <Button variant="dark" onClick={() => {
                     handleFirestoreNewData(data && data.link)
-                }}>Confirmer le téléversement</Button> :
+                }}>{t("msh_user_panel.u_section.s_logo.l_button_confirmation")}</Button> :
                 isLoading ? <Spinner animation="grow" /> : <Button variant="outline-dark" onClick={(event) => {
                     if(newImg !== null) {
                         setIsLoading(true)
@@ -533,7 +533,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                             setAlert({danger : false})
                         }, 3000);
                     }
-                }}>Téléverser</Button>}
+                }}>{t("msh_general.g_button.b_upload")}</Button>}
             </Modal.Footer>
         </Modal>
         
@@ -559,7 +559,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             placement="top"
             overlay={
                 <Tooltip id="title">
-                    Ajouter/Changer la photo de votre profil
+                    {t("msh_user_panel.u_update_photo.u_tooltip")}
                 </Tooltip>
             }>
         <input type="file" 
@@ -576,15 +576,15 @@ const Dilema = ({user, userDB, setUserDB}) => {
         onHide={handleCloseUpdatePhoto}
         >
         <Modal.Body>
-            <p style={{textAlign: "center"}}>Etes-vous sûr.e de vouloir ajouter ou changer votre photo de profil ?</p>
+            <p style={{textAlign: "center"}}>{t("msh_user_panel.u_update_photo.u_modal.m_title")}</p>
         </Modal.Body>
         <Modal.Footer>
             <div>
-                <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>Oui</Button>
+                <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_yes")}</Button>
                 <Button size="sm" variant="danger" onClick={() => {
                     setImg(null)
                     handleCloseUpdatePhoto()
-                }}>Non</Button>
+                }}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_no")}</Button>
             </div>
         </Modal.Footer>
     </Modal>}

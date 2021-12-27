@@ -31,6 +31,7 @@ import Chat from './chatRoom'
 import { useTranslation } from "react-i18next"
 
 const GuestDatabase = ({user, userDB}) =>{
+    const { t, i18n } = useTranslation()
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -41,8 +42,8 @@ const GuestDatabase = ({user, userDB}) =>{
     const [filter, setFilter] = useState("High Tech")
     const [item, setItem] = useState({
         img: LostOnes,
-        username: "Profil du client",
-        details: "Cliquez sur un élément du tableau pour afficher plus de détails sur le client !"
+        username: t("msh_crm.c_sheet.s_title"),
+        details: t("msh_crm.c_sheet.s_subtitle")
     })
     const [selectedUser, setselectedUser] = useState(null)
     const [sendingMail, setSendingMail] = useState(false)
@@ -50,7 +51,6 @@ const GuestDatabase = ({user, userDB}) =>{
     const [IsLoading, setIsLoading] = useState(false)
     const [showChat, setShowChat] = useState(false)
     const [radioValueGender, setRadioValueGender] = useState('male');
-    const { t, i18n } = useTranslation()
 
 
     const handleClose = () => setList(false)
@@ -65,8 +65,8 @@ const GuestDatabase = ({user, userDB}) =>{
       }
 
     const radiosGender = [
-        { name: 'Homme', value: 'male' },
-        { name: 'Femme', value: 'female' },
+        { name: t("msh_crm.c_gender.g_man"), value: 'male' },
+        { name: t("msh_crm.c_gender.g_female"), value: 'female' },
     ];
 
       const handleChangeCheckbox = (email) => {
@@ -85,7 +85,7 @@ const GuestDatabase = ({user, userDB}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter un client à la base de données !" 
+        const notif = t("msh_crm.c_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -188,7 +188,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 width: "100%",
                 padding: "1%",
                 textAlign:"center"
-            }}>Base de données client</h1>
+            }}>{t("msh_crm.c_title")}</h1>
             <div style={{
                 display: "flex"
             }}>
@@ -202,9 +202,9 @@ const GuestDatabase = ({user, userDB}) =>{
                                 <tr>
                                     <th style={{border: "transparent"}}></th>
                                     <th style={{border: "transparent"}}></th>
-                                    <th style={{border: "transparent"}}>Nationalité</th>
-                                    <th style={{border: "transparent"}}>Catégorie</th>
-                                    <th style={{border: "transparent"}}>Connexion</th>
+                                    <th style={{border: "transparent"}}>{t("msh_general.g_table.t_origin")}</th>
+                                    <th style={{border: "transparent"}}>{t("msh_general.g_table.t_category")}</th>
+                                    <th style={{border: "transparent"}}>{t("msh_general.g_table.t_connexion")}</th>
                                     <th style={{border: "transparent"}}></th>
                                 </tr>
                             </thead>
@@ -236,16 +236,16 @@ const GuestDatabase = ({user, userDB}) =>{
                                          : <td style={{paddingTop: "3vh"}}><StyledBadge badgeContent="" color="secondary">.</StyledBadge></td>}
                                         {sendingMail ? 
                                         <Form.Group controlId="formBasicCheckbox" style={{display: "flex", marginTop: "1vh"}}>
-                                            <Form.Check type="checkbox" onChange={() => handleChangeCheckbox(flow.email)} style={{marginRight: "1vw"}} /> Envoyer le mail
+                                            <Form.Check type="checkbox" onChange={() => handleChangeCheckbox(flow.email)} style={{marginRight: "1vw"}} /> {t("msh_crm.c_checbox_mail_label")}
                                         </Form.Group> : <td style={{paddingTop: "3vh"}}>
                                             <Button variant="outline-danger" size="sm" onClick={()=> {
                                                 handleDeleteGuest(flow.id)
                                                 setItem({
                                                     img: LostOnes,
-                                                    username: "Profil du client",
-                                                    details: "Cliquez sur un élément du tableau pour afficher plus de détails sur le client !"
+                                                    username: t("msh_crm.c_sheet.s_title"),
+                                                    details: t("msh_crm.c_sheet.s_subtitle")
                                                 })
-                                            }}>Supprimer</Button>
+                                            }}>{t("msh_general.g_button.b_delete")}</Button>
                                         </td>}
                                     </tr>
                                 ))}
@@ -255,14 +255,14 @@ const GuestDatabase = ({user, userDB}) =>{
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
                         {sendingMail ? 
                             IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
-                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>Annuler</Button>
+                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_general.g_button.b_back")}</Button>
                             <Button variant="dark" onClick={async() => {
                             await handleMailSent()
                             return handleMailSended()
                             }}>Envoyer les emails</Button>
                         </span>
-                            : <Button variant="outline-dark" onClick={() => setSendingMail(true)}>Envoyer un e-mail de bienvenue</Button>}
-                        {!sendingMail && <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>Ajouter un client</Button>}
+                            : <Button variant="outline-dark" onClick={() => setSendingMail(true)}>{t("msh_crm.c_button.b_send_mail")}</Button>}
+                        {!sendingMail && <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_crm.c_button.b_add")}</Button>}
                     </div>
 
 
@@ -274,7 +274,7 @@ const GuestDatabase = ({user, userDB}) =>{
                         >
                         <Modal.Header closeButton className="bg-light">
                             <Modal.Title id="contained-modal-title-vcenter">
-                            Ajouter un client
+                            {t("msh_crm.c_button.b_add")}
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -306,25 +306,25 @@ const GuestDatabase = ({user, userDB}) =>{
                                         </Form.Group>
                                         <Form.Row>
                                             <Form.Group controlId="description">
-                                            <Form.Label>Nom du client</Form.Label>
+                                            <Form.Label>{t("msh_crm.c_client")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.title} name="title" onChange={handleChange} />
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="description">
-                                            <Form.Label>E-mail du client</Form.Label>
+                                            <Form.Label>{t("msh_crm.c_email")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} />
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="description">
-                                            <Form.Label>Numéro de téléphone du client</Form.Label>
+                                            <Form.Label>{t("msh_crm.c_phone")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: 0654789321" style={{width: "20vw"}} value={formValue.phone} name="phone" onChange={handleChange} />
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>Origine du client</Form.Label><br/>
+                                            <Form.Label>{t("msh_crm.c_origin.o_label")}</Form.Label><br/>
                                                 <select class="selectpicker" value={formValue.origin} name="origin" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
@@ -343,7 +343,7 @@ const GuestDatabase = ({user, userDB}) =>{
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>Catégorie client</Form.Label><br/>
+                                            <Form.Label>{t("msh_crm.c_category.c_label")}</Form.Label><br/>
                                             <select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
                                             style={{width: "10vw", 
                                             height: "60%", 
@@ -352,15 +352,15 @@ const GuestDatabase = ({user, userDB}) =>{
                                             backgroundColor: "white", 
                                             paddingLeft: "1vw"}}>
                                                 <option></option>
-                                                <option>Tourisme</option>
-                                                <option>Business</option>
+                                                <option>{t("msh_crm.c_category.c_tourisim")}</option>
+                                                <option>{t("msh_crm.c_category.c_business")}</option>
                                             </select>
                                             </Form.Group>
                                         </Form.Row>
                                     </div>
                         </Modal.Body>
                         {footerState && <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}
                     </Modal>
                 </div>
@@ -401,8 +401,8 @@ const GuestDatabase = ({user, userDB}) =>{
                             {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%"}}>
-                                <Button variant="outline-dark">Contacter le client</Button>
-                                <Button variant="outline-dark" onClick={() => setShowChat(true)}>Afficher le chat</Button>
+                                <Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>
+                                <Button variant="outline-dark" onClick={() => setShowChat(true)}>{t("msh_crm.c_button.b_chat")}</Button>
                                 </div>}
                             {item.details && <Card.Text style={{textAlign: "center", marginBottom: "5vh", marginTop: "2vh", color: "gray"}}>
                                 {item.details}
@@ -412,7 +412,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 </PerfectScrollbar>
                 </div>
                 {showChat && <div style={{width: "25%", padding: "2%"}}>
-                    <h3 style={{textAlign: "center", borderBottom: "1px solid lightgrey"}}>Fil de discussion</h3>
+                    <h3 style={{textAlign: "center", borderBottom: "1px solid lightgrey"}}>{t("msh_crm.c_chat_title")}</h3>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
                         <Chat user={user} userDB={userDB} title={item.username} />
                     </PerfectScrollbar>

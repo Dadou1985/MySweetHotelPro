@@ -6,8 +6,11 @@ import RepairLogo from '../../svg/repair.svg'
 import TimerLogo from '../../svg/timer.svg'
 import CabLogo from '../../svg/taxi.svg'
 import '../css/sticker.css'
+import { useTranslation } from "react-i18next"
 
 export default function Sticker({url, logo}) {
+    const { t, i18n } = useTranslation()
+
       console.log('STICKERURL', logo)
     return (
         <div className="sticker_container">
@@ -25,8 +28,8 @@ export default function Sticker({url, logo}) {
             logoWidth="50"
             logoHeight="50"
             />
-            <h5 className="sticker_bottom_up">Tous nos services en</h5>
-            <h3 className="sticker_bottom_down">une seule app</h3>
+            <h5 className="sticker_bottom_up">{t("msh_user_panel.u_section.s_visuals.v_sticker.s_message.part_one")}</h5>
+            <h3 className="sticker_bottom_down">{t("msh_user_panel.u_section.s_visuals.v_sticker.s_message.part_two")}</h3>
         </div>
     )
 }

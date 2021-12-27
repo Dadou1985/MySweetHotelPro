@@ -26,9 +26,9 @@ export default function Flyer({url, logo}) {
             backgroundPosition: "center"
         }}>
             <div>
-                <h1 style={{fontSize: "4em", filter: "drop-shadow(1px 1px 1px)"}}>Contactez-nous<br/>en un seul clic</h1>
+                <h1 style={{fontSize: "4em", filter: "drop-shadow(1px 1px 1px)"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_one")}<br/>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_two")}</h1>
                 <Divider style={{width: "100%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
-                <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}>Découvrez notre application web et profitez de nos services<br/>depuis un smartphone ou une tablette</h6>
+                <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_three")}<br/>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_four")}</h6>
             </div>
             <MshScreen logo={logo} />
             <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
@@ -36,7 +36,7 @@ export default function Flyer({url, logo}) {
                 value={url.replace(/ /g,'%20')} 
                 size={192}
                 />
-                <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
+                <h6 style={{marginTop: 0}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_five")}</h6>
             </div>
         </div>
     )

@@ -63,7 +63,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Attribuer à une équipe
+                {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
             <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -73,7 +73,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Attribuer à une équipe
+                {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
             <img src={RedCircle} alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -83,7 +83,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Attribuer à une équipe
+                {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
              <img src={BlueCircle} alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -93,7 +93,7 @@ const Messenger = ({filterDate}) =>{
             placement="top"
             overlay={
               <Tooltip id="title">
-                Attribuer à une équipe
+                {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
              <img src={Circle} alt="default" className="modal-note-circle" onClick={() => setChecked(true)} />
@@ -162,7 +162,7 @@ const Messenger = ({filterDate}) =>{
                     let marker = startDate.getTime()
                         
                     if(moment(startDate).format('L') !== moment(new Date()).format('L')) {
-                        const notif = "Votre note a bien été enregistrée pour le " + moment(startDate).format('L') 
+                        const notif = t("msh_messenger.m_notif") + moment(startDate).format('L') 
                         addNote(marker, url)
                         addNotification(notif)
                         setStartDate(new Date)
@@ -184,7 +184,7 @@ const Messenger = ({filterDate}) =>{
             let marker = startDate.getTime()
                 
             if(moment(startDate).format('L') !== moment(new Date()).format('L')) {
-                const notif = "Votre message a bien été enregistré pour le " + moment(startDate).format('L') 
+                const notif = t("msh_messenger.m_notif") + moment(startDate).format('L') 
                 addNote(marker, null)
                 addNotification(notif)
                 setStartDate(new Date)
@@ -213,7 +213,7 @@ const Messenger = ({filterDate}) =>{
         <div className="messenger_container">
             {typeof window !== `undefined` && window.innerWidth > 768 ?
                 <div className="icon-add-note-container" onClick={handleShow}>
-                    <img src={Plus} alt="Plus" className="icon-add-note" /> Ajouter une note de service
+                    <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                 </div> 
             :
             <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Ajouter une note de service</Button>}
@@ -231,12 +231,12 @@ const Messenger = ({filterDate}) =>{
             centered>
                 <Modal.Header closeButton className="bg-light">
                 <Modal.Title id="example-modal-sizes-title-sm" style={{width: "100%"}}>
-                    Rédiger une note de service
+                    {t("msh_messenger.m_note_title")}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Input type="text" name="title" placeholder="Donner un titre à la note..." className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
-                    <Input type="textarea" placeholder="Rédiger une note..." value={note} className="modal-note-input" onChange={handleChangeNote} required />
+                    <Input type="text" name="title" placeholder={t("msh_messenger.m_note_title_placeholder")} className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
+                    <Input type="textarea" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required />
                 </Modal.Body>
                 <Modal.Footer style={{borderTop: "none"}}>
                     <div className="modal-note-button-container">
@@ -248,7 +248,7 @@ const Messenger = ({filterDate}) =>{
                             selected={startDate}
                             value={startDate}
                             onChange={changedDate => setStartDate(changedDate)}
-                            placeholderText="Date du jour"
+                            placeholderText={t("msh_messenger.m_calendar_title")}
                             locale="fr-FR"
                             dateFormat="d MMMM yyyy"
                         />
@@ -262,7 +262,7 @@ const Messenger = ({filterDate}) =>{
                             justifyContent: "flex-end",
                             alignItems: "center",
                             }}>
-                            <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>Attribution par équipe</h5>
+                            <h5 style={{width: "100%", textAlign: 'center', marginBottom: '2vh', marginTop: "2vh", paddingTop: "2vh", borderTop: "1px solid lightgrey"}}>{t("msh_messenger.m_team_choice")}</h5>
                             <div style={{
                                 display: "flex",
                                 width: "100%",
@@ -279,7 +279,7 @@ const Messenger = ({filterDate}) =>{
                                     <img src={Circle} alt="Général" className="modal-note-list-circle" onClick={() => {
                                         setStatus("default")
                                         setChecked(false)}} />
-                                    <h6>Général</h6>
+                                    <h6>{t("msh_messenger.m_general_team")}</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
@@ -292,7 +292,7 @@ const Messenger = ({filterDate}) =>{
                                     <img src={YellowCircle} alt="Réception" className="modal-note-list-circle" onClick={() => {
                                         setStatus('darkgoldenrod')
                                         setChecked(false)}} />
-                                    <h6>Réception</h6>
+                                    <h6>{t("msh_messenger.m_reception_team")}</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
@@ -305,7 +305,7 @@ const Messenger = ({filterDate}) =>{
                                     <img src={BlueCircle} alt="Ménage" className="modal-note-list-circle" onClick={() => {
                                         setStatus("lightskyblue")
                                         setChecked(false)}} />
-                                    <h6>Ménage</h6>
+                                    <h6>{t("msh_messenger.m_housekeeping_team")}</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                                 <ListItemIcon button={true}>
@@ -318,7 +318,7 @@ const Messenger = ({filterDate}) =>{
                                     <img src={RedCircle} alt="Technique" className="modal-note-list-circle" onClick={() => {
                                         setStatus('red')
                                         setChecked(false)}} />
-                                    <h6>Technique</h6>
+                                    <h6>{t("msh_messenger.m_technical_team")}</h6>
                                     </ListItemIcon>
                                 </ListItemIcon>
                             </div>
@@ -337,9 +337,9 @@ const Messenger = ({filterDate}) =>{
                         <div style={{width: "100%",}}>
                             <img src={Close} style={{width: "5%", float: "right"}} onClick={handleHideDrawer} />
                         </div>
-                    <h4 style={{textAlign: "center", marginBottom: "3vh"}}>Ecrire une note de service</h4>
-                    <div><Input type="text" name="title" placeholder="Titre de la note" className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
-                    <div><Input type="text" placeholder="Rédiger une note..." value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>
+                    <h4 style={{textAlign: "center", marginBottom: "3vh"}}>{t("msh_messenger.m_drawer_title")}</h4>
+                    <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
+                    <div><Input type="text" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>
                     <DatePicker
                         id="calendar"
                         className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
@@ -350,7 +350,7 @@ const Messenger = ({filterDate}) =>{
                             setStartDate(changedDate)
                             hideCalendar()
                         }}
-                        placeholderText="Date du jour"
+                        placeholderText={t("msh_messenger.m_calendar_title")}
                         locale="fr-FR"
                         dateFormat="d MMMM yyyy"
                     />
@@ -375,7 +375,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Général
+                                        {t("msh_messenger.m_general_team")}
                                     </Tooltip>
                                     }>
                                     <img src={Circle} alt="info" className="modal-note-list-circle" onClick={() => {
@@ -390,7 +390,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Réception
+                                        {t("msh_messenger.m_reception_team")}
                                     </Tooltip>
                                     }>
                                     <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
@@ -405,7 +405,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Ménage
+                                        {t("msh_messenger.m_housekeeping_team")}
                                     </Tooltip>
                                     }>
                                     <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
@@ -420,7 +420,7 @@ const Messenger = ({filterDate}) =>{
                                     placement="right"
                                     overlay={
                                     <Tooltip id="title">
-                                        Technique
+                                        {t("msh_messenger.m_technical_team")}
                                     </Tooltip>
                                     }>
                                     <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {

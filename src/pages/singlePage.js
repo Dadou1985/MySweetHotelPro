@@ -57,7 +57,7 @@ const SinglePage = () => {
       }}>
           <ToolBar />
           <div className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">{t("chat.chat_title")}</h5>
+            <h5 className="font-weight-bolder dark_messenger_title">{t("msh_chat.c_chat_title")}</h5>
             {!!userDB && !!user&&
             <Chat userDB={userDB} user={user} />}
         </div>

@@ -14,6 +14,7 @@ import {
   import { useTranslation } from "react-i18next"
 
 const Caisse = () =>{
+    const { t, i18n } = useTranslation()
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
@@ -21,7 +22,6 @@ const Caisse = () =>{
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const [filterDate, setFilterDate] = useState(new Date())
-    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -46,7 +46,7 @@ const Caisse = () =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'effectuer un rapport de caisse !" 
+        const notif = t("msh_safe.s_notif")
         addNotification(notif)
         let caisse = document.getElementById("montant").value
         return db.collection('hotels')
@@ -181,7 +181,7 @@ const Caisse = () =>{
             placement="right"
             overlay={
               <Tooltip id="title">
-                Caisse
+                {t("msh_coolbar.tooltip_safe")}
               </Tooltip>
             }>
                 <img src={Safe} className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
@@ -200,7 +200,7 @@ const Caisse = () =>{
                         justifyContent: "space-between", 
                         width: "90%"
                     }}>
-                        Caisse du Jour
+                        {t("msh_safe.s_title")}
                         <div style={{
                             maxWidth: "50%",
                             display: "flex",
@@ -208,7 +208,7 @@ const Caisse = () =>{
                             justifyContent: "space-between"
                         }}>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                            <Form.Label style={{fontSize: "15px", fontWeight: "bolder"}}>Shift</Form.Label>
+                            <Form.Label style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</Form.Label>
                             <select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={handleChange} 
                             style={{width: "10vw", 
                             height: "4vh", 
@@ -219,9 +219,9 @@ const Caisse = () =>{
                             fontSize: "15px", 
                             paddingLeft: "10px", 
                             marginRight: footerState ? "0px" : "2vw"}}>
-                                <option>matin</option>
-                                <option>soir</option>
-                                <option>nuit</option>
+                                <option value="matin">{t("msh_safe.s_select.s_morning_shift")}</option>
+                                <option value="soir">{t("msh_safe.s_select.s_afternoon_shift")}</option>
+                                <option value="nuit">{t("msh_safe.s_select.s_night_shift")}</option>
                             </select>
                             </Form.Group>
                             {!footerState && <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -249,14 +249,14 @@ const Caisse = () =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Caisse du shift" title="Caisse du shift">
+                            <Tab eventKey="Caisse du shift" title={t("msh_safe.s_second_tab_title")}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover variant="dark" size="sm" className="text-center">
                                 <thead>
                                     <tr>
-                                    <th>Valeur</th>
-                                    <th>Quantité</th>
-                                    <th>Montant</th>
+                                    <th>{t("msh_general.g_table.t_value")}</th>
+                                    <th>{t("msh_general.g_table.t_quantity")}</th>
+                                    <th>{t("msh_general.g_table.t_amount")}</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -336,7 +336,7 @@ const Caisse = () =>{
                                     <td><output id="test15">0.00</output></td>
                                     </tr>
                                     <tr>
-                                        <td colSpan="3">Rouleaux de pièces</td>
+                                        <td colSpan="3">{t("msh_general.g_table.t_rolls")}</td>
                                     </tr>
                                     <tr>
                                     <td>2.00</td>
@@ -382,8 +382,8 @@ const Caisse = () =>{
                                 <tfoot>
                                     <tr>
                                         <td></td>
-                                        <td >Total quantité</td>
-                                        <td>Total</td>
+                                        <td >{t("msh_general.g_table.t_total_qty")}</td>
+                                        <td>{t("msh_general.g_table.t_total")}</td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -399,10 +399,10 @@ const Caisse = () =>{
                             <Table striped bordered hover size="sm" className="text-center" ref={componentRef}>
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
-                                    <th>Nom du collaborateur</th>
-                                    <th>Montant</th>
-                                    <th>Shift</th>
-                                    <th>Date</th>
+                                    <th>{t("msh_general.g_table.t_username")} {t("msh_general.g_table.t_coworker")}</th>
+                                    <th>{t("msh_general.g_table.t_amount")}</th>
+                                    <th>{t("msh_general.g_table.t_shift")}</th>
+                                    <th>{t("msh_general.g_table.t_date")}</th>
                                     <th className="bg-dark"></th>
                                     </tr>
                                 </thead>
@@ -424,7 +424,7 @@ const Caisse = () =>{
                                             }).catch(function(error) {
                                                 console.log(error);
                                             });
-                                        }}>Supprimer</Button></td>
+                                        }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -435,8 +435,8 @@ const Caisse = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <>
-                            <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>Reset</Button>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>{t("msh_general.g_button.b_reset")}</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
                         {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}
                     </Modal.Footer>

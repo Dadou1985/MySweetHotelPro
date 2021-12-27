@@ -139,6 +139,7 @@
     },
     "msh_room_change": {
         "r_title": "Délogement client",
+        "r_table_title": "Liste des délogements",
         "r_client": "Nom du client",
         "r_from": "Depuis la chambre...",
         "r_to": "...vers la chambre",
@@ -305,7 +306,7 @@
     },
     "msh_admin_board": {
         "a_title": "Interface Administrateur",
-        "a_first_tab_title": "Crééer un utilisateur",
+        "a_first_tab_title": "Créer un utilisateur",
         "a_second_tab_title": "Supprimer un utilisateur",
         "a_cowoker": "Prénom et nom du collaborateur",
         "a_email": "E-mail du collaborateur",

@@ -141,7 +141,7 @@ const Navigation = ({user, userDB}) =>{
                         placement="bottom"
                         overlay={
                           <Tooltip id="title">
-                            Portail utilisateur
+                            {t("msh_navigation.tooltip_user_profile")}
                           </Tooltip>
                         }>
                     <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} onClick={()=>navigate('/doorsStage')} />
@@ -151,7 +151,7 @@ const Navigation = ({user, userDB}) =>{
                         placement="bottom"
                         overlay={
                           <Tooltip id="title">
-                            Déconnection
+                            {t("msh_navigation.tooltip_deconnexion")}
                           </Tooltip>
                         }>
                     <PowerSettingsNewIcon alt="connect" className="shuttDown_button nav_icons" onClick={handleShow} />
@@ -161,11 +161,11 @@ const Navigation = ({user, userDB}) =>{
             <Modal show={list} centered onHide={handleClose}>
                 <Modal.Header closeButton>
                 <Modal.Title id="example-modal-sizes-title-sm">
-                    Voulez-vous quitter l'application ?
+                    {t("msh_navigation.deconnexion_modal_title")}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Button variant="danger" style={{width: "100%"}} onClick={handleLogout}>Quitter</Button>
+                    <Button variant="danger" style={{width: "100%"}} onClick={handleLogout}>{t("msh_navigation.deconnexion_modal_button")}</Button>
                 </Modal.Body>
             </Modal>
             {!!userDB && !!user&&

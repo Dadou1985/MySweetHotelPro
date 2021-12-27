@@ -46,16 +46,16 @@ export default function Band({url, logo}) {
                 alignItems: "center"
             }}>
                 <div>
-                    <h1 style={{fontSize: "5em", filter: "drop-shadow(1px 1px 1px)"}}><b>Contactez-nous<br/>en un seul clic</b></h1>
+                    <h1 style={{fontSize: "5em", filter: "drop-shadow(1px 1px 1px)"}}><b>{t("msh_user_panel.u_section.s_visuals.v_band.b_message.part_one")}<br/>{t("msh_user_panel.u_section.s_visuals.v_band.b_message.part_two")}</b></h1>
                     <Divider style={{width: "100%", marginBottom: "4vh", marginTop: "4vh", filter: "drop-shadow(1px 1px 1px)"}} />
-                    <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}><b>Découvrez notre application web et profitez de nos services<br/>depuis un smartphone ou une tablette</b></h6>
+                    <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}><b>{t("msh_user_panel.u_section.s_visuals.v_band.b_message.part_three")}<br/>{t("msh_user_panel.u_section.s_visuals.v_band.b_message.part_four")}</b></h6>
                 </div>
                 <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                     <QRCode 
                     value={url.replace(/ /g,'%20')} 
                     size={230}
                     />
-                    <h6 style={{marginTop: 0}}>Scannez le qr code ci-dessus</h6>
+                    <h6 style={{marginTop: 0}}>{t("msh_user_panel.u_section.s_visuals.v_band.b_message.part_five")}</h6>
                 </div>
             </div>
         </div>

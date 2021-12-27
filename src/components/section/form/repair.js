@@ -56,7 +56,7 @@ const Repair = ({userDB}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter un signalement technique à la liste !" 
+        const notif = t("msh_maintenance.m_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -150,7 +150,7 @@ const Repair = ({userDB}) =>{
                 placement="right"
                 overlay={
                 <Tooltip id="title">
-                    Maintenance
+                    {t("msh_toolbar.tooltip_technical")}
                 </Tooltip>
                 }>
                         <img src={Maintenance} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
@@ -165,7 +165,7 @@ const Repair = ({userDB}) =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Maintenance technique
+                        {t("msh_maintenance.m_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -177,7 +177,7 @@ const Repair = ({userDB}) =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Signaler un problème technique" title="Signaler un problème technique">
+                            <Tab eventKey="Signaler un problème technique" title={t("msh_maintenance.m_first_tab_title")}>
                             <div style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -188,19 +188,19 @@ const Repair = ({userDB}) =>{
                                 }}>
                                     <Form.Row>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Nom du client</Form.Label>
+                                        <Form.Label>{t("msh_maintenance.m_client")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Numéro de chambre</Form.Label>
+                                        <Form.Label>{t("msh_maintenance.m_room")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>Quel type de problème ?</Form.Label><br/>
+                                        <Form.Label>{t("msh_maintenance.m_type.t_label")}</Form.Label><br/>
                                         <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                                         style={{width: "20vw", 
                                         height: "6vh", 
@@ -209,36 +209,36 @@ const Repair = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>Peinture</option>
-                                            <option>Plomberie</option>
-                                            <option>Electricité</option>
-                                            <option>Ménage</option>
-                                            <option>Autres</option>
+                                            <option>{t("msh_room_change.r_reason.r_paint")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_electricity")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_other")}</option>
                                         </select>
                                     </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
                                         <Form.Group controlId="details">
-                                            <Form.Label>Plus de détails</Form.Label>
+                                            <Form.Label>{t("msh_maintenance.m_details")}</Form.Label>
                                             <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
                                         </Form.Group>
                                     </Form.Row>
                                 </div>
                             </Tab>
-                            <Tab eventKey="Liste des problèmes techniques" title="Liste des problèmes techniques">
+                            <Tab eventKey="Liste des problèmes techniques" title={t("msh_maintenance.m_second_tab_title")}>
                             {!imgFrame ? 
                                 <PerfectScrollbar style={{height: "55vh"}}>
                                     <Table striped bordered hover size="sm" className="text-center">
                                         <thead className="bg-dark text-center text-light">
                                             <tr>
-                                            <th>Client</th>
-                                            <th>Chambre</th>
-                                            <th>Catégorie</th>
-                                            <th>Détails</th>
-                                            <th>Date</th>
-                                            <th>Photo</th>
-                                            <th>Collaborateur</th>
-                                            <th>Statut</th>
+                                            <th>{t("msh_general.g_table.t_client")}</th>
+                                            <th>{t("msh_general.g_table.t_room")}</th>
+                                            <th>{t("msh_general.g_table.t_category")}</th>
+                                            <th>{t("msh_general.g_table.t_details")}</th>
+                                            <th>{t("msh_general.g_table.t_date")}</th>
+                                            <th>{t("msh_general.g_table.t_photo")}</th>
+                                            <th>{t("msh_general.g_table.t_coworker")}</th>
+                                            <th>{t("msh_general.g_table.t_statut")}</th>
                                             <th className="bg-dark"></th>
                                             </tr>
                                         </thead>
@@ -277,7 +277,7 @@ const Repair = ({userDB}) =>{
                                                     }).catch(function(error) {
                                                         console.log(error);
                                                     });
-                                                }}>Supprimer</Button></td>
+                                                }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -298,7 +298,7 @@ const Repair = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}
                 </Modal>
 

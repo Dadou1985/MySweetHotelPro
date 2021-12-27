@@ -92,10 +92,10 @@ const CheckListTable = ({shift}) => {
 
     return (
         <div>
-            <Button variant="outline-info" className="checkList_allSelected_button" block onClick={handleCleanCheckboxes}>Tout dé-sélectionner</Button>
+            <Button variant="outline-info" className="checkList_allSelected_button" block onClick={handleCleanCheckboxes}>{t("msh_check_list.c_button.b_uncheck_all")}</Button>
             <InputGroup className="mb-3">
                 <FormControl
-                placeholder="Ajouter une tâche"
+                placeholder={t("msh_check_list.c_input_placeholder")}
                 aria-label="Recipient's username"
                 aria-describedby="basic-addon2"
                 value={formValue.task}
@@ -108,7 +108,7 @@ const CheckListTable = ({shift}) => {
                 }}
                 />
                 <InputGroup.Append>
-                <Button variant="outline-success" onClick={handleSubmit}>Valider</Button>
+                <Button variant="outline-success" onClick={handleSubmit}>{t("msh_check_list.c_button.b_validate")}</Button>
                 </InputGroup.Append>
             </InputGroup>
             <PerfectScrollbar style={{height: "55vh"}}>
@@ -138,7 +138,7 @@ const CheckListTable = ({shift}) => {
                                 }).catch(function(error) {
                                     console.log(error);
                                 }); 
-                                }}>Supprimer</Button>
+                                }}>{t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>
                         ))}

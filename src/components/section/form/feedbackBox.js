@@ -24,7 +24,7 @@ const FeedbackBox = ({userDB}) =>{
       const handleSubmitFeedback = async(event) => {
         event.preventDefault()
         setFormValue({categorie: "improvement", feedback: ""})
-        const notif = "La Team MSH vous remercie pour votre contribution !"
+        const notif = t("msh_feedback_box.f_notif")
         await db.collection('feedbacks')
             .doc('category')
             .collection(formValue.categorie)
@@ -51,7 +51,7 @@ const FeedbackBox = ({userDB}) =>{
             placement="bottom"
             overlay={
               <Tooltip id="title">
-                Feedback Box
+                {t("msh_feedback_box.f_title")}
               </Tooltip>
             }>
                 <img src={Feedback} alt="contact" onClick={handleShow} className="nav_icons" />
@@ -66,7 +66,7 @@ const FeedbackBox = ({userDB}) =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Feedback Box
+                        {t("msh_feedback_box.f_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -80,7 +80,7 @@ const FeedbackBox = ({userDB}) =>{
                         }}>
                             <Form.Row>
                                 <Form.Group controlId="description">
-                                <h4>Pour une meilleure expérience utilisateur</h4>
+                                <h4>{t("msh_feedback_box.f_subtitle")}</h4>
                                 </Form.Group>
                             </Form.Row>
                             <Form.Row style={{width: "100%"}}>
@@ -94,15 +94,15 @@ const FeedbackBox = ({userDB}) =>{
                                     borderRadius: "3px",
                                     backgroundColor: "white", 
                                     paddingLeft: "1vw"}}>
-                                        <option value="improvement">Améliorations</option>
-                                        <option value="satisfaction">Satisfaction</option>
+                                        <option value="improvement">{t("msh_feedback_box.f_comment.c_improvement")}</option>
+                                        <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
                                     </select>
                                 </Form.Group>
                                 </Form.Row>
                             <Form.Row style={{width: "100%"}}>
                                 <Form.Group controlId="description" style={{width: "100%"}}>
                                 <Form.Control as="textarea" type="text" 
-                                placeholder="Faites-nous un retour de votre expérience..." 
+                                placeholder={t("msh_feedback_box.f_input_textarea")} 
                                 style={{width: "100%", height: "30vh", resize: "none"}} 
                                 value={formValue.feedback} name="feedback" onChange={handleChange} />
                                 </Form.Group>
@@ -110,7 +110,7 @@ const FeedbackBox = ({userDB}) =>{
                         </div>
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="dark" onClick={handleSubmitFeedback}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmitFeedback}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>
                 </Modal>
         </div>

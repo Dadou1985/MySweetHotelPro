@@ -22,7 +22,7 @@ const Memo =()=>{
         
             <div className="memo_container">
                 <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                    <h5 className="font-weight-bolder memo_title">Note de service</h5>
+                    <h5 className="font-weight-bolder memo_title">{t("msh_messenger.m_note_big_title")}</h5>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                         <DatePicker
                             variant="dialog"

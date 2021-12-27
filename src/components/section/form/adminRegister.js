@@ -44,7 +44,7 @@ const AdminRegister = ({hide, userDB}) => {
     const handleSubmit = async(event) => {
         event.preventDefault()
         //setFormValue("")
-        const notif = "Vous venez de créer un compte collaborateur !" 
+        const notif = t("msh_admin_board.a_notif") 
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
         .doc(newUid)
@@ -92,7 +92,7 @@ const AdminRegister = ({hide, userDB}) => {
                     textAlign: "center"
                 }}>
                 <Form.Group controlId="formGroupName">
-                    <Form.Control style={{width: "20vw"}} value={formValue.username} name="username" type="text" placeholder="Prénom et Nom du collaborateur" onChange={handleChange} required />
+                    <Form.Control style={{width: "20vw"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
                 </Form.Group>
                 {/*<Form.Group controlId="formGroupEmail">
                     <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
@@ -105,12 +105,12 @@ const AdminRegister = ({hide, userDB}) => {
                     <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
                 </Form.Group>*/}
                 <Form.Group controlId="formGroupRefHotel">
-                    <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="text" placeholder="Email du collaborateur" onChange={handleChange} required />
+                    <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
                 </Form.Group>
             </div>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
             </Modal.Footer>
          </div>
     )

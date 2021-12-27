@@ -154,7 +154,7 @@ export default function CallCenter({user, userDB}) {
                 placement="top"
                 overlay={
                     <Tooltip id="title">
-                    Assistance Technique
+                    {t("msh_support.s_title")}
                     </Tooltip>
                 }>
                 <img src={Assistance} className="icon" alt="contact" onClick={() => {
@@ -177,7 +177,7 @@ export default function CallCenter({user, userDB}) {
                 >
                 <Modal.Header closeButton className="bg-light">
                     <Modal.Title id="contained-modal-title-vcenter">
-                    Assistance technique
+                    {t("msh_support.s_title")}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -256,7 +256,7 @@ export default function CallCenter({user, userDB}) {
                         value={note} 
                         name="note" 
                         type="text" 
-                        placeholder="Ecrire un message..." 
+                        placeholder={t("msh_support.s_input_placeholder")}
                         onChange={handleChange}
                         onKeyDown={async(e) => {
                           if(e.key === "Enter") {

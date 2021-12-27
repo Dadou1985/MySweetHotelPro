@@ -21,7 +21,7 @@ const AdminBoard = ({user, userDB}) =>{
                     placement="bottom"
                     overlay={
                         <Tooltip id="title">
-                        Administrateur
+                        {t("msh_navigation.tooltip_admin_board")}
                         </Tooltip>
                     }>
                 <img src={Connection} alt="connect" className="nav_icons" onClick={handleShowTab} />
@@ -36,31 +36,31 @@ const AdminBoard = ({user, userDB}) =>{
                         >
                         <Modal.Header closeButton className="bg-light">
                             <Modal.Title id="contained-modal-title-vcenter">
-                            Interface Administrateur
+                            {t("msh_admin_board.a_title")}
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                         
                         <Tabs defaultActiveKey="Créer" id="uncontrolled-tab-example" style={{display: "flex", flexFlow: "row", justifyContent: "space-around"}} variant="dark">
-                                <Tab eventKey="Créer" title="Créer un utilisateur">
+                                <Tab eventKey="Créer" title={t("msh_admin_board.a_first_tab_title")}>
                                     <div style={{
                                         display: "flex",
                                         flexFlow: "column",
                                         alignItems: "center"
                                     }}>
-                                        <h3 style={{textAlign: "center"}}>Créer un utilisateur</h3>
+                                        <h3 style={{textAlign: "center"}}>{t("msh_admin_board.a_first_tab_title")}</h3>
                                         <Divider style={{width: "90%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                                     </div>
                                     {!!user && !!userDB &&
                                     <AdminRegister user={user} userDB={userDB} hide={handleCloseTab} /> }  
                                 </Tab>
-                                <Tab eventKey="Supprimer" title="Supprimer un utilisateur">
+                                <Tab eventKey="Supprimer" title={t("msh_admin_board.a_second_tab_title")}>
                                 <div style={{
                                         display: "flex",
                                         flexFlow: "column",
                                         alignItems: "center"
                                     }}>
-                                        <h3 style={{textAlign: "center"}}>Supprimer un utilisateur</h3>
+                                        <h3 style={{textAlign: "center"}}>{t("msh_admin_board.a_second_tab_title")}</h3>
                                         <Divider style={{width: "90%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                                     </div>
                                     {!!user && !!userDB &&

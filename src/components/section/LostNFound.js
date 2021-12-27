@@ -12,6 +12,8 @@ import { useTranslation } from "react-i18next"
 
 
 const LostNFound = ({userDB}) =>{
+    const { t, i18n } = useTranslation()
+
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -22,10 +24,9 @@ const LostNFound = ({userDB}) =>{
     const [filter, setFilter] = useState("High Tech")
     const [item, setItem] = useState({
         img: LostOnes,
-        description: "Cliquez sur un élément du tableau",
-        details: "Plus de détails sur l'objet s'afficheront ici !"
+        description: t("msh_lost_found.l_sheet.s_title"),
+        details: t("msh_lost_found.l_sheet.s_subtitle")
     })
-    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -50,7 +51,7 @@ const LostNFound = ({userDB}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
+        const notif = t("msh_lost_found.l_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -100,7 +101,7 @@ const LostNFound = ({userDB}) =>{
                 width: "100%",
                 padding: "1%",
                 textAlign:"center"
-            }}>Objets Trouvés</h1>
+            }}>{t("msh_lost_found.l_title")}</h1>
             <div style={{
                 display: "flex"
             }}>
@@ -115,19 +116,19 @@ const LostNFound = ({userDB}) =>{
                     if(eventKey === "Autres") {return setFilter("Autres")}
                 }}>
                     <Tab eventKey="High Tech" title="High Tech"></Tab>
-                    <Tab eventKey="Documents" title="Documents Officiels"></Tab>
-                    <Tab eventKey="Vêtements" title="Vêtements"></Tab>
-                    <Tab eventKey="Autres" title="Autres"></Tab>
+                    <Tab eventKey="Documents" title={t("msh_lost_found.l_second_tab_title")}></Tab>
+                    <Tab eventKey="Vêtements" title={t("msh_lost_found.l_third_tab_title")}></Tab>
+                    <Tab eventKey="Autres" title={t("msh_lost_found.l_fourth_tab_title")}></Tab>
                 </Tabs>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
                         <Table striped bordered hover size="sm" className="text-center" style={{maxHeight: "70vh"}}>
                             <thead className="bg-dark text-center text-light">
                                 <tr>
-                                    <th>Photo</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th>Lieu</th>
-                                    <th>Collaborateur</th>
+                                    <th>{t("msh_general.g_table.t_photo")}</th>
+                                    <th>{t("msh_general.g_table.t_description")}</th>
+                                    <th>{t("msh_general.g_table.t_date")}</th>
+                                    <th>{t("msh_general.g_table.t_place")}</th>
+                                    <th>{t("msh_general.g_table.t_coworker")}</th>
                                     <th className="bg-dark"></th>
                                 </tr>
                             </thead>
@@ -154,14 +155,14 @@ const LostNFound = ({userDB}) =>{
                                             }).catch(function(error) {
                                                 console.log(error);
                                             });
-                                        }}>Supprimer</Button></td>
+                                        }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                     </tr>
                                 ))}
                             </tbody>
                         </Table>
                     </PerfectScrollbar>
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
-                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>Ajouter un objet</Button>
+                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_lost_found.l_button.b_add")}</Button>
                     </div>
 
 
@@ -173,7 +174,7 @@ const LostNFound = ({userDB}) =>{
                         >
                         <Modal.Header closeButton className="bg-light">
                             <Modal.Title id="contained-modal-title-vcenter">
-                            Ajouter un objet trouvé
+                            {t("msh_lost_found.l_button.b_add")}
                             </Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
@@ -187,7 +188,7 @@ const LostNFound = ({userDB}) =>{
                                     }}>
                                         <Form.Row>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>Quel type d'objet ?</Form.Label><br/>
+                                            <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
                                                 <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
@@ -196,15 +197,15 @@ const LostNFound = ({userDB}) =>{
                                                 backgroundColor: "white"}}>
                                                     <option></option>
                                                     <option>High Tech</option>
-                                                    <option>Documents Officiels</option>
-                                                    <option>Vêtements</option>
-                                                    <option>Autres</option>
+                                                    <option>{t("msh_lost_found.l_second_tab_title")}</option>
+                                                    <option>{t("msh_lost_found.l_third_tab_title")}</option>
+                                                    <option>{t("msh_lost_found.l_fourth_tab_title")}</option>
                                                 </select>
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>Lieu ?</Form.Label><br/>
+                                            <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
                                                 <select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
@@ -212,31 +213,31 @@ const LostNFound = ({userDB}) =>{
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
                                                     <option></option>
-                                                    <option>Hall</option>
-                                                    <option>Restaurant</option>
-                                                    <option>Parking</option>
-                                                    <option>Toilettes</option>
-                                                    <option>Etages</option>
-                                                    <option>Autres</option>
+                                                    <option>{t("msh_lost_found.l_place.p_hall")}</option>
+                                                    <option>{t("msh_lost_found.l_place.p_restaurant")}</option>
+                                                    <option>{t("msh_lost_found.l_place.p_parking")}</option>
+                                                    <option>{t("msh_lost_found.l_place.p_toilet")}</option>
+                                                    <option>{t("msh_lost_found.l_place.p_floors")}</option>
+                                                    <option>{t("msh_lost_found.l_place.p_other")}</option>
                                                 </select>
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="description">
-                                            <Form.Label>Description de l'objet</Form.Label>
-                                            <Form.Control type="text" placeholder="ex: un i-phone noir" style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
+                                            <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
+                                            <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
                                             </Form.Group>
                                         </Form.Row>
                                         <Form.Row>
                                             <Form.Group controlId="details">
-                                                <Form.Label>Plus de détails</Form.Label>
+                                                <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
                                                 <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "30vh"}} value={formValue.details} name="details" onChange={handleChange}  />
                                             </Form.Group>
                                         </Form.Row>
                                     </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>
@@ -248,7 +249,7 @@ const LostNFound = ({userDB}) =>{
                         <Card.Text>
                         {item.details}
                         </Card.Text>
-                        <Button variant="outline-dark">Contacter le propriétaire</Button>
+                        <Button variant="outline-dark">{t("msh_lost_found.l_button.b_send")}</Button>
                     </Card.Body>
                 </Card>
                 </div>

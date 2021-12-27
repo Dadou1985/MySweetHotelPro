@@ -34,7 +34,7 @@ const ToolBar = () =>{
             placement="right"
             overlay={
               <Tooltip id="title">
-                Objets trouvés
+                {t("msh_toolbar.tooltip_lost_found")}
               </Tooltip>
             }>
                 <img src={LostOnes} className="icon" alt="contact" onClick={() => navigate("/Lost")} style={{width: "40%", marginRight: "10%"}} />

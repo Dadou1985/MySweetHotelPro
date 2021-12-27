@@ -62,7 +62,7 @@ const Clock = ({userDB}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        const notif = "Vous venez d'ajouter une demande de réveil !" 
+        const notif = t("msh_alarm.a_notif")
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -145,7 +145,7 @@ const Clock = ({userDB}) =>{
                 placement="right"
                 overlay={
                 <Tooltip id="title">
-                    Réveil
+                    {t("msh_toolbar.tooltip_alarm")}
                 </Tooltip>
                 }>
                         <img src={Timer} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
@@ -160,7 +160,7 @@ const Clock = ({userDB}) =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Programmation des réveils
+                        {t("msh_alarm.a_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -172,7 +172,7 @@ const Clock = ({userDB}) =>{
                             return setFooterState(true)
                         }
                     }}>
-                        <Tab eventKey="Programmer un réveil" title="Programmer un réveil">
+                        <Tab eventKey="Programmer un réveil" title={t("msh_alarm.a_first_tab_title")}>
                         <div style={{
                                     display: "flex",
                                     flexFlow: "row wrap",
@@ -192,7 +192,7 @@ const Clock = ({userDB}) =>{
                                         <KeyboardDateTimePicker
                                             variant="dialog"
                                             ampm={false}
-                                            label="Date et Heure de programmation"
+                                            label={t("msh_alarm.a_calendar_title")}
                                             value={formValue.date}
                                             onChange={handleDateChange}
                                             onError={console.log}
@@ -205,31 +205,31 @@ const Clock = ({userDB}) =>{
                                 {step && <>
                                     <Form.Row>
                                     <Form.Group controlId="description">
-                                    <Form.Label>Nom du client</Form.Label>
+                                    <Form.Label>{t("msh_alarm.a_client")}</Form.Label>
                                     <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
                                     </Form.Group>
                                 </Form.Row>
                                 <Form.Row>
                                     <Form.Group controlId="description">
-                                    <Form.Label>Numéro de chambre</Form.Label>
+                                    <Form.Label>{t("msh_alarm.a_room")}</Form.Label>
                                     <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
                                     </Form.Group>
                                 </Form.Row>
                                 </>}
                             </div>
                         </Tab>
-                        <Tab eventKey="Liste des réveils" title="Liste des réveils">
+                        <Tab eventKey="Liste des réveils" title={t("msh_alarm.a_second_tab_title")}>
                         <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover size="sm" className="text-center">
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
-                                    <th>Client</th>
-                                    <th>Chambre</th>
-                                    <th>Date</th>
-                                    <th>Heure</th>
-                                    <th>N° de tel.</th>
-                                    <th>Statut</th>
-                                    <th>Collaborateur</th>
+                                    <th>{t("msh_general.g_table.t_client")}</th>
+                                    <th>{t("msh_general.g_table.t_client")}</th>
+                                    <th>{t("msh_general.g_table.t_date")}</th>
+                                    <th>{t("msh_general.g_table.t_time")}</th>
+                                    <th>{t("msh_general.g_table.t_phone")}</th>
+                                    <th>{t("msh_general.g_table.t_statut")}</th>
+                                    <th>{t("msh_general.g_table.t_coworker")}</th>
                                     <th className="bg-dark"></th>
                                     </tr>
                                 </thead>
@@ -260,7 +260,7 @@ const Clock = ({userDB}) =>{
                                                 }).catch(function(error) {
                                                     console.log(error);
                                                 });
-                                            }}>Supprimer</Button></td>
+                                            }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -271,10 +271,10 @@ const Clock = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         {step && <>
-                            <Button variant="outline-dark" onClick={() => setStep(false)}>Retour</Button>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
-                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>Poursuivre</Button>}
+                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                     </Modal.Footer>}
                 </Modal>
         </div>

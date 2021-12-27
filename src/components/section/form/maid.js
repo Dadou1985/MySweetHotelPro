@@ -56,7 +56,7 @@ const Maid = ({userDB}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
+        const notif = t("msh_room_change.r_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -183,7 +183,7 @@ const Maid = ({userDB}) =>{
                 placement="right"
                 overlay={
                 <Tooltip id="title">
-                    Délogement
+                    {t("msh_toolbar.tooltip_room_change")}
                 </Tooltip>
                 }>
                         <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
@@ -199,7 +199,7 @@ const Maid = ({userDB}) =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Délogement client
+                        {t("msh_room_change.r_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -211,7 +211,7 @@ const Maid = ({userDB}) =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Déloger un client" title="Déloger un client">
+                            <Tab eventKey="Déloger un client" title={t("msh_room_change.r_phone_button.b_show_modal")}>
                             <div style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -222,7 +222,7 @@ const Maid = ({userDB}) =>{
                                 }}>
                                     <Form.Row>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Nom du client</Form.Label>
+                                        <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "15vw"}} value={formValue.client} name="client" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
@@ -233,12 +233,12 @@ const Maid = ({userDB}) =>{
                                         width: "60%"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Depuis la chambre...</Form.Label>
+                                        <Form.Label>{t("msh_room_change.r_from")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 310" style={{width: "10vw"}} value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description">
-                                        <Form.Label>...vers la chambre</Form.Label>
+                                        <Form.Label>{t("msh_room_change.r_to")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 409" style={{width: "10vw"}} value={formValue.toRoom} name="toRoom" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
@@ -249,7 +249,7 @@ const Maid = ({userDB}) =>{
                                         width: "60%"
                                     }}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>Pour quel motif ?</Form.Label><br/>
+                                        <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
                                         <select className="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
                                         style={{width: "10vw", 
                                         height: "60%", 
@@ -258,16 +258,16 @@ const Maid = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>Peinture</option>
-                                            <option>Plomberie</option>
-                                            <option>Electricité</option>
-                                            <option>Ménage</option>
-                                            <option>Autres</option>
+                                            <option>{t("msh_room_change.r_reason.r_paint")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_electricity")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                            <option>{t("msh_room_change.r_reason.r_other")}</option>
                                         </select>
                                     </Form.Group>
                                     
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>Etat de la chambre</Form.Label><br/>
+                                        <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
                                         <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                                         style={{width: "10vw", 
                                         height: "60%", 
@@ -276,36 +276,36 @@ const Maid = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>Sale</option>
-                                            <option>Propre</option>
+                                            <option>{t("msh_room_change.r_state.s_dirty")}</option>
+                                            <option>{t("msh_room_change.r_state.s_clean")}</option>
                                         </select>
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row>
                                         <Form.Group controlId="details">
-                                            <Form.Label>Plus de détails</Form.Label>
+                                            <Form.Label>{t("msh_room_change.r_details")}</Form.Label>
                                             <Form.Control as="textarea" rows="3" style={{width: "25vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
                                         </Form.Group>
                                     </Form.Row>
                                 </div>
                             </Tab>
-                            <Tab eventKey="Liste des délogements" title="Liste des délogements">
+                            <Tab eventKey="Liste des délogements" title={t("msh_room_change.r_table_title")}>
                             {!imgFrame ? 
                                 <PerfectScrollbar style={{height: "55vh"}}>
                                     <Table striped bordered hover size="sm" className="text-center"  style={{overflowX: "auto",
                                             maxWidth: "90vw"}}>
                                         <thead className="bg-dark text-center text-light">
                                             <tr>
-                                            <th>Client</th>
-                                            <th>Ch. initiale</th>
-                                            <th>Ch. finale</th>
-                                            <th>Motif</th>
-                                            <th>Etat</th>
-                                            <th>Details</th>
-                                            <td>Date</td>
-                                            <th>Photo</th>
-                                            <th>Collaborateur</th>
-                                            <th>Statut</th>
+                                            <th>{t("msh_general.g_table.t_client")}</th>
+                                            <th>{t("msh_general.g_table.t_from")}</th>
+                                            <th>{t("msh_general.g_table.t_to")}</th>
+                                            <th>{t("msh_general.g_table.t_reason")}</th>
+                                            <th>{t("msh_general.g_table.t_state")}</th>
+                                            <th>{t("msh_general.g_table.t_details")}</th>
+                                            <td>{t("msh_general.g_table.t_date")}</td>
+                                            <th>{t("msh_general.g_table.t_photo")}</th>
+                                            <th>{t("msh_general.g_table.t_coworker")}</th>
+                                            <th>{t("msh_general.g_table.t_statut")}</th>
                                             <th className="bg-dark"></th>
                                             </tr>
                                         </thead>
@@ -330,7 +330,7 @@ const Maid = ({userDB}) =>{
                                                                 />
                                                         </Popover.Title>
                                                         <Popover.Content className="text-center">
-                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id, flow.userId)}>Valider</Button>
+                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id, flow.userId)}>{t("msh_general.g_button.b_send")}</Button>
                                                         </Popover.Content>
                                                     </Popover>
                                                     }
@@ -357,12 +357,12 @@ const Maid = ({userDB}) =>{
                                                                     backgroundColor: "white", 
                                                                     paddingLeft: "1vw"}}>
                                                                         <option></option>
-                                                                        <option>Sale</option>
-                                                                        <option>Propre</option>
+                                                                        <option>{t("msh_room_change.r_state.s_dirty")}</option>
+                                                                        <option>{t("msh_room_change.r_state.s_clean")}</option>
                                                                     </select>
                                                                 </Popover.Title>
                                                                 <Popover.Content className="text-center">
-                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoomState(flow.id)}>Valider</Button>
+                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoomState(flow.id)}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Content>
                                                             </Popover>
                                                             }
@@ -400,7 +400,7 @@ const Maid = ({userDB}) =>{
                                                     }).catch(function(error) {
                                                         console.log(error);
                                                     });
-                                                }}>Supprimer</Button></td>
+                                                }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -421,7 +421,7 @@ const Maid = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                        <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}
                 </Modal>
         </div>

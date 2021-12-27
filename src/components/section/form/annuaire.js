@@ -38,7 +38,7 @@ const Annuaire = () =>{
     const handleSubmit = event => {
     event.preventDefault()
     setFormValue("")
-    const notif = "Vous venez d'ajouter un nouveau nom à l'annuaire !" 
+    const notif = t("msh_phone_book.p_notif") 
     addNotification(notif)
     return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -85,7 +85,7 @@ const Annuaire = () =>{
             placement="right"
             overlay={
               <Tooltip id="title">
-                Annuaire
+                {t("msh_coolbar.tooltip_phone_book")}
               </Tooltip>
             }>
                 <img src={Contact} className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
@@ -100,7 +100,7 @@ const Annuaire = () =>{
                     >
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter">
-                        Annuaire du personnel
+                        {t("msh_phone_book.p_title")}
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
@@ -112,7 +112,7 @@ const Annuaire = () =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Répertoire" title="Répertoire" style={{overflow: "auto"}}>
+                            <Tab eventKey="Répertoire" title={t("msh_phone_book.p_first_tab_title")} style={{overflow: "auto"}}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                                 {info.map(flow =>(
                                     <div style={{
@@ -124,8 +124,8 @@ const Annuaire = () =>{
                                     key={flow.markup}>
                                         <div style={{padding: "2%", width: "50%"}}>
                                             <h5 className="bold">{flow.name}</h5>
-                                            <p><i>Mobile : {flow.mobile}</i> 
-                                            <br /><i>Fixe : {flow.fix}</i></p>
+                                            <p><i>{t("msh_phone_book.p_mobile")} : {flow.mobile}</i> 
+                                            <br /><i>{t("msh_phone_book.p_local")} : {flow.fix}</i></p>
                                         </div>
                                             <Button variant="outline-danger" size="sm" onClick={() => {
                                                 return db.collection('hotels')
@@ -138,12 +138,12 @@ const Annuaire = () =>{
                                                 }).catch(function(error) {
                                                     console.log(error);
                                                 })
-                                            }}>Supprimer</Button>
+                                            }}>{t("msh_general.g_button.b_delete")}</Button>
                                     </div>
                                 ))}
                                 </PerfectScrollbar>
                             </Tab>
-                            <Tab eventKey="Ajouter un contact" title="Ajouter un contact">
+                            <Tab eventKey="Ajouter un contact" title={t("msh_phone_book.p_second_tab_title")}>
                             <div style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -154,7 +154,7 @@ const Annuaire = () =>{
                                 }}>
                                     <Form.Row>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Nom du collaborateur</Form.Label>
+                                        <Form.Label>{t("msh_phone_book.p_contact")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "25vw"}} value={formValue.name} name="name" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
@@ -165,12 +165,12 @@ const Annuaire = () =>{
                                         width: "50%"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>Numéro de mobile</Form.Label>
+                                        <Form.Label>{t("msh_phone_book.p_mobile")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 0656872674" style={{width: "11vw"}} value={formValue.mobile} name="mobile" onChange={handleChange} />
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description">
-                                        <Form.Label>Numéro de fixe</Form.Label>
+                                        <Form.Label>{t("msh_phone_book.p_local")}</Form.Label>
                                         <Form.Control type="text" placeholder="ex: 0130987654" style={{width: "11vw"}} value={formValue.fix} name="fix" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
@@ -180,7 +180,7 @@ const Annuaire = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>Enregistrer</Button>
+                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}
                     </Modal.Footer>
                 </Modal>

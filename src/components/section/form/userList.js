@@ -46,9 +46,9 @@ const UserList = ({userDB}) => {
                 <Table striped bordered hover className=" text-center">
                     <thead className="bg-dark text-light">
                         <tr>
-                        <th>Pseudo</th>
-                        <th>E-mail</th>
-                        <th>Admin</th>
+                        <th>{t("msh_general.g_table.t_username")}</th>
+                        <th>{t("msh_connexion.c_email_maj")}</th>
+                        <th>{t("msh_general.g_table.t_administrator")}</th>
                         <th></th>
                         </tr>
                     </thead>
@@ -77,7 +77,7 @@ const UserList = ({userDB}) => {
                             })
 
                             return deleteUser({uid: flow.userId})
-                        }}>Supprimer</Button></td>
+                        }}>{t("msh_general.g_button.b_delete")}</Button></td>
                     </tr>
                     ))}
                     </tbody>
