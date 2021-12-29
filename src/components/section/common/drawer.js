@@ -20,6 +20,7 @@ import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
 import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
 import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
 import Connection from '../../../svg/employee.svg'
+import { t } from 'i18next';
 
 
 export default function TemporaryDrawer({userDB, user}) {
@@ -44,7 +45,7 @@ export default function TemporaryDrawer({userDB, user}) {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-        <h4 className="drawer_title">Menu</h4>
+        <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
         {!!user && !!userDB &&
         <Chat user={user} userDB={userDB} />}

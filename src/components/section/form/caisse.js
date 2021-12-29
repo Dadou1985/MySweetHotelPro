@@ -231,7 +231,7 @@ const Caisse = () =>{
                                 value={filterDate}
                                 onChange={handleDateChange}
                                 onError={console.log}
-                                format="dd/MM/yyyy"
+                                format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                                 autoOk
                             />                                        
                             </MuiPickersUtilsProvider>}
@@ -410,7 +410,7 @@ const Caisse = () =>{
                                     {info.map((flow, key) =>(
                                         <tr key={key}>
                                         <td>{flow.author}</td>
-                                        <td>{flow.amount} euros</td>
+                                        <td>{flow.amount} {t("msh_safe.s_currency")}</td>
                                         <td>{flow.shift}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {

@@ -9,19 +9,19 @@ const PhoneCheckList = ({user, userDB}) =>{
 
     return(
         <div className="phoneCheckList_container">
-            <h3 className="phone_title">Check List</h3>
+            <h3 className="phone_title">{t("msh_check_list.c_title")}</h3>
             <Tab.Container defaultActiveKey="matin">
             <Row>
                 <Col sm={2}>
                 <Nav variant="pills" className="flex-row">
-                    <Nav.Item>
-                    <Nav.Link eventKey="matin">Matin</Nav.Link>
+                <Nav.Item>
+                    <Nav.Link eventKey="matin">{t("msh_check_list.c_button.b_morning_shift")}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                    <Nav.Link eventKey="soir">Soir</Nav.Link>
+                    <Nav.Link eventKey="soir">{t("msh_check_list.c_button.b_afternoon_shift")}</Nav.Link>
                     </Nav.Item>
                     <Nav.Item>
-                    <Nav.Link eventKey="nuit">Nuit</Nav.Link>
+                    <Nav.Link eventKey="nuit">{t("msh_check_list.c_button.b_night_shift")}</Nav.Link>
                     </Nav.Item>
                 </Nav>
                 </Col>

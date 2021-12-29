@@ -61,7 +61,8 @@ const SinglePage = () => {
             {!!userDB && !!user&&
             <Chat userDB={userDB} user={user} />}
         </div>
-          <Memo />
+        {!!userDB && !!user&&
+            <Memo userDB={userDB} user={user} />}
         </div>
         </FirebaseContext.Provider>
   )

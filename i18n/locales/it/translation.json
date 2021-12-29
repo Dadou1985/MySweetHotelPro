@@ -155,6 +155,13 @@
             "s_dirty": "Saldi",
             "s_clean": "Pulito"
         },
+        "r_action": {
+            "a_attribute": "Per attribuire",
+            "a_attribute_room": "Assegna un numero di camera",
+            "a_check": "Per controllare",
+            "a_input": "Inserisci un numero di camera"
+        },
+        "r_photo_state": "nessuno",
         "r_details": "Maggiori dettagli",
         "r_phone_button": {
             "b_show_modal": "Annulla iscrizione cliente",
@@ -189,6 +196,7 @@
             "t_cleaning": "Famiglia",
             "t_other": "Altri"
         },
+        "m_photo_state": "nessuno",
         "m_details": "Maggiori dettagli",
         "m_phone_button": {
             "b_show_modal": "Segnala un problema",
@@ -263,9 +271,12 @@
             "b_add": "Aggiungi un cliente",
             "b_send_mail": "Invia un'email di benvenuto",
             "b_contact": "Contatta il cliente",
-            "b_chat": "Mostra chat"
+            "b_chat": "Mostra chat",
+            "b_cancel": "Annulla",
+            "b_send_em_all": "Invia email"
         },
-        "c_notif": "Hai appena aggiunto un cliente al database!"
+        "c_notif": "Hai appena aggiunto un cliente al database!",
+        "c_notif_mails": "Le email sono state inviate!"
     },
     "msh_check_list": {
         "c_title": "Lista di controllo",
@@ -403,7 +414,7 @@
         "r_or": "o",
         "r_step": {
             "s_first": {
-                "f_title": "Primo passo",
+                "f_title": "Primo passaggio",
                 "f_subtitle": "Crea un account amministratore",
                 "f_first_name": "Nome",
                 "f_last_name": "Nome",
@@ -413,7 +424,7 @@
                 "f_alert": "Attenzione! Conferma nuovamente la password!"
             },
             "s_secondo": {
-                "s_title": "Primo passo",
+                "s_title": "Secondo passaggio",
                 "s_subtitle": {
                     "s_find": "Inserisci il codice postale della tua struttura",
                     "s_create": "Registra la mia struttura"
@@ -438,7 +449,7 @@
                 "s_drawer_list_hotel": "Elenco degli hotel trovati"
             },
             "s_terzo": {
-                "t_title": "Primo passo",
+                "t_title": "Terzo passaggio",
                 "t_subtitle": "Carica qui il logo del tuo hotel",
                 "t_skip_button": "Lo farò più tardi",
                 "t_modal": {
@@ -454,7 +465,7 @@
                 }
             },
             "s_fourth": {
-                "f_title": "Primo passo",
+                "f_title": "Riepilogo",
                 "f_subtitle": "Riepilogo",
                 "f_step_back_button": "Torna a questo passaggio",
                 "f_section": {

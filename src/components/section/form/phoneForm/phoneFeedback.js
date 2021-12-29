@@ -5,10 +5,10 @@ import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
 
 function PhoneFeedback({userDB}) {
+    const { t, i18n } = useTranslation()
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
-    const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
 
@@ -23,7 +23,7 @@ function PhoneFeedback({userDB}) {
       const handleSubmitFeedback = async(event) => {
         event.preventDefault()
         setFormValue({categorie: "improvement", feedback: ""})
-        const notif = "La Team MSH vous remercie pour votre contribution !"
+        const notif = t("msh_feedback_box.f_notif")
         await db.collection('feedbacks')
             .doc('category')
             .collection(formValue.categorie)
@@ -45,7 +45,7 @@ function PhoneFeedback({userDB}) {
     }
     return (
         <div className="phone_container">
-                <h4 style={{marginBottom: "5vh"}}>Feedback Box</h4>
+                <h4 style={{marginBottom: "5vh"}}>{t("msh_feedback_box.f_title")}</h4>
 
                 <select class="selectpicker" 
                 value={formValue.categorie} name="categorie" onChange={handleChange} 
@@ -56,19 +56,19 @@ function PhoneFeedback({userDB}) {
                     backgroundColor: "white", 
                     paddingLeft: "1vw", 
                     marginBottom: "3vh"}}>
-                        <option value="improvement">Améliorations</option>
-                        <option value="satisfaction">Satisfaction</option>
+                        <option value="improvement">{t("msh_feedback_box.f_comment.c_improvement")}</option>
+                        <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
                     </select>
 
             <Form.Row>
                 <Form.Group controlId="description">
                 <Form.Control as="textarea" type="text" 
-                placeholder="Faites-nous un retour de votre expérience..." 
+                placeholder={t("msh_feedback_box.f_input_textarea")} 
                 style={{width: "90vw", height: "30vh", resize: "none", marginBottom: "30vh"}} 
                 value={formValue.feedback} name="feedback" onChange={handleChange} />
                 </Form.Group>
             </Form.Row>
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} className="phone_submitButton" onClick={handleSubmitFeedback}>Envoyer maintenant</Button>
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} className="phone_submitButton" onClick={handleSubmitFeedback}>{t("msh_feedback_box.f_phone_button")}</Button>
         </div>
     )
 }

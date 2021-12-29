@@ -142,7 +142,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     }
 
     const handleChangeEmail = () => {
-        const notif = "Le changement de votre adresse e-mail a été enregistré avec succès !" 
+        const notif = t("msh_user_panel.u_section.s_email.e_notif")
 
          auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
@@ -152,7 +152,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
       }
 
       const handleChangePassword = () => {
-        const notif = "Le changement de votre mot de passe a été enregistré avec succès !" 
+        const notif = t("msh_user_panel.u_section.s_password.p_notif")  
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
@@ -195,8 +195,8 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     </div>*/}
                 </h1>
                 <div className="userProfile-header-toggle-container">
-                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdateEmail}>Modifier mon adresse e-mail</Button>
-                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdatePassword}>Modifier mon mot de passe</Button>
+                    <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
+                    <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
                 </div>
                 </div>
                 <Avatar alt="user-profile-photo" 
@@ -212,26 +212,26 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                         zIndex: "10"
                     }} />
                 <Drawer anchor="bottom" open={listEmail} onClose={handleCloseUpdateEmail}>
-                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre adresse e-mail</b></h5>
+                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>{t("msh_user_panel.u_section.s_email.e_label")}</b></h5>
                     <div className="drawer-container">
-                        <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder="Entrer une nouvelle adresse e-mail" className="user-dialog-hotel" onChange={handleChange} required /></div>
+                        <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder={t("msh_user_panel.u_section.s_email.e_input_placeholder")} className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
                     <Button variant="success" onClick={(event) => {
                         handleUpdateEmail(event, formValue.email)
                         handleChangeEmail(formValue.email)
                         handleCloseUpdateEmail()
-                    }}>Actualiser maintenant</Button>
+                    }}>{t("msh_general.g_button.b_update")}</Button>
                 </Drawer>
                 <Drawer anchor="bottom" open={listPassword} onClose={handleCloseUpdatePassword}>
-                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>Actualisation de votre mot de passe</b></h5>
+                    <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>{t("msh_user_panel.u_section.s_password.p_label")}</b></h5>
                     <div className="drawer-container">
-                        <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder="Entrer un nouveau mot de passe" className="user-dialog-hotel" onChange={handleChange} required /></div>
+                        <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder={t("msh_user_panel.u_section.s_password.p_input_placeholder")} className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
                     <Button variant="success" onClick={(event) => {
                         handleUpdatePassword(event, formValue.password)
                         handleChangePassword()
                         handleCloseUpdatePassword()
-                    }}>Actualiser maintenant</Button>
+                    }}>{t("msh_general.g_button.b_update")}</Button>
                 </Drawer>
                 {img && 
                     <Modal show={confModal}
@@ -240,15 +240,15 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     centered
                     >
                     <Modal.Body>
-                        <p style={{textAlign: "center"}}>Etes-vous sûr.e de vouloir ajouter ou changer votre photo de profil ?</p>
+                        <p style={{textAlign: "center"}}>{t("msh_user_panel.u_update_photo.u_modal.m_title")}</p>
                     </Modal.Body>
                     <Modal.Footer>
                         <div>
-                            <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={(event) => handleChangePhotoUrl(event)}>Oui</Button>
+                            <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={(event) => handleChangePhotoUrl(event)}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_yes")}</Button>
                             <Button size="sm" variant="danger" onClick={() => {
                                 setImg(null)
                                 handleCloseUpdatePhoto()
-                                }}>Non</Button>
+                                }}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_no")}</Button>
                         </div>
                     </Modal.Footer>
                 </Modal>}

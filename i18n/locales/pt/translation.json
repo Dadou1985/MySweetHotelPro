@@ -155,6 +155,13 @@
             "s_dirty": "Promoção",
             "s_clean": "Limpar"
         },
+        "r_action": {
+            "a_attribute": "Para atribuir",
+            "a_attribute_room": "Atribuir um número de quarto",
+            "a_check": "Para verificar",
+            "a_input": "Digite o número do quarto"
+        },
+        "r_photo_state": "nenhum",
         "r_details": "Mais detalhes",
         "r_phone_button": {
             "b_show_modal": "Cancelar inscrição de cliente",
@@ -189,6 +196,7 @@
             "t_cleaning": "Household",
             "t_other": "Outros"
         },
+        "m_photo_state": "nenhum",
         "m_details": "Mais detalhes",
         "m_phone_button": {
             "b_show_modal": "Comunicar um problema",
@@ -263,9 +271,12 @@
             "b_add": "Adicionar um cliente",
             "b_send_mail": "Envie um e-mail de boas-vindas",
             "b_contact": "Contactar o cliente",
-            "b_chat": "Mostrar bate-papo"
+            "b_chat": "Mostrar bate-papo",
+            "b_cancel": "Cancelar",
+            "b_send_em_all": "Enviar e-mails"
         },
-        "c_notif": "Você acabou de adicionar um cliente ao banco de dados!"
+        "c_notif": "Você acabou de adicionar um cliente ao banco de dados!",
+        "c_notif_mails": "Os emails foram enviados!"
     },
     "msh_check_list": {
         "c_title": "Lista de verificação",
@@ -297,6 +308,7 @@
             "s_afternoon_shift": "Noite",
             "s_night_shift": "Noite"
         },
+        "s_currency": "euros",
         "s_notif": "Você acabou de fazer um relatório de caixa!"
     },
     "msh_support": {
@@ -413,7 +425,7 @@
                 "f_alert": "Atenção! Por favor, reconfirme sua senha!"
             },
             "s_second": {
-                "s_title": "Primeira etapa",
+                "s_title": "Segunda etapa",
                 "s_subtitle": {
                     "s_find": "Insira o código postal do seu estabelecimento",
                     "s_create": "Registrar meu estabelecimento"
@@ -438,7 +450,7 @@
                 "s_drawer_list_hotel": "Lista de hotéis encontrados"
             },
             "s_third": {
-                "t_title": "Primeira etapa",
+                "t_title": "Terceira etapa",
                 "t_subtitle": "Carregue o logotipo do seu hotel aqui",
                 "t_skip_button": "Farei isso mais tarde",
                 "t_modal": {
@@ -454,7 +466,7 @@
                 }
             },
             "s_fourth": {
-                "f_title": "Primeiro passo",
+                "f_title": "Resumo",
                 "f_subtitle": "Resumo",
                 "f_step_back_button": "Volte para esta etapa",
                 "f_section": {

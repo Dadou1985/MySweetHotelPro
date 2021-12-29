@@ -155,6 +155,13 @@
             "s_dirty": "Verkauf",
             "s_clean": "Sauber"
         },
+        "r_action": {
+            "a_attribute": "Zu Attribut",
+            "a_attribute_room": "Raumnummer zuweisen",
+            "a_check": "Zu überprüfen",
+            "a_input": "Geben Sie eine Zimmernummer ein"
+        },
+        "r_photo_state": "keine",
         "r_details": "Weitere Details",
         "r_phone_button": {
             "b_show_modal": "Kunden abmelden",
@@ -189,6 +196,7 @@
             "t_cleaning": "Haushalt",
             "t_other": "Andere"
         },
+        "m_photo_state": "keine",
         "m_details": "Weitere Details",
         "m_phone_button": {
             "b_show_modal": "Ein Problem melden",
@@ -263,9 +271,12 @@
             "b_add": "Kunden hinzufügen",
             "b_send_mail": "Eine Willkommens-E-Mail senden",
             "b_contact": "Kontaktieren Sie den Kunden",
-            "b_chat": "Chat anzeigen"
+            "b_chat": "Chat anzeigen",
+            "b_cancel": "Abbrechen",
+            "b_send_em_all": "E-Mails senden"
         },
-        "c_notif": "Sie haben soeben einen Kunden zur Datenbank hinzugefügt!"
+        "c_notif": "Sie haben soeben einen Kunden zur Datenbank hinzugefügt!",
+        "c_notif_mails": "Die E-Mails wurden versendet!"
     },
     "msh_check_list": {
         "c_title": "Check-Liste",
@@ -297,6 +308,7 @@
             "s_afternoon_shift": "Abend",
             "s_night_shift": "Nacht"
         },
+        "s_currency": "Euro",
         "s_notif": "Sie haben gerade einen Kassenbericht erstellt!"
     },
     "msh_support": {
@@ -413,7 +425,7 @@
                 "f_alert": "Achtung! Bitte bestätigen Sie Ihr Passwort noch einmal!"
             },
             "s_second": {
-                "s_title": "Erster Schritt",
+                "s_title": "Zweiter Schritt",
                 "s_subtitle": {
                     "s_find": "Geben Sie die Postleitzahl Ihres Unternehmens ein",
                     "s_create": "Meine Einrichtung registrieren"
@@ -438,7 +450,7 @@
                 "s_drawer_list_hotel": "Liste der gefundenen Hotels"
             },
             "s_dritter": {
-                "t_title": "Erster Schritt",
+                "t_title": "Dritter Schritt",               
                 "t_subtitle": "Hier Ihr Hotellogo hochladen",
                 "t_skip_button": "Das mache ich später",
                 "t_modal": {
@@ -454,7 +466,7 @@
                 }
             },
             "s_vierter": {
-                "f_title": "Erster Schritt",
+                "f_title": "Zusammenfassung",
                 "f_subtitle": "Zusammenfassung",
                 "f_step_back_button": "Zu diesem Schritt zurückgehen",
                 "f_section": {

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
 import { db } from '../../../../Firebase'
 import moment from 'moment'
-import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import DateFnsUtils from '@date-io/date-fns';
@@ -46,7 +45,7 @@ const PhoneCab = ({userDB}) =>{
         event.preventDefault()
         setFormValue("")
         setStep(false)
-        const notif = "Vous venez d'ajouter une demande de réservation de taxi à la liste !" 
+        const notif = t("msh_cab.c_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -100,10 +99,9 @@ const PhoneCab = ({userDB}) =>{
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
 
-
     return(
         <div className="phone_container">
-            <h3 className="phone_title">Réservation de taxi</h3>
+            <h3 className="phone_title">{t("msh_cab.c_title")}</h3>
             <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
             {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
@@ -115,11 +113,11 @@ const PhoneCab = ({userDB}) =>{
                 <thead className="bg-dark text-center text-light">
                     <tr>
                     {expand && <th>Client</th>}
-                    <th>Chambre</th>
+                    <th>{t("msh_general.g_table.t_room")}</th>
                     {expand && <th>Date</th>}
-                    <th>Heure</th>
-                    <th>Pax</th>
-                    <th>Statut</th>
+                    <th>{t("msh_general.g_table.t_time")}</th>
+                    <th>{t("msh_general.g_table.t_passenger")}</th>
+                    <th>{t("msh_general.g_table.t_statut")}</th>
                     {expand && <th>Véhicule</th>}
                     {expand &&<th>Destination</th>}
                     {expand && <th className="bg-dark"></th>}
@@ -153,17 +151,17 @@ const PhoneCab = ({userDB}) =>{
                             }).catch(function(error) {
                                 console.log(error);
                             });
-                        }}>Supprimer</Button></td>}
+                        }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                     </tr>
                     ))}
                 </tbody>
             </Table>
             </div>
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Réserver un taxi</Button>
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_cab.c_phone_button.b_show_modal")}</Button>
 
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Réserver un taxi</h4>
+                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_cab.c_phone_button.b_show_modal")}</h4>
                 {!step && <Form.Row style={{
                     display: "flex",
                     flexFlow: "row",
@@ -176,12 +174,12 @@ const PhoneCab = ({userDB}) =>{
                     <KeyboardDateTimePicker
                         variant="dialog"
                         ampm={false}
-                        label="Date et Heure de réservation"
+                        label={t("msh_cab.c_calendar_title")}
                         value={formValue.date}
                         onChange={handleDateChange}
                         onError={console.log}
                         disablePast
-                        format="dd/MM/yyyy HH:mm"
+                        format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                     />                                        
                     </MuiPickersUtilsProvider>
                     </Form.Group>
@@ -189,48 +187,48 @@ const PhoneCab = ({userDB}) =>{
                 {step && <>
                 <Form.Row>
                     <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>Nom du client</Form.Label>
+                    <Form.Label>{t("msh_cab.c_client")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>Numéro de chambre</Form.Label>
+                    <Form.Label>{t("msh_cab.c_room")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>Nbre de passagers</Form.Label>
+                    <Form.Label>{t("msh_cab.c_pax")}</Form.Label>
                     <Form.Control type="number" value={formValue.passenger} name="passenger" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="description">
-                    <Form.Label>Type de véhicule</Form.Label><br/>
+                    <Form.Label>{t("msh_cab.c_vehicule.v_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
                     className="phonePage_select">
                         <option></option>
-                        <option>Berline</option>
-                        <option>Van</option>
+                        <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                        <option>{t("msh_cab.c_vehicule.v_van")}</option>
                     </select>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>Adresse de destination</Form.Label>
-                    <Form.Control type="text" placeholder="ex: 16 avenue Paul Cézanne, 78990 Elancourt" value={formValue.destination} name="destination" onChange={handleChange} />
+                    <Form.Label>{t("msh_cab.c_destination.d_label")}</Form.Label>
+                    <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} value={formValue.destination} name="destination" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 </>}
                 {step && <>
-                    <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>Retour</Button>
+                    <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)
-                    }}>Réserver maintenant</Button>                
+                    }}>{t("msh_cab.c_phone_button.b_validation")}</Button>                
                 </>}
-                {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>Poursuivre</Button>}
+                {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                 </div>
             </Drawer>
         </div>

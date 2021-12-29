@@ -3,7 +3,6 @@ import LostOnes from '../../images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal } from 'react-bootstrap'
 import { db } from '../../Firebase'
 import moment from 'moment'
-import 'moment/locale/fr';
 import Picture from '../../svg/picture.svg'
 import Close from '../../svg/close.svg'
 import Plus from '../../svg/plus3.svg'

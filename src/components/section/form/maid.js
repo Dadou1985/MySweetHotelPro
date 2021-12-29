@@ -323,7 +323,7 @@ const Maid = ({userDB}) =>{
                                                         id="popover-positioned-top">
                                                         <Popover.Title as="h3">
                                                             <Input 
-                                                                placeholder="Entrer un n° de chambre"
+                                                                placeholder={t("msh_room_change.r_action.a_attribute_room")}
                                                                 value={formValue.toRoom}
                                                                 name="toRoom"
                                                                 onChange={(e) => setFormValue({toRoom: e.target.value})}
@@ -335,7 +335,7 @@ const Maid = ({userDB}) =>{
                                                     </Popover>
                                                     }
                                                 >
-                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>A attribuer</Button>
+                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_attribute")}</Button>
                                                 </OverlayTrigger>
                                                         </td> : <td>{flow.toRoom}</td>}
                                                 <td>{flow.reason}</td>
@@ -348,7 +348,7 @@ const Maid = ({userDB}) =>{
                                                             <Popover 
                                                                 id="popover-positioned-top">
                                                                 <Popover.Title as="h3" className="text-center">
-                                                                <h6>Etat de la chambre</h6>
+                                                                <h6>{t("msh_room_change.r_state.s_label")}</h6>
                                                                 <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                                                                     style={{width: "5vw", 
                                                                     height: "100%", 
@@ -367,7 +367,7 @@ const Maid = ({userDB}) =>{
                                                             </Popover>
                                                             }
                                                         >
-                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>A vérifier</Button>
+                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_check")}</Button>
                                                 </OverlayTrigger>
                                                     </td> : 
                                                     <td>{flow.state}</td>}
@@ -377,7 +377,7 @@ const Maid = ({userDB}) =>{
                                                     setImg(flow.img)
                                                     setImgFrame(true)
                                                 }}><img src={Picture} style={{width: "1vw"}} /></td> : 
-                                                <td>Aucune</td>}
+                                                <td>{t("msh_room_change.r_photo_state")}</td>}
                                                 <td>{flow.author}</td>
                                                 <td>
                                                 <Switch

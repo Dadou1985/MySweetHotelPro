@@ -154,7 +154,13 @@
             "s_label": "Room status",
             "s_dirty": "Sale",
             "s_clean": "Clean"
+        },"r_action": {
+            "a_attribute": "To attribute",
+            "a_attribute_room": "Assign a room number",
+            "a_check": "To check",
+            "a_input": "Enter a room number"
         },
+        "r_photo_state": "none",
         "r_details": "More details",
         "r_phone_button": {
             "b_show_modal": "Unsubscribe a client",
@@ -189,6 +195,7 @@
             "t_cleaning": "Household",
             "t_other": "Others"
         },
+        "m_photo_state": "none",
         "m_details": "More details",
         "m_phone_button": {
             "b_show_modal": "Report a problem",
@@ -263,9 +270,12 @@
             "b_add": "Add a customer",
             "b_send_mail": "Send a welcome email",
             "b_contact": "Contact the customer",
-            "b_chat": "Show chat"
+            "b_chat": "Show chat",
+            "b_cancel": "Cancel",
+            "b_send_em_all": "Send emails"
         },
-        "c_notif": "You have just added a customer to the database!"
+        "c_notif": "You have just added a customer to the database!",
+        "c_notif_mails": "The emails have been sent!"
     },
     "msh_check_list": {
         "c_title": "Check-List",
@@ -297,6 +307,7 @@
             "s_afternoon_shift": "Evening",
             "s_night_shift": "Night"
         },
+        "s_currency": "euros",
         "s_notif": "You have just carried out a cash report!"
     },
     "msh_support": {
@@ -413,7 +424,7 @@
                 "f_alert": "Attention! Please re-confirm your password!"
             },
             "s_second": {
-                "s_title": "First step",
+                "s_title": "Second step",
                 "s_subtitle": {
                     "s_find": "Enter the postal code of your establishment",
                     "s_create": "Register my establishment"
@@ -438,7 +449,7 @@
                 "s_drawer_list_hotel": "List of hotels found"
             },
             "s_third": {
-                "t_title": "First step",
+                "t_title": "Third step",
                 "t_subtitle": "Upload your hotel logo here",
                 "t_skip_button": "I'll do it later",
                 "t_modal": {
@@ -454,7 +465,7 @@
                 }
             },
             "s_fourth": {
-                "f_title": "First step",
+                "f_title": "Summary",
                 "f_subtitle": "Summary",
                 "f_step_back_button": "Go back to this step",
                 "f_section": {

@@ -155,6 +155,13 @@
             "s_dirty": "Oferta",
             "s_clean": "Limpiar"
         },
+        "r_action": {
+            "a_attribute": "A atributo",
+            "a_attribute_room": "Asignar un número de habitación",
+            "a_check": "Para comprobar",
+            "a_input": "Ingresa un número de habitación"
+        },
+        "r_photo_state": "ninguno",
         "r_details": "Más detalles",
         "r_phone_button": {
             "b_show_modal": "Cancelar la suscripción de un cliente",
@@ -189,6 +196,7 @@
             "t_cleaning": "Hogar",
             "t_other": "Otros"
         },
+        "m_photo_state": "ninguno",
         "m_details": "Más detalles",
         "m_phone_button": {
             "b_show_modal": "Informar un problema",
@@ -263,9 +271,12 @@
             "b_add": "Agregar un cliente",
             "b_send_mail": "Enviar un correo electrónico de bienvenida",
             "b_contact": "Comuníquese con el cliente",
-            "b_chat": "Mostrar chat"
+            "b_chat": "Mostrar chat",
+            "b_cancel": "Cancelar",
+            "b_send_em_all": "Enviar correos electrónicos"
         },
-        "c_notif": "¡Acaba de agregar un cliente a la base de datos!"
+        "c_notif": "¡Acaba de agregar un cliente a la base de datos!",
+        "c_notif_mails": "¡Los correos electrónicos han sido enviados!"
     },
     "msh_check_list": {
         "c_title": "Lista de verificación",
@@ -297,6 +308,7 @@
             "s_afternoon_shift": "Tarde",
             "s_night_shift": "Noche"
         },
+        "s_currency": "euros",
         "s_notif": "¡Acaba de realizar un informe de caja!"
     },
     "msh_support": {
@@ -413,7 +425,7 @@
                 "f_alert": "¡Atención! ¡Vuelva a confirmar su contraseña!"
             },
             "s_second": {
-                "s_title": "Primer paso",
+                "s_title": "Segundo paso",
                 "s_subtitle": {
                     "s_find": "Introduzca el código postal de su establecimiento",
                     "s_create": "Registrar mi establecimiento"
@@ -438,7 +450,7 @@
                 "s_drawer_list_hotel": "Lista de hoteles encontrados"
             },
             "s_third": {
-                "t_title": "Primer paso",
+                "t_title": "Tercer paso",
                 "t_subtitle": "Sube el logotipo de tu hotel aquí",
                 "t_skip_button": "Lo haré más tarde",
                 "t_modal": {
@@ -454,7 +466,7 @@
                 }
             },
             "s_fourth": {
-                "f_title": "Primer paso",
+                "f_title": "Resumen",
                 "f_subtitle": "Resumen",
                 "f_step_back_button": "Regresa a este paso",
                 "f_section": {

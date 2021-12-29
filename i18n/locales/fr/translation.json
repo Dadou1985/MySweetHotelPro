@@ -156,6 +156,13 @@
             "s_dirty": "Sale",
             "s_clean": "Propre"
         },
+        "r_action" :{
+            "a_attribute": "A attribuer",
+            "a_attribute_room": "Attribuer un numéro de chambre",
+            "a_check": "A vérifier",
+            "a_input": "Entrer un numéro de chambre"
+        },
+        "r_photo_state": "aucune",
         "r_details": "Plus de détails",
         "r_phone_button": {
             "b_show_modal": "Déloger un client",
@@ -178,7 +185,7 @@
     },
     "msh_maintenance": {
         "m_title": "Maintenance technique",
-        "m_first_tab_title": "Signaler un problème techniques",
+        "m_first_tab_title": "Signaler un problème technique",
         "m_second_tab_title": "Liste des problèmes techniques",
         "m_client": "Nom du client",
         "m_room": "Numéro de chambre",
@@ -191,6 +198,7 @@
             "t_other": "Autres"
         },
         "m_details":"Plus de détails",
+        "m_photo_state": "aucune",
         "m_phone_button": {
             "b_show_modal": "Signaler un problème",
             "b_validation": "Signaler maintenant"
@@ -264,9 +272,13 @@
             "b_add": "Ajouter un client",
             "b_send_mail": "Envoyer un e-mail de bienvenue",
             "b_contact": "Contacter le client",
-            "b_chat": "Afficher le chat"
+            "b_chat": "Afficher le chat",
+            "b_cancel": "Annuler",
+            "b_send_em_all": "Envoyer les emails"
         },
-        "c_notif": "Vous venez d'ajouter un client à la base de données !"
+        "c_notif": "Vous venez d'ajouter un client à la base de données !",
+        "c_notif_mails": "Les e-mails ont bien été envoyés !"
+
     },
     "msh_check_list": {
         "c_title": "Check-List",
@@ -298,6 +310,7 @@
             "s_afternoon_shift": "Soir",
             "s_night_shift": "Nuit"
         },
+        "s_currency": "euros",
         "s_notif": "Vous venez d'effectuer un rapport de caisse !"
     },
     "msh_support": {
@@ -414,7 +427,7 @@
                 "f_alert": "Attention ! Veuillez confirmer à nouveau votre mot de passe s'il vous plaît !"
             },
             "s_second": {
-                "s_title": "Première étape",
+                "s_title": "Seconde étape",
                 "s_subtitle": {
                     "s_find": "Entrez le code postal de votre établissement",
                     "s_create": "Enregistrer mon établissement"
@@ -439,7 +452,7 @@
                 "s_drawer_list_hotel": "Liste des hôtels trouvés"
             },
             "s_third": {
-                "t_title": "Première étape",
+                "t_title": "Troisième étape",
                 "t_subtitle": "Téléverser le logo de votre hôtel ici",
                 "t_skip_button": "Je le ferai plus tard",
                 "t_modal": {
@@ -455,7 +468,7 @@
                 }
             },
             "s_fourth": {
-                "f_title": "Première étape",
+                "f_title": "Récapitulatif",
                 "f_subtitle": "Récapitulatif",
                 "f_step_back_button": "Revenir à cette étape",
                 "f_section": {
@@ -477,11 +490,13 @@
                         }
                     },
                     "s_second": {
+                        "s_title": "Responsable des opérations",
                         "s_name": "Nom",
                         "s_email": "E-mail"
                     }
                 },
-                "f_alert": "Vous n'avez pas rempli tous les champs du formulaire !"
+                "f_alert": "Vous n'avez pas rempli tous les champs du formulaire !",
+                "f_validation": "Valider mon formulaire"
             },
             "s_final": {
                 "f_title": "Welcome to the Smart Hospitality",

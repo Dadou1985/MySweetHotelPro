@@ -197,7 +197,7 @@ const Clock = ({userDB}) =>{
                                             onChange={handleDateChange}
                                             onError={console.log}
                                             disablePast
-                                            format="dd/MM/yyyy HH:mm"
+                                            format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                                         />                                        
                                         </MuiPickersUtilsProvider>
                                         </Form.Group>
@@ -224,7 +224,7 @@ const Clock = ({userDB}) =>{
                                 <thead className="bg-dark text-center text-light">
                                     <tr>
                                     <th>{t("msh_general.g_table.t_client")}</th>
-                                    <th>{t("msh_general.g_table.t_client")}</th>
+                                    <th>{t("msh_general.g_table.t_room")}</th>
                                     <th>{t("msh_general.g_table.t_date")}</th>
                                     <th>{t("msh_general.g_table.t_time")}</th>
                                     <th>{t("msh_general.g_table.t_phone")}</th>

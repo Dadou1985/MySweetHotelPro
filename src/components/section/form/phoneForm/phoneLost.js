@@ -50,7 +50,7 @@ const PhoneLost = ({userDB}) =>{
       const addLostObject = (event, photo) => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter un objet trouvé au panier !" 
+        const notif = t("msh_lost_found.l_notif")
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -122,7 +122,7 @@ const PhoneLost = ({userDB}) =>{
 
     return(
       <div className="phone_container">
-              <h3 className="phone_title">Objets Trouvés</h3>
+              <h3 className="phone_title">{t("msh_lost_found.l_title")}</h3>
               <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
             {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
@@ -134,10 +134,10 @@ const PhoneLost = ({userDB}) =>{
                 <thead className="bg-dark text-center text-light">
                     <tr>
                     {expand && <th>Type</th>}
-                    <th>Description</th>
-                    <th>Date</th>
+                    <th>{t("msh_general.g_table.t_description")}</th>
+                    <th>{t("msh_general.g_table.t_date")}</th>
                     {expand && <th>Photo</th>}
-                    <th>Lieu</th>
+                    <th>{t("msh_general.g_table.t_place")}</th>
                     {expand && <th>Details</th>}
                     {expand &&<th>Collaborateur</th>}
                     {expand && <th className="bg-dark"></th>}
@@ -167,7 +167,7 @@ const PhoneLost = ({userDB}) =>{
                             }).catch(function(error) {
                                 console.log(error);
                             });
-                        }}>Supprimer</Button></td>}
+                        }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                         </tr>
                     ))}
                 </tbody>
@@ -184,48 +184,48 @@ const PhoneLost = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-              <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Enregistrer un objet trouvé</Button>
+              <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_lost_found.l_button.b_show_modal")}</Button>
           
               <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Enregistrer un objet trouvé</h4>
+                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_lost_found.l_button.b_show_modal")}</h4>
                 <Form.Row>
                   <Form.Group controlId="exampleForm.SelectCustom">
-                  <Form.Label>Quel type d'objet ?</Form.Label><br/>
+                  <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
                       <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                       className="phonePage_select">
-                          <option></option>
-                          <option>High Tech</option>
-                          <option>Documents Officiels</option>
-                          <option>Vêtements</option>
-                          <option>Autres</option>
+                        <option></option>
+                        <option>High Tech</option>
+                        <option>{t("msh_lost_found.l_second_tab_title")}</option>
+                        <option>{t("msh_lost_found.l_third_tab_title")}</option>
+                        <option>{t("msh_lost_found.l_fourth_tab_title")}</option>
                       </select>
                   </Form.Group>
               </Form.Row>
               <Form.Row>
                   <Form.Group controlId="exampleForm.SelectCustom">
-                  <Form.Label>Lieu ?</Form.Label><br/>
+                  <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
                       <select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
                       className="phonePage_select">
-                          <option></option>
-                          <option>Hall</option>
-                          <option>Restaurant</option>
-                          <option>Parking</option>
-                          <option>Toilettes</option>
-                          <option>Etages</option>
-                          <option>Autres</option>
+                        <option></option>
+                        <option>{t("msh_lost_found.l_place.p_hall")}</option>
+                        <option>{t("msh_lost_found.l_place.p_restaurant")}</option>
+                        <option>{t("msh_lost_found.l_place.p_parking")}</option>
+                        <option>{t("msh_lost_found.l_place.p_toilet")}</option>
+                        <option>{t("msh_lost_found.l_place.p_floors")}</option>
+                        <option>{t("msh_lost_found.l_place.p_other")}</option>
                       </select>
                   </Form.Group>
               </Form.Row>
               <Form.Row>
                   <Form.Group controlId="description" className="phone_input">
-                  <Form.Label>Description de l'objet</Form.Label>
-                  <Form.Control type="text" placeholder="ex: un i-phone noir" value={formValue.description} name="description" onChange={handleChange} />
+                  <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
+                  <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} value={formValue.description} name="description" onChange={handleChange} />
                   </Form.Group>
               </Form.Row>
               <Form.Row>
                   <Form.Group controlId="details" className="phone_textarea">
-                      <Form.Label>Plus de détails</Form.Label>
+                      <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
                       <Form.Control as="textarea" rows="2" name="details" value={formValue.details} onChange={handleChange}  />
                   </Form.Group>
               </Form.Row>
@@ -233,12 +233,12 @@ const PhoneLost = ({userDB}) =>{
                 <input type="file" className="phone-camera-icon"
                     onChange={handleImgChange} />
                 <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                <span style={{marginLeft: "2vw"}}>Ajouter une photo</span>
+                <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
                 </Form.Row>
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)
-                    }}>Enregistrer maintenant</Button>
+                    }}>{t("msh_lost_found.l_button.b_validation")}</Button>
                 </div>
             </Drawer>
           </div>

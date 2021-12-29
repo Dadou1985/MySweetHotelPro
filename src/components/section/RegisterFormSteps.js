@@ -17,11 +17,11 @@ import { navigate } from 'gatsby-link'
 import { useTranslation } from "react-i18next"
 
 export default function RegisterFormSteps() {
-    const [stepOne, setStepOne] = useState(false)
+    const [stepOne, setStepOne] = useState(true)
     const [stepTwo, setStepTwo] = useState(false)
     const [stepThree, setStepThree] = useState(false)
     const [stepFour, setStepFour] = useState(false)
-    const [finalStep, setFinalStep] = useState(true)
+    const [finalStep, setFinalStep] = useState(false)
     const [alert, setAlert] = useState({success: false, danger: false, message: ""})
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
@@ -284,13 +284,13 @@ export default function RegisterFormSteps() {
                     <img src={MshLogo} className="register_form_logo" />
                     <img src={MshLogoPro} className="register_form_logo" />
                 </div>
-                {finalStep ? <h1 className="form_title"><b>Welcome to the Smart Hospitality</b></h1> : <h1 className="form_title"><b>Formulaire d'inscription</b></h1>}
+                {finalStep ? <h1 className="form_title"><b>{t("msh_register_form.r_step.s_final.f_title")}</b></h1> : <h1 className="form_title"><b>{t("msh_register_form.r_title")}</b></h1>}
                 </div>
-                {stepOne && <h3 className="step_title">Première étape</h3>}
-                {stepTwo && <h3 className="step_title">Deuxième étape</h3>}
-                {stepThree && <h3 className="step_title">Troisième étape</h3>}
-                {stepFour && <h3 className="step_title">Récapitulatif</h3>}
-                {finalStep && <h3 className="step_title">Félicitations !<br/> Vous venez de prendre 2 ans d'avance sur la concurrence !</h3>}
+                {stepOne && <h3 className="step_title">{t("msh_register_form.r_step.s_first.f_title")}</h3>}
+                {stepTwo && <h3 className="step_title">{t("msh_register_form.r_step.s_second.s_title")}</h3>}
+                {stepThree && <h3 className="step_title">{t("msh_register_form.r_step.s_third.t_title")}</h3>}
+                {stepFour && <h3 className="step_title">{t("msh_register_form.r_step.s_fourth.f_title")}</h3>}
+                {finalStep && <h3 className="step_title">{t("msh_register_form.r_step.s_final.f_subtitle.part_one")}<br/>{t("msh_register_form.r_step.s_final.f_subtitle.part_two")}</h3>}
                 {finalStep ? <div className="progress_container"><ProgressBar className="progress_bar" now={now} label={`${now}%`} /></div> : <ProgressBar now={now} label={`${now}%`} />}
                 
                 {stepOne && <form className="stepOne_container" onSubmit={() => {
@@ -305,18 +305,18 @@ export default function RegisterFormSteps() {
                         setNow(25)
                     }
                 }}>
-                <h5 className="stepOne_title"><b>Créer un compte administrateur</b></h5>
+                <h5 className="stepOne_title"><b>{t("msh_register_form.r_step.s_first.f_subtitle")}</b></h5>
                 <Form.Row className="stepOne_form_name_input">
                     <Form.Group controlId="description1">
-                    <Form.Control type="text" placeholder="Prénom" className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
+                    <Form.Control type="text" placeholder={t("msh_register_form.r_step.s_first.f_first_name")} className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
                     </Form.Group>
                 
                     <Form.Group controlId="description2">
-                    <Form.Control type="text" placeholder="Nom" className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
+                    <Form.Control type="text" placeholder={t("msh_register_form.r_step.s_first.f_last_name")} className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                     <Form.Group controlId="description3">
-                    <Form.Control type="email" placeholder="E-mail" className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
+                    <Form.Control type="email" placeholder={t("msh_register_form.r_step.s_first.f_email")} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
                 <Form.Row style={{
                     display: "flex",
@@ -326,26 +326,26 @@ export default function RegisterFormSteps() {
                     width: "70%",
                 }}>
                     <Form.Group controlId="description4">
-                    <Form.Control type="password" placeholder="Mot de passe" className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
+                    <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_password")} className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
                     </Form.Group>
             
                     <Form.Group controlId="description5">
-                    <Form.Control type="password" placeholder="Confirmer le mot de passe" className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
+                    <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_confirmation")} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
                 </Form.Row>
-                <Button variant="success" className="stepOne_validation_button" type="submit">Passer à l'étape suivante</Button>
+                <Button variant="success" className="stepOne_validation_button" type="submit">{t("msh_register_form.r_button.b_next")}</Button>
                 {alert.danger && <Alert variant="danger" className="stepOne_alert">
-                    Attention ! Veuillez confirmer à nouveau votre mot de passe s'il vous plaît !
+                    {t("msh_register_form.r_step.s_first.f_alert")}
                 </Alert>}
                 </form>}
                 {stepTwo && <div className="stepTwo_container">
                         {findHotelForm ? <Button variant="outline-info" className="stepTwo_find_button" onClick={() => setfindHotelForm(false)}>Trouver mon hôtel avec le code postal</Button> : <div className="stepTwo_find_container">
-                        <h5 className="stepTwo_title"><b>Entrez le code postal de votre établissement</b></h5>
+                        <h5 className="stepTwo_title"><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_find")}</b></h5>
                         <Form.Row>
                             <Form.Group className="stepTwo_find_input_container">
                             <Input 
                                 type="text" 
-                                placeholder="Code postal" 
+                                placeholder={t("msh_register_form.r_step.s_second.s_input.i_find_placeholder")} 
                                 value={initialFilter} 
                                 onChange={handleChangeInitialfilter}
                                 className="text-center stepTwo_find_input"
@@ -355,7 +355,7 @@ export default function RegisterFormSteps() {
 
                         <Form.Row>
                             <Form.Group className="stepTwo_find_dropdown_container">
-                            <DropdownButton style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} id="dropdown-basic-button" title="Valider" drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
+                            <DropdownButton style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} id="dropdown-basic-button" title={t("msh_register_form.r_button.b_find")} drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
                             {info.map(details => {
                                 return <Dropdown.Item  onClick={()=>{
                                     setFormValue({...formValue,
@@ -380,43 +380,43 @@ export default function RegisterFormSteps() {
                             <Button variant="dark" style={{display: typeof window && window.innerWidth > 768 ? "none" : "flex"}} className="stepTwo_find_dropdown_container" onClick={() => {
                                 setFilter(initialFilter)
                                 return setShowFindHotelDrawer(true)
-                                }}>Valider</Button>
+                                }}>{t("msh_register_form.r_button.b_find")}</Button>
                             </Form.Group>
                         </Form.Row>
                         <div className="stepTwo_hotel_name_container"><b>{formValue.hotelName && formValue.hotelName}</b></div>
                         </div>}
-                        <div className="stepTwo_separation">ou</div>
+                        <div className="stepTwo_separation">{t("msh_register_form.r_or")}</div>
                     {findHotelForm ? <div className="stepTwo_create_hotel_container">
-                        <h5 style={{marginBottom: "3vh"}}><b>Enregistrer mon établissement</b></h5>
+                        <h5 style={{marginBottom: "3vh"}}><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_create")}</b></h5>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder="Région" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name={t("msh_register_form.r_step.s_second.s_input.i_region")} type="text" placeholder="Région" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder="Département" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name={t("msh_register_form.r_step.s_second.s_input.i_district")} type="text" placeholder="Département" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder="Ville" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name={t("msh_register_form.r_step.s_second.s_input.i_city")} type="text" placeholder="Ville" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} type="text" placeholder="Code postal" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name={t("msh_register_form.r_step.s_second.s_input.i_standing")} type="number" placeholder="Classement" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name={t("msh_register_form.r_step.s_second.s_input.i_capacity")} type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name={t("msh_register_form.r_step.s_second.s_input.i_address")} type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name={t("msh_register_form.r_step.s_second.s_input.i_phone")} type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name={t("msh_register_form.r_step.s_second.s_input.i_web")} type="text" placeholder="Site web" onChange={handleChange} required />
                         </Form.Group>
                     </div> : <Button variant="outline-dark" style={{marginTop: "3vh"}} onClick={() => {
                         if(typeof window && window.innerWidth > 768) {
@@ -425,24 +425,24 @@ export default function RegisterFormSteps() {
                             setShowCreateHotelDrawer(true)
                         }
                         
-                        }}>Je ne trouve pas mon établissement</Button>}
+                        }}>{t("msh_register_form.r_button.b_create")}</Button>}
                     <div className="stepTwo_button_container">
                             <Button variant="outline-info" onClick={() => {
                                 setStepTwo(false)
                                 setStepOne(true)
                                 setNow(0)
-                            }} className="stepTwo_button">Etape précédente</Button>
+                            }} className="stepTwo_button">{t("msh_register_form.r_button.b_back")}</Button>
                             <Button variant="success" onClick={() => {
                                 if(isRegistrated) {
                                     setAlert({
                                         danger: true,
-                                        message: "Cet établissement bénéficie déjà de nos services ! Pour plus de renseignement, veuillez vous adresser au responsable des opérations de votre équipe."
+                                        message: t("msh_register_form.r_step.s_second.s_alert.a_isRegitrated")
                                     })
                                 }else{
                                     if(formValue.region === "" || formValue.hotelName === "" || formValue.departement === "" || formValue.city === "" || formValue.code_postal === "" || formValue.standing === "" || formValue.room === null || formValue.adresse === "" || formValue.phone === "" || formValue.website === ""){
                                         setAlert({
                                             danger: true,
-                                            message: "Vous devez choisir ou enregistrer un établissement !"
+                                            message: t("msh_register_form.r_step.s_second.s_alert.a_action_required")
                                         })  
                                     }else{
                                         setStepTwo(false)
@@ -450,17 +450,17 @@ export default function RegisterFormSteps() {
                                         setNow(50)
                                     }
                                 }
-                            }} className="stepTwo_button">Etape suivante</Button>
+                            }} className="stepTwo_button">{t("msh_register_form.r_button.b_next")}</Button>
                         </div>
                         {alert.danger && <div>
                             <Alert variant="danger" className="stepThree_alert">
                                 {alert.message}
                             </Alert>
-                            {isRegistrated && <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>Revenir sur le site web</b></a>}
+                            {isRegistrated && <a href="https://mysweethotel.com/" style={{fontSize: "1.5em", color: "black"}}><b>{t("msh_register_form.r_step.s_final.f_message.hidden_paragraph")}</b></a>}
                         </div>}
                 </div>}
                 {stepThree && <div>
-                    <h5 className="stepThree_title"><b>Téléverser le logo de votre hôtel ici</b></h5>
+                    <h5 className="stepThree_title"><b>{t("msh_register_form.r_step.s_third.t_subtitle")}</b></h5>
                     <div className="stepThree_upload_container">
                         <input type="file" className="steps-camera-icon"
                             onChange={handleImgChange} />
@@ -472,13 +472,13 @@ export default function RegisterFormSteps() {
                         setNow(75)                                   
                         setStepFour(true)
                         setIsLoading(false)
-                        }}>Je le ferai plus tard</Button>
+                        }}>{t("msh_register_form.r_step.s_third.t_skip_button")}</Button>
                     <div className="stepThree_button_container">
                             <Button variant="outline-info" onClick={() => {
                                 setStepThree(false)
                                 setStepTwo(true)
                                 setNow(25)
-                            }} className="stepThree_button">Etape précédente</Button>
+                            }} className="stepThree_button">{t("msh_register_form.r_button.b_back")}</Button>
                             <Button variant="success" className="stepThree_button" onClick={() => {
                                 if(newImg !== null) {
                                     handleUploadLogo().then(() => {
@@ -495,13 +495,13 @@ export default function RegisterFormSteps() {
                                         setAlert({danger : false})
                                     }, 3000);
                                 }
-                            }}>Etape suivante</Button>
+                            }}>{t("msh_register_form.r_button.b_next")}</Button>
                         </div>
                         {alert.success && <Alert variant="success" className="stepThree_alert">
-                            Votre logo a été téléversé avec succès !
+                            {t("msh_register_form.r_step.s_third.t_alert.a_success")}
                         </Alert>}
                         {alert.danger && <Alert variant="danger" className="stepThree_alert">
-                            Vous devez téléverser une image avant de valider le formulaire !
+                        {t("msh_register_form.r_step.s_third.t_alert.a_danger")}
                         </Alert>}
                 </div>}
                 {stepFour && 
@@ -512,38 +512,38 @@ export default function RegisterFormSteps() {
                             setStepFour(false)
                             setStepThree(true)
                             setNow(50)
-                        }}>Revenir à cette étape</Button>
+                        }}>{t("msh_register_form.r_step.s_fourth.f_step_back_button")}</Button>
                     </div>
                     <Divider className="stepFour_divider" />
                     <div className="stepFour_hotel_data_container">
-                        <h4 className="stepFour_hotel_data_title"><b>Etablissement hôtelier</b></h4>
+                        <h4 className="stepFour_hotel_data_title"><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_title")}</b></h4>
                         <div>
-                            <p><b>Nom:</b> {formValue.hotelName}</p>
-                            <p><b>Adresse:</b> {formValue.adresse}</p>
-                            <p><b>Ville:</b> {formValue.city}</p>
-                            <p><b>Département:</b> {formValue.departement}</p>
-                            <p><b>Région:</b> {formValue.region}</p>
-                            <p><b>Code postal:</b> {formValue.code_postal}</p>
-                            <p><b>Classement:</b> {formValue.standing} étoiles</p>
-                            <p><b>Capacité:</b> {formValue.room} chambres</p>
-                            {formValue.website && <p><b>Site web:</b> {formValue.website}</p>}
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_name")}:</b> {formValue.hotelName}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_address")}:</b> {formValue.adresse}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_city")}:</b> {formValue.city}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_district")}:</b> {formValue.departement}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_region")}:</b> {formValue.region}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_code_postal")}:</b> {formValue.code_postal}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_standing.s_label")}:</b> {formValue.standing} {t("msh_register_form.r_step.s_fourth.f_section.s_first.f_standing.s_suffix")}</p>
+                            <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_first.f_capacity.c_label")}:</b> {formValue.room} {t("msh_register_form.r_step.s_fourth.f_section.s_first.f_capacity.c_suffix")}</p>
+                            {formValue.website && <p><b>{t("msh_register_form.r_step.s_second.s_input.i_web")}:</b> {formValue.website}</p>}
                         </div>
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
                             setStepTwo(true)
                             setNow(25)
-                        }}>Revenir à cette étape</Button>
+                        }}>{t("msh_register_form.r_step.s_fourth.f_step_back_button")}</Button>
                     </div>
                     <Divider className="stepFour_divider" />
                     <div className="stepFour_manager_data_container">
-                        <h4 className="stepFour_manager_data_title"><b>Responsable des opérations</b></h4>
-                        <p><b>Nom: </b>{formValue.firstName} {formValue.lastName}</p>
-                        <p><b>E-mail:</b> {formValue.email}</p>
+                        <h4 className="stepFour_manager_data_title"><b>{t("msh_register_form.r_step.s_fourth.f_section.s_second.s_title")}</b></h4>
+                        <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_second.s_name")}: </b>{formValue.firstName} {formValue.lastName}</p>
+                        <p><b>{t("msh_register_form.r_step.s_fourth.f_section.s_second.s_email")}:</b> {formValue.email}</p>
                         <Button variant="outline-info" size="sm" onClick={() => {
                             setStepFour(false)
                             setStepOne(true)
                             setNow(0)
-                        }}>Revenir à cette étape</Button>
+                        }}>{t("msh_register_form.r_step.s_fourth.f_step_back_button")}</Button>
                     </div>
                     {isLoading ? <Spinner animation="grow" /> : <Button variant="success" className="stepFour_button" onClick={() => {
                             if(formValue.region !== "" || formValue.hotelName !== "" || formValue.departement !== "" || formValue.city !== "" || formValue.code_postal !== "" || formValue.standing !== "" || formValue.room === null || formValue.adresse !== "" || formValue.phone !== "" || formValue.website !== ""){
@@ -552,7 +552,7 @@ export default function RegisterFormSteps() {
                                     setNow(100)
                                     return setFinalStep(true)
                             }else{
-                                setAlert({danger: true, message: "Vous n'avez pas rempli tous les champs du formulaire !"})
+                                setAlert({danger: true, message: t("msh_register_form.r_step.s_fourth.f_alert")})
                                 setTimeout(() => {
                                     setAlert({danger: false, message: ""})
                                 }, 5000);
@@ -566,12 +566,12 @@ export default function RegisterFormSteps() {
                 {finalStep && 
                 <div className="finalStep_container">
                     <div className="finalStep_greeting_message_container" style={{marginTop: "5vh"}}>
-                        <p>Vous pouvez désormais jouir de nos services gratuitement et ce, durant toute la phase de pré-lancement qui s'étendra jusqu'en mai 2022.</p>
-                        <p>Vous pouvez dès maintenant accéder à notre solution en cliquant sur le lien suivant : <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
-                        <p><b>Des visuels ont été élaborés afin de faciliter la communication autour de la solution à destination de la clientèle.<br/>
-                        Téléchargeable uniquement depuis un ordinateur (portable ou fixe), vous les trouverez dans la section "Profil" de l'application web en cliquant sur l'icône suivante <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> situé dans la barre de navigation.<br/></b></p>
-                        {!url && <p><b>Vous pourrez également y téléverser le logo de votre établissement afin que votre marque soit identifiable par vos clients et votre personnel.</b></p>}
-                        <p>Toute l'équipe de <i><b>My Sweet Hotel</b></i> vous remercie pour la confiance que vous lui avez accordée !</p>
+                        <p>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</p>
+                        <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")} <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
+                        <p><b>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
+                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></b></p>
+                        {/*!url && <p><b>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</b></p>*/}
+                        <p>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</p>
                     </div>
                     <a href="https://mysweethotel.com/" target="_blank" style={{
                         display: 'flex',
@@ -581,22 +581,22 @@ export default function RegisterFormSteps() {
                         color: "black"
                     }}>
                         <img src={Home} style={{width: "15%", marginTop: "5vh", marginBottom: "1vh"}} />
-                        <b>Revenir sur le site</b>
+                        <b>{t("msh_register_form.r_step.s_final.f_message.hidden_paragraph")}</b>
                     </a >
                </div> }
                <Modal show={showModal} centered size="lg" onHide={() => setShowModal(false)}>
                     <Modal.Header closeButton>
-                    <Modal.Title>Etes-vous sûr.e de vouloir sélectionner cette image ?</Modal.Title>
+                    <Modal.Title>{t("msh_register_form.r_step.s_third.t_modal.m_title")}</Modal.Title>
                     </Modal.Header>
                     <Modal.Body className="finalStep_modal">{newImg && newImg.name}</Modal.Body>
                     <Modal.Footer>
                     <Button variant="outline-dark" onClick={() => {
                         setNewImg(null)
                         setShowModal(false)}}>
-                        non
+                        {t("msh_register_form.r_step.s_third.t_modal.m_button.b_no")}
                     </Button>
                     <Button variant="dark" onClick={handleUploadLogo}>
-                        oui
+                        {t("msh_register_form.r_step.s_third.t_modal.m_button.b_yes")}
                     </Button>
                     </Modal.Footer>
                 </Modal>
@@ -610,7 +610,7 @@ export default function RegisterFormSteps() {
                         flexFlow: "column",
                         alignItems: "center"
                         }}>
-                        <h5 style={{textAlign: "center", paddingTop: "2vh"}}><b>Liste des hôtels trouvés</b></h5>
+                        <h5 style={{textAlign: "center", paddingTop: "2vh"}}><b>{t("msh_register_form.r_step.s_second.s_drawer_list_hotel")}</b></h5>
                         <Divider style={{width: "90vw", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                     </div>
                     <div id="drawer-container" style={{
@@ -663,7 +663,7 @@ export default function RegisterFormSteps() {
                         alignItems: "center"
                         }}>
                         <h5 style={{textAlign: "center", paddingTop: "2vh", fontSize: "1.5em"}}>
-                            <b>Enregistrer mon établissement</b>
+                            <b>{t("msh_register_form.r_step.s_second.s_subtitle.s_create")}</b>
                             <img src={Close} style={{width: "5vw", cursor: "pointer", position: "absolute", right: "5%"}} onClick={() => {
                                 setFormValue({...formValue,
                                     region: "", 
@@ -693,38 +693,38 @@ export default function RegisterFormSteps() {
                         marginTop: "8vh"
                     }}>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder="Région" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name={t("msh_register_form.r_step.s_second.s_input.i_region")} type="text" placeholder="Région" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder="Département" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name={t("msh_register_form.r_step.s_second.s_input.i_district")} type="text" placeholder="Département" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder="Ville" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name={t("msh_register_form.r_step.s_second.s_input.i_city")} type="text" placeholder="Ville" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder="Code postal" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} type="text" placeholder="Code postal" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name={t("msh_register_form.r_step.s_second.s_input.i_standing")} type="number" placeholder="Classement" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name={t("msh_register_form.r_step.s_second.s_input.i_capacity")} type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name={t("msh_register_form.r_step.s_second.s_input.i_address")} type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name={t("msh_register_form.r_step.s_second.s_input.i_phone")} type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder="Site web" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name={t("msh_register_form.r_step.s_second.s_input.i_web")} type="text" placeholder="Site web" onChange={handleChange} required />
                         </Form.Group>
                         <Button variant="success" style={{position: "fixed", bottom: "0", left: "0", width: "100%", borderRadius: "0"}} onClick={() => {
                             setShowCreateHotelDrawer(false)
-                        }}>Valider </Button>            
+                        }}>{t("msh_register_form.r_button.b_phone_validation")}</Button>            
                 </form>
             </Drawer>
             </div>

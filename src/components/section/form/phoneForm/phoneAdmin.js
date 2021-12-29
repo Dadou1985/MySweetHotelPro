@@ -40,7 +40,7 @@ function PhoneAdmin({userDB}) {
     const handleSubmit = async(event) => {
         event.preventDefault()
         //setFormValue("")
-        const notif = "Vous venez de créer un compte collaborateur !" 
+        const notif = t("msh_admin_board.a_notif")
         addNotification(notif)
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
         return db.collection('businessUsers')
@@ -99,7 +99,7 @@ function PhoneAdmin({userDB}) {
 
     return (
         <div className="phone_container">
-            <h3 className="phone_title">Liste des collaborateurs</h3>
+            <h3 className="phone_title">{t("msh_admin_board.a_phone_title")}</h3>
             <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
             {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
@@ -110,8 +110,8 @@ function PhoneAdmin({userDB}) {
             <Table striped bordered hover>
                 <thead className="bg-dark text-center text-light">
                     <tr>
-                    <th>Pseudo</th>
-                    <th>Admin</th>
+                    <th>{t("msh_general.g_table.t_username")}</th>
+                    <th>{t("msh_general.g_table.t_administrator")}</th>
                     {expand && <th>E-mail</th>}
                     <th></th>
                     </tr>
@@ -141,13 +141,13 @@ function PhoneAdmin({userDB}) {
                         })
 
                         return deleteUser({uid: flow.userId})
-                    }}>Supprimer</Button></td>
+                    }}>{t("msh_general.g_button.b_delete")}</Button></td>
                 </tr>
                 ))}
                 </tbody>
             </Table>
         </div>
-        <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Ajouter un collaborateur</Button>
+        <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_admin_board.a_phone_button.b_show_modal")}</Button>
 
         <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
             <div style={{
@@ -158,9 +158,9 @@ function PhoneAdmin({userDB}) {
                 padding: "5%",
                 textAlign: "center"
             }}>
-            <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Créér un compte collaborateur</h4>
+            <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_admin_board.a_first_tab_title")}</h4>
             <Form.Group controlId="formGroupName">
-                <Form.Control style={{width: "80vw"}} value={formValue.username} name="username" type="text" placeholder="Prénom et Nom du collaborateur" onChange={handleChange} required />
+                <Form.Control style={{width: "80vw"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
             </Form.Group>
             {/*<Form.Group controlId="formGroupEmail">
                 <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
@@ -173,10 +173,10 @@ function PhoneAdmin({userDB}) {
                 <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
             </Form.Group>*/}
             <Form.Group controlId="formGroupRefHotel">
-                <Form.Control style={{width: "80vw"}} value={formValue.email} name="email" type="text" placeholder="E-mail du collaborateur" onChange={handleChange} required />
+                <Form.Control style={{width: "80vw"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
             </Form.Group>
 
-            <Button variant="success" onClick={handleSubmit}>Créér un compte maintenant</Button>
+            <Button variant="success" onClick={handleSubmit}>{t("msh_admin_board.a_phone_button.b_validation")}</Button>
         </div>
         </Drawer>
     </div>

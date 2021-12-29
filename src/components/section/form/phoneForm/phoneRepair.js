@@ -48,7 +48,7 @@ const PhoneRepair = ({userDB}) =>{
       const addTechnicalProblem = (event, photo) => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter un signalement technique à la liste !" 
+        const notif = t("msh_maintenance.m_notif") 
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -144,7 +144,7 @@ const PhoneRepair = ({userDB}) =>{
     return(
         
         <div className="phone_container">
-            <h3 className="phone_title">Maintenance technique</h3>
+            <h3 className="phone_title">{t("msh_maintenance.m_title")}</h3>
             <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
             {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
@@ -155,10 +155,10 @@ const PhoneRepair = ({userDB}) =>{
             {!imgFrame ? <Table striped bordered hover size="sm" className="text-center">
                     <thead className="bg-dark text-center text-light">
                         <tr>
-                        <th>Client</th>
-                        <th>Chambre</th>
-                        <th>Catégorie</th>
-                        <th>Statut</th>
+                        <th>{t("msh_general.g_table.t_client")}</th>
+                        <th>{t("msh_general.g_table.t_room")}</th>
+                        <th>{t("msh_general.g_table.t_category")}</th>
+                        <th>{t("msh_general.g_table.t_statut")}</th>
                         {expand && <th>Détails</th>}
                         {expand && <td>Date</td>}
                         {expand && <th>Photo</th>}
@@ -200,7 +200,7 @@ const PhoneRepair = ({userDB}) =>{
                                 }).catch(function(error) {
                                     console.log(error);
                                 });
-                            }}>Supprimer</Button></td>}
+                            }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             </tr>
                         ))}
                     </tbody>
@@ -217,40 +217,40 @@ const PhoneRepair = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>Signaler un problème</Button>
+            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_maintenance.m_phone_button.b_show_modal")}</Button>
             
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Signaler un problème technique</h4>
+                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_maintenance.m_phone_button.b_show_modal")}</h4>
                     <Form.Row>
                         <Form.Group controlId="description" className="phone_input">
-                        <Form.Label>Nom du client</Form.Label>
+                        <Form.Label>{t("msh_maintenance.m_client")}</Form.Label>
                         <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="description" className="phone_input">
-                        <Form.Label>Numéro de chambre</Form.Label>
+                        <Form.Label>{t("msh_maintenance.m_room")}</Form.Label>
                         <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
                         </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                        <Form.Label>Quel type de problème ?</Form.Label><br/>
+                        <Form.Label>{t("msh_maintenance.m_type.t_label")}</Form.Label><br/>
                         <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                         className="phonePage_select">
                             <option></option>
-                            <option>Peinture</option>
-                            <option>Plomberie</option>
-                            <option>Electricité</option>
-                            <option>Ménage</option>
-                            <option>Autres</option>
+                            <option>{t("msh_room_change.r_reason.r_paint")}</option>
+                            <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
+                            <option>{t("msh_room_change.r_reason.r_electricity")}</option>
+                            <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                            <option>{t("msh_room_change.r_reason.r_other")}</option>
                         </select>
                     </Form.Group>
                     </Form.Row>
                     <Form.Row>
                         <Form.Group controlId="details" className="phone_textarea">
-                            <Form.Label>Plus de détails</Form.Label>
+                            <Form.Label>{t("msh_maintenance.m_details")}</Form.Label>
                             <Form.Control as="textarea" rows="2" value={formValue.details} name="details" onChange={handleChange}  />
                         </Form.Group>
                     </Form.Row>
@@ -258,12 +258,12 @@ const PhoneRepair = ({userDB}) =>{
                         <input type="file" className="phone-camera-icon"
                             onChange={handleImgChange} />
                         <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                        <span style={{marginLeft: "2vw"}}>Ajouter une photo</span>
+                        <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
                     </Form.Row>
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)
-                    }}>Signaler maintenant</Button>
+                    }}>{t("msh_maintenance.m_phone_button.b_validation")}</Button>
                 </div>
             </Drawer>
             </div>

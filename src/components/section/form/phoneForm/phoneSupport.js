@@ -109,7 +109,7 @@ export default function PhoneSupport({user, userDB}) {
 
     return (
         <div className="communizi-container">
-            <h4 style={{padding: "2vh", textAlign: "center", fontWeight: 'bold'}}>Assistance technique</h4>
+            <h4 style={{padding: "2vh", textAlign: "center"}}>{t("msh_support.s_title")}</h4>
 
             <PerfectScrollbar style={{paddingTop: "3vh"}}>
             <div style={{
@@ -180,7 +180,7 @@ export default function PhoneSupport({user, userDB}) {
                 </PerfectScrollbar>
             <div className={typeof window !== `undefined` && window.innerWidth < 768 && "communizi_form_input_div"}>
                 <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
-                    <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder="Ecrire un message..." onChange={handleChange} required />
+                    <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder={t("msh_support.s_input_placeholder")} onChange={handleChange} required />
                     <img src={Send} alt="sendIcon" style={{width: "7vw", borderRadius: "100%"}} onClick={async() => {
                     await getChatRoom()
                     if(chatRoom !== null) {

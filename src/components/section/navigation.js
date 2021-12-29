@@ -18,6 +18,11 @@ import List from '@material-ui/core/List';
 import Logo from '../../svg/mshPro-newLogo-transparent.png'
 import moment from 'moment'
 import 'moment/locale/fr';
+import 'moment/locale/de';
+import 'moment/locale/it';
+import 'moment/locale/es';
+import 'moment/locale/pt';
+import 'moment/locale/en-gb';
 import { useTranslation } from "react-i18next"
 
 const Navigation = ({user, userDB}) =>{
@@ -97,8 +102,7 @@ const Navigation = ({user, userDB}) =>{
     }
 
     console.log("///////", listImg)
-
-
+    moment.locale(userDB.language)
     return(
         <div className="shadow-lg bg-white">
             <Navbar bg="light" expand="lg" style={{

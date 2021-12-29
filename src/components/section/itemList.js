@@ -45,9 +45,9 @@ const ItemList = ({item}) => {
                 <Table striped bordered hover size="sm" className="text-center">
                     <thead className="bg-dark text-center text-light">
                         <tr>
-                        <th>Client</th>
-                        <th>Chambre</th>
-                        <th>Heure</th>
+                        <th>{t("msh_general.g_table.t_client")}</th>
+                        <th>{t("msh_general.g_table.t_room")}</th>
+                        <th>{t("msh_general.g_table.t_time")}</th>
                         <th className="bg-dark"></th>
                         </tr>
                 </thead>
@@ -71,7 +71,7 @@ const ItemList = ({item}) => {
                                 }).catch(function(error) {
                                     console.log(error);
                                 }); 
-                                }}>Supprimer</Button>
+                                }}>{t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>
                         ))}

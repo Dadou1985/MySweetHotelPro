@@ -254,7 +254,7 @@ const Repair = ({userDB}) =>{
                                                     setImg(flow.img)
                                                     setImgFrame(true)
                                                 }}><img src={Picture} style={{width: "1vw"}} /></td> : 
-                                                <td>Aucune</td>}
+                                                <td>{t("msh_maintenance.m_photo_state")}</td>}
                                                 <td>{flow.author}</td>
                                                 <td>
                                                 <Switch

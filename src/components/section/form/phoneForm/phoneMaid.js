@@ -45,7 +45,7 @@ const PhoneMaid = ({userDB}) =>{
       const handleSubmit = event => {
         event.preventDefault()
         setFormValue("")
-        const notif = "Vous venez d'ajouter une demande de délogement à la liste !" 
+        const notif = t("msh_room_change.r_notif")  
         addNotification(notif)
         return db.collection('hotels')
             .doc(userDB.hotelId)
@@ -141,7 +141,7 @@ const PhoneMaid = ({userDB}) =>{
     return(
         
         <div className="phone_container">
-            <h3 className="phone_title">Délogements clients</h3>
+            <h3 className="phone_title">{t("msh_room_change.r_title")}</h3>
             <div style={{width: "90vw", overflow: "scroll", height: '100%'}}>
             {/*<div style={{display: "flex", flexFlow: "row", justifyContent: expand ? "flex-start" : "flex-end", width: "100%"}}>
                 <span style={{display: "flex", flexFlow: expand ? "row-reverse" : "row"}}  onClick={handleChangeExpand}>
@@ -154,11 +154,11 @@ const PhoneMaid = ({userDB}) =>{
                     <thead className="bg-dark text-center text-light">
                         <tr>
                         {expand && <th>Client</th>}
-                        <th>Ch. initiale</th>
-                        <th>Ch. finale</th>
+                        <th>{t("msh_general.g_table.t_from")}</th>
+                        <th>{t("msh_general.g_table.t_to")}</th>
                         {expand && <th>Motif</th>}
-                        <th>Etat</th>
-                        <th>Statut</th>
+                        <th>{t("msh_general.g_table.t_state")}</th>
+                        <th>{t("msh_general.g_table.t_statut")}</th>
                         {expand && <th>Details</th>}
                         {expand && <td>Date</td>}
                         {expand && <th>Photo</th>}
@@ -175,13 +175,13 @@ const PhoneMaid = ({userDB}) =>{
                                 <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
                                     setCurrentRoom(flow.id)
                                     setGuestId(flow.userId)
-                                    setNewRoom(true)}}>Attribuer</Button></td> : 
+                                    setNewRoom(true)}}>{t("msh_room_change.r_action.a_attribute")}</Button></td> : 
                                 <td>{flow.toRoom}</td>}
                             {flow.state === "" ? 
                                 <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
                                     setRoomState(true)
                                     setCurrentRoom(flow.id)
-                                }}>A vérifier</Button></td>
+                                }}>{t("msh_room_change.r_action.a_check")}</Button></td>
                                 : <td>{flow.state}</td>}
                             {expand && <td>{flow.reason}</td>}
                             <td>
@@ -196,7 +196,7 @@ const PhoneMaid = ({userDB}) =>{
                             {expand && <td style={{cursor: "pointer"}} onClick={() => {
                                 setImg(flow.img)
                                 setImgFrame(true)
-                            }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : "Aucune"}</td>}
+                            }}>{flow.img ? <img src={Picture} style={{width: "5vw"}} /> : t("msh_room_change.r_photo_state")}</td>}
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                 if(flow.img){
@@ -212,7 +212,7 @@ const PhoneMaid = ({userDB}) =>{
                                 }).catch(function(error) {
                                     console.log(error);
                                 });
-                            }}>Supprimer</Button></td>}
+                            }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             
                             </tr>
                         ))}
@@ -230,72 +230,72 @@ const PhoneMaid = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>  
-                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>Déloger un client</Button>
+                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>{t("msh_room_change.r_phone_button.b_show_modal")}</Button>
            
                 <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                     <div  className="phone_container_drawer">
-                    <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Déloger un client</h4>
+                    <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_room_change.r_phone_button.b_show_modal")}</h4>
                     <Form.Row>
                     <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>Nom du client</Form.Label>
+                    <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row style={{display: "flex", flexFlow: "row", justifyContent: "space-between", width: "90vw"}}>
                     <Form.Group controlId="description" className="phone_smallInput">
-                    <Form.Label>Depuis la chambre...</Form.Label>
+                    <Form.Label>{t("msh_room_change.r_from")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 310" value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
                     </Form.Group>
 
                     <Form.Group controlId="description" className="phone_smallInput">
-                    <Form.Label>...vers la chambre</Form.Label>
+                    <Form.Label>{t("msh_room_change.r_to")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 409" value={formValue.toRoom} name="toRoom" onChange={handleChange} />
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label>Pour quel motif ?</Form.Label><br/>
+                    <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
                     className="phonePage_select">
                         <option></option>
-                        <option>Peinture</option>
-                        <option>Plomberie</option>
-                        <option>Electricité</option>
-                        <option>Ménage</option>
-                        <option>Autres</option>
+                        <option>{t("msh_room_change.r_reason.r_paint")}</option>
+                        <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
+                        <option>{t("msh_room_change.r_reason.r_electricity")}</option>
+                        <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                        <option>{t("msh_room_change.r_reason.r_other")}</option>
                     </select>
                 </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label>Etat de la chambre</Form.Label><br/>
+                    <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                     className="phonePage_select">
                         <option></option>
-                        <option>Sale</option>
-                        <option>Propre</option>
+                        <option>{t("msh_room_change.r_state.s_dirty")}</option>
+                        <option>{t("msh_room_change.r_state.s_clean")}</option>
                     </select>
                     </Form.Group>
                 </Form.Row>
                 <Form.Row>
                     <Form.Group controlId="details" className="phone_textarea">
-                        <Form.Label>Plus de détails</Form.Label>
+                        <Form.Label>{t("msh_room_change.r_details")}</Form.Label>
                         <Form.Control as="textarea" rows="2" value={formValue.details} name="details" onChange={handleChange}  />
                     </Form.Group>
                 </Form.Row>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
                         handleSubmit(event)
                         setActivate(false)
-                        }}>Déloger maintenant</Button>
+                        }}>{t("msh_room_change.r_phone_button.b_validation")}</Button>
                     </div>
                 </Drawer>
 
                 <Drawer anchor="bottom" open={newRoom} onClose={() => setNewRoom(false)}  className="phone_container_drawer">
                     <div className="phone_container_drawer">
-                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>Attribuer un numéro chambre</h6>
+                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>{t("msh_room_change.r_action.a_attribute_room")}</h6>
                         <Input
                         style={{margin: "2%"}} 
-                            placeholder="Entrer un n° de chambre"
+                            placeholder={t("msh_room_change.r_action.a_input")}
                             value={formValue.toRoom}
                             name="toRoom"
                             onChange={(e) => setFormValue({toRoom: e.target.value})}
@@ -303,12 +303,12 @@ const PhoneMaid = ({userDB}) =>{
                     </div>
                     <Button variant="success" size="md" onClick={() => {
                         handleUpdateRoom(currentRoom, guestId)
-                        setNewRoom(false)}}>Valider</Button>
+                        setNewRoom(false)}}>{t("msh_register_form.r_button.b_phone_validation")}</Button>
                 </Drawer>
 
                 <Drawer anchor="bottom" open={roomState} onClose={() => setRoomState(false)}  className="phone_container_drawer">
                     <div className="phone_container_drawer">
-                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>Etat de la chambre</h6>
+                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>{t("msh_room_change.r_state.s_label")}</h6>
                         <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                             style={{width: "100%", 
                             height: "100%", 
@@ -319,14 +319,14 @@ const PhoneMaid = ({userDB}) =>{
                             marginBottom: "2vh", 
                             marginTop: "2vh"}}>
                                 <option></option>
-                                <option>Sale</option>
-                                <option>Propre</option>
+                                <option>{t("msh_room_change.r_state.s_dirty")}</option>
+                                <option>{t("msh_room_change.r_state.s_clean")}</option>
                         </select>
                         </div>
                     <Button variant="success" onClick={() => {
                             handleUpdateRoomState(currentRoom)
                             setRoomState(false)
-                    }}>Valider</Button>
+                    }}>{t("msh_register_form.r_button.b_phone_validation")}</Button>
                 </Drawer>
             </div>
                             

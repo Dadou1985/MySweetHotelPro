@@ -142,7 +142,7 @@ const GuestDatabase = ({user, userDB}) =>{
         setSendingMail(false)
         setIsLoading(false)
         setguestMail([])
-        return addNotification("Les e-mails ont bien été envoyés !")
+        return addNotification(t("msh_crm.c_notif_mails"))
     }
 
     const StyledBadge = withStyles((theme) => ({
@@ -255,11 +255,11 @@ const GuestDatabase = ({user, userDB}) =>{
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
                         {sendingMail ? 
                             IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
-                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_general.g_button.b_back")}</Button>
+                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_crm.c_button.b_cancel")}</Button>
                             <Button variant="dark" onClick={async() => {
                             await handleMailSent()
                             return handleMailSended()
-                            }}>Envoyer les emails</Button>
+                            }}>{t("msh_crm.c_button.b_send_em_all")}</Button>
                         </span>
                             : <Button variant="outline-dark" onClick={() => setSendingMail(true)}>{t("msh_crm.c_button.b_send_mail")}</Button>}
                         {!sendingMail && <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_crm.c_button.b_add")}</Button>}

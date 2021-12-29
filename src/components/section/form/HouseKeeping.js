@@ -210,7 +210,7 @@ const HouseKeeping = ({userDB}) =>{
             </Modal.Header>
             <Modal.Body
             style={{overflow: "auto"}}>
-                <Tab.Container defaultActiveKey="Serviette">
+                <Tab.Container defaultActiveKey={t("msh_housekeeping.h_towel")}>
                 <Row>
                     <Col sm={3}>
                     <Nav variant="pills" className="flex-column">

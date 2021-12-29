@@ -199,7 +199,7 @@ const Cab = ({userDB}) =>{
                                             onChange={handleDateChange}
                                             onError={console.log}
                                             disablePast
-                                            format="dd/MM/yyyy HH:mm"
+                                            format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                                         />                                        
                                         </MuiPickersUtilsProvider>
                                         </Form.Group>

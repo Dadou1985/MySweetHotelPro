@@ -10,7 +10,7 @@ import {
   import { useTranslation } from "react-i18next"
 
 
-const Memo =()=>{
+const Memo =({userDB})=>{
     const [filterDate, setFilterDate] = useState(new Date())
     const { t, i18n } = useTranslation()
 
@@ -30,7 +30,7 @@ const Memo =()=>{
                             value={filterDate}
                             onChange={handleDateChange}
                             onError={console.log}
-                            format="dd/MM/yyyy"
+                            format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                             autoOk
                         />                                        
                         </MuiPickersUtilsProvider>
