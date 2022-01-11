@@ -5,6 +5,8 @@ import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenFlyer"
 import '../css/flyer.css'
 import { useTranslation } from "react-i18next"
+import MshTitle from '../../svg/msh-newLogo-transparent.png'
+import MshLogo from '../../svg/new-logo-msh.png'
 
 export default function Flyer({url, logo}) {
     const { t, i18n } = useTranslation()
@@ -30,7 +32,7 @@ export default function Flyer({url, logo}) {
                 <Divider style={{width: "100%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                 <h6 style={{filter: "drop-shadow(1px 1px 1px)"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_three")}<br/>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_four")}</h6>
             </div>
-            <MshScreen logo={logo} />
+            {logo ? <MshScreen logo={logo} /> : <MshScreen logo={MshLogo} />}
             <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                 <QRCode 
                 value={url.replace(/ /g,'%20')} 

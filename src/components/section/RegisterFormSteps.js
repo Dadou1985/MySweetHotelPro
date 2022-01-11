@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal, ProgressBar } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { auth, db, storage } from '../../Firebase'
+import { auth, db, storage, functions } from '../../Firebase'
 import HotelLogo from '../../svg/hotel.svg'
 import { useShortenUrl } from 'react-shorten-url';
 import { sha256 } from 'js-sha256';
@@ -149,6 +149,19 @@ export default function RegisterFormSteps() {
                 appLink: url ? `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}` : `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
             })
         }
+
+    const mailNewSubscriber = functions.httpsCallable("sendNewSubscriber")
+    const mailWelcomeLogo = functions.httpsCallable("sendWelcomeMailLogo")
+    const mailWelcomeNoLogo = functions.httpsCallable("sendWelcomeMailNoLogo")
+
+    const sendwelcomeMail = (url) => {
+        mailNewSubscriber({subscriber: `${formValue.firstName} ${formValue.lastName}`, hotel: formValue.hotelName, standing: formValue.standing, country: "FRANCE", city: formValue.city, capacity: formValue.room})
+        if(url){
+            return mailWelcomeLogo({firstName: formValue.firstName, email: formValue.email, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+        }else{
+            return mailWelcomeNoLogo({firstName: formValue.firstName, email: formValue.email, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+        }
+    }
     
     const handleCreateUser = async (newUrl) => {
         setIsLoading(true)
@@ -156,6 +169,7 @@ export default function RegisterFormSteps() {
         authUser.user.updateProfile({
             displayName: `${formValue.firstName} ${formValue.lastName}`
         })
+        sendwelcomeMail(newUrl)
         handleFirestoreNewData(newUrl)
         return setStepThree(false)
       }
@@ -274,7 +288,6 @@ export default function RegisterFormSteps() {
           });
       };
 
-
     console.log('SHORTENURL', url)
 
     return (<div className="register_form_container">
@@ -339,7 +352,7 @@ export default function RegisterFormSteps() {
                 </Alert>}
                 </form>}
                 {stepTwo && <div className="stepTwo_container">
-                        {findHotelForm ? <Button variant="outline-info" className="stepTwo_find_button" onClick={() => setfindHotelForm(false)}>Trouver mon hôtel avec le code postal</Button> : <div className="stepTwo_find_container">
+                        {findHotelForm ? <Button variant="outline-info" className="stepTwo_find_button" onClick={() => setfindHotelForm(false)}>{t("msh_register_form.r_button.b_search")}</Button> : <div className="stepTwo_find_container">
                         <h5 className="stepTwo_title"><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_find")}</b></h5>
                         <Form.Row>
                             <Form.Group className="stepTwo_find_input_container">
@@ -547,17 +560,17 @@ export default function RegisterFormSteps() {
                     </div>
                     {isLoading ? <Spinner animation="grow" /> : <Button variant="success" className="stepFour_button" onClick={() => {
                             if(formValue.region !== "" || formValue.hotelName !== "" || formValue.departement !== "" || formValue.city !== "" || formValue.code_postal !== "" || formValue.standing !== "" || formValue.room === null || formValue.adresse !== "" || formValue.phone !== "" || formValue.website !== ""){
-                                    handleCreateUser(data && data.link)
-                                    setStepFour(false)
-                                    setNow(100)
-                                    return setFinalStep(true)
+                                handleCreateUser(data && data.link)
+                                setStepFour(false)
+                                setNow(100)
+                                return setFinalStep(true)
                             }else{
                                 setAlert({danger: true, message: t("msh_register_form.r_step.s_fourth.f_alert")})
                                 setTimeout(() => {
                                     setAlert({danger: false, message: ""})
                                 }, 5000);
                             }
-                        }}>Valider mon formulaire</Button>}
+                        }}>{t("msh_register_form.r_button.b_validation_form")}</Button>}
                         {alert.danger && <Alert variant="danger" className="stepThree_alert">
                             {alert.message}
                         </Alert>}

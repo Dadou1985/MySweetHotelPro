@@ -248,7 +248,7 @@ const LostNFound = ({userDB}) =>{
                         <Card.Text>
                         {item.details}
                         </Card.Text>
-                        <Button variant="outline-dark">{t("msh_lost_found.l_button.b_send")}</Button>
+                        {/*<Button variant="outline-dark">{t("msh_lost_found.l_button.b_send")}</Button>*/}
                     </Card.Body>
                 </Card>
                 </div>

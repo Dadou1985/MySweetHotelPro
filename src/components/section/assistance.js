@@ -161,7 +161,7 @@ const changeAdminSpeakStatus = (roomName) => {
                     onChange={handleChange}
                     id="dark_message_note" />
                 </FormGroup>
-                    <div className="communizi-button-container">
+                    {/*<div className="communizi-button-container">
                      <OverlayTrigger
                         placement="top"
                         overlay={
@@ -172,7 +172,7 @@ const changeAdminSpeakStatus = (roomName) => {
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
                      </OverlayTrigger>
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
-                    </div>
+                      </div>*/}
                 </Form>
             </div>
 

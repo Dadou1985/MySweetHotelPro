@@ -5,6 +5,8 @@ import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenBand"
 import '../css/band.css'
 import HotelLogo from '../../images/les-forteresses.png'
+import MshTitle from '../../svg/msh-newLogo-transparent.png'
+import MshLogo from '../../svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
 
 export default function Band({url, logo}) {
@@ -28,7 +30,7 @@ export default function Band({url, logo}) {
             backgroundPositionX: "13vw",
             backgroundPositionY: "61vh"
         }}>
-            <div style={{
+            {logo ? <div style={{
                 display: "flex",
                 flexFlow: "column",
                 height: "100%",
@@ -37,7 +39,16 @@ export default function Band({url, logo}) {
             }}>
                 <img src={logo} style={{width: "50%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
                 <MshScreen logo={logo} />
-            </div>
+            </div> : <div style={{
+                display: "flex",
+                flexFlow: "column",
+                height: "100%",
+                alignItems: "center",
+                width: "30%"
+            }}>
+                <img src={MshLogo} style={{width: "70%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
+                <MshScreen logo={MshLogo} />
+            </div>}
             <div style={{
                 display: "flex",
                 flexFlow: "column",

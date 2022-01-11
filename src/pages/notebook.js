@@ -53,7 +53,7 @@ const handleDateChange = (date) => {
             {!!user && !!userDB &&
             <Navigation user={user} userDB={userDB} />}  
         <div id="iziChat" className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">Note de service</h5>
+            <h5 className="font-weight-bolder dark_messenger_title">{t("msh_messenger.m_note_big_title")}</h5>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
               <DatePicker
                   variant="dialog"

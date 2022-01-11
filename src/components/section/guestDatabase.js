@@ -401,7 +401,7 @@ const GuestDatabase = ({user, userDB}) =>{
                             {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%"}}>
-                                <Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>
+                                {/*<Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>*/}
                                 <Button variant="outline-dark" onClick={() => setShowChat(true)}>{t("msh_crm.c_button.b_chat")}</Button>
                                 </div>}
                             {item.details && <Card.Text style={{textAlign: "center", marginBottom: "5vh", marginTop: "2vh", color: "gray"}}>
