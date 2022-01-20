@@ -43,8 +43,8 @@ export default function RegisterFormSteps() {
         firstName: "",
         lastName: "",
         email: "",
-        password: "",
-        confPassword: "",
+        //password: "",
+        //confPassword: "",
         region: "", 
         departement: "", 
         city: "", 
@@ -157,15 +157,15 @@ export default function RegisterFormSteps() {
     const sendwelcomeMail = (url) => {
         mailNewSubscriber({subscriber: `${formValue.firstName} ${formValue.lastName}`, hotel: formValue.hotelName, standing: formValue.standing, country: "FRANCE", city: formValue.city, capacity: formValue.room})
         if(url){
-            return mailWelcomeLogo({firstName: formValue.firstName, email: formValue.email, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+            return mailWelcomeLogo({firstName: formValue.firstName, email: formValue.email, fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
         }else{
-            return mailWelcomeNoLogo({firstName: formValue.firstName, email: formValue.email, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+            return mailWelcomeNoLogo({firstName: formValue.firstName, email: formValue.email,fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
         }
     }
     
     const handleCreateUser = async (newUrl) => {
         setIsLoading(true)
-        const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), formValue.password.trim())
+        const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-admin-${formValue.firstName}}`)
         authUser.user.updateProfile({
             displayName: `${formValue.firstName} ${formValue.lastName}`
         })
@@ -182,7 +182,7 @@ export default function RegisterFormSteps() {
         adminStatus: true, 
         adresse: formValue.adresse,
         email: formValue.email,
-        password: formValue.password,
+        password: `msh-admin-${formValue.firstName}`,
         website: formValue.website,
         hotelId: hotelId !== "" ? hotelId : newHotelId,
         hotelName: formValue.hotelName,
@@ -307,16 +307,9 @@ export default function RegisterFormSteps() {
                 {finalStep ? <div className="progress_container"><ProgressBar className="progress_bar" now={now} label={`${now}%`} /></div> : <ProgressBar now={now} label={`${now}%`} />}
                 
                 {stepOne && <form className="stepOne_container" onSubmit={() => {
-                    if(formValue.password !== formValue.confPassword){
-                        setAlert({danger: true})
-                        setTimeout(() => {
-                            setAlert({danger : false})
-                        }, 3000);
-                    }else{
                         setStepOne(false)
                         setStepTwo(true)
                         setNow(25)
-                    }
                 }}>
                 <h5 className="stepOne_title"><b>{t("msh_register_form.r_step.s_first.f_subtitle")}</b></h5>
                 <Form.Row className="stepOne_form_name_input">
@@ -331,7 +324,7 @@ export default function RegisterFormSteps() {
                     <Form.Group controlId="description3">
                     <Form.Control type="email" placeholder={t("msh_register_form.r_step.s_first.f_email")} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
-                <Form.Row style={{
+                {/*<Form.Row style={{
                     display: "flex",
                     flexFlow: "column",
                     alignItems: "center",
@@ -345,7 +338,7 @@ export default function RegisterFormSteps() {
                     <Form.Group controlId="description5">
                     <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_confirmation")} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
-                </Form.Row>
+            </Form.Row>*/}
                 <Button variant="success" className="stepOne_validation_button" type="submit">{t("msh_register_form.r_button.b_next")}</Button>
                 {alert.danger && <Alert variant="danger" className="stepOne_alert">
                     {t("msh_register_form.r_step.s_first.f_alert")}
@@ -580,7 +573,7 @@ export default function RegisterFormSteps() {
                 <div className="finalStep_container">
                     <div className="finalStep_greeting_message_container" style={{marginTop: "5vh"}}>
                         <p>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</p>
-                        <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")} <a href="https://mysweethotelpro.com/" target="_blank">mysweethotelpro.com</a></p>
+                        <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")}</p>
                         <p><b>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
                         {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></b></p>
                         {/*!url && <p><b>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</b></p>*/}
