@@ -6,7 +6,7 @@ import AdminBoard from './form/adminBoard'
 import FeedbackBox from './form/feedbackBox'
 import Drawer from './common/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
-import Fom from '../../svg/fom.svg'
+import Logout from '../../images/logout.png'
 import SuperAdmin from '../../svg/superhero.svg'
 import Magician from '../../svg/magician.svg'
 import Ghost from '../../svg/ghost.svg'
@@ -24,6 +24,8 @@ import 'moment/locale/es';
 import 'moment/locale/pt';
 import 'moment/locale/en-gb';
 import { useTranslation } from "react-i18next"
+import Avatar from 'react-avatar'
+import { Link } from 'gatsby'
 
 const Navigation = ({user, userDB}) =>{
 
@@ -105,42 +107,33 @@ const Navigation = ({user, userDB}) =>{
     moment.locale(userDB.language)
     return(
         <div className="shadow-lg bg-white">
-            <Navbar bg="light" expand="lg" style={{
+            <Navbar expand="lg" style={{
                     display: "flex",
+                    flexFlow: "row",
                     justifyContent: "space-between",
                     height: "7vh"
                 }}>
                 {!!user && userDB &&
-                <Drawer className="drawer" user={user} userDB={userDB} />}
+                <Drawer className="drawer" user={user} userDB={userDB} style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
                         <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" /></Navbar.Brand>
-                    {/*{!!user &&
+                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} onClick={() => handleShowDrawer()} />}
+                    {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
                         display: "flex",
-                        width: "50%",
-                        height: "5vh",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        fontWeight: "bolder",
-                        fontSize: "XXL"
-                    }}>{user.displayName}</div>}*/}
-                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" onClick={() => handleShowDrawer()} />}
-                    <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>
-                    <div className="nav_container">
-                    <div className="icon_container">
-                    {/*!!user &&
-                    <Avatar 
-                    name={user.username}
-                    round={true}
-                    size="30"
-                    color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                    />*/}
-                    {userDB && user&&
-                        <AdminBoard user={user} userDB={userDB} />}
-                    {userDB && user&&
-                        <FeedbackBox user={user} userDB={userDB} />}
+                        flexFlow: "row",
+                        justifyContent: "space-around",
+                        width: "35%",
+                        marginLeft: "10vw"
+                    }}>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/singlePage">Activités</Link>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/notebook">Consignes</Link>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/chat">Chat Client</Link>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/crm">C.R.M</Link>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/Lost">Objets Trouvés</Link>
                     </div>
+                    <div className="nav_container">
                     <OverlayTrigger
                         placement="bottom"
                         overlay={
@@ -148,9 +141,19 @@ const Navigation = ({user, userDB}) =>{
                             {t("msh_navigation.tooltip_user_profile")}
                           </Tooltip>
                         }>
-                    <img src={Fom} alt="Fom" style={{width: "7%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} onClick={()=>navigate('/doorsStage')} />
+                        <Avatar 
+                        name={userDB.username}
+                        round={true}
+                        size="25"
+                        color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                        style={{cursor: "pointer"}}
+                        onClick={()=>navigate('/doorsStage')}
+                        />
                     </OverlayTrigger>
-                    <div className="username_title"><b>{userDB.username}</b></div>
+                    {userDB && user&&
+                        <AdminBoard user={user} userDB={userDB} />}
+                    {userDB && user&&
+                        <FeedbackBox user={user} userDB={userDB} />}
                     <OverlayTrigger
                         placement="bottom"
                         overlay={
@@ -158,7 +161,7 @@ const Navigation = ({user, userDB}) =>{
                             {t("msh_navigation.tooltip_deconnexion")}
                           </Tooltip>
                         }>
-                    <PowerSettingsNewIcon alt="connect" className="shuttDown_button nav_icons" onClick={handleShow} />
+                    <img src={Logout} alt="Fom" className="nav_icons" alt="connect" onClick={handleShow} />
                     </OverlayTrigger>
                 </div>
             </Navbar>

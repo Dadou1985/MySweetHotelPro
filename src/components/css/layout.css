@@ -570,39 +570,28 @@ input[type=number] {
 
 .brand {
     position: absolute;
-    left: 2vw;
     cursor: pointer;
-    
+    width: 5vw;
+    text-align: center;
+    left: 0;
 }
 
 .logo-msh {
-    width: 15%;
+    width: 75%;
 }
 
 .nav_container {
     display: flex;
     flex-flow: row;
-    width: 35%;
-    height: 5vh;
-    justify-content: center;
+    width: 10%;
+    height: 7vh;
+    justify-content: space-between;
     align-items: center;
-}
-
-.icon_container {
-    display: flex;
-    flex-flow: row;
-    justify-content: space-around;
-    font-size: small;
-    margin-right: 1%;
-    width: 30%;
-    z-index: 100;
 }
 
 .shuttDown_button {
     width: 10%;
     cursor: pointer;
-    margin-right: 1vw;
-    margin-left: 1vw;
 }
 
 .username_title {
@@ -615,7 +604,7 @@ input[type=number] {
 }
 
 .nav_icons {
-    width: 2vw;
+    width: 1vw;
     cursor: pointer;
 }
 
@@ -735,12 +724,13 @@ input[type=number] {
 .toolbar_container {
     display: flex;
     flex-flow: column;
-    width: 7%;
-    height: 85vh;
-    margin: 1%;
+    width: 5%;
+    height: 93vh;
     border-right: 1px solid lightgrey;
     justify-content: space-around;
     align-items: center;
+    background-color: white;
+    padding-bottom: 3%;
 }
 
 @media screen and (max-width: 768px) {
@@ -756,8 +746,8 @@ input[type=number] {
     display: flex;
     flex-flow: column;
     padding: 1%;
-    height: 65vh;
-    width: 100%;
+    height: 100%;
+    width: 70%;
     margin-bottom: 5vh;
 }
 
@@ -770,7 +760,7 @@ input[type=number] {
 }
 
 .messenger_notebox {
-    max-height: 55vh;
+    max-height: 100%;
     padding: 1%;
 }
 
@@ -802,28 +792,28 @@ input[type=number] {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    background-color: d;
+    background-color: c;
 }
 
 .icon-add-note-container {
     display: flex;
-    padding-left: 2vw;
-    width: 100%;
+    padding-left: 6vw;
+    width: 90%;
     cursor: pointer;
     margin-top: 2vh;
     margin-bottom: 4vh;
     flex-flow: row;
-    justify-content: end;
+    justify-content: start;
 }
 
 .icon-add-note {
-    width: 2%; 
+    width: 1%; 
     filter: drop-shadow(2px 2px 2px);
     margin-right: 1vw;
 }
 
 .perfect-scrollbar {
-    height: 55vh !important;
+    height: 100% !important;
 }
 
 .modal-note-title {
@@ -902,6 +892,12 @@ input[type=number] {
     margin-bottom: 1vw;
 }
 
+.MuiPickersStaticWrapper-staticWrapperRoot {
+    height: fit-content;
+    filter: drop-shadow(2px 4px 6px black);
+    margin-top: 3vh;
+    margin-left: 2vw;
+}
 
 @media screen and (max-width: 768px) {
     .messenger_container {
@@ -1040,22 +1036,26 @@ input[type=number] {
 
 .accordion {
     width: 100%;
-    max-height: 70vh
+    max-height: 70vh;
 }
 
 .accordion-note {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
     width: 100%;
     max-height: 55vh;
 }
 
 .user_Message {
-    width: 100%;
+    width: 80%;
     font-size: small;
     margin-bottom: 2%;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     margin-bottom: 1vh;
-    background-color: lightgrey;
+    border: 1px solid lightgrey;
+    background-color: whitesmoke;
     filter: drop-shadow(2px 2px 2px)
 }
 
@@ -1633,7 +1633,7 @@ input[type=number] {
     text-align: center;
 }
 
-.nav_icons {
+.conscons {
     width: 2vw;
     cursor: pointer;
 }
@@ -1730,7 +1730,7 @@ input[type=number] {
     align-items: center;
     padding: 1%;
     height: 100%;
-    width: 50%;
+    width: 95%;
 }
 
 .dark_messenger_karenStories_container {

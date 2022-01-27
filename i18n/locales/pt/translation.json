@@ -62,7 +62,7 @@
         "c_alert": "Você deve primeiro escolher uma conversa!"
     },
     "msh_messenger": {
-        "m_note_big_title": "Nota de serviço",
+        "m_note_big_title": "Instruções",
         "m_note_circle_tooltip": "Atribuir a uma equipe",
         "m_notification": "Sua nota foi salva para",
         "m_add_note": "Adicionar um memorando",

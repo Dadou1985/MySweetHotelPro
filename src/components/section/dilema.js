@@ -45,6 +45,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const bandPdfRef = useRef(null)
     const { loading, error, data } = useShortenUrl(url);
     const { t, i18n } = useTranslation()
+    const [allHotelData, setAllHotelData] = useState(null);
 
     const exportPDF = (pdf) => {
         if (pdf.current) {
@@ -304,7 +305,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
      const handleChangeEmail = () => {
         const notif = t("msh_user_panel.u_section.s_email.e_notif") 
 
-         auth.signInWithEmailAndPassword(user.email, userDB.password)
+        auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
             addNotification(notif)
@@ -402,7 +403,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             <Modal.Footer>
                 <Button variant="outline-dark" onClick={(event) => {
                     handleUpdateEmail(event, formValue.email)
-                    handleChangeEmail(formValue.email)
+                    handleChangeEmail()
                     handleCloseUpdateEmail()
                 }}>{t("msh_general.g_button.b_update")}</Button>
             </Modal.Footer>

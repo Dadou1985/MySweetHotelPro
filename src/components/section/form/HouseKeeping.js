@@ -193,7 +193,7 @@ const HouseKeeping = ({userDB}) =>{
                     {t("msh_housekeeping.h_title")}                
                 </Tooltip>
                 }>
-                        <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "4vw"}} />
+                        <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "2vw"}} />
             </OverlayTrigger>
         </StyledBadge>
 

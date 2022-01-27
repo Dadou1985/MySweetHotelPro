@@ -184,7 +184,7 @@ const Caisse = () =>{
                 {t("msh_coolbar.tooltip_safe")}
               </Tooltip>
             }>
-                <img src={Safe} className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
+                <img src={Safe} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
             </OverlayTrigger>
 
 
@@ -261,122 +261,122 @@ const Caisse = () =>{
                                 </thead>
                                 <tbody>
                                     <tr>
-                                    <td>500.00</td>
-                                    <td><input id="bank" type="text" onInput={()=> change("bank", 500, "test")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test">0.00</output></td>
+                                        <td>500.00</td>
+                                        <td><input id="bank" type="text" onInput={()=> change("bank", 500, "test")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>200.00</td>
-                                    <td><input id="bank2" type="text" onInput={()=> change("bank2", 200, "test2")} onInputCapture={()=>total()}  onChange={()=>montant()}></input></td>
-                                    <td><output id="test2">0.00</output></td>
+                                        <td>200.00</td>
+                                        <td><input id="bank2" type="text" onInput={()=> change("bank2", 200, "test2")} onInputCapture={()=>total()}  onChange={()=>montant()}></input></td>
+                                        <td><output id="test2">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>100.00</td>
-                                    <td><input id="bank3" type="text" onInput={()=> change("bank3", 100, "test3")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test3">0.00</output></td>
+                                        <td>100.00</td>
+                                        <td><input id="bank3" type="text" onInput={()=> change("bank3", 100, "test3")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test3">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>50.00</td>
-                                    <td><input id="bank4" type="text" onInput={()=> change("bank4", 50, "test4")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test4">0.00</output></td>
+                                        <td>50.00</td>
+                                        <td><input id="bank4" type="text" onInput={()=> change("bank4", 50, "test4")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test4">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>20.00</td>
-                                    <td><input id="bank5" type="text" onInput={()=> change("bank5", 20, "test5")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test5">0.00</output></td>
+                                        <td>20.00</td>
+                                        <td><input id="bank5" type="text" onInput={()=> change("bank5", 20, "test5")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test5">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>10.00</td>
-                                    <td><input id="bank6" type="text" onInput={()=> change("bank6", 10, "test6")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test6">0.00</output></td>
+                                        <td>10.00</td>
+                                        <td><input id="bank6" type="text" onInput={()=> change("bank6", 10, "test6")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test6">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>5.00</td>
-                                    <td><input id="bank7" type="text" onInput={()=> change("bank7", 5, "test7")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test7">0.00</output></td>
+                                        <td>5.00</td>
+                                        <td><input id="bank7" type="text" onInput={()=> change("bank7", 5, "test7")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test7">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>2.00</td>
-                                    <td><input id="bank8" type="text" onInput={()=> change("bank8", 2, "test8")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test8">0.00</output></td>
+                                        <td>2.00</td>
+                                        <td><input id="bank8" type="text" onInput={()=> change("bank8", 2, "test8")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test8">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>1.00</td>
-                                    <td><input id="bank9" type="text" onInput={()=> change("bank9", 1, "test9")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test9">0.00</output></td>
+                                        <td>1.00</td>
+                                        <td><input id="bank9" type="text" onInput={()=> change("bank9", 1, "test9")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test9">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.50</td>
-                                    <td><input id="bank10" type="text" onInput={()=> change("bank10", 0.5, "test10")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test10">0.00</output></td>
+                                        <td>0.50</td>
+                                        <td><input id="bank10" type="text" onInput={()=> change("bank10", 0.5, "test10")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test10">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.20</td>
-                                    <td><input id="bank11" type="text" onInput={()=> change("bank11", 0.2, "test11")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test11">0.00</output></td>
+                                        <td>0.20</td>
+                                        <td><input id="bank11" type="text" onInput={()=> change("bank11", 0.2, "test11")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test11">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.10</td>
-                                    <td><input id="bank12" type="text" onInput={()=> change("bank12", 0.1, "test12")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test12">0.00</output></td>
+                                        <td>0.10</td>
+                                        <td><input id="bank12" type="text" onInput={()=> change("bank12", 0.1, "test12")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test12">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.05</td>
-                                    <td><input id="bank13" type="text" onInput={()=> change("bank13", 0.05, "test13")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test13">0.00</output></td>
+                                        <td>0.05</td>
+                                        <td><input id="bank13" type="text" onInput={()=> change("bank13", 0.05, "test13")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test13">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.02</td>
-                                    <td><input id="bank14" type="text" onInput={()=> change("bank14", 0.02, "test14")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test14">0.00</output></td>
+                                        <td>0.02</td>
+                                        <td><input id="bank14" type="text" onInput={()=> change("bank14", 0.02, "test14")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test14">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.01</td>
-                                    <td><input id="bank15" type="text" onInput={()=> change("bank15", 0.01, "test15")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test15">0.00</output></td>
+                                        <td>0.01</td>
+                                        <td><input id="bank15" type="text" onInput={()=> change("bank15", 0.01, "test15")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test15">0.00</output></td>
                                     </tr>
                                     <tr>
                                         <td colSpan="3">{t("msh_general.g_table.t_rolls")}</td>
                                     </tr>
                                     <tr>
-                                    <td>2.00</td>
-                                    <td><input id="bank16" type="text" onInput={()=> change("bank16", 50, "test16")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test16">0.00</output></td>
+                                        <td>2.00</td>
+                                        <td><input id="bank16" type="text" onInput={()=> change("bank16", 50, "test16")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test16">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>1.00</td>
-                                    <td><input id="bank17" type="text" onInput={()=> change("bank17", 25, "test17")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test17">0.00</output></td>
+                                        <td>1.00</td>
+                                        <td><input id="bank17" type="text" onInput={()=> change("bank17", 25, "test17")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test17">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.50</td>
-                                    <td><input id="bank18" type="text" onInput={()=> change("bank18", 20, "test18")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test18">0.00</output></td>
+                                        <td>0.50</td>
+                                        <td><input id="bank18" type="text" onInput={()=> change("bank18", 20, "test18")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test18">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.20</td>
-                                    <td><input id="bank19" type="text" onInput={()=> change("bank19", 8, "test19")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test19">0.00</output></td>
+                                        <td>0.20</td>
+                                        <td><input id="bank19" type="text" onInput={()=> change("bank19", 8, "test19")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test19">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.10</td>
-                                    <td><input id="bank20" type="text" onInput={()=> change("bank20", 4, "test20")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test20">0.00</output></td>
+                                        <td>0.10</td>
+                                        <td><input id="bank20" type="text" onInput={()=> change("bank20", 4, "test20")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test20">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.05</td>
-                                    <td><input id="bank21" type="text" onInput={()=> change("bank21", 2.5, "test21")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test21">0.00</output></td>
+                                        <td>0.05</td>
+                                        <td><input id="bank21" type="text" onInput={()=> change("bank21", 2.5, "test21")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test21">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.02</td>
-                                    <td><input id="bank22" type="text" onInput={()=> change("bank22", 1.5, "test22")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test22">0.00</output></td>
+                                        <td>0.02</td>
+                                        <td><input id="bank22" type="text" onInput={()=> change("bank22", 1.5, "test22")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test22">0.00</output></td>
                                     </tr>
                                     <tr>
-                                    <td>0.01</td>
-                                    <td><input id="bank23" type="text" onInput={()=> change("bank23", 0.5, "test23")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                    <td><output id="test23">0.00</output></td>
+                                        <td>0.01</td>
+                                        <td><input id="bank23" type="text" onInput={()=> change("bank23", 0.5, "test23")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
+                                        <td><output id="test23">0.00</output></td>
                                     </tr>
                                 </tbody>
                                 <tfoot>

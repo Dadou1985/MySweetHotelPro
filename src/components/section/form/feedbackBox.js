@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
-import Feedback from '../../../svg/feedbackBox.svg'
+import Feedback from '../../../images/feedback.png'
 import { db } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
 

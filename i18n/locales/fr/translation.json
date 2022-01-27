@@ -62,13 +62,13 @@
         "c_alert": "Vous devez d'abord choisir une conversation !"
     },
     "msh_messenger": {
-        "m_note_big_title": "Note de service",
+        "m_note_big_title": "Consignes",
         "m_note_circle_tooltip": "Attribuer à une équipe",
         "m_notification": "Votre note a bien été enregistrée pour le ",
-        "m_add_note": "Ajouter une note de service",
-        "m_note_title": "Rédiger une note de service",
-        "m_note_title_placeholder": "Donner un titre à la note...",
-        "m_note_body_placeholder": "Rédiger une note...",
+        "m_add_note": "Ajouter une consigne",
+        "m_note_title": "Rédiger une consigne",
+        "m_note_title_placeholder": "Donner un titre à la consigne...",
+        "m_note_body_placeholder": "Ecrire une consigne...",
         "m_calendar_title": "Date du jour",
         "m_team_choice": "Attribution par équipe",
         "m_general_team": "Général",

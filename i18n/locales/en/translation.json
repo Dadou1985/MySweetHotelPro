@@ -62,10 +62,10 @@
         "c_alert": "You must first choose a conversation!"
     },
     "msh_messenger": {
-        "m_note_big_title": "Service note",
+        "m_note_big_title": "Instructions",
         "m_note_circle_tooltip": "Assign to a team",
         "m_notification": "Your note has been saved for the",
-        "m_add_note": "Add a memo",
+        "m_add_note": "Add a note",
         "m_note_title": "Write a memo",
         "m_note_title_placeholder": "Give a title to the note ...",
         "m_note_body_placeholder": "Write a note ...",

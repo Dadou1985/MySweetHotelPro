@@ -255,7 +255,7 @@ export default function CommunIzi({userDB, user}) {
                               round={true}
                               name={flow.id}
                               size="30"
-                              color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
+                              color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
                               style={{marginRight: "1vw"}} />
                               {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>

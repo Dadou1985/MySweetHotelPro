@@ -165,7 +165,7 @@ export default function RegisterFormSteps() {
     
     const handleCreateUser = async (newUrl) => {
         setIsLoading(true)
-        const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-admin-${formValue.firstName}}`)
+        const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-admin-${formValue.firstName}`)
         authUser.user.updateProfile({
             displayName: `${formValue.firstName} ${formValue.lastName}`
         })
@@ -395,34 +395,34 @@ export default function RegisterFormSteps() {
                     {findHotelForm ? <div className="stepTwo_create_hotel_container">
                         <h5 style={{marginBottom: "3vh"}}><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_create")}</b></h5>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name={t("msh_register_form.r_step.s_second.s_input.i_region")} type="text" placeholder="Région" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_region")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name={t("msh_register_form.r_step.s_second.s_input.i_district")} type="text" placeholder="Département" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_district")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name={t("msh_register_form.r_step.s_second.s_input.i_city")} type="text" placeholder="Ville" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_city")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} type="text" placeholder="Code postal" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name={t("msh_register_form.r_step.s_second.s_input.i_standing")} type="number" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_standing")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name={t("msh_register_form.r_step.s_second.s_input.i_capacity")} type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_capacity")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name={t("msh_register_form.r_step.s_second.s_input.i_address")} type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_address")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name={t("msh_register_form.r_step.s_second.s_input.i_phone")} type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_phone")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name={t("msh_register_form.r_step.s_second.s_input.i_web")} type="text" placeholder="Site web" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_web")} onChange={handleChange} required />
                         </Form.Group>
                     </div> : <Button variant="outline-dark" style={{marginTop: "3vh"}} onClick={() => {
                         if(typeof window && window.innerWidth > 768) {
@@ -699,34 +699,34 @@ export default function RegisterFormSteps() {
                         marginTop: "8vh"
                     }}>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} type="text" placeholder="Nom de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name={t("msh_register_form.r_step.s_second.s_input.i_region")} type="text" placeholder="Région" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_region")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name={t("msh_register_form.r_step.s_second.s_input.i_district")} type="text" placeholder="Département" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_district")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name={t("msh_register_form.r_step.s_second.s_input.i_city")} type="text" placeholder="Ville" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_city")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} type="text" placeholder="Code postal" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name={t("msh_register_form.r_step.s_second.s_input.i_standing")} type="number" placeholder="Classement" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_standing")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name={t("msh_register_form.r_step.s_second.s_input.i_capacity")} type="number" placeholder="Nombre de chambre" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_capacity")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name={t("msh_register_form.r_step.s_second.s_input.i_address")} type="text" placeholder="Adresse de l'hôtel" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_address")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name={t("msh_register_form.r_step.s_second.s_input.i_phone")} type="text" placeholder="Numéro de téléphone" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_phone")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name={t("msh_register_form.r_step.s_second.s_input.i_web")} type="text" placeholder="Site web" onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_web")} onChange={handleChange} required />
                         </Form.Group>
                         <Button variant="success" style={{position: "fixed", bottom: "0", left: "0", width: "100%", borderRadius: "0"}} onClick={() => {
                             setShowCreateHotelDrawer(false)

@@ -62,7 +62,7 @@
         "c_alert": "Sie müssen zuerst eine Konversation auswählen!"
     },
     "msh_messenger": {
-        "m_note_big_title": "Servicenotiz",
+        "m_note_big_title": "Anweisungen",
         "m_note_circle_tooltip": "Einem Team zuweisen",
         "m_notification": "Ihre Notiz wurde gespeichert für",
         "m_add_note": "Notiz hinzufügen",

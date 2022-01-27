@@ -5,6 +5,7 @@ import Chat from '../components/section/communIzi'
 import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
+import ToolBar from "../components/section/toolbar"
 
 const ChatPage = () => {
   const [hide, setHide] = useState("flex")
@@ -38,15 +39,20 @@ const ChatPage = () => {
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-                <Loader hide={hide} />
-            </div>     
-            {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}  
-        <div id="iziChat" className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">Chat Client</h5>
-            {!!userDB && !!user&&
-            <Chat userDB={userDB} user={user} />}
-        </div>
+          <Loader hide={hide} />
+        </div>     
+        {!!user && !!userDB &&
+        <Navigation user={user} userDB={userDB} />}  
+          <div style={{
+            display: "flex"
+          }}>
+            <ToolBar />
+            <div id="iziChat" className="dark_messenger_communizi_container">
+              <h5 className="font-weight-bolder dark_messenger_title">Chat Client</h5>
+              {!!userDB && !!user&&
+              <Chat userDB={userDB} user={user} />}
+            </div>
+          </div>
     </FirebaseContext.Provider>
   )
 }

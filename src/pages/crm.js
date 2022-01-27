@@ -4,6 +4,7 @@ import {FirebaseContext, db, auth} from '../Firebase'
 import GuestDatabase from '../components/section/guestDatabase'
 import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
+import ToolBar from "../components/section/toolbar"
 
 const UserDatabase = () => {
   const [hide, setHide] = useState("flex")
@@ -35,12 +36,17 @@ const UserDatabase = () => {
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-                <Loader hide={hide} />
-            </div>   
-            {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}    
+          <Loader hide={hide} />
+        </div>   
         {!!user && !!userDB &&
-        <GuestDatabase user={user} userDB={userDB} />}
+        <Navigation user={user} userDB={userDB} />}    
+        <div style={{
+            display: "flex"
+          }}>
+          <ToolBar />
+          {!!user && !!userDB &&
+          <GuestDatabase user={user} userDB={userDB} />}
+        </div>
     </FirebaseContext.Provider>
   )
 }

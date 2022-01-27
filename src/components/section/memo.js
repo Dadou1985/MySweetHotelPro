@@ -36,7 +36,6 @@ const Memo =({userDB})=>{
                         </MuiPickersUtilsProvider>
                 </div>
                 {!!filterDate && <Messenger filterDate={filterDate} />}
-                <CoolBar />
             </div>
     )
 }

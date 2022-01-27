@@ -149,7 +149,7 @@ const Cab = ({userDB}) =>{
                     {t("msh_toolbar.tooltip_cab")}
                 </Tooltip>
                 }>
-                    <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                    <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
                 </OverlayTrigger>
             </StyledBadge>
 

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-bootstrap'
-import Connection from '../../../svg/employee.svg'
+import Connection from '../../../images/admin.png'
 import AdminRegister from './adminRegister'
 import UserList from './userList'
 import Divider from '@material-ui/core/Divider';

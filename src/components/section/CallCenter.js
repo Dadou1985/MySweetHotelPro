@@ -160,7 +160,7 @@ export default function CallCenter({user, userDB}) {
                 <img src={Assistance} className="icon" alt="contact" onClick={() => {
                   handleShow()
                   updateAdminSpeakStatus()
-                  }} style={{width: "35%"}} />
+                  }} style={{width: "2vw"}} />
 
                 </OverlayTrigger>
                 {adminSpeakStatus.map(status => {

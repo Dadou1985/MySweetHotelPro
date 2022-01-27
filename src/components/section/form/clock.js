@@ -148,7 +148,7 @@ const Clock = ({userDB}) =>{
                     {t("msh_toolbar.tooltip_alarm")}
                 </Tooltip>
                 }>
-                        <img src={Timer} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                        <img src={Timer} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
                 </OverlayTrigger>
             </StyledBadge>
 

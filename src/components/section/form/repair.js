@@ -153,7 +153,7 @@ const Repair = ({userDB}) =>{
                     {t("msh_toolbar.tooltip_technical")}
                 </Tooltip>
                 }>
-                        <img src={Maintenance} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                        <img src={Maintenance} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
                     </OverlayTrigger>
             </StyledBadge>            
 

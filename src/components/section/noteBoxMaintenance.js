@@ -16,12 +16,12 @@ import { green } from '@material-ui/core/colors';
 import { useTranslation } from "react-i18next"
 import Arrow from '../../svg/arrowDown.svg'
 
-const NoteBox = ({filterDate}) => {
+const NoteBoxMaintenance = ({filterDate}) => {
 
     const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
     const { t, i18n } = useTranslation()
-    const [reception, setReception] = useState(false);
+    const [maintenance, setMaintenance] = useState(false);
 
     const {userDB} = useContext(FirebaseContext)
 
@@ -43,7 +43,7 @@ const NoteBox = ({filterDate}) => {
                       })        
                     });
                     console.log(snapMessages)
-                    const noteFiltered = snapMessages.length > 0 && snapMessages.filter(note => note.status == "darkgoldenrod")
+                    const noteFiltered = snapMessages.length > 0 && snapMessages.filter(note => note.status == "red")
                     setMessages(noteFiltered)
                 });
                 return unsubscribe
@@ -74,19 +74,19 @@ const NoteBox = ({filterDate}) => {
 
     return (
       <>
-      <h6 style={{color:"darkgoldenrod", borderBottom: "1px solid darkgoldenrod"}}>
-        <b>{t('msh_messenger.m_reception_team')}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <img src={Arrow} style={{
-          width: "2vw", 
-          color: "red", 
-          float: "right", 
-          transform: reception ? "rotate(180deg)" : "rotate(0deg)", 
-          backgroundColor: "darkgoldenrod", 
-          borderRadius: "50%",
-          padding: "1%"}} 
-          onClick={() => setReception(!reception)} />
-      </h6>
+      <h6 style={{color: "red", borderBottom: "1px solid red"}}>
+          <b>{t('msh_maintenance.m_title')}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <img src={Arrow} style={{
+              width: "2vw", 
+              color: "red", 
+              float: "right", 
+              transform: maintenance ? "rotate(180deg)" : "rotate(0deg)", 
+              backgroundColor: "red", 
+              borderRadius: "50%",
+              padding: "1%"}} 
+              onClick={() => setMaintenance(!maintenance)} />
+    </h6>
         <Accordion allowZeroExpanded className="accordion-note">
-                {reception && messages.length > 0 && messages.map((flow, index) => {
+                {maintenance && messages.length > 0 && messages.map((flow, index) => {
                   return <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
                     <AccordionItemHeading style={{
                       paddingLeft: "1%",
@@ -144,4 +144,4 @@ const NoteBox = ({filterDate}) => {
     )
 }
 
-export default NoteBox
+export default NoteBoxMaintenance

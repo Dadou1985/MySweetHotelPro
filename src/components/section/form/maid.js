@@ -186,7 +186,7 @@ const Maid = ({userDB}) =>{
                     {t("msh_toolbar.tooltip_room_change")}
                 </Tooltip>
                 }>
-                        <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "3vw", marginRight: "1vw"}} />
+                        <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
                 </OverlayTrigger>
             </StyledBadge>
 

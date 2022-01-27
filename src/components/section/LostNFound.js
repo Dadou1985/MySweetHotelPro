@@ -95,12 +95,13 @@ const LostNFound = ({userDB}) =>{
      console.log("/*/**/*/*", filter)
 
     return(
-        <div>
-            <h1 style={{
+        <div style={{width: "95%"}}>
+            <h2 style={{
                 width: "100%",
                 padding: "1%",
+                paddingTop: "2%",
                 textAlign:"center"
-            }}>{t("msh_lost_found.l_title")}</h1>
+            }}>{t("msh_lost_found.l_title")}</h2>
             <div style={{
                 display: "flex"
             }}>

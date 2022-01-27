@@ -4,6 +4,7 @@ import {FirebaseContext, db, auth} from '../Firebase'
 import LostNFound from '../components/section/LostNFound'
 import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
+import ToolBar from "../components/section/toolbar"
 
 const Lost = () => {
   const [hide, setHide] = useState("flex")
@@ -35,12 +36,17 @@ const Lost = () => {
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-                <Loader hide={hide} />
-            </div>   
-            {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}    
+          <Loader hide={hide} />
+        </div>   
         {!!user && !!userDB &&
-        <LostNFound user={user} userDB={userDB} />}
+        <Navigation user={user} userDB={userDB} />}    
+         <div style={{
+            display: "flex"
+          }}>
+          <ToolBar />
+          {!!user && !!userDB &&
+          <LostNFound user={user} userDB={userDB} />}
+        </div>
     </FirebaseContext.Provider>
   )
 }

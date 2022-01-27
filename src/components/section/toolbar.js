@@ -6,6 +6,9 @@ import Maid from './form/maid'
 import Repair from './form/repair'
 import HouseKeeping from './form/HouseKeeping'
 import Database from '../../svg/database.png'
+import CheckList from './form/checkList'
+import CallCenter from './CallCenter'
+import Caisse from './form/caisse'
 import GuestTerminator from './guestTerminator'
 import { FirebaseContext } from '../../Firebase'
 import LostOnes from '../../svg/lost-items.svg'
@@ -30,27 +33,15 @@ const ToolBar = () =>{
                 <Clock userDB={userDB} user={user}  />}
             {userDB && user &&
                 <Repair userDB={userDB} user={user}  />}
-            <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                {t("msh_toolbar.tooltip_lost_found")}
-              </Tooltip>
-            }>
-                <img src={LostOnes} className="icon" alt="contact" onClick={() => navigate("/Lost")} style={{width: "40%", marginRight: "10%"}} />
-            </OverlayTrigger>
-            <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                C.R.M
-              </Tooltip>
-            }>
-                <img src={Database} className="icon" alt="contact" onClick={() => navigate("/crm")} style={{width: "40%", marginRight: "10%"}} />
-            </OverlayTrigger>
-
             {userDB && user &&
-                <GuestTerminator userDB={userDB} user={user}  />} 
+                <CheckList userDB={userDB} user={user} />}
+            {userDB && user &&
+                <Caisse userDB={userDB} user={user} />} 
+            {userDB && user &&
+                <CallCenter user={user} userDB={userDB} />} 
+
+            {/*userDB && user &&
+                <GuestTerminator userDB={userDB} user={user}  />*/} 
         </div>
     )
 }
