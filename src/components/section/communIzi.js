@@ -2,18 +2,11 @@ import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import Send from '../../svg/paper-plane.svg'
+import Send from '../../images/paper-plane.png'
 import Plus from '../../svg/plus3.svg'
 import ChatRoom from './chatRoom'
-import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton, Alert } from 'react-bootstrap'
+import { Modal, Button, DropdownButton, Alert, Tab, Tabs, Table } from 'react-bootstrap'
 import Avatar from 'react-avatar'
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemHeading,
-  AccordionItemButton,
-  AccordionItemPanel,
-} from 'react-accessible-accordion'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -25,12 +18,15 @@ import { useTranslation } from "react-i18next"
 export default function CommunIzi({userDB, user}) {
     
     const [info, setInfo] = useState([])
+    const [present, setPresent] = useState([]);
+    const [arrival, setArrival] = useState([]);
     const [note, setNote] = useState('')
     const [expanded, setExpanded] = useState('')
     const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
     const [guestList, setGuestList] = useState([])
+    const [guest, setGuest] = useState(null);
     const [list, setList] = useState(false)
     const [payload, setPayload] = useState({token:{}, logo:"", language:"", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting:""})
     const [showAlert, setShowAlert] = useState(false)
@@ -69,7 +65,7 @@ export default function CommunIzi({userDB, user}) {
     return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection('chat')
-          .doc(`${expanded}`)
+          .doc(`${guest}`)
           .update({
               hotelResponding: true,
           })      
@@ -80,7 +76,7 @@ export default function CommunIzi({userDB, user}) {
         return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
-          .doc(`${expanded}`)
+          .doc(`${guest}`)
           .collection('chatRoom')
           .add({
             author: userDB.username,
@@ -143,7 +139,7 @@ export default function CommunIzi({userDB, user}) {
         return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
-          .orderBy("markup", "asc")
+          .where("checkoutDate", "!=", "")
         }
 
       let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
@@ -155,7 +151,12 @@ export default function CommunIzi({userDB, user}) {
             })        
           });
           console.log(snapInfo)
-          setInfo(snapInfo)
+          
+          const presentGuest = snapInfo && snapInfo.filter(guest => guest.room !== "")
+          const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room == "")
+
+          setPresent(presentGuest)
+          setArrival(arrivalGuest)
       });
       return unsubscribe
      },[])
@@ -185,10 +186,10 @@ export default function CommunIzi({userDB, user}) {
           return db.collection('hotels')
           .doc(userDB.hotelId)
           .collection("chat")
-          .where("title", "==", expanded)
+          .where("title", "==", guest)
       }
   
-      if(expanded !== null) {
+      if(guest !== null) {
         let unsubscribe = pullData().onSnapshot(function(snapshot) {
           const snapInfo = []
         snapshot.forEach(function(doc) {          
@@ -210,7 +211,7 @@ export default function CommunIzi({userDB, user}) {
         });
       return unsubscribe
       }
-    }, [expanded])
+    }, [guest])
 
     const addNotification = (notification) => {
       return db.collection('notifications')
@@ -231,198 +232,109 @@ export default function CommunIzi({userDB, user}) {
 
     return (
         <div className="communizi-container">  
-          <PerfectScrollbar>
-            <div className="communizi_notebox">
-            <Accordion allowZeroExpanded>
-                {info.map((flow) => (
-                  flow.status &&
-                  <AccordionItem key={flow.id} onClick={() => {
-                    handleChangeExpanded(flow.id)
-                    if(showAlert) {
-                      return setShowAlert(false)
-                    }
-                    }}>
-                    <AccordionItemHeading style={{
-                      backgroundColor: "rgb(33, 35, 39)", 
-                      padding: "2%",
-                      borderTopLeftRadius: "5px",
-                      borderTopRightRadius: "5px",
-                      marginTop: "1vh"
-                      }}>
-                        <AccordionItemButton style={{outline: "none", color: "gray", display: "flex", justifyContent: "space-between"}}>
-                          <div style={{display: "flex", alignItems: "center"}}>
-                            <Avatar 
-                              round={true}
-                              name={flow.id}
-                              size="30"
-                              color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
-                              style={{marginRight: "1vw"}} />
-                              {typeof window && window.innerWidth > 768 ? flow.id : null}
-                          </div>
-                          <div style={{display: "flex", alignItems: "center"}}>{t('msh_chat.c_room_maj')} {flow.room}</div>
-                            <div style={{display: "flex", alignItems: "center"}}>
-                              <Switch
-                                checked={flow.status}
-                                onChange={() => changeRoomStatus(flow.id)}
-                                inputProps={{ 'aria-label': 'secondary checkbox' }}
-                              />
-                              <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
-                            </div>
-                        </AccordionItemButton>
-                    </AccordionItemHeading>
-                    <AccordionItemPanel style={{marginBottom: "1vh"}}>
-                      {user&& userDB&& 
-                      <ChatRoom user={user} userDB={userDB} title={flow.id} />}
-                    </AccordionItemPanel>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-            </PerfectScrollbar>
-            <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
-                <Form className="communizi_form">
-                <FormGroup  className="communizi_form_input_container"> 
-                    <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
-                    value={note}
-                    onChange={handleChange}
-                    onKeyPress={(e) => {
-                      if(expanded) {
-                        if(e.key === "Enter" && note) {
-                          handleSubmit(e)
-                          updateAdminSpeakStatus()
-                          sendPushNotification({payload: payload})
-                          setShowAlert(false)
-                        }
-                      }else{
-                        if(e.key === "Enter") {
-                          e.preventDefault()
-                          return setShowAlert(true)
-                        }
-                      }
-                    }}
-                    id="dark_message_note" />
-                </FormGroup>
-                    <div className="communizi-button-container">
-                    {/*<OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="title">
-                            Ajouter une photo
-                          </Tooltip>
-                        }>
-                        <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-                      </OverlayTrigger>*/}
-                        <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
-                          if(expanded) {
-                            if(note) {
-                              handleSubmit(event)
-                              updateAdminSpeakStatus()
-                              sendPushNotification({payload: payload})
-                              if(showAlert) {
-                                showAlert(false)
-                              }
-                            }
-                          }else{
-                            return setShowAlert(true)
-                          }
-                        }} />          
-                    </div>
-                </Form>
-            </div>
-            <Modal show={showModal} 
-            onHide={handleClose}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered>
-                <Modal.Header closeButton>
-                <Modal.Title id="example-modal-sizes-title-sm">
-                    Contacter un client
-                </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                      <DropdownButton id="dropdown-basic-button" title={initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}>
-                      {guestList.map((guest, key) => (
-                        <DropdownItem
-                        key={key}
-                        onClick={() => {
-                          setExpanded(guest.username)
-                          setInitialFilter(guest.username)}}>{guest.username} - Chambre {guest.room}</DropdownItem>
-                      ))}
-                      </DropdownButton>
-                    <Input 
-                      type="textarea" 
-                      placeholder="Ecrire un message..." 
-                      style={{resize: "none", marginTop: "2vh"}}
-                      value={note}  
-                      maxLength="60" 
-                      onChange={handleChange} />
-                </Modal.Body>
-                <Modal.Footer style={{borderTop: "none"}}>
-                    <Button variant="success" onClick={(event) => {
-                      const notif = t("msh_chat.c_notification") 
-                      addNotification(notif)
-                      handleSubmit(event)
-                      setShowModal(false)
-                      setInitialFilter('Liste Clients Présents')
-                      updateAdminSpeakStatus()
-                      sendPushNotification({payload: payload})
-                    }}>Envoyer</Button>
-                </Modal.Footer>
-            </Modal>
-
-            <Drawer anchor="bottom" open={activate} onClose={handleHideDrawer}>
-              <div id="drawer-container" style={{
-                  display: "flex",
-                  flexFlow: "column", 
-                  justifyContent: "space-between",
-                  padding: "5%", 
-                  maxHeight: "90vh"}}>
-                  <div style={{
-                    marginBottom: list ? "2vh" : "6vh"
-                  }}>
-                    <h4>Contacter un client</h4>
-                    <Button onClick={handleShowList}>{initialFilter !== "Liste Clients Présents" ? initialFilter : "Liste Clients Présents"}</Button>
-                  </div>
-                    {list && <div style={{
-                      marginBottom: "5vh"
-                    }}>
-                      <PerfectScrollbar>
-                      {guestList.map(guest => (
-                        <DropdownItem
-                        style={{borderBottom: "1px solid lightgrey"}}
-                        onClick={() => {
-                          setExpanded(guest.username)
-                          setInitialFilter(guest.username)
-                          handleHideList()}}>{guest.username} - Chambre {guest.room}</DropdownItem>
-                      ))}
-                      </PerfectScrollbar>
-                    </div>}
-                   <div style={{
-                     backgroundColor: "white",
-                     width: "90%",
-                     bottom: "8vh"
-                   }}>
-                    <Input 
-                        type="text" 
-                        placeholder="Ecrire un message..." 
-                        value={note}  
-                        maxLength="60" 
-                        onChange={handleChange}
-                        id="dark_message_contact" />
-                   </div>
+        <div style={{width: "65%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
+              <div style={{height: "72vh", padding: "2vw", borderBottom: "1px solid lightgrey"}}>
+                <PerfectScrollbar>
+                  {user&& userDB&& guest !== null ?
+                    <ChatRoom user={user} userDB={userDB} title={guest} /> : null}
+                </PerfectScrollbar>
               </div>
-              <Button variant="success" size="lg" onClick={(event) => {
-                      const notif = t("msh_chat.c_notification") 
-                      addNotification(notif)
-                      handleSubmit(event)
-                      setActivate(false)
-                      setInitialFilter("Liste Clients Présents")
-                      updateAdminSpeakStatus()
-                      sendPushNotification({payload: payload})
-                    }}>Envoyer</Button>
-            </Drawer>
-            {showAlert && <Alert variant="danger" style={{width: "20vw"}}>
-              {t('msh_chat.c_alert')}
-            </Alert>}
+              <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
+                  <Form className="communizi_form">
+                  <FormGroup  className="communizi_form_input_container"> 
+                      <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
+                      value={note}
+                      onChange={handleChange}
+                      onKeyPress={(e) => {
+                          if(e.key === "Enter" && note) {
+                            handleSubmit(e)
+                            updateAdminSpeakStatus()
+                            sendPushNotification({payload: payload})
+                            setShowAlert(false)
+                          }
+                      }}
+                      id="dark_message_note" />
+                  </FormGroup>
+                      <div className="communizi-button-container">
+                      {/*<OverlayTrigger
+                          placement="top"
+                          overlay={
+                            <Tooltip id="title">
+                              Ajouter une photo
+                            </Tooltip>
+                          }>
+                          <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
+                        </OverlayTrigger>*/}
+                          <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
+                            if(expanded) {
+                              if(note) {
+                                handleSubmit(event)
+                                updateAdminSpeakStatus()
+                                sendPushNotification({payload: payload})
+                                if(showAlert) {
+                                  showAlert(false)
+                                }
+                              }
+                            }else{
+                              return setShowAlert(true)
+                            }
+                          }} />          
+                      </div>
+                  </Form>
+              </div>
+            </div>
+          <div style={{width: "35%", borderTop: "1px solid lightgrey"}}>
+          <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
+            <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
+            <PerfectScrollbar>
+            <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
+              <tbody>
+                {present && present.map((flow) => (
+                    <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                      <td><Avatar 
+                        round={true}
+                        name={flow.id}
+                        size="40"
+                        color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                        style={{margin: "10%"}} /></td>
+                        <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> - {t('msh_general.g_table.t_room')} {flow.room}</td>
+                        <td style={{paddingTop: "2vh"}}><Switch
+                          checked={flow.status}
+                          onChange={() => changeRoomStatus(flow.id)}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        /><i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i></td>
+                    </tr>
+                ))}
+              </tbody>
+            </Table>
+            </PerfectScrollbar>
+            </Tab>
+            <Tab eventKey="En arrivée" title={t('msh_chat.c_guest_arrival')}>
+            <PerfectScrollbar>
+            <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
+              <tbody>
+                {arrival && arrival.map((flow) => (
+                    <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                      <td><Avatar 
+                        round={true}
+                        name={flow.id}
+                        size="40"
+                        color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                        style={{margin: "10%"}} /></td>
+                        <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
+                        <td style={{paddingTop: "2vh"}}><Switch
+                          checked={flow.status}
+                          onChange={() => changeRoomStatus(flow.id)}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        /><i style={{color: "gray", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i></td>
+                    </tr>
+                ))}
+              </tbody>
+            </Table>
+            </PerfectScrollbar>
+            </Tab>
+          </Tabs>
+          </div>
         </div>
     )
 }

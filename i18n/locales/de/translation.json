@@ -59,7 +59,9 @@
         "c_input_placeholder": "Auf Kunden antworten ...",
         "c_send_button": "Senden",
         "c_notification": "Ihre Nachricht wurde gesendet!",
-        "c_alert": "Sie müssen zuerst eine Konversation auswählen!"
+        "c_alert": "Sie müssen zuerst eine Konversation auswählen!",
+        "c_guest_present": "Bleiben",
+        "c_guest_arrival": "Bei der Ankunft"
     },
     "msh_messenger": {
         "m_note_big_title": "Anweisungen",
@@ -77,7 +79,8 @@
         "m_technical_team": "Technik",
         "m_drawer_title": "Schreibe ein Memo",
         "m_drawer_note_title": "Titel notieren",
-        "m_notif": "Ihre Notiz wurde gespeichert für die"
+        "m_notif": "Ihre Notiz wurde gespeichert für die",
+        "m_calendar": "Wählen Sie ein Datum im Kalender aus"
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Portier",

@@ -48,7 +48,7 @@ const ChatPage = () => {
           }}>
             <ToolBar />
             <div id="iziChat" className="dark_messenger_communizi_container">
-              <h5 className="font-weight-bolder dark_messenger_title">Chat Client</h5>
+              <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
               {!!userDB && !!user&&
               <Chat userDB={userDB} user={user} />}
             </div>

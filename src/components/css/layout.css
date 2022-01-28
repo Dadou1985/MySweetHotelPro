@@ -848,9 +848,9 @@ input[type=number] {
     width: 5%;
     height: 8vh;
     z-index: 20;
-    right: -3%; 
     opacity: 0;
-    margin-right: 12vw;
+    margin-top: 1vh;
+    margin-right: 7vw;
     cursor: pointer;
 }
 
@@ -1728,7 +1728,6 @@ input[type=number] {
     flex-flow: column;
     justify-content: flex-start;
     align-items: center;
-    padding: 1%;
     height: 100%;
     width: 95%;
 }
@@ -1754,13 +1753,18 @@ input[type=number] {
 }
 
 .dark_messenger_title {
-    text-align: center;
     border-radius: 1%;
-    padding: 1%;
+    padding-top: 2%;
+    padding-bottom: 1%;
     width: 100%;
+    padding-left: 40%;
 }
 
-.communizi-container {width: 100%;}
+.communizi-container {
+    display: flex;
+    width: 100%;
+    height: 80vh;
+}
 
 .communizi_notebox {
     max-height: 70vh;
@@ -1771,7 +1775,7 @@ input[type=number] {
     display: flex;
     flex-flow: row;
     align-items: center;
-    margin-top: 2vh;
+    padding-top: 1vh;
 }
 
 .communizi_form_input_div {
@@ -1786,8 +1790,8 @@ input[type=number] {
     display: flex;
     flex-flow: row;
     align-items: center;
-    width: 90%;
-    margin-bottom: 3vh;
+    width: 93%;
+    padding-left: 2vw;
     padding-top: 2vh;
 }
 
@@ -1796,7 +1800,8 @@ input[type=number] {
     flex-flow: row;
     justify-content: space-around;
     align-items: center;
-    width: 10%;
+    width: 7%;
+    padding-right: 2vw;
 }
 
 .communizi-file-button {
@@ -1806,9 +1811,8 @@ input[type=number] {
 }
 
 .communizi-send-button {
-    width: 40%;
+    width: 55%;
     cursor: pointer;
-    border-radius: 50%;
 }
 
 .karenStories-container {width: 100%;}
@@ -2132,7 +2136,8 @@ input[type=number] {
     border-bottom-right-radius: 15px;
     padding: 15px;
     color: black;
-    filter: drop-shadow(2px 2px 2px)
+    filter: drop-shadow(2px 2px 2px);
+    margin-right: 3vw;
 }
 
 .darkTextOther{
@@ -2153,7 +2158,9 @@ input[type=number] {
     background-color: rgb(123, 22, 22);
     padding: 15px;
     color: black;
-    filter: drop-shadow(2px 2px 2px)
+    filter: drop-shadow(2px 2px 2px);
+    margin-right: 3vw;
+    margin-left: 3vw;
 }
 
 .oldDarkTextUser{
@@ -2176,7 +2183,8 @@ input[type=number] {
     background-color: rgb(33, 35, 39);
     padding: 15px;
     color: black;
-    filter: drop-shadow(2px 2px 2px) grayscale()
+    filter: drop-shadow(2px 2px 2px) grayscale();
+    margin-right: 3vw;
 }
 
 .oldDarkTextOther{
@@ -2197,7 +2205,8 @@ input[type=number] {
     background-color: rgb(67, 66, 66);
     padding: 15px;
     color: black;
-    filter: drop-shadow(2px 2px 2px) grayscale()
+    filter: drop-shadow(2px 2px 2px) grayscale();
+    margin-left: 3vw;
 }
 
 .user_avatar_chat_label {
@@ -2231,7 +2240,7 @@ input[type=number] {
     height: 4%;
     position: absolute;
     filter: drop-shadow(1px 1px 1px);
-    bottom: 11vh;
+    bottom: 9vh;
 
 }
 
@@ -2242,7 +2251,7 @@ input[type=number] {
     position: absolute;
     filter: drop-shadow(1px 1px 1px);
     filter: grayscale(90%) drop-shadow(1px 1px 1px);
-    bottom: 11vh;
+    bottom: 9vh;
 }
 
 @media screen and (max-width: 768px) {

@@ -5,6 +5,7 @@ import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
 import DateFnsUtils from '@date-io/date-fns';
 import MomentUtils from "@date-io/moment";
+import Pens from '../images/pens.png'
 
 import {
   MuiPickersUtilsProvider,
@@ -61,11 +62,15 @@ console.log(userDB && userDB.language)
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}  
         <div style={{
-            display: "flex"
+            display: "flex",
+            backgroundImage: `url(${Pens})`,
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
+            backgroundPositionX: "5vw"
           }}>
           <ToolBar />
           <div id="iziChat" className="dark_messenger_communizi_container">
-              <h2 className="dark_messenger_title">{t("msh_messenger.m_note_big_title")}</h2>
+              <h3 className="dark_messenger_title">{t("msh_messenger.m_note_big_title")}</h3>
               <div style={{
                 display: "flex",
                 flexFlow: "row",
@@ -73,18 +78,21 @@ console.log(userDB && userDB.language)
               }}>
                 {!!userDB && !!user && !!filterDate &&
                 <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
-                <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >
-                  <DatePicker
-                      variant="static"
-                      ampm={false}
-                      value={filterDate}
-                      onChange={handleDateChange}
-                      onError={console.log}
-                      autoOk
-                      orientation="landscape"
-                      format={userDB && userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
-                  />                                        
-                  </MuiPickersUtilsProvider>
+                <div style={{height: "80vh"}}>
+                  <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >
+                    <DatePicker
+                        variant="static"
+                        ampm={false}
+                        value={filterDate}
+                        onChange={handleDateChange}
+                        onError={console.log}
+                        autoOk
+                        orientation="landscape"
+                        format={userDB && userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
+                    />   
+                    </MuiPickersUtilsProvider>
+                    <h5 style={{textAlign: "center", marginTop: "3vh"}}>{t('msh_messenger.m_calendar')}</h5>
+                </div>
               </div>
           </div>
         </div>

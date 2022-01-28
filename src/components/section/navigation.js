@@ -127,7 +127,7 @@ const Navigation = ({user, userDB}) =>{
                         width: "35%",
                         marginLeft: "10vw"
                     }}>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/singlePage">Activités</Link>
+                        <Link style={{color: "black", textDecoration: "none"}} to="/singlePage">Tableau de bord</Link>
                         <Link style={{color: "black", textDecoration: "none"}} to="/notebook">Consignes</Link>
                         <Link style={{color: "black", textDecoration: "none"}} to="/chat">Chat Client</Link>
                         <Link style={{color: "black", textDecoration: "none"}} to="/crm">C.R.M</Link>

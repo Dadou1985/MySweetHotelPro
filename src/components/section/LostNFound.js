@@ -96,12 +96,12 @@ const LostNFound = ({userDB}) =>{
 
     return(
         <div style={{width: "95%"}}>
-            <h2 style={{
+            <h3 style={{
                 width: "100%",
                 padding: "1%",
                 paddingTop: "2%",
-                textAlign:"center"
-            }}>{t("msh_lost_found.l_title")}</h2>
+                paddingLeft: "40%"
+            }}>{t("msh_lost_found.l_title")}</h3>
             <div style={{
                 display: "flex"
             }}>

@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Loader from '../components/section/common/loader'
 import ToolBar from "../components/section/toolbar"
-import Memo from '../components/section/memo'
 import Navigation from '../components/section/navigation'
 import {FirebaseContext, db, auth} from '../Firebase'
-import Chat from '../components/section/communIzi'
+import Dashboard from '../components/section/dashboard'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
+import Background from "../images/newDeskDigital.png"
+import moment from 'moment'
+import 'moment/locale/fr';
 
 const SinglePage = () => {
 
@@ -50,21 +52,24 @@ const SinglePage = () => {
       <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
         <Loader hide={hide} />
       </div>
-      {!!user && !!userDB &&
-      <Navigation user={user} userDB={userDB} />}
+        {!!user && !!userDB &&
+        <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
-      }}>
+          backgroundImage: `url(${Background})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPositionX: "5vw"
+        }}>
           <ToolBar />
           <div className="dark_messenger_communizi_container">
-            <h5 className="font-weight-bolder dark_messenger_title">{t("msh_chat.c_chat_title")}</h5>
+            <h3 style={{paddingTop: "3vh", paddingLeft: "3vw"}}>Tableau de bord</h3>
+            <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1em", marginLeft: "3vw", color: "gray"}}>{moment().format('LL')}</div>
             {!!userDB && !!user&&
-            <Chat userDB={userDB} user={user} />}
-        </div>
-        {!!userDB && !!user&&
-            <Memo userDB={userDB} user={user} />}
-        </div>
-        </FirebaseContext.Provider>
+            <Dashboard userDB={userDB} user={user} />}
+          </div>
+      </div>
+    </FirebaseContext.Provider>
   )
 }
 

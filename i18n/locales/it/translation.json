@@ -59,7 +59,9 @@
         "c_input_placeholder": "Rispondi al cliente ...",
         "c_send_button": "Invia",
         "c_notification": "Il tuo messaggio è stato inviato!",
-        "c_alert": "Devi prima scegliere una conversazione!"
+        "c_alert": "Devi prima scegliere una conversazione!",
+        "c_guest_present": "Stare",
+        "c_guest_arrival": "All'arrivo"
     },
     "msh_messenger": {
         "m_note_big_title": "Istruzioni",
@@ -77,7 +79,8 @@
         "m_technical_team": "Tecnico",
         "m_drawer_title": "Scrivi un promemoria",
         "m_drawer_note_title": "Titolo della nota",
-        "m_notif": "La tua nota è stata salvata per"
+        "m_notif": "La tua nota è stata salvata per",
+        "m_calendar": "Seleziona una data sul calendario"
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Concierge",
