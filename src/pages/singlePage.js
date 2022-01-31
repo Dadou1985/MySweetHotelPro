@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Loader from '../components/section/common/loader'
 import ToolBar from "../components/section/toolbar"
+import Memo from '../components/section/memo'
 import Navigation from '../components/section/navigation'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Dashboard from '../components/section/dashboard'
@@ -56,17 +57,36 @@ const SinglePage = () => {
         <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
-          backgroundImage: `url(${Background})`,
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          backgroundPositionX: "5vw"
+          //backgroundImage: `url(${Background})`,
+          //backgroundSize: "cover",
+          //backgroundRepeat: "no-repeat",
+          //backgroundPositionX: "5vw"
         }}>
           <ToolBar />
-          <div className="dark_messenger_communizi_container">
-            <h3 style={{paddingTop: "3vh", paddingLeft: "3vw"}}>Tableau de bord</h3>
-            <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1em", marginLeft: "3vw", color: "gray"}}>{moment().format('LL')}</div>
-            {!!userDB && !!user&&
-            <Dashboard userDB={userDB} user={user} />}
+          <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "flex-start",
+            alignItems: "center",
+            height: "100%",
+            width: "95%"
+          }}>
+            <div style={{width: "50%"}}>
+              <h3 style={{paddingTop: "3vh", paddingLeft: "3vw"}}>Tableau de bord</h3>
+              <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1em", marginLeft: "3vw", color: "gray"}}>{moment().format('LL')}</div>
+              {!!userDB && !!user&&
+              <Dashboard userDB={userDB} user={user} />}
+            </div>
+            <div style={{
+              display: "flex",
+              flexFlow: "column",
+              alignItems: "center",
+              width: "50%",
+              paddingTop: "3vh",
+            }}>
+              {!!user && !! userDB &&
+              <Memo user={user} userDB={userDB} />}
+            </div>
           </div>
       </div>
     </FirebaseContext.Provider>

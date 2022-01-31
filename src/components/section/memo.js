@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
-import CoolBar from './coolBar'
+import StickList from './stickList'
 import '../css/memo.css'
-import Messenger from './messenger'
+import Divider from '@material-ui/core/Divider'
 import DateFnsUtils from '@date-io/date-fns';
 import {
     MuiPickersUtilsProvider,
@@ -21,21 +21,21 @@ const Memo =({userDB})=>{
     return(
         
             <div className="memo_container">
-                <div style={{display: "flex", justifyContent: "flex-end", alignItems: "flex-end"}}>
-                    <h5 className="font-weight-bolder memo_title">{t("msh_messenger.m_note_big_title")}</h5>
-                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                        <DatePicker
-                            variant="dialog"
-                            ampm={false}
-                            value={filterDate}
-                            onChange={handleDateChange}
-                            onError={console.log}
-                            format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
-                            autoOk
-                        />                                        
-                        </MuiPickersUtilsProvider>
-                </div>
-                {!!filterDate && <Messenger filterDate={filterDate} />}
+                <h5 className="memo_title"><b>{t("Le Mur")}</b> - Expression libre</h5>
+                <Divider/>
+                {userDB && 
+                <StickList userDB={userDB} />}
+                {/*<MuiPickersUtilsProvider utils={DateFnsUtils}>
+                    <DatePicker
+                        variant="dialog"
+                        ampm={false}
+                        value={filterDate}
+                        onChange={handleDateChange}
+                        onError={console.log}
+                        format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
+                        autoOk
+                    />                                        
+                </MuiPickersUtilsProvider>*/}
             </div>
     )
 }

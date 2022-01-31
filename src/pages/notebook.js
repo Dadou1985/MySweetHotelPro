@@ -6,7 +6,6 @@ import Navigation from '../components/section/navigation'
 import DateFnsUtils from '@date-io/date-fns';
 import MomentUtils from "@date-io/moment";
 import Pens from '../images/pens.png'
-
 import {
   MuiPickersUtilsProvider,
   DatePicker
@@ -63,10 +62,10 @@ console.log(userDB && userDB.language)
         <Navigation user={user} userDB={userDB} />}  
         <div style={{
             display: "flex",
-            backgroundImage: `url(${Pens})`,
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPositionX: "5vw"
+            //backgroundImage: `url(${Pens})`,
+            //backgroundSize: "cover",
+            //backgroundRepeat: "no-repeat",
+            //backgroundPositionX: "5vw"
           }}>
           <ToolBar />
           <div id="iziChat" className="dark_messenger_communizi_container">

@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Coffee from '../../images/morningCoffee.png'
 import { useTranslation } from "react-i18next"
+import Taxi from '../../svg/taxi.svg'
+import Timer from '../../svg/timer.svg'
+import RoomChage from '../../svg/logout.svg'
+import Maintenance from '../../svg/repair.svg'
+
 
 export default function Dashboard({user, userDb}) {
   const { t, i18n } = useTranslation()
@@ -8,11 +13,11 @@ export default function Dashboard({user, userDb}) {
   return <div style={{
       display: "flex",
       flexFlow: "column",
-      width: "50%",
+      width: "100%",
       padding: "1%",
       marginTop: "2vh"
   }}>
-        <div style={{width: "100%", marginBottom: "5vh"}}>
+        <div style={{width: "100%", marginBottom: "7vh"}}>
           <div style={{
             display: "flex",
             flexFlow: "row",
@@ -86,53 +91,81 @@ export default function Dashboard({user, userDb}) {
         width: "90%", 
         flexFlow: "row",
         justifyContent: "space-between",
-        marginTop: "5vh",
+        marginTop: "7vh",
         marginLeft: "2vw"
         }}>
-        <div style={{
-          display: "flex",
-          flexFlow: "row",
-          padding: "1%",
-          width: "8vw", 
-          height: "16vh", 
-          borderBottom: "15px solid green",
-          borderRight: "5px solid green", 
-          borderRadius: "50%",   
-          filter: "drop-shadow(2px 4px 6px black", 
-          backgroundColor: "whitesmoke"}}><h3>5</h3></div>
-        <div style={{
-          display: "flex",
-          flexFlow: "row",
-          padding: "1%",
-          width: "8vw", 
-          height: "16vh", 
-          borderBottom: "15px solid green",
-          borderRight: "5px solid green", 
-          borderRadius: "50%",   
-          filter: "drop-shadow(2px 4px 6px black", 
-          backgroundColor: "whitesmoke"}}><h3>5</h3></div>
-        <div style={{
-          display: "flex",
-          flexFlow: "row",
-          padding: "1%",
-          width: "8vw", 
-          height: "16vh", 
-          borderBottom: "15px solid green",
-          borderRight: "5px solid green", 
-          borderRadius: "50%",   
-          filter: "drop-shadow(2px 4px 6px black", 
-          backgroundColor: "whitesmoke"}}><h3>5</h3></div>
-        <div style={{
-          display: "flex",
-          flexFlow: "row",
-          padding: "1%",
-          width: "8vw", 
-          height: "16vh", 
-          borderBottom: "15px solid green",
-          borderRight: "5px solid green", 
-          borderRadius: "50%",   
-          filter: "drop-shadow(2px 4px 6px black", 
-          backgroundColor: "whitesmoke"}}><h3>5</h3></div>
+        <div>
+          <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "center",
+            padding: "1%",
+            width: "8vw", 
+            height: "16vh", 
+            border: "1px solid lightgrey", 
+            borderRadius: "50%",   
+            filter: "drop-shadow(2px 4px 6px)",
+            marginBottom: "1vh",
+            cursor: "pointer"}}
+            className='softSkin'>
+              <img src={Taxi}  style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+          </div>
+          <h5 style={{textAlign: "center"}}>Réservations<br/> de taxi</h5>
+        </div>
+        <div>
+          <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "center",
+            padding: "1%",
+            width: "8vw", 
+            height: "16vh", 
+            border: "1px solid lightgrey", 
+            borderRadius: "50%",   
+            filter: "drop-shadow(2px 4px 6px)",
+            marginBottom: "1vh",
+            cursor: "pointer"}}
+            className='softSkin'>
+              <img src={Timer} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+          </div>
+          <h5 style={{textAlign: "center"}}>Réveils</h5>
+        </div>
+        <div>
+          <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "center",
+            padding: "1%",
+            width: "8vw", 
+            height: "16vh", 
+            border: "1px solid lightgrey", 
+            borderRadius: "50%",   
+            filter: "drop-shadow(2px 4px 6px)",
+            marginBottom: "1vh",
+            cursor: "pointer"}}
+            className='softSkin'>
+              <img src={RoomChage} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+          </div>
+          <h5 style={{textAlign: "center"}}>Délogements</h5>
+        </div>
+        <div>
+          <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "center",
+            padding: "1%",
+            width: "8vw", 
+            height: "16vh", 
+            border: "1px solid lightgrey", 
+            borderRadius: "50%",   
+            filter: "drop-shadow(2px 4px 6px)",
+            marginBottom: "1vh",
+            cursor: "pointer"}}
+            className='softSkin'>
+              <img src={Maintenance} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+          </div>
+          <h5 style={{textAlign: "center"}}>Interventions<br/>techniques</h5>
+        </div>
       </div>
   </div>;
 }

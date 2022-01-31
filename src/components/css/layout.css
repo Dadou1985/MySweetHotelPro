@@ -673,28 +673,34 @@ input[type=number] {
 /*Memo*/
 
 .memo_container {
-    width: 40vw;
-    height: 85vh;
-    /*background-image: url("../../images/tableau.jpg");*/
+    width: 95%;
+    height: 65vh;
+    background-image: url("../../images/tableau.jpg");
     background-size: contain;
     background-repeat: no-repeat;
+    background-position-x: center;
     padding: 1%;
     display: flex;
     flex-flow: column;
+    align-items: center;
 }
 
 .memo_title {
     text-align: center;
     padding: 1%; 
-    margin-bottom: 3%;
-    margin-right: 2vw;
+    padding-Top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid lightgrey;
+    width: 90%;
 }
 
 .sticker_img {
-    width: 100%;
+    width: 5vw;
     filter: drop-shadow(1px 1px 1px); 
     margin-right: 15%;
     cursor: pointer;
+    margin-bottom: 3vh;
+    
 }
 
 .memo_modalTitle_input {

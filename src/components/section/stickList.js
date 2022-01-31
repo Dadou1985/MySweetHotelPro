@@ -1,29 +1,17 @@
 import React, {useState, useEffect, useContext } from 'react'
 import PostIt from './postIt'
 import CreateSticker from './createSticker'
-import { FirebaseContext, db } from '../../Firebase'
+import { db } from '../../Firebase'
 
-
-const StickList = () => {
+const StickList = ({userDB}) => {
 
     const [postIt, setPostIt] = useState([])
 
-    const {userDB} = useContext(FirebaseContext)
-
     useEffect(() => {
         const stickerOnAir = () => {
-            return db.collection('mySweetHotel')
-                .doc('country')
-                .collection('France')
-                .doc('collection')
-                .collection('hotel')
-                .doc('region')
-                .collection(userDB.hotelRegion)
-                .doc('departement')
-                .collection(userDB.hotelDept)
-                .doc(`${userDB.hotelId}`)
+            return db.collection('hotels')
+                .doc(userDB.hotelId)
                 .collection('stickers')
-                .where("author", "==", userDB.username)
         }
 
         let unsubscribe = stickerOnAir().onSnapshot(function(snapshot) {
@@ -46,9 +34,9 @@ const StickList = () => {
             display: "flex",
             flexFlow: "row wrap",
             alignItems: "flex-start",
-            height: "45vh",
-            marginBottom: "15%", 
-            paddingLeft: "3vw"
+            width: "95%",
+            height: "85%",
+            paddingLeft: "3vw",
         }}>
             {postIt.map(stick =>(
                 <PostIt
@@ -56,11 +44,11 @@ const StickList = () => {
                 author={stick.author}
                 text={stick.text}
                 title={stick.title}
-                assignee={stick.assignee}
                 markup={stick.id}
+                userDB={userDB}
                 />
             ))}
-            <div style={{
+            {postIt.length < 23 && <div style={{
                 display: "flex",
                 flexFlow: "row",
                 alignItems: "center",
@@ -69,8 +57,8 @@ const StickList = () => {
                 width: "1vw",
                 marginTop: "5vh",
             }}>
-            <CreateSticker />
-            </div>
+            {userDB && <CreateSticker userDB={userDB} />}
+            </div>}
         </div>
     )
 }

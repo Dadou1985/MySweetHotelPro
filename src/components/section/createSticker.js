@@ -1,16 +1,13 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import Plus from '../../svg/plus3.svg'
-import { FirebaseContext, db } from '../../Firebase'
+import Plus from '../../images/postItPlus.png'
+import { db } from '../../Firebase'
 
 
-const CreateSticker = () => {
+const CreateSticker = ({userDB}) => {
 
-    const [info, setInfo] = useState([])
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
-
-    const { userDB } = useContext(FirebaseContext)
 
     const showSticker = () => {
         setVisible(true)
@@ -27,16 +24,8 @@ const CreateSticker = () => {
     const handleSubmit = () => {
         setVisible(false)
         setFormValue({title: "", text: ""})
-        return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('hotel')
-            .doc('region')
-            .collection(userDB.hotelRegion)
-            .doc('departement')
-            .collection(userDB.hotelDept)
-            .doc(`${userDB.hotelId}`)
+        return db.collection('hotels')
+            .doc(userDB.hotelId)
             .collection('stickers')
             .add({
             title: formValue.title,
@@ -50,30 +39,6 @@ const CreateSticker = () => {
         console.log(event)
         setVisible(false)
     }
-
-    useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('mySweetHotel')
-            .doc('country')
-            .collection('France')
-            .doc('collection')
-            .collection('users')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    console.log(snapInfo)
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
-     },[])
 
     return (
             <div>
@@ -102,19 +67,6 @@ const CreateSticker = () => {
                 }}>
                 <input value={formValue.title} name="title" type="text" placeholder="Donner un titre au mémo..." onChange={handleChange} 
                 className="memo_modalTitle_input" required />
-                {/*<select class="selectpicker" defaultValue={formValue.assignee} name="assignee" onChange={handleChange} 
-                    style={{width: "15%", 
-                    height: "3vh", 
-                    border: "none", 
-                    backgroundColor: "transparent", 
-                    fontSize: "15px"}}>
-                        <option value={formValue.assignee}>Général</option>
-                        {info.map(flow => (
-                            <option value={flow.id}>
-                                {flow.id}
-                            </option> 
-                        ))}
-                </select>*/}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
