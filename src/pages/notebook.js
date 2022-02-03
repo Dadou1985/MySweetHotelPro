@@ -5,7 +5,9 @@ import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
 import DateFnsUtils from '@date-io/date-fns';
 import MomentUtils from "@date-io/moment";
+import Memo from '../components/section/memo'
 import Pens from '../images/pens.png'
+import Book from '../images/book2.png'
 import {
   MuiPickersUtilsProvider,
   DatePicker
@@ -61,38 +63,56 @@ console.log(userDB && userDB.language)
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}  
         <div style={{
-            display: "flex",
-            //backgroundImage: `url(${Pens})`,
-            //backgroundSize: "cover",
-            //backgroundRepeat: "no-repeat",
-            //backgroundPositionX: "5vw"
+            display: "flex"
           }}>
           <ToolBar />
-          <div id="iziChat" className="dark_messenger_communizi_container">
+          <div id="iziChat"  style={{
+            display: "flex",
+            flexFlow: "row wrap",
+            justifyContent: "flex-start",
+            height: "100%",
+            width: "100%",
+            backgroundImage: `url(${Book})`,
+            backgroundRepeat: "no-repeat",
+            backgroundPositionY: "5vh",
+          }}>
               <h3 className="dark_messenger_title">{t("msh_messenger.m_note_big_title")}</h3>
               <div style={{
                 display: "flex",
-                flexFlow: "row",
-                height: "82vh"
+                flexFlow: "column",
+                alignItems: "end",
+                height: "83vh",
+                width: "55%",
+                marginTop: "3vh"
               }}>
-                {!!userDB && !!user && !!filterDate &&
-                <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
-                <div style={{height: "80vh"}}>
+                <div>
                   <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >
                     <DatePicker
-                        variant="static"
+                        variant="inline"
                         ampm={false}
                         value={filterDate}
                         onChange={handleDateChange}
                         onError={console.log}
                         autoOk
-                        orientation="landscape"
+                        inputVariant="outlined"
+                        label={t('msh_messenger.m_calendar')}
+                        disableFuture
                         format={userDB && userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
                     />   
                     </MuiPickersUtilsProvider>
-                    <h5 style={{textAlign: "center", marginTop: "3vh"}}>{t('msh_messenger.m_calendar')}</h5>
                 </div>
+                {!!userDB && !!user && !!filterDate &&
+                <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
               </div>
+              <div style={{
+                      display: "flex",
+                      flexFlow: "column",
+                      alignItems: "center",
+                      width: "45%"
+                    }}>
+                      {!!user && !! userDB &&
+                      <Memo user={user} userDB={userDB} />}
+                  </div>
           </div>
         </div>
     </FirebaseContext.Provider>

@@ -413,7 +413,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 </PerfectScrollbar>
                 </div>
                 {showChat && <div style={{width: "25%", padding: "2%"}}>
-                    <h3 style={{textAlign: "center", borderBottom: "1px solid lightgrey"}}>{t("msh_crm.c_chat_title")}</h3>
+                    <h4 style={{textAlign: "center", borderBottom: "1px solid lightgrey", padding: "1vh"}}>{t("msh_crm.c_chat_title")}</h4>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
                         <Chat user={user} userDB={userDB} title={item.username} />
                     </PerfectScrollbar>

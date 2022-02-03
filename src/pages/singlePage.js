@@ -57,10 +57,10 @@ const SinglePage = () => {
         <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
-          //backgroundImage: `url(${Background})`,
-          //backgroundSize: "cover",
-          //backgroundRepeat: "no-repeat",
-          //backgroundPositionX: "5vw"
+          backgroundImage: `url(${Background})`,
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
+          backgroundPositionX: "5vw"
         }}>
           <ToolBar />
           <div style={{
@@ -77,7 +77,7 @@ const SinglePage = () => {
               {!!userDB && !!user&&
               <Dashboard userDB={userDB} user={user} />}
             </div>
-            <div style={{
+            {/*<div style={{
               display: "flex",
               flexFlow: "column",
               alignItems: "center",
@@ -86,7 +86,7 @@ const SinglePage = () => {
             }}>
               {!!user && !! userDB &&
               <Memo user={user} userDB={userDB} />}
-            </div>
+              </div>*/}
           </div>
       </div>
     </FirebaseContext.Provider>

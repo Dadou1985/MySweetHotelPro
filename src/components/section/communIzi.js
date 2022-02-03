@@ -14,6 +14,8 @@ import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
+import Bubbles from '../../images/bubbles.png'
+import ChatBubble from '../../images/chatBubble.png'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -153,7 +155,7 @@ export default function CommunIzi({userDB, user}) {
           console.log(snapInfo)
           
           const presentGuest = snapInfo && snapInfo.filter(guest => guest.room !== "")
-          const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room == "")
+          const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room === "")
 
           setPresent(presentGuest)
           setArrival(arrivalGuest)
@@ -233,7 +235,28 @@ export default function CommunIzi({userDB, user}) {
     return (
         <div className="communizi-container">  
         <div style={{width: "65%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
-              <div style={{height: "72vh", padding: "2vw", borderBottom: "1px solid lightgrey"}}>
+              <div style={{
+                height: "72vh", 
+                padding: "2vw", 
+                borderBottom: "1px solid lightgrey",
+                backgroundImage: `url(${Bubbles})`,
+                backgroundSize: "cover",
+                backgroundRepeat: "no-repeat"
+              }}>
+                {!guest && <>
+                <h3 style={{
+                  position:"absolute",
+                  left: "24vw",
+                  top: "36vh",
+                  filter: "drop-shadow(1px 1px 1px)"
+                }}>Sélectionnez</h3>
+                <h3 style={{
+                  position:"absolute",
+                  left: "37vw",
+                  top: "55vh",
+                  filter: "drop-shadow(1px 1px 1px)"
+                }}>une conversation</h3>
+                </>}
                 <PerfectScrollbar>
                   {user&& userDB&& guest !== null ?
                     <ChatRoom user={user} userDB={userDB} title={guest} /> : null}

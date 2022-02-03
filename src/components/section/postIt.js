@@ -30,8 +30,8 @@ const PostIt = ({author, title, text, markup, userDB}) => {
       
   return (
     <div style={{
-        width: "12%",
-        height: "10vh",
+        width: "10%",
+        height: "8vh",
         marginRight: "3vw"
     }}>
     <OverlayTrigger

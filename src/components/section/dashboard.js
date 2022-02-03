@@ -5,10 +5,71 @@ import Taxi from '../../svg/taxi.svg'
 import Timer from '../../svg/timer.svg'
 import RoomChage from '../../svg/logout.svg'
 import Maintenance from '../../svg/repair.svg'
+import {db} from '../../Firebase'
+import moment from 'moment'
+import 'moment/locale/fr';
 
-
-export default function Dashboard({user, userDb}) {
+export default function Dashboard({user, userDB}) {
   const { t, i18n } = useTranslation()
+  const [reception, setReception] = useState([])
+  const [menage, setMenage] = useState([])
+  const [maintenance, setMaintenance] = useState([]);
+  const [chat, setChat] = useState([]);
+
+  useEffect(() => {
+    const noteOnAir = () => {
+      return db.collection('hotels')
+        .doc(userDB.hotelId)
+        .collection('note')
+        .where("date", "==", moment(new Date()).format('LL'))
+        .orderBy('markup', "desc")
+    }
+
+      let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
+        const snapMessages = []
+        snapshot.forEach(function(doc) {          
+            snapMessages.push({
+              id: doc.id,
+              ...doc.data()
+            })        
+          });
+          console.log(snapMessages)
+          const noteReception = snapMessages.length > 0 && snapMessages.filter(note => note.status === "darkgoldenrod")
+          const noteMenage = snapMessages.length > 0 && snapMessages.filter(note => note.status === "cornflowerblue")
+          const noteMaintenance = snapMessages.length > 0 && snapMessages.filter(note => note.status === "red")
+
+          setReception(noteReception)
+          setMenage(noteMenage)
+          setMaintenance(noteMaintenance)
+      });
+      return unsubscribe
+         
+   },[])
+
+   useEffect(() => {
+    const chatOnAir = () => {
+      return db.collection('hotels')
+        .doc(userDB.hotelId)
+        .collection("chat")
+        .where("checkoutDate", "!=", "")
+      }
+
+    let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
+        const snapInfo = []
+      snapshot.forEach(function(doc) {          
+        snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
+        console.log(snapInfo)
+        
+        const chatStatus = snapInfo && snapInfo.filter(chat => chat.status === true)
+
+        setChat(chatStatus)
+    });
+    return unsubscribe
+   },[])
 
   return <div style={{
       display: "flex",
@@ -34,8 +95,8 @@ export default function Dashboard({user, userDb}) {
               filter: "drop-shadow(2px 4px 6px gray", 
               color: "darkgoldenrod",
               backgroundColor: "whitesmoke"}}>
-                <div style={{display: "flex", borderBottom: "1px solid darkgoldenrod"}}><h3>3</h3> Consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "6vh"}}>Réception</h4>
+                <div style={{display: "flex", borderBottom: "1px solid darkgoldenrod"}}>{reception.length > 0 ? reception.length : "Aucune"} consigne(s)</div>
+                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Réception</h4>
             </div>
             <div style={{
               width: "25%",
@@ -48,8 +109,8 @@ export default function Dashboard({user, userDb}) {
                filter: "drop-shadow(2px 4px 6px gray",
                color: "cornflowerblue",
                backgroundColor: "whitesmoke"}}>
-              <div style={{display: "flex", borderBottom: "1px solid cornflowerblue"}}><h3>3</h3>Consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "6vh"}}>Ménage</h4>
+              <div style={{display: "flex", borderBottom: "1px solid cornflowerblue"}}>{menage.length > 0 ? menage.length : "Aucune"} consigne(s)</div>
+                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Ménage</h4>
               </div>
             <div style={{
               width: "25%",
@@ -62,8 +123,8 @@ export default function Dashboard({user, userDb}) {
               filter: "drop-shadow(2px 4px 6px gray",
               color: "red",
               backgroundColor: "whitesmoke"}}>
-              <div style={{display: "flex", borderBottom: "1px solid red"}}><h3>3</h3>Consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "6vh"}}>Maintenance Technique</h4>
+              <div style={{display: "flex", borderBottom: "1px solid red"}}>{maintenance.length > 0 ? maintenance.length : "Aucune"} consigne(s)</div>
+                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Maintenance Technique</h4>
             </div>
           </div>
         </div>
@@ -83,7 +144,7 @@ export default function Dashboard({user, userDb}) {
           borderRight: "5px solid gray",
           color: "gray",
           backgroundColor: "whitesmoke"}}> 
-        <div style={{display: "flex"}}><h4>2</h4> conversation(s) active(s)</div>
+        <div style={{display: "flex"}}>{chat.length} conversation(s) active(s)</div>
         <h4 style={{marginTop: "4vh"}}>Chat Client</h4>
       </div>
       <div style={{
@@ -100,17 +161,17 @@ export default function Dashboard({user, userDb}) {
             flexFlow: "row",
             justifyContent: "center",
             padding: "1%",
-            width: "8vw", 
-            height: "16vh", 
+            width: "7vw", 
+            height: "14vh", 
             border: "1px solid lightgrey", 
             borderRadius: "50%",   
             filter: "drop-shadow(2px 4px 6px)",
             marginBottom: "1vh",
             cursor: "pointer"}}
             className='softSkin'>
-              <img src={Taxi}  style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+              <img src={Taxi}  style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
           </div>
-          <h5 style={{textAlign: "center"}}>Réservations<br/> de taxi</h5>
+          <h6 style={{textAlign: "center"}}>Réservations<br/> de taxi</h6>
         </div>
         <div>
           <div style={{
@@ -118,17 +179,17 @@ export default function Dashboard({user, userDb}) {
             flexFlow: "row",
             justifyContent: "center",
             padding: "1%",
-            width: "8vw", 
-            height: "16vh", 
+            width: "7vw", 
+            height: "14vh", 
             border: "1px solid lightgrey", 
             borderRadius: "50%",   
             filter: "drop-shadow(2px 4px 6px)",
             marginBottom: "1vh",
             cursor: "pointer"}}
             className='softSkin'>
-              <img src={Timer} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+              <img src={Timer} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
           </div>
-          <h5 style={{textAlign: "center"}}>Réveils</h5>
+          <h6 style={{textAlign: "center"}}>Réveils</h6>
         </div>
         <div>
           <div style={{
@@ -136,17 +197,17 @@ export default function Dashboard({user, userDb}) {
             flexFlow: "row",
             justifyContent: "center",
             padding: "1%",
-            width: "8vw", 
-            height: "16vh", 
+            width: "7vw", 
+            height: "14vh", 
             border: "1px solid lightgrey", 
             borderRadius: "50%",   
             filter: "drop-shadow(2px 4px 6px)",
             marginBottom: "1vh",
             cursor: "pointer"}}
             className='softSkin'>
-              <img src={RoomChage} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+              <img src={RoomChage} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
           </div>
-          <h5 style={{textAlign: "center"}}>Délogements</h5>
+          <h6 style={{textAlign: "center"}}>Délogements</h6>
         </div>
         <div>
           <div style={{
@@ -154,17 +215,17 @@ export default function Dashboard({user, userDb}) {
             flexFlow: "row",
             justifyContent: "center",
             padding: "1%",
-            width: "8vw", 
-            height: "16vh", 
+            width: "7vw", 
+            height: "14vh", 
             border: "1px solid lightgrey", 
             borderRadius: "50%",   
             filter: "drop-shadow(2px 4px 6px)",
             marginBottom: "1vh",
             cursor: "pointer"}}
             className='softSkin'>
-              <img src={Maintenance} style={{width: "5vw"}} /><h2 style={{position: "absolute", marginLeft: "7vw"}}>5</h2>
+              <img src={Maintenance} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
           </div>
-          <h5 style={{textAlign: "center"}}>Interventions<br/>techniques</h5>
+          <h6 style={{textAlign: "center"}}>Interventions<br/>techniques</h6>
         </div>
       </div>
   </div>;

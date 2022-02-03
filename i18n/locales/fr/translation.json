@@ -80,7 +80,7 @@
         "m_drawer_title": "Ecrire une note de service",
         "m_drawer_note_title": "Titre de la note",
         "m_notif": "Votre note a bien été enregistrée pour le ",
-        "m_calendar": "Sélectionner une date sur le calendrier"
+        "m_calendar": "Sélectionner une date"
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Conciergerie",

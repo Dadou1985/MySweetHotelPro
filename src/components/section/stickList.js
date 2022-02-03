@@ -35,7 +35,7 @@ const StickList = ({userDB}) => {
             flexFlow: "row wrap",
             alignItems: "flex-start",
             width: "95%",
-            height: "85%",
+            maxHeight: "85%",
             paddingLeft: "3vw",
         }}>
             {postIt.map(stick =>(

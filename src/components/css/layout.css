@@ -683,6 +683,7 @@ input[type=number] {
     display: flex;
     flex-flow: column;
     align-items: center;
+    margin-top: 2vh;
 }
 
 .memo_title {
@@ -695,11 +696,12 @@ input[type=number] {
 }
 
 .sticker_img {
-    width: 5vw;
+    width: 4vw;
+    height: 8vh;
     filter: drop-shadow(1px 1px 1px); 
     margin-right: 15%;
     cursor: pointer;
-    margin-bottom: 3vh;
+    margin-bottom: 4vh;
     
 }
 
@@ -753,8 +755,8 @@ input[type=number] {
     flex-flow: column;
     padding: 1%;
     height: 100%;
-    width: 70%;
-    margin-bottom: 5vh;
+    width: 100%;
+    margin-top: 2vh;
 }
 
 .messenger_title {

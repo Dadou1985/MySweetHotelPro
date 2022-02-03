@@ -125,13 +125,14 @@ const Navigation = ({user, userDB}) =>{
                         flexFlow: "row",
                         justifyContent: "space-around",
                         width: "35%",
+                        height: "7vh",
                         marginLeft: "10vw"
                     }}>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/singlePage">Tableau de bord</Link>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/notebook">Consignes</Link>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/chat">Chat Client</Link>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/crm">C.R.M</Link>
-                        <Link style={{color: "black", textDecoration: "none"}} to="/Lost">Objets Trouvés</Link>
+                        <Link style={{color: "black", textDecoration: "none", display: "flex", flexFlow: "column", justifyContent: "center"}} to="/singlePage">Tableau de bord</Link>
+                        <Link style={{color: "black", textDecoration: "none", display: "flex", flexFlow: "column", justifyContent: "center"}} to="/notebook">Consignes</Link>
+                        <Link style={{color: "black", textDecoration: "none", display: "flex", flexFlow: "column", justifyContent: "center"}} to="/chat">Chat Client</Link>
+                        <Link style={{color: "black", textDecoration: "none", display: "flex", flexFlow: "column", justifyContent: "center"}} to="/crm">C.R.M</Link>
+                        <Link style={{color: "black", textDecoration: "none", display: "flex", flexFlow: "column", justifyContent: "center"}} to="/Lost">Objets Trouvés</Link>
                     </div>
                     <div className="nav_container">
                     <OverlayTrigger
