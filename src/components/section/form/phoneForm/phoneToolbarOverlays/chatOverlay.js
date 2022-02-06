@@ -36,7 +36,7 @@ function ChatOverlay({userDB}) {
               backgroundColor: "red", 
               position: "absolute", 
               width: "17%", 
-              height: "20%", 
+              height: "17%", 
               color: "white", 
               textAlign: "center", 
               fontSize: "12px",

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Loader from '../components/section/common/loader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Chat from '../components/section/communIzi'
+import PhoneChat from '../components/section/phoneCommunIzi'
 import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
@@ -46,12 +47,20 @@ const ChatPage = () => {
           <div style={{
             display: "flex"
           }}>
-            <ToolBar />
+            {typeof window && window.innerWidth > 768 ?
+            <>
+              <ToolBar />
+              <div id="iziChat" className="dark_messenger_communizi_container">
+                <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
+                {!!userDB && !!user&&
+                <Chat userDB={userDB} user={user} />}
+              </div>
+            </> : 
             <div id="iziChat" className="dark_messenger_communizi_container">
               <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
               {!!userDB && !!user&&
-              <Chat userDB={userDB} user={user} />}
-            </div>
+              <PhoneChat userDB={userDB} user={user} />}
+            </div>}
           </div>
     </FirebaseContext.Provider>
   )

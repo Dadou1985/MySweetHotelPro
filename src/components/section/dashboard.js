@@ -8,6 +8,7 @@ import Maintenance from '../../svg/repair.svg'
 import {db} from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
+import { navigate } from 'gatsby'
 
 export default function Dashboard({user, userDB}) {
   const { t, i18n } = useTranslation()
@@ -15,6 +16,11 @@ export default function Dashboard({user, userDB}) {
   const [menage, setMenage] = useState([])
   const [maintenance, setMaintenance] = useState([]);
   const [chat, setChat] = useState([]);
+  const [taxi, setTaxi] = useState([]);
+  const [alarm, setAlarm] = useState([]);
+  const [roomChange, setRoomChange] = useState([]);
+  const [technical, setTechnical] = useState([]);
+
 
   useEffect(() => {
     const noteOnAir = () => {
@@ -71,161 +77,155 @@ export default function Dashboard({user, userDB}) {
     return unsubscribe
    },[])
 
+   useEffect(() => {
+    const toolOnAir = () => {
+        return db.collection('hotels')
+        .doc(userDB.hotelId)
+        .collection("cab")
+        .orderBy("markup", "asc")
+    }
+
+    let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                const snapInfo = []
+              snapshot.forEach(function(doc) {          
+                snapInfo.push({
+                    id: doc.id,
+                    ...doc.data()
+                  })        
+                });
+                console.log(snapInfo)
+                setTaxi(snapInfo)
+            });
+            return unsubscribe
+ },[])
+ useEffect(() => {
+  const toolOnAir = () => {
+      return db.collection('hotels')
+      .doc(userDB.hotelId)
+      .collection("clock")
+      .orderBy("markup", "asc")
+  }
+
+  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              console.log(snapInfo)
+              setAlarm(snapInfo)
+          });
+          return unsubscribe
+},[])
+useEffect(() => {
+  const toolOnAir = () => {
+      return db.collection('hotels')
+      .doc(userDB.hotelId)
+      .collection("roomChange")
+      .orderBy("markup", "asc")
+  }
+
+  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              console.log(snapInfo)
+              setRoomChange(snapInfo)
+          });
+          return unsubscribe
+},[])
+useEffect(() => {
+  const toolOnAir = () => {
+      return db.collection('hotels')
+      .doc(userDB.hotelId)
+      .collection("maintenance")
+      .orderBy("markup", "asc")
+  }
+
+  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              console.log(snapInfo)
+              setTechnical(snapInfo)
+          });
+          return unsubscribe
+},[])
+
+
   return <div style={{
       display: "flex",
       flexFlow: "column",
       width: "100%",
       padding: "1%",
-      marginTop: "2vh"
+      marginTop: "2vh",
+      alignItems: typeof window && window.innerWidth > 768 ? "flex-start" : "center"
   }}>
         <div style={{width: "100%", marginBottom: "7vh"}}>
-          <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "space-around"
-          }}>
-            <div style={{
-              width: "25%",
-              height: "25vh", 
-              padding: "1%", 
-              borderRadius: "10px", 
-              border: "1px solid lightgrey", 
+          <div className='dashboard-note-container'>
+            <div className='dashboard-icon dashboard-note-card' style={{
               borderBottom: "15px solid darkgoldenrod",
-              borderRight: "5px solid darkgoldenrod", 
-              filter: "drop-shadow(2px 4px 6px gray", 
-              color: "darkgoldenrod",
-              backgroundColor: "whitesmoke"}}>
+              borderRight: "5px solid darkgoldenrod",  
+              color: "darkgoldenrod"}} onClick={() => navigate('/notebook')}>
                 <div style={{display: "flex", borderBottom: "1px solid darkgoldenrod"}}>{reception.length > 0 ? reception.length : "Aucune"} consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Réception</h4>
+                <h4 className='dashboard-note-title'>{t("msh_messenger.m_reception_team")}</h4>
             </div>
-            <div style={{
-              width: "25%",
-              height: "25vh", 
-              padding: "1%", 
-              borderRadius: "10px", 
+            <div className='dashboard-icon dashboard-note-card' style={{
               border: "1px solid lightgrey", 
               borderBottom: "15px solid cornflowerblue",
               borderRight: "5px solid cornflowerblue",
-               filter: "drop-shadow(2px 4px 6px gray",
-               color: "cornflowerblue",
-               backgroundColor: "whitesmoke"}}>
+              color: "cornflowerblue"}} onClick={() => navigate('/notebook')}>
               <div style={{display: "flex", borderBottom: "1px solid cornflowerblue"}}>{menage.length > 0 ? menage.length : "Aucune"} consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Ménage</h4>
+                <h4 className='dashboard-note-title'>{t("msh_messenger.m_housekeeping_team")}</h4>
               </div>
-            <div style={{
-              width: "25%",
-              height: "25vh", 
-              padding: "1%", 
-              borderRadius: "10px", 
+            <div className='dashboard-icon dashboard-note-card' style={{ 
               border: "1px solid lightgrey", 
               borderBottom: "15px solid red",
               borderRight: "5px solid red", 
-              filter: "drop-shadow(2px 4px 6px gray",
-              color: "red",
-              backgroundColor: "whitesmoke"}}>
+              color: "red"}} onClick={() => navigate('/notebook')}>
               <div style={{display: "flex", borderBottom: "1px solid red"}}>{maintenance.length > 0 ? maintenance.length : "Aucune"} consigne(s)</div>
-                <h4 style={{textAlign: "center", marginTop: "8vh"}}>Maintenance Technique</h4>
+                <h4 className='dashboard-note-title'>{t("msh_maintenance.m_title")}</h4>
             </div>
           </div>
         </div>
-      <div style={{
-          display: "flex",
-          flexFlow: "row",
-          justifyContent: "space-between",
-          width: "90%",
-          height: "10vh",
-          marginLeft: "2vw", 
-          padding: "1%", 
-          borderRadius: "10px", 
-          filter: "drop-shadow(2px 4px 6px black",
-          backgroundColor: "transparent", 
-          border: "1px solid lightgrey",
-          borderBottom: "15px solid gray",
-          borderRight: "5px solid gray",
-          color: "gray",
-          backgroundColor: "whitesmoke"}}> 
-        <div style={{display: "flex"}}>{chat.length} conversation(s) active(s)</div>
-        <h4 style={{marginTop: "4vh"}}>Chat Client</h4>
+      <div className='dashboard-icon dashboard-chat-card' onClick={() => navigate('/chat')}> 
+        <div style={{display: "flex", borderBottom: typeof window && window.innerWidth > 768 ? "none" : "1px solid gray"}}>{chat.length} conversation(s) active(s)</div>
+        <h4 className='dashboard-chat-title'>{t("msh_chat.c_chat_title")}</h4>
       </div>
-      <div style={{
-        display: "flex", 
-        width: "90%", 
-        flexFlow: "row",
-        justifyContent: "space-between",
-        marginTop: "7vh",
-        marginLeft: "2vw"
-        }}>
+      <div className='dashboard-task-container'>
         <div>
-          <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "center",
-            padding: "1%",
-            width: "7vw", 
-            height: "14vh", 
-            border: "1px solid lightgrey", 
-            borderRadius: "50%",   
-            filter: "drop-shadow(2px 4px 6px)",
-            marginBottom: "1vh",
-            cursor: "pointer"}}
-            className='softSkin'>
-              <img src={Taxi}  style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
+          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
+              <img src={Taxi}  style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} /><h5 style={{position: "absolute", marginLeft: typeof window && window.innerWidth > 768 ? "7vw" : "15vw"}}>{taxi.length}</h5>
           </div>
-          <h6 style={{textAlign: "center"}}>Réservations<br/> de taxi</h6>
+          <h6 style={{display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "row wrap", justifyContent: "center"}}>Taxi</h6>
         </div>
         <div>
-          <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "center",
-            padding: "1%",
-            width: "7vw", 
-            height: "14vh", 
-            border: "1px solid lightgrey", 
-            borderRadius: "50%",   
-            filter: "drop-shadow(2px 4px 6px)",
-            marginBottom: "1vh",
-            cursor: "pointer"}}
-            className='softSkin'>
-              <img src={Timer} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
+          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
+              <img src={Timer} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} /><h5 style={{position: "absolute", marginLeft: typeof window && window.innerWidth > 768 ? "7vw" : "15vw"}}>{alarm.length}</h5>
           </div>
-          <h6 style={{textAlign: "center"}}>Réveils</h6>
+          <h6 style={{display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "row wrap", justifyContent: "center"}}>Réveils</h6>
         </div>
         <div>
-          <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "center",
-            padding: "1%",
-            width: "7vw", 
-            height: "14vh", 
-            border: "1px solid lightgrey", 
-            borderRadius: "50%",   
-            filter: "drop-shadow(2px 4px 6px)",
-            marginBottom: "1vh",
-            cursor: "pointer"}}
-            className='softSkin'>
-              <img src={RoomChage} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
+          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
+              <img src={RoomChage} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} /><h5 style={{position: "absolute", marginLeft: typeof window && window.innerWidth > 768 ? "7vw" : "15vw"}}>{roomChange.length}</h5>
           </div>
-          <h6 style={{textAlign: "center"}}>Délogements</h6>
+          <h6 style={{display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "row wrap", justifyContent: "center"}}>Délogements</h6>
         </div>
         <div>
-          <div style={{
-            display: "flex",
-            flexFlow: "row",
-            justifyContent: "center",
-            padding: "1%",
-            width: "7vw", 
-            height: "14vh", 
-            border: "1px solid lightgrey", 
-            borderRadius: "50%",   
-            filter: "drop-shadow(2px 4px 6px)",
-            marginBottom: "1vh",
-            cursor: "pointer"}}
-            className='softSkin'>
-              <img src={Maintenance} style={{width: "3vw"}} /><h4 style={{position: "absolute", marginLeft: "7vw"}}>5</h4>
+          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
+              <img src={Maintenance} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} /><h5 style={{position: "absolute", marginLeft: typeof window && window.innerWidth > 768 ? "7vw" : "15vw"}}>{technical.length}</h5>
           </div>
-          <h6 style={{textAlign: "center"}}>Interventions<br/>techniques</h6>
+          <h6 style={{display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "row wrap", justifyContent: "center"}}>Interventions</h6>
         </div>
       </div>
   </div>;

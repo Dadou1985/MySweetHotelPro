@@ -3,6 +3,7 @@ import { Input } from 'reactstrap'
 import NoteBox from './noteBox'
 import NoteBoxHousekeeping from './noteBoxHousekeeping'
 import NoteBoxMaintenance from './noteBoxMaintenance'
+import PhoneNoteBox from './phoneNoteBox'
 import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -10,7 +11,13 @@ import Send from '../../svg/paper-plane.svg'
 import Close from '../../svg/close.svg'
 import Calendar from '../../svg/calendar.svg'
 import Plus from '../../svg/plus3.svg'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import List from '@material-ui/core/List';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import YellowCircle from '../../svg/yellow-circle.svg'
+import RedCircle from '../../svg/red-circle.svg'
+import BlueCircle from '../../svg/blue-circle.svg'
+import Circle from '../../svg/circle.svg'
 import Upload from '../../svg/plus2.svg'
 import Drawer from '@material-ui/core/Drawer'
 import { FirebaseContext, db, storage } from '../../Firebase'
@@ -60,6 +67,51 @@ const Messenger = ({filterDate}) =>{
             hideCalendar()
         }
     }
+
+    const renderSwitch = (status) => {
+        switch(status) {
+          case 'darkgoldenrod':
+            return <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="title">
+                {t("msh_messenger.m_note_circle_tooltip")}
+              </Tooltip>
+            }>
+            <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+        </OverlayTrigger>
+          case 'red':
+            return <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="title">
+                {t("msh_messenger.m_note_circle_tooltip")}
+              </Tooltip>
+            }>
+            <img src={RedCircle} alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
+        </OverlayTrigger>
+          case 'lightskyblue':
+            return <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="title">
+                {t("msh_messenger.m_note_circle_tooltip")}
+              </Tooltip>
+            }>
+             <img src={BlueCircle} alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
+        </OverlayTrigger>
+        default:
+            return <OverlayTrigger
+            placement="top"
+            overlay={
+              <Tooltip id="title">
+                {t("msh_messenger.m_note_circle_tooltip")}
+              </Tooltip>
+            }>
+            <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+        </OverlayTrigger>
+        }
+      }
 
     const addNote = (marker, url) => {
         return db.collection('hotels')
@@ -161,86 +213,80 @@ const Messenger = ({filterDate}) =>{
     
     return(
         <div className="messenger_container">
+            {typeof window !== `undefined` && window.innerWidth > 768 ?
             <PerfectScrollbar className="perfect-scrollbar">
-                <div className="messenger_notebox">
-                    
+                <div className="messenger_notebox"> 
                     {!!userDB && !!setUserDB && !!filterDate &&
                     <NoteBox filterDate={filterDate} />}
-                    {typeof window !== `undefined` && window.innerWidth > 768 ?
-                <div className="icon-add-note-container" onClick={() => {
-                    setStatus("darkgoldenrod")
-                    handleShow()}}>
-                    <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
-                </div> 
-            :
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={() => {
-                setStatus("darkgoldenrod")
-                handleShow()}}>{t("msh_messenger.m_add_note")}</Button>}
+                    <div className="icon-add-note-container" onClick={() => {
+                        setStatus("darkgoldenrod")
+                        handleShow()}}>
+                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
+                    </div>
                 </div>
                 <div className="messenger_notebox">
                     {!!userDB && !!setUserDB && !!filterDate &&
-                    <NoteBoxHousekeeping filterDate={filterDate} />}
-                    {typeof window !== `undefined` && window.innerWidth > 768 ?
-                <div className="icon-add-note-container" onClick={() => {
-                    setStatus("cornflowerblue")
-                    handleShow()}}>
-                    <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
-                </div> 
-            :
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={() => {
-                setStatus("cornflowerblue")
-                handleShow()}}>{t("msh_messenger.m_add_note")}</Button>}
+                        <NoteBoxHousekeeping filterDate={filterDate} />}
+                    <div className="icon-add-note-container" onClick={() => {
+                        setStatus("cornflowerblue")
+                        handleShow()}}>
+                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
+                    </div>
                 </div>
                 <div className="messenger_notebox">
                     {!!userDB && !!setUserDB && !!filterDate &&
                     <NoteBoxMaintenance filterDate={filterDate} />}
-                    {typeof window !== `undefined` && window.innerWidth > 768 ?
-                <div className="icon-add-note-container" onClick={() => {
-                    setStatus("red")
-                    handleShow()}}>
-                    <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
-                </div> 
-            :
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={() => {
-                setStatus("red")
-                handleShow()}}>{t("msh_messenger.m_add_note")}</Button>}
-                </div>
-            </PerfectScrollbar>
-            <Modal show={showModal} 
-            size="lg"
-            onHide={handleClose}
-            aria-labelledby="contained-modal-title-vcenter"
-            centered>
-                <Modal.Header closeButton style={{backgroundColor: status}}>
-                <Modal.Title id="example-modal-sizes-title-sm" style={{width: "100%"}}>
-                    {t("msh_messenger.m_note_title")}
-                </Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Input type="text" name="title" placeholder={t("msh_messenger.m_note_title_placeholder")} className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
-                    <Input type="textarea" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required />
-                </Modal.Body>
-                <Modal.Footer style={{borderTop: "none"}}>
-                    <div className="modal-note-button-container">
-                        <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
-                      <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
-                         <DatePicker
-                            id="calendar"
-                            className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
-                            selected={startDate}
-                            value={startDate}
-                            onChange={changedDate => setStartDate(changedDate)}
-                            placeholderText={t("msh_messenger.m_calendar_title")}
-                            locale="fr-FR"
-                            dateFormat="d MMMM yyyy"
-                        />
-                        <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" />
-                        <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
+                    <div className="icon-add-note-container" onClick={() => {
+                        setStatus("red")
+                        handleShow()}}>
+                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                     </div>
-                </Modal.Footer>
-            </Modal>
+                </div>
 
-            <Drawer anchor="bottom" open={activate} onClose={handleHideDrawer}>
+                <Modal show={showModal} 
+                    size="lg"
+                    onHide={handleClose}
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered>
+                        <Modal.Header closeButton style={{backgroundColor: status}}>
+                        <Modal.Title id="example-modal-sizes-title-sm" style={{width: "100%"}}>
+                            {t("msh_messenger.m_note_title")}
+                        </Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Input type="text" name="title" placeholder={t("msh_messenger.m_note_title_placeholder")} className="modal-note-title" maxLength="60" onChange={handleChangeTitle} required />
+                            <Input type="textarea" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required />
+                        </Modal.Body>
+                        <Modal.Footer style={{borderTop: "none"}}>
+                            <div className="modal-note-button-container">
+                                <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
+                            <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
+                                <DatePicker
+                                    id="calendar"
+                                    className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
+                                    selected={startDate}
+                                    value={startDate}
+                                    onChange={changedDate => setStartDate(changedDate)}
+                                    placeholderText={t("msh_messenger.m_calendar_title")}
+                                    locale="fr-FR"
+                                    dateFormat="d MMMM yyyy"
+                                />
+                                <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" />
+                                <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
+                            </div>
+                        </Modal.Footer>
+                    </Modal>
+            </PerfectScrollbar> :
+            <>
+                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0, zIndex: "10"}} onClick={handleShow}>Ajouter une note de service</Button>
+                <PerfectScrollbar className="perfect-scrollbar">
+                    <div className="messenger_notebox">
+                        {!!userDB && !!setUserDB && !!filterDate &&
+                        <PhoneNoteBox filterDate={filterDate} />}
+                    </div>
+                </PerfectScrollbar>
+
+                <Drawer anchor="bottom" open={activate} onClose={handleHideDrawer}>
                 <div id="drawer-container" style={{
                     display: "flex",
                     flexFlow: "column", 
@@ -272,12 +318,65 @@ const Messenger = ({filterDate}) =>{
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
                       <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
+                        {renderSwitch(status)}
                         <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" onClick={changeDrawerHeight} />
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                     </div>
+                    <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
+                            display: checked ? "flex" : "none",
+                            flexFlow: "row",
+                            alignItems: "center",
+                            marginTop: "2vh"
+                        }}>
+                            <ListItemIcon button>
+                                <ListItemIcon>
+                                <OverlayTrigger
+                                    placement="right"
+                                    overlay={
+                                    <Tooltip id="title">
+                                        {t("msh_messenger.m_reception_team")}
+                                    </Tooltip>
+                                    }>
+                                    <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
+                                        setStatus('darkgoldenrod')
+                                        setChecked(false)}} />
+                                </OverlayTrigger>
+                                </ListItemIcon>
+                            </ListItemIcon>
+                            <ListItemIcon button>
+                                <ListItemIcon>
+                                <OverlayTrigger
+                                    placement="right"
+                                    overlay={
+                                    <Tooltip id="title">
+                                        {t("msh_messenger.m_housekeeping_team")}
+                                    </Tooltip>
+                                    }>
+                                    <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                        setStatus("lightskyblue")
+                                        setChecked(false)}} />
+                                </OverlayTrigger>
+                                </ListItemIcon>
+                            </ListItemIcon>
+                            <ListItemIcon button>
+                                <ListItemIcon>
+                                <OverlayTrigger
+                                    placement="right"
+                                    overlay={
+                                    <Tooltip id="title">
+                                        {t("msh_messenger.m_technical_team")}
+                                    </Tooltip>
+                                    }>
+                                    <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
+                                        setStatus('red')
+                                        setChecked(false)}} />
+                                </OverlayTrigger>
+                                </ListItemIcon>
+                            </ListItemIcon>
+                        </List>
                 </div>
             </Drawer>
-            
+            </>}    
         </div>
     )
 }

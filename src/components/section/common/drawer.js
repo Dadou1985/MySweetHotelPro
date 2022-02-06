@@ -4,6 +4,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Lost from '../../../svg/lost-items.svg'
+import Dasboard from "../../../images/dashboard.png"
 import CheckList from '../../../svg/todoList.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'
@@ -47,6 +48,7 @@ export default function TemporaryDrawer({userDB, user}) {
     >
         <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
+        <img src={Dasboard} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
         {!!user && !!userDB &&
         <Chat user={user} userDB={userDB} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
@@ -68,7 +70,6 @@ export default function TemporaryDrawer({userDB, user}) {
       <Divider />
       <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
-        <img src={Feedback} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/feedback")}} />
         {userDB.adminStatus && <img src={Connection} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
         {!!user && !!userDB &&

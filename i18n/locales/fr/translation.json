@@ -45,6 +45,12 @@
         }
 
     },
+    "msh_dashboard": {
+       "d_title": "",
+       "d_none": "",
+       "d_note": "",
+       "d_chat_room": "" 
+    },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",

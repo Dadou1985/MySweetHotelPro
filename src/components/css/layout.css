@@ -561,9 +561,144 @@ input[type=number] {
 }
 
 
-/*DoorsStage*/
+/*Dashboard*/
+
+.dashboard-icon {
+   filter: drop-shadow(2px 4px 6px gray);
+}
+
+.dashboard-icon:hover {
+    filter: drop-shadow(4px 8px 12px gray);
+}
+
+.dashboard-circle-icon {
+    filter: drop-shadow(2px 4px 6px);
+}
+
+.dashboard-circle-icon:hover {
+    filter: drop-shadow(4px 8px 12px);
+}
+
+.dashboard-note-container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+}
+
+.dashboard-note-card {
+    width: 25%;
+    height: 25vh; 
+    padding: 1%;
+    border-radius: 10px;
+    border: 1px solid lightgrey; 
+    background-color: whitesmoke;
+}
+
+.dashboard-note-title {
+    text-align: center; 
+    margin-top: 8vh;
+}
+
+.dashboard-chat-title {
+    margin-top: 4vh;
+}
+
+.dashboard-chat-card {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    width: 90%;
+    height: 10vh;
+    margin-left: 2vw;
+    padding: 1%; 
+    border-radius: 10px;
+    background-color: transparent;
+    border: 1px solid lightgrey;
+    border-bottom: 15px solid gray;
+    border-right: 5px solid gray;
+    color: gray;
+    background-color: whitesmoke;
+}
+
+.dashboard-task-container {
+    display: flex;
+    width: 90%;
+    flex-flow: row;
+    justify-content: space-between;
+    margin-top: 7vh;
+    margin-left: 2vw;
+}
+
+.dasboard-task-badge {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    padding: 1%;
+    width: 7vw; 
+    height: 14vh;
+    border: 1px solid lightgrey;
+    border-radius: 50%; 
+    margin-bottom: 1vh;
+    cursor: pointer;
+}
 
 
+
+@media screen and (max-width: 768px) {
+    .dashboard-note-container {
+        flex-flow: column;
+        align-items: center;
+    }
+    
+    .dashboard-note-card {
+        width: 90%;
+        height: 15vh; 
+        margin-bottom: 1vh;
+        margin-left: 5vw;
+    }
+    
+    .dashboard-note-title {
+        text-align: center; 
+        margin-top: 3vh;
+    }
+
+    .dashboard-chat-title {
+        margin-top: 3vh;
+        text-align: center;
+    }
+    
+    .dashboard-chat-card {
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: column;
+        width: 90%;
+        height: 15vh;
+        margin-left: 7vw;
+    }
+    
+    .dashboard-task-container {
+        display: flex;
+        width: 90%;
+        flex-flow: row wrap;
+        justify-content: space-between;
+        margin-top: 7vh;
+        margin-left: 7vw;
+        margin-bottom: 3vh;
+    }
+    
+    .dasboard-task-badge {
+        display: flex;
+        flex-flow: row;
+        justify-content: center;
+        padding: 1%;
+        width: 16vw; 
+        height: 10vh;
+        border: 1px solid lightgrey;
+        border-radius: 50%; 
+        margin-bottom: 1vh;
+        cursor: pointer;
+    }
+}
 
 
 /*Navigation*/
@@ -641,6 +776,17 @@ input[type=number] {
     display: none;
 }
 
+.cental-menu {
+    border-bottom: none;
+}
+
+.cental-menu:hover {
+    border-bottom: 2px solid darkgoldenrod;
+    color: darkgoldenrod;
+}
+
+
+
 @media screen and (max-width: 768px) {
     .menu{
         visibility: visible;
@@ -662,10 +808,12 @@ input[type=number] {
     }
 
     .super-admin-icon {
+        position: absolute;
         display: flex;
         width: 5vw;
         border-radius: 50px;
         z-index: 10;
+        right: 5vw;
     }
 }
 
@@ -680,7 +828,6 @@ input[type=number] {
     background-repeat: no-repeat;
     background-position-x: center;
     padding: 1%;
-    display: flex;
     flex-flow: column;
     align-items: center;
     margin-top: 2vh;
@@ -1670,7 +1817,7 @@ input[type=number] {
 .drawer_listIcons {
     display: flex;
     flex-flow: column;
-    height: 13vh;
+    height: 18vh;
     justify-content: space-around;
     align-items: center;
 }
@@ -1686,7 +1833,7 @@ input[type=number] {
 .drawer_listIcons3 {
     display: flex;
     flex-flow: column;
-    height: 30vh;
+    height: 25vh;
     justify-content: space-around;
     align-items: center;
 }
@@ -2018,7 +2165,10 @@ input[type=number] {
         margin-top: 2vh;
     }
 
-    
+    .dark_messenger_title {
+        padding-left: 0%;
+        text-align: center;
+    }
 
     .communizi_form_input_container {
         width: 90%;
@@ -2039,8 +2189,7 @@ input[type=number] {
     }
     
     .communizi-send-button {
-        width: 7vw;
-        border-radius: 50px;
+        width: 6vw;
     }
 
     .karenStories-container {
@@ -2729,3 +2878,8 @@ input[type=number] {
 }
 
 
+/*Perfectscrollbar*/
+
+.chat-perfectscrollbar {
+    width: 100% !important;
+}

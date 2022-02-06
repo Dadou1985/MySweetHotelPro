@@ -57,10 +57,11 @@ const SinglePage = () => {
         <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
-          backgroundImage: `url(${Background})`,
+          backgroundImage: typeof window && window.innerWidth > 768 ? `url(${Background})` : "none",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          backgroundPositionX: "5vw"
+          backgroundPositionX: "5vw",
+          backgroundPositionY: "-5vh"
         }}>
           <ToolBar />
           <div style={{
@@ -71,9 +72,19 @@ const SinglePage = () => {
             height: "100%",
             width: "95%"
           }}>
-            <div style={{width: "50%"}}>
-              <h3 style={{paddingTop: "3vh", paddingLeft: "3vw"}}>Tableau de bord</h3>
-              <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1em", marginLeft: "3vw", color: "gray"}}>{moment().format('LL')}</div>
+            <div style={{width: typeof window && window.innerWidth > 768 ? "50%" : "100%"}}>
+              <h3 style={{
+                paddingTop: "3vh", 
+                paddingLeft: typeof window && window.innerWidth > 768 ? "3vw" : "0", 
+                textAlign: typeof window && window.innerWidth > 768 ? "left" : "center"}}>Tableau de bord</h3>
+              <div style={{
+                display: "flex", 
+                flexFlow: "row", 
+                fontSize: "1em", 
+                marginLeft: typeof window && window.innerWidth > 768 ? "3vw" : "0", 
+                marginBottom: typeof window && window.innerWidth > 768 ? "0" : "5vh",
+                color: "gray", 
+                justifyContent: typeof window && window.innerWidth > 768 ? "left" : "center"}}>{moment().format('LL')}</div>
               {!!userDB && !!user&&
               <Dashboard userDB={userDB} user={user} />}
             </div>
