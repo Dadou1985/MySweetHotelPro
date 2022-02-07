@@ -4,10 +4,12 @@ import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { db } from '../../Firebase'
 import Avatar from 'react-avatar'
 import  '../css/post-it.css'
+import { useTranslation } from "react-i18next"
 
 const PostIt = ({author, title, text, markup, userDB}) => {
 
     const [visible, setVisible] = useState(false)
+    const { t, i18n } = useTranslation()
 
     const showSticker = () => {
         setVisible(true)
@@ -70,10 +72,10 @@ const PostIt = ({author, title, text, markup, userDB}) => {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="outline-danger" onClick={removeSticker}>
-          Jeter
+          {t("msh_memo.m_post_it.p_remove_button")}
         </Button>
         <Button variant="success" onClick={handleClose}>
-          Fermer
+        {t("msh_memo.m_create_sticker.s_close_button")}
         </Button>
       </Modal.Footer>
     </Modal>

@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import Send from '../../svg/paper-plane.svg'
+import Send from '../../images/paper-plane.png'
 import Plus from '../../svg/plus3.svg'
 import SupportRoom from './supportRoom'
 import { OverlayTrigger, Tooltip, Button, DropdownButton, Dropdown } from 'react-bootstrap'
@@ -119,7 +119,7 @@ const changeAdminSpeakStatus = (roomName) => {
     return (
         <div className="communizi-container">
           
-            <PerfectScrollbar>
+            <PerfectScrollbar className='chat-perfectscrollbar'>
             <div className="communizi_notebox">
             <Accordion allowZeroExpanded>
                 {info.map((flow) => (
@@ -161,8 +161,8 @@ const changeAdminSpeakStatus = (roomName) => {
                     onChange={handleChange}
                     id="dark_message_note" />
                 </FormGroup>
-                    {/*<div className="communizi-button-container">
-                     <OverlayTrigger
+                    <div className="communizi-button-container">
+                     {/*<OverlayTrigger
                         placement="top"
                         overlay={
                           <Tooltip id="title">
@@ -170,9 +170,9 @@ const changeAdminSpeakStatus = (roomName) => {
                           </Tooltip>
                         }>
                         <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-                     </OverlayTrigger>
+                      </OverlayTrigger>*/}
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
-                      </div>*/}
+                      </div>
                 </Form>
             </div>
 

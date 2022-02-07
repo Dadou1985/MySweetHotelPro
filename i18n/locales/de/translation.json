@@ -45,6 +45,10 @@
         }
 
     },
+    "msh_dashboard": {
+       "d_title": "Armaturenbrett",
+       "d_chat_room": "Aktive Gespräche" 
+    },
     "msh_connexion": {
         "c_email_maj": "E-Mail",
         "c_email": "E-Mail",
@@ -61,7 +65,8 @@
         "c_notification": "Ihre Nachricht wurde gesendet!",
         "c_alert": "Sie müssen zuerst eine Konversation auswählen!",
         "c_guest_present": "Bleiben",
-        "c_guest_arrival": "Bei der Ankunft"
+        "c_guest_arrival": "Bei der Ankunft",
+        "c_chat_room": "Noch keine Gespräche"
     },
     "msh_messenger": {
         "m_note_big_title": "Anweisungen",
@@ -81,6 +86,20 @@
         "m_drawer_note_title": "Titel notieren",
         "m_notif": "Ihre Notiz wurde gespeichert für die",
         "m_calendar": "Wählen Sie ein Datum im Kalender aus"
+    },
+    "msh_memo": {
+        "m_title":"Die Wand",
+        "m_subtitle": "Für die kleinen Worte",
+        "m_create_sticker": {
+            "s_tooltip": "Schreibe ein Wort",
+            "s_title": "Einen Titel geben",
+            "s_body": "Schreibe ein Wort...",
+            "s_stick_button": "Stift",
+            "s_close_button": "Nah dran"
+        },
+        "m_post_it": {
+            "p_remove_button": "Werfen"
+        }
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Portier",

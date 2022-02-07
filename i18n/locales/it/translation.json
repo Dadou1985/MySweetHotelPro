@@ -45,6 +45,10 @@
         }
 
     },
+    "msh_dashboard": {
+       "d_title": "Pannello",
+       "d_chat_room": "Conversazioni attive" 
+    },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",
@@ -61,7 +65,22 @@
         "c_notification": "Il tuo messaggio è stato inviato!",
         "c_alert": "Devi prima scegliere una conversazione!",
         "c_guest_present": "Stare",
-        "c_guest_arrival": "All'arrivo"
+        "c_guest_arrival": "All'arrivo",
+        "c_chat_room": "Nessuna conversazione ancora"
+    },
+    "msh_memo": {
+        "m_title":"Il muro",
+        "m_subtitle": "Per le piccole parole",
+        "m_create_sticker": {
+            "s_tooltip": "Scrivi una parola",
+            "s_title": "Dare un titolo",
+            "s_body": "Scrivi una parola...",
+            "s_stick_button": "Spillo",
+            "s_close_button": "Chiudere"
+        },
+        "m_post_it": {
+            "p_remove_button": "Gettare"
+        }
     },
     "msh_messenger": {
         "m_note_big_title": "Istruzioni",

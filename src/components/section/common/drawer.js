@@ -20,7 +20,7 @@ import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
 import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
 import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
 import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
-import Connection from '../../../svg/employee.svg'
+import Connection from '../../../images/admin.png'
 import { t } from 'i18next';
 
 
@@ -70,7 +70,7 @@ export default function TemporaryDrawer({userDB, user}) {
       <Divider />
       <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
-        {userDB.adminStatus && <img src={Connection} alt="Feedback box" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
+        {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
         {!!user && !!userDB &&
         <Support user={user} userDB={userDB} />}

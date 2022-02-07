@@ -278,7 +278,7 @@ const Messenger = ({filterDate}) =>{
                     </Modal>
             </PerfectScrollbar> :
             <>
-                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0, zIndex: "10"}} onClick={handleShow}>Ajouter une note de service</Button>
+                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0, zIndex: "10"}} onClick={handleShow}>{t("msh_messenger.m_add_note")}</Button>
                 <PerfectScrollbar className="perfect-scrollbar">
                     <div className="messenger_notebox">
                         {!!userDB && !!setUserDB && !!filterDate &&

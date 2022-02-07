@@ -45,6 +45,10 @@
         }
 
     },
+    "msh_dashboard": {
+       "d_title": "Dashboard",
+       "d_chat_room": "Active conversations" 
+    },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",
@@ -61,7 +65,8 @@
         "c_notification": "Your message has been sent!",
         "c_alert": "You must first choose a conversation!",
         "c_guest_present": "Staying",
-        "c_guest_arrival": "On arrival"
+        "c_guest_arrival": "On arrival",
+        "c_chat_room": "No conversations yet"
     },
     "msh_messenger": {
         "m_note_big_title": "Instructions",
@@ -81,6 +86,20 @@
         "m_drawer_note_title": "Note title",
         "m_notif": "Your note has been saved for the",
         "m_calendar": "Select a date on the calendar"
+    },
+    "msh_memo": {
+        "m_title":"The Wall",
+        "m_subtitle": "For the little words",
+        "m_create_sticker": {
+            "s_tooltip": "Write a word",
+            "s_title": "Give a title",
+            "s_body": "Write a word...",
+            "s_stick_button": "Pin",
+            "s_close_button": "Close"
+        },
+        "m_post_it": {
+            "p_remove_button": "Throw"
+        }
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "concierge",

@@ -223,7 +223,7 @@ const Maid = ({userDB}) =>{
                                     <Form.Row>
                                         <Form.Group controlId="description">
                                         <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "15vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "25vw"}} value={formValue.client} name="client" onChange={handleChange} />
                                         </Form.Group>
                                     </Form.Row>
                                     <Form.Row style={{

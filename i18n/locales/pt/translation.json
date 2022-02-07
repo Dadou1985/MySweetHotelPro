@@ -45,6 +45,10 @@
         }
 
     },
+    "msh_dashboard": {
+       "d_title": "Painel de controle",
+       "d_chat_room": "Conversas ativas" 
+    },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",
@@ -61,7 +65,8 @@
         "c_notification": "Sua mensagem foi enviada!",
         "c_alert": "Você deve primeiro escolher uma conversa!",
         "c_guest_present": "Ficando",
-        "c_guest_arrival": "Na chegada"
+        "c_guest_arrival": "Na chegada",
+        "c_chat_room": "Nenhuma conversa ainda"
     },
     "msh_messenger": {
         "m_note_big_title": "Instruções",
@@ -81,6 +86,20 @@
         "m_drawer_note_title": "Título da nota",
         "m_notif": "Sua nota foi salva para o",
         "m_calendar": "Selecione uma data no calendário"
+    },
+    "msh_memo": {
+        "m_title":"A parede",
+        "m_subtitle": "Para as pequenas palavras",
+        "m_create_sticker": {
+            "s_tooltip": "Escreva uma palavra",
+            "s_title": "Dar um título",
+            "s_body": "Escreva uma palavra...",
+            "s_stick_button": "Alfinete",
+            "s_close_button": "Fechar"
+        },
+        "m_post_it": {
+            "p_remove_button": "Arremessar"
+        }
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Conciergerie",

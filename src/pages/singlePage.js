@@ -76,7 +76,7 @@ const SinglePage = () => {
               <h3 style={{
                 paddingTop: "3vh", 
                 paddingLeft: typeof window && window.innerWidth > 768 ? "3vw" : "0", 
-                textAlign: typeof window && window.innerWidth > 768 ? "left" : "center"}}>Tableau de bord</h3>
+                textAlign: typeof window && window.innerWidth > 768 ? "left" : "center"}}>{t("msh_dashboard.d_title")}</h3>
               <div style={{
                 display: "flex", 
                 flexFlow: "row", 

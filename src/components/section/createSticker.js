@@ -2,12 +2,14 @@ import React, {useState } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Plus from '../../images/postItPlus.png'
 import { db } from '../../Firebase'
+import { useTranslation } from "react-i18next"
 
 
 const CreateSticker = ({userDB}) => {
 
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
+    const { t, i18n } = useTranslation()
 
     const showSticker = () => {
         setVisible(true)
@@ -46,7 +48,7 @@ const CreateSticker = ({userDB}) => {
                 placement="top"
                 overlay={
                     <Tooltip id="title">
-                    Créer un mémo
+                    {t("msh_memo.m_create_sticker.s_tooltip")}
                     </Tooltip>
                 }>
                 <img src={Plus} alt="post-it" className="sticker_img" onClick={showSticker} />
@@ -65,17 +67,17 @@ const CreateSticker = ({userDB}) => {
                     justifyContent: "space-between",
                     width: "100%"
                 }}>
-                <input value={formValue.title} name="title" type="text" placeholder="Donner un titre au mémo..." onChange={handleChange} 
+                <input value={formValue.title} name="title" type="text" placeholder={t("msh_memo.m_create_sticker.s_title")} onChange={handleChange} 
                 className="memo_modalTitle_input" required />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <textarea value={formValue.text} name="text" placeholder="Ecrire un mémo..." onChange={handleChange} 
+                <textarea value={formValue.text} name="text" placeholder={t("msh_memo.m_create_sticker.s_body")} onChange={handleChange} 
                 className="memo_modalBody_textarea" required></textarea>
             </Modal.Body>
             <Modal.Footer>
-                <Button variant="outline-secondary" onClick={handleClose}>Fermer</Button>
-                <Button variant="outline-success" onClick={handleSubmit}>Epingler</Button>
+                <Button variant="outline-secondary" onClick={handleClose}>{t("msh_memo.m_create_sticker.s_close_button")}</Button>
+                <Button variant="outline-success" onClick={handleSubmit}>{t("msh_memo.m_create_sticker.s_stick_button")}</Button>
             </Modal.Footer>
             </Modal>
             </div>

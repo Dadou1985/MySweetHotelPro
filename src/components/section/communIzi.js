@@ -15,7 +15,7 @@ import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
 import Bubbles from '../../images/bubbles.png'
-import ChatBubble from '../../images/chatBubble.png'
+import Binocular from '../../images/binoculars.png'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -310,9 +310,9 @@ export default function CommunIzi({userDB, user}) {
           <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
             <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
             <PerfectScrollbar>
-            <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
+            {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
-                {present && present.map((flow) => (
+                {present.map((flow) => (
                     <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
                       <td><Avatar 
                         round={true}
@@ -329,14 +329,44 @@ export default function CommunIzi({userDB, user}) {
                     </tr>
                 ))}
               </tbody>
-            </Table>
+            </Table> : <div style={{
+              display: "flex",
+              flexFlow: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "75vh",
+            }}>
+                          <div style={{
+                            display: "flex",
+                            flexFlow: "column",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            borderBottom: "5px solid lightgray",
+                            borderRight: "5px solid lightgray",
+                            border: '1px solid lightgrey',
+                            borderRadius: "100%",
+                            padding: "1vw",
+                            width: "12vw",
+                            height: "20vh",
+                            backgroundColor: "whitesmoke",
+                            filter: "drop-shadow(2px 4px 6px)", 
+                            marginBottom: "1vh"
+                          }}>
+                            <img src={Binocular} style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                          </div>
+                          <h6 style={{
+                              width: "10vw",
+                              textAlign: "center",
+                              color: "gray",
+                              filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
+                      </div>}
             </PerfectScrollbar>
             </Tab>
             <Tab eventKey="En arrivée" title={t('msh_chat.c_guest_arrival')}>
             <PerfectScrollbar>
-            <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
+            {arrival.length > 0 ? <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
-                {arrival && arrival.map((flow) => (
+                {arrival.map((flow) => (
                     <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
                       <td><Avatar 
                         round={true}
@@ -353,7 +383,37 @@ export default function CommunIzi({userDB, user}) {
                     </tr>
                 ))}
               </tbody>
-            </Table>
+            </Table> : <div style={{
+              display: "flex",
+              flexFlow: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "75vh",
+            }}>
+                  <div style={{
+                    display: "flex",
+                    flexFlow: "column",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderBottom: "5px solid lightgray",
+                    borderRight: "5px solid lightgray",
+                    border: '1px solid lightgrey',
+                    borderRadius: "100%",
+                    padding: "1vw",
+                    width: "12vw",
+                    height: "20vh",
+                    backgroundColor: "whitesmoke",
+                    filter: "drop-shadow(2px 4px 6px)", 
+                    marginBottom: "1vh"
+                  }}>
+                    <img src={Binocular} style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                  </div>
+                  <h6 style={{
+                      width: "10vw",
+                      textAlign: "center",
+                      color: "gray",
+                      filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
+              </div>}
             </PerfectScrollbar>
             </Tab>
           </Tabs>

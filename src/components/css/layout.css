@@ -586,9 +586,11 @@ input[type=number] {
 }
 
 .dashboard-note-card {
-    width: 25%;
-    height: 25vh; 
-    padding: 1%;
+    display: flex;
+    flex-flow: row;
+    width: 45%;
+    height: 15vh; 
+    padding: 3%;
     border-radius: 10px;
     border: 1px solid lightgrey; 
     background-color: whitesmoke;
@@ -596,7 +598,8 @@ input[type=number] {
 
 .dashboard-note-title {
     text-align: center; 
-    margin-top: 8vh;
+    margin-top: 1vh;
+    color: gray;
 }
 
 .dashboard-chat-title {
@@ -677,26 +680,7 @@ input[type=number] {
     }
     
     .dashboard-task-container {
-        display: flex;
-        width: 90%;
-        flex-flow: row wrap;
-        justify-content: space-between;
-        margin-top: 7vh;
-        margin-left: 7vw;
-        margin-bottom: 3vh;
-    }
-    
-    .dasboard-task-badge {
-        display: flex;
-        flex-flow: row;
-        justify-content: center;
-        padding: 1%;
-        width: 16vw; 
-        height: 10vh;
-        border: 1px solid lightgrey;
-        border-radius: 50%; 
-        margin-bottom: 1vh;
-        cursor: pointer;
+        display: none;
     }
 }
 
@@ -2867,6 +2851,7 @@ input[type=number] {
 
 .support-scrollbar {
     height: 60vh !important;
+    width: 100% !important;
 }
 
 

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Assistance from '../../svg/support-technique.svg'
-import Send from '../../svg/paper-plane.svg'
+import Send from '../../images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';

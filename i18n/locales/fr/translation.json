@@ -46,10 +46,8 @@
 
     },
     "msh_dashboard": {
-       "d_title": "",
-       "d_none": "",
-       "d_note": "",
-       "d_chat_room": "" 
+       "d_title": "Tableau de bord",
+       "d_chat_room": "Conversations actives" 
     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
@@ -67,7 +65,8 @@
         "c_notification": "Votre message a bien été envoyé !",
         "c_alert": "Vous devez d'abord choisir une conversation !",
         "c_guest_present": "En séjour",
-        "c_guest_arrival": "En arrivée"
+        "c_guest_arrival": "En arrivée",
+        "c_chat_room": "Aucune conversation pour le moment"
     },
     "msh_messenger": {
         "m_note_big_title": "Consignes",
@@ -87,6 +86,20 @@
         "m_drawer_note_title": "Titre de la note",
         "m_notif": "Votre note a bien été enregistrée pour le ",
         "m_calendar": "Sélectionner une date"
+    },
+    "msh_memo": {
+        "m_title":"Le Mur",
+        "m_subtitle": "Pour les petits mots",
+        "m_create_sticker": {
+            "s_tooltip": "Ecrire un mot",
+            "s_title": "Donner un titre",
+            "s_body": "Ecrire un mot...",
+            "s_stick_button": "Epingler",
+            "s_close_button": "Fermer"
+        },
+        "m_post_it": {
+            "p_remove_button": "Jeter"
+        }
     },
     "msh_toolbar": {
         "tooltip_conciergerie": "Conciergerie",

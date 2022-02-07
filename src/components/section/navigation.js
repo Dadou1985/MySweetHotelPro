@@ -128,7 +128,7 @@ const Navigation = ({user, userDB}) =>{
                         height: "7vh",
                         marginLeft: "10vw"
                     }}>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/singlePage">Tableau de bord</Link>
+                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
                         <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
                         <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
                         <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/crm">C.R.M</Link>

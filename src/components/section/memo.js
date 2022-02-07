@@ -11,7 +11,7 @@ const Memo =({userDB})=>{
     return(
         
             <div style={{display: typeof window !== `undefined` && window.innerWidth > 768 ? "flex" : "none"}} className="memo_container">
-                <h5 className="memo_title"><b>{t("Le Mur")}</b> - Expression libre</h5>
+                <h5 className="memo_title"><b>{t("msh_memo.m_title")}</b> - {t("msh_memo.m_subtitle")}</h5>
                 <Divider/>
                 {userDB && 
                 <StickList userDB={userDB} />}
