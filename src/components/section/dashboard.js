@@ -25,7 +25,7 @@ export default function Dashboard({user, userDB}) {
   const [alarm, setAlarm] = useState([]);
   const [roomChangeCategory, setRoomChangeCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
   const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
-  const [showRoomChangeModal, setShowRoomChangeModal] = useState(true);
+  const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
 
@@ -178,9 +178,6 @@ const maintenanceData = {
 },[])
 
 const roomChangeWeekAgo = Date.now() - 604800000
-const roomChangeMonthAgo = Date.now() - 2678400000
-const roomChangeSixMonthsAgo = Date.now() - 15901200000
-const roomChangeYearAgo = Date.now() - 31536000000
 
 useEffect(() => {
   const toolOnAir = () => {
@@ -218,9 +215,6 @@ useEffect(() => {
 },[])
 
 const maintenanceWeekAgo = Date.now() - 604800000
-const maintenanceMonthAgo = Date.now() - 2678400000
-const maintenanceSixMonthsAgo = Date.now() - 15901200000
-const maintenanceYearAgo = Date.now() - 31536000000
 
 console.log("++++++++++++", Date.now())
 
