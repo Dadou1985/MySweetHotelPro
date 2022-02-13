@@ -1,8 +1,9 @@
-import * as firebase from 'firebase'
-import "firebase/auth";
-import "firebase/firestore";
-import "firebase/functions";
-import "firebase/storage";
+import firebase from 'firebase/compat/app';
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import "firebase/compat/functions";
+import "firebase/compat/storage";
+import "firebase/compat/performance";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCDGf-DWOM8z-I4nC2jg0PxsfLKQ_GE7o0",
@@ -22,5 +23,6 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const functions = firebase.functions();
 const specialFirestoreOptions = firebase.firestore.FieldValue
+const perf = firebase.performance();
 
 export { db, auth, functions, storage, specialFirestoreOptions }

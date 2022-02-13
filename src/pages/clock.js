@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Loader from '../components/section/common/loader'
+import Loader from '../components/section/common/shiftLoader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import PhoneClock from '../components/section/form/phoneForm/phoneClock'
 import Navigation from '../components/section/navigation'

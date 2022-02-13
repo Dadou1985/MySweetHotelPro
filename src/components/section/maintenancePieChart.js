@@ -5,16 +5,16 @@ import {db} from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import { Chart } from 'primereact/chart';
-import Dougnut from '../../images/doughtnut.png'
+import PieChart from '../../images/pie-chart.png'
 
-const RoomChangeDoughtnut = ({userDB, filter}) => {
-    const [roomChangeCategory, setRoomChangeCategory] = useState({noise: [], temperature: [], maintenance: [], housekeeping: [], others: []});
+const MaintenancePieChart = ({userDB, filter}) => {
+    const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
 
     useEffect(() => {
         const toolOnAir = () => {
             return db.collection('hotels')
             .doc(userDB.hotelId)
-            .collection("roomChange")
+            .collection("maintenance")
             .where("markup", ">=", filter)
         }
     
@@ -28,16 +28,16 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
                     });
                     console.log(snapInfo)
     
-                    const noise = snapInfo && snapInfo.filter(reason => reason.reason === "Bruit")
-                    const temperature = snapInfo && snapInfo.filter(reason => reason.reason === "Température")
-                    const maintenance = snapInfo && snapInfo.filter(reason => reason.reason === "Technique")
-                    const housekeeping = snapInfo && snapInfo.filter(reason => reason.reason === "Ménage")
-                    const others = snapInfo && snapInfo.filter(reason => reason.reason === "Autres")
-
-                    setRoomChangeCategory({
-                        noise: noise,
-                        temperature: temperature,
-                        maintenance: maintenance,
+                    const paint = snapInfo && snapInfo.filter(reason => reason.type === "Peinture")
+                    const electricity = snapInfo && snapInfo.filter(reason => reason.type === "Electricité")
+                    const plumbery = snapInfo && snapInfo.filter(reason => reason.type === "Plomberie")
+                    const housekeeping = snapInfo && snapInfo.filter(reason => reason.type === "Ménage")
+                    const others = snapInfo && snapInfo.filter(reason => reason.type === "Autres")
+    
+                    setMaintenanceCategory({
+                        paint: paint,
+                        electricity: electricity,
+                        plumbery: plumbery,
                         housekeeping: housekeeping,
                         others: others
                     })
@@ -46,10 +46,10 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
         },[filter])   
 
     const roomChangeData = {
-        labels: ['Bruit', 'Température', 'Technique', 'Ménage', 'Autres'],
-    datasets: [
-        {
-            data: [roomChangeCategory.noise.length, roomChangeCategory.temperature.length, roomChangeCategory.maintenance.length, roomChangeCategory.housekeeping.length, roomChangeCategory.others.length],
+        labels: ['Peinture', 'Electricité', 'Plomberie', 'Ménage', 'Autres'],
+        datasets: [
+            {
+                data: [maintenanceCategory.paint.length, maintenanceCategory.electricity.length, maintenanceCategory.plumbery.length, maintenanceCategory.housekeeping.length, maintenanceCategory.others.length],
                 backgroundColor: [
                     "yellow",
                     "blue",
@@ -86,7 +86,7 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
             border: "transparent",
             justifyContent: "center",
         }}>
-            {roomChangeCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []}  ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ width: '70%' }} /> : <div style={{
+            {maintenanceCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []}  ? <Chart type="pie" data={roomChangeData} options={lightOptions} style={{ width: '100%' }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -108,11 +108,11 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
                     marginTop: "2vh",
                     marginBottom: "2vh"
                 }}>
-                    <img src={Dougnut} style={{width: "3vw"}} />
+                    <img src={PieChart} style={{width: "3vw"}} />
                 </div>
                 <h6>Aucune donnée trouvé</h6>
                 </div>}
         </div>
 }
 
-export default RoomChangeDoughtnut;
+export default MaintenancePieChart;

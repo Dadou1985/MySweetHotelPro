@@ -29,6 +29,12 @@ import Loader from "react-loader-spinner"
 import '../css/loader.css'
 import Chat from './chatRoom'
 import { useTranslation } from "react-i18next"
+import TimeLine from './guestTimeLine'
+import ChatIcon from '../../images/dialog.png'
+import Services from '../../images/services.png'
+import Puzzle from '../../images/warning.png'
+import { Tooltip } from 'primereact/tooltip';
+import Binocular from '../../images/binoculars.png'
 
 const GuestDatabase = ({user, userDB}) =>{
     const { t, i18n } = useTranslation()
@@ -45,11 +51,11 @@ const GuestDatabase = ({user, userDB}) =>{
         username: t("msh_crm.c_sheet.s_title"),
         details: t("msh_crm.c_sheet.s_subtitle")
     })
-    const [selectedUser, setselectedUser] = useState(null)
+    const [showChat, setShowChat] = useState(false)
     const [sendingMail, setSendingMail] = useState(false)
     const [guestMail, setguestMail] = useState([])
     const [IsLoading, setIsLoading] = useState(false)
-    const [showChat, setShowChat] = useState(false)
+    const [guestId, setGuestId] = useState(null)
     const [radioValueGender, setRadioValueGender] = useState('male');
 
 
@@ -179,9 +185,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 style={{width: "50%", paddingTop: "1vh"}} />
         }
     }
-
-    console.log("********", item)
-
+        
     return(
         <div style={{width: "95%"}}>
             <h3 style={{
@@ -197,8 +201,8 @@ const GuestDatabase = ({user, userDB}) =>{
                     width: "50%",
                     padding: "2%",
                 }}>
-                    <PerfectScrollbar style={{maxHeight: "70vh"}}>
-                        <Table hover size="lg" style={{maxHeight: "70vh", border: "transparent"}}>
+                    <PerfectScrollbar style={{maxHeight: "65vh"}}>
+                        <Table hover size="lg" style={{maxHeight: "100%", border: "transparent"}}>
                             <thead className="text-center">
                                 <tr>
                                     <th style={{border: "transparent"}}></th>
@@ -213,16 +217,16 @@ const GuestDatabase = ({user, userDB}) =>{
                                 {info.map(flow =>(
                                     <tr style={{cursor: "pointer"}} onClick={() => {
                                         setItem(flow)
-                                        setShowChat(false)}}>
+                                        setGuestId(flow.id)}}>
                                         {flow.photo ? 
                                         <td  onClick={() => {
                                         setImg(flow.img)
                                         setImgFrame(true)
                                         }} style={{display: "flex", flexFlow: "row", alignItems: "center"}}>
-                                            <Avatar src={flow.photo} round={true} size="70" />
+                                            <Avatar src={flow.photo} round={true} size="70" style={{filter: "drop-shadow(2px 4px 6px)"}} />
                                         </td> : 
                                         <td style={{display: "flex", flexFlow: "row", alignItems: "center"}} >
-                                            <Avatar src={defaultImg} round={true} size="70" />
+                                            <Avatar src={defaultImg} round={true} size="70" style={{filter: "drop-shadow(2px 4px 6px)"}} />
                                         </td>}
                                         <td>
                                             <span style={{display: "flex", flexFlow: "column", justifyContent: "center", paddingTop: "1vh"}}>
@@ -256,13 +260,13 @@ const GuestDatabase = ({user, userDB}) =>{
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
                         {sendingMail ? 
                             IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
-                            <Button variant="outline-dark" style={{marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_crm.c_button.b_cancel")}</Button>
+                            <Button variant="light" style={{filter: "drop-shadow(2px 4px 6px)", marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_crm.c_button.b_cancel")}</Button>
                             <Button variant="dark" onClick={async() => {
                             await handleMailSent()
                             return handleMailSended()
                             }}>{t("msh_crm.c_button.b_send_em_all")}</Button>
                         </span>
-                            : <Button variant="outline-dark" onClick={() => setSendingMail(true)}>{t("msh_crm.c_button.b_send_mail")}</Button>}
+                            : <Button variant="light" style={{filter: "drop-shadow(2px 4px 6px)"}} onClick={() => setSendingMail(true)}>{t("msh_crm.c_button.b_send_mail")}</Button>}
                         {!sendingMail && <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_crm.c_button.b_add")}</Button>}
                     </div>
 
@@ -365,9 +369,9 @@ const GuestDatabase = ({user, userDB}) =>{
                         </Modal.Footer>}
                     </Modal>
                 </div>
-                <div style={{width: "25%", padding: "2%"}}>
+                <div style={{width: "25%", padding: "2%", filter: "drop-shadow(2px 4px 6px)"}}>
                 <PerfectScrollbar style={{mawHeight: "75vh"}}>
-                    <Card style={{ width: '100%', borderRadius: "10px", maxHeight: "70vh" }}>
+                    <Card style={{ width: '100%', borderRadius: "10px", maxHeight: "70vh", border: "1px solid lightgrey" }} className="softSkin">
                         <Card.Img variant="top" src={item.photo ? item.photo : defaultImg} style={{width: "100%"}} />
                         <Card.Body style={{
                             display: "flex",
@@ -401,9 +405,11 @@ const GuestDatabase = ({user, userDB}) =>{
                             <img src={Birthday} style={{width: "5%", marginRight: "1vw"}} />
                             {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
-                            {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%"}}>
+                            {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%", marginTop: "1vh"}}>
                                 {/*<Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>*/}
-                                <Button variant="outline-dark" onClick={() => setShowChat(true)}>{t("msh_crm.c_button.b_chat")}</Button>
+                                <img src={Services} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter les services" onClick={() => setShowChat(true)} />
+                                <img src={Puzzle} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter les évènements" onClick={() => setShowChat(true)} />
+                                <img src={ChatIcon} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter le Chat" onClick={() => setShowChat(true)} />
                                 </div>}
                             {item.details && <Card.Text style={{textAlign: "center", marginBottom: "5vh", marginTop: "2vh", color: "gray"}}>
                                 {item.details}
@@ -412,13 +418,30 @@ const GuestDatabase = ({user, userDB}) =>{
                     </Card>
                 </PerfectScrollbar>
                 </div>
-                {showChat && <div style={{width: "25%", padding: "2%"}}>
-                    <h4 style={{textAlign: "center", borderBottom: "1px solid lightgrey", padding: "1vh"}}>{t("msh_crm.c_chat_title")}</h4>
+                {guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />}
+            </div>
+
+            <Modal show={showChat}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={() => setShowChat(false)}
+                >
+                <Modal.Header closeButton className="bg-light">
+                    <Modal.Title id="contained-modal-title-vcenter">
+                    <img src={item.photo ? item.photo : defaultImg} style={{width: "2vw", height: "4vh", borderRadius: "50%"}} /> Conversations avec {item.username}
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                
+                <div style={{width: "100%", padding: "2%"}}>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
                         <Chat user={user} userDB={userDB} title={item.username} />
                     </PerfectScrollbar>
-                </div>}
-            </div>
+                </div>
+
+                </Modal.Body>
+            </Modal>
         </div>
     )
 }

@@ -258,11 +258,11 @@ const Maid = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>{t("msh_room_change.r_reason.r_paint")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_electricity")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_other")}</option>
+                                            <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
+                                            <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
+                                            <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                            <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                            <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
                                         </select>
                                     </Form.Group>
                                     

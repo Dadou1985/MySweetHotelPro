@@ -1,10 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next"
-import Taxi from '../../svg/taxi.svg'
-import Timer from '../../svg/timer.svg'
-import RoomChage from '../../svg/logout.svg'
-import Maintenance from '../../svg/repair.svg'
-import { Modal, Button, Tab, Tabs, Table, ModalBody } from 'react-bootstrap'
 import {db} from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -15,25 +10,27 @@ import ChatLogo from '../../images/chat.png'
 import PieChart from '../../images/pie-chart.png'
 import Dougnut from '../../images/doughtnut.png'
 import RoomChangeRate from './roomChangeRate'
-import roomChangeRate from './roomChangeRate';
+import MaintenanceRate from './maintenanceRate';
 
-export default function Dashboard({user, userDB}) {
+const Dashboard = ({user, userDB}) => {
   const { t, i18n } = useTranslation()
   const [consigne, setConsigne] = useState([]);
   const [chat, setChat] = useState([]);
   const [taxi, setTaxi] = useState([]);
   const [alarm, setAlarm] = useState([]);
-  const [roomChangeCategory, setRoomChangeCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
-  const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
+  const [roomChange, setRoomChange] = useState([]);
+  const [maintenance, setMaintenance] = useState([]);
+  const [roomChangeCategory, setRoomChangeCategory] = useState({noise: [], temperature: [], maintenance: [], cleaning: [], others: []});
+  const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], cleaning: [], others: []});
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
 
   const roomChangeData = {
-    labels: ['Peinture', 'Electricité', 'Plomberie', 'Ménage', 'Autres'],
+    labels: ['Bruit', 'Température', 'Technique', 'Ménage', 'Autres'],
     datasets: [
         {
-            data: [roomChangeCategory.paint.length, roomChangeCategory.electricity.length, roomChangeCategory.plumbery.length, roomChangeCategory.housekeeping.length, roomChangeCategory.others.length],
+            data: [roomChangeCategory.noise.length, roomChangeCategory.temperature.length, roomChangeCategory.maintenance.length, roomChangeCategory.cleaning.length, roomChangeCategory.others.length],
             backgroundColor: [
                 "yellow",
                 "blue",
@@ -55,7 +52,7 @@ const lightOptions = {
     plugins: {
         legend: {
             labels: {
-                color: '#495057'
+                color: '#495057',
             },
             position: "bottom"
         }
@@ -66,7 +63,7 @@ const maintenanceData = {
   labels: ['Peinture', 'Electricité', 'Plomberie', 'Ménage', 'Autres'],
   datasets: [
     {
-      data: [maintenanceCategory.paint.length, maintenanceCategory.electricity.length, maintenanceCategory.plumbery.length, maintenanceCategory.housekeeping.length, maintenanceCategory.others.length],
+      data: [maintenanceCategory.paint.length, maintenanceCategory.electricity.length, maintenanceCategory.plumbery.length, maintenanceCategory.cleaning.length, maintenanceCategory.others.length],
       backgroundColor: [
         "yellow",
         "blue",
@@ -196,18 +193,19 @@ useEffect(() => {
                 })        
               });
               console.log(snapInfo)
+              setRoomChange(snapInfo)
 
-              const paint = snapInfo && snapInfo.filter(reason => reason.reason === "Peinture")
-              const electricity = snapInfo && snapInfo.filter(reason => reason.reason === "Electricité")
-              const plumbery = snapInfo && snapInfo.filter(reason => reason.reason === "Plomberie")
-              const housekeeping = snapInfo && snapInfo.filter(reason => reason.reason === "Ménage")
-              const others = snapInfo && snapInfo.filter(reason => reason.reason === "Autres")
+              const noise = snapInfo && snapInfo.filter(reason => reason.reason === "noise")
+              const temperature = snapInfo && snapInfo.filter(reason => reason.reason === "temperature")
+              const maintenance = snapInfo && snapInfo.filter(reason => reason.reason === "maintenance")
+              const cleaning = snapInfo && snapInfo.filter(reason => reason.reason === "cleaning")
+              const others = snapInfo && snapInfo.filter(reason => reason.reason === "others")
 
               setRoomChangeCategory({
-                paint: paint,
-                electricity: electricity,
-                plumbery: plumbery,
-                housekeeping: housekeeping,
+                noise: noise,
+                temperature: temperature,
+                maintenance: maintenance,
+                cleaning: cleaning,
                 others: others
               })
           });
@@ -215,8 +213,6 @@ useEffect(() => {
 },[])
 
 const maintenanceWeekAgo = Date.now() - 604800000
-
-console.log("++++++++++++", Date.now())
 
 useEffect(() => {
   const toolOnAir = () => {
@@ -235,11 +231,13 @@ useEffect(() => {
                 })        
               });
 
-              const paint = snapInfo && snapInfo.filter(reason => reason.type === "Peinture")
-              const electricity = snapInfo && snapInfo.filter(reason => reason.type === "Electricité")
-              const plumbery = snapInfo && snapInfo.filter(reason => reason.type === "Plomberie")
-              const housekeeping = snapInfo && snapInfo.filter(reason => reason.type === "Ménage")
-              const others = snapInfo && snapInfo.filter(reason => reason.type === "Autres")
+              setMaintenance(snapInfo)
+
+              const paint = snapInfo && snapInfo.filter(reason => reason.type === "paint")
+              const electricity = snapInfo && snapInfo.filter(reason => reason.type === "electricity")
+              const plumbery = snapInfo && snapInfo.filter(reason => reason.type === "plumbery")
+              const cleaning = snapInfo && snapInfo.filter(reason => reason.type === "cleaning")
+              const others = snapInfo && snapInfo.filter(reason => reason.type === "others")
 
 
               console.log(snapInfo)
@@ -247,13 +245,14 @@ useEffect(() => {
                 paint: paint,
                 electricity: electricity,
                 plumbery: plumbery,
-                housekeeping: housekeeping,
+                cleaning: cleaning,
                 others: others
               })
           });
           return unsubscribe
 },[])
 
+console.log("------------", maintenanceCategory)
 
   return <div style={{
       display: "flex",
@@ -263,7 +262,7 @@ useEffect(() => {
       marginTop: "2vh",
       alignItems: typeof window && window.innerWidth > 768 ? "flex-start" : "center"
   }}>
-        <div style={{width: "100%", marginBottom: typeof window && window.innerWidth > 768 ? "5vh" : "1vh"}}>
+        <div style={{width: "100%", marginBottom: typeof window && window.innerWidth > 768 ? "2vh" : "1vh"}}>
           <div className='dashboard-note-container'>
             <div className='dashboard-icon dashboard-note-card' style={{
               borderBottom: "2px solid lightgrey",
@@ -331,6 +330,7 @@ useEffect(() => {
             flexFlow: "column",
             alignItems: "center",
             width: "45%", 
+            height: "40vh",
             backgroundColor: "whitesmoke",
             borderRadius: "10px",
             border: "1px solid lightgrey", 
@@ -341,9 +341,9 @@ useEffect(() => {
           }} 
           className="dashboard-icon" 
           onClick={() => setShowRoomChangeModal(true)}>
-              <h5 style={{textAlign: "center"}}>Taux de délogement</h5>
+              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>Taux de délogement en interne</h5>
               <p style={{textAlign: "center", color: "gray"}}>Sur les 7 derniers jours</p>
-              {roomChangeCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []} ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ position: 'relative', width: '20vw' }} /> : <div style={{
+              {roomChange.length > 0 ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "3vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -382,10 +382,11 @@ useEffect(() => {
             borderRight: "2px solid lightgrey",
             padding: "3%",
             cursor: "pointer"
-          }} className="dashboard-icon">
-              <h5 style={{textAlign: "center"}}>Taux d'incidence technique</h5>
+          }} className="dashboard-icon"
+            onClick={() => setShowMaintenanceModal(true)}>
+              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>Taux d'incidence technique</h5>
               <p style={{textAlign: "center", color: "gray"}}>Sur les 7 derniers jours</p>
-              {roomChangeCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []} ? <Chart type="pie" data={maintenanceData} options={lightOptions} style={{ position: 'relative', width: '20vw' }} /> : <div style={{
+              {maintenanceCategory !== {paint: [], electricity: [], plumbery: [], cleaning: [], others: []} ? <Chart type="pie" data={maintenanceData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -415,6 +416,7 @@ useEffect(() => {
         </div>
 
         <RoomChangeRate userDB={userDB} showModal={showRoomChangeModal} closeModal={() => setShowRoomChangeModal(false)} />
+        <MaintenanceRate userDB={userDB} showModal={showMaintenanceModal} closeModal={() => setShowMaintenanceModal(false)} />
       {/*<div className='dashboard-task-container'>
         <div>
           <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
@@ -428,18 +430,8 @@ useEffect(() => {
           </div>
           <h6 style={{display: "flex", flexFlow: "row wrap", justifyContent: "center"}}>{t("msh_toolbar.tooltip_alarm")}</h6>
         </div>
-        <div>
-          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
-              <img src={RoomChage} style={{width: "3vw"}} /><h5 style={{position: "absolute", marginLeft: "7vw"}}>{roomChange.length}</h5>
-          </div>
-          <h6 style={{display: "flex", flexFlow: "row wrap", justifyContent: "center"}}>{t("msh_toolbar.tooltip_room_change")}</h6>
-        </div>
-        <div style={{display: "flex", flexFlow: "column", alignItems: "center"}}>
-          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
-              <img src={Maintenance} style={{width: "3vw"}} /><h5 style={{position: "absolute", marginLeft: "7vw"}}>{technical.length}</h5>
-          </div>
-          <h6 style={{width: "5vw", textAlign: "center"}}>{t("msh_toolbar.tooltip_technical")}</h6>
-        </div>
       </div>*/}
   </div>;
 }
+
+export default Dashboard

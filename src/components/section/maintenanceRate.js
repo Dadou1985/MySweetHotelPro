@@ -4,11 +4,9 @@ import { Modal, Button, Tab, Tabs, Table, ModalBody, Nav, Row, Col } from 'react
 import {db} from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { Chart } from 'primereact/chart';
-import Dougnut from '../../images/doughtnut.png'
-import DoughnutChart from "./roomChangeDoughtnut"
+import MaintenancePieChart from "./maintenancePieChart"
 
-const RoomChangeRate = ({userDB, showModal, closeModal}) => {
+const MaintenanceRate = ({userDB, showModal, closeModal}) => {
     const [filter, setFilter] = useState(Date.now() - 604800000);
 
     const roomChangeWeekAgo = Date.now() - 604800000
@@ -26,7 +24,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
       enforceFocus={false}>
       <Modal.Header closeButton className="bg-light">
       <Modal.Title id="contained-modal-title-vcenter">
-        Taux de délogement
+        Taux d'incidence technique
         </Modal.Title>
       </Modal.Header>
       <ModalBody style={{
@@ -137,11 +135,11 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
             {activeTab === "month" && <h5 style={{textAlign: "center"}}>30 derniers jours</h5>}
             {activeTab === "semester" && <h5 style={{textAlign: "center"}}>6 derniers mois</h5>}
             {activeTab === "year" && <h5 style={{textAlign: "center"}}>12 derniers mois</h5>}
-            <DoughnutChart filter={filter} userDB={userDB} />
+            <MaintenancePieChart filter={filter} userDB={userDB} />
         </div>
       </ModalBody>
     </Modal>
   </div>;
 }
 
-export default RoomChangeRate;
+export default MaintenanceRate;

@@ -209,11 +209,11 @@ const Repair = ({userDB}) =>{
                                         backgroundColor: "white", 
                                         paddingLeft: "1vw"}}>
                                             <option></option>
-                                            <option>{t("msh_room_change.r_reason.r_paint")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_electricity")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                            <option>{t("msh_room_change.r_reason.r_other")}</option>
+                                            <option value="paint">{t("msh_room_change.r_reason.r_paint")}</option>
+                                            <option value="plumbery">{t("msh_room_change.r_reason.r_plumbery")}</option>
+                                            <option value="electricity">{t("msh_room_change.r_reason.r_electricity")}</option>
+                                            <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                            <option value="others">{t("msh_room_change.r_reason.r_other")}</option>
                                         </select>
                                     </Form.Group>
                                     </Form.Row>

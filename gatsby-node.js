@@ -12,6 +12,12 @@ exports.onCreateWebpackConfig = ({
   actions,
   getConfig
 }) => {
+  actions.setWebpackConfig({
+    resolve: {
+      fallback: { "url": require.resolve("url/") }
+    }
+  })
+  
   if (stage === 'build-html') {
     actions.setWebpackConfig({
       externals: getConfig().externals.concat(function(context, request, callback) {

@@ -47,7 +47,39 @@
     },
     "msh_dashboard": {
        "d_title": "Tableau de bord",
-       "d_chat_room": "Conversations actives" 
+       "d_chat_room": "Conversations actives",
+       "d_doughnut_chart": {
+           "d_title": "",
+           "d_subtitle": ""
+       },
+       "d_pie_chart": {
+            "p_title": "",
+            "p_subtitle": ""
+       },
+       "d_no_data": "",
+       "d_data_modal": {
+           "d_period_title": "",
+           "d_period": {
+               "p_week": "",
+               "p_month": "",
+               "p_semester": "",
+               "p_year": ""
+           }
+       },
+       "room_change_data": {
+           "d_noise": "",
+           "d_temperature": "",
+           "d_maintenance": "",
+           "d_housekeeping": "",
+           "d_others": ""
+       },
+       "maintenance_data": {
+        "d_paint": "",
+        "d_electricity": "",
+        "d_plumbery": "",
+        "d_housekeeping": "",
+        "d_others": ""
+    }
     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
@@ -167,11 +199,11 @@
         "r_to": "...vers la chambre",
         "r_reason": {
             "r_label": "Pour quel motif ?",
-            "r_paint": "Peinture",
-            "r_plumbery": "Plomberie",
-            "r_electricity": "Electricité",
-            "r_cleaning": "Ménage",
-            "r_other": "Autres"
+            "r_noise": "Bruit",
+            "r_temperature": "Température",
+            "r_maintenance": "Incident technique",
+            "r_cleaning": "Nettoyage",
+            "r_others": "Autres"
         },
         "r_state":{
             "s_label": "Etat de la chambre",

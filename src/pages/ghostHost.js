@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Loader from '../components/section/common/loader'
+import Loader from '../components/section/common/shiftLoader'
 import PhoneGhost from '../components/section/form/phoneForm/phoneGhost'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
