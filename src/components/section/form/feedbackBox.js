@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Form, Button, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Tooltip, OverlayTrigger, Modal, FloatingLabel } from 'react-bootstrap'
 import Feedback from '../../../images/feedback.png'
 import { db } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
@@ -78,35 +78,46 @@ const FeedbackBox = ({userDB}) =>{
                             padding: "5%",
                             textAlign: "center"
                         }}>
-                            <Form.Row>
+                            <div style={{marginBottom: "2vh"}}>
                                 <Form.Group controlId="description">
                                 <h4>{t("msh_feedback_box.f_subtitle")}</h4>
                                 </Form.Group>
-                            </Form.Row>
-                            <Form.Row style={{width: "100%"}}>
+                            </div>
+                            <div style={{width: "100%", marginBottom: "1vh"}}>
                                 <Form.Group controlId="exampleForm.SelectCustom" style={{width: "100%"}}>
-                                <select class="selectpicker" 
-                                value={formValue.categorie} name="categorie" onChange={handleChange} 
-                                    style={{
-                                    width: "100%", 
-                                    height: "3vh", 
-                                    border: "1px solid lightgrey", 
-                                    borderRadius: "3px",
-                                    backgroundColor: "white", 
-                                    paddingLeft: "1vw"}}>
-                                        <option value="improvement">{t("msh_feedback_box.f_comment.c_improvement")}</option>
-                                        <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
-                                    </select>
+                                <FloatingLabel
+                                    controlId="floatingInput"
+                                    label="Catégorie"
+                                    className="mb-3"
+                                >
+                                    <Form.Select class="selectpicker" 
+                                        value={formValue.categorie} name="categorie" onChange={handleChange} 
+                                            style={{
+                                            width: "100%", 
+                                            border: "1px solid lightgrey", 
+                                            borderRadius: "3px",
+                                            backgroundColor: "white", 
+                                            paddingLeft: "1vw"}}>
+                                                <option value="improvement">{t("msh_feedback_box.f_comment.c_improvement")}</option>
+                                                <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
+                                    </Form.Select>
+                                </FloatingLabel>
                                 </Form.Group>
-                                </Form.Row>
-                            <Form.Row style={{width: "100%"}}>
+                                </div>
+                            <div style={{width: "100%", marginBottom: "1vh"}}>
                                 <Form.Group controlId="description" style={{width: "100%"}}>
-                                <Form.Control as="textarea" type="text" 
-                                placeholder={t("msh_feedback_box.f_input_textarea")} 
-                                style={{width: "100%", height: "30vh", resize: "none"}} 
-                                value={formValue.feedback} name="feedback" onChange={handleChange} />
+                                <FloatingLabel
+                                    controlId="floatingInput"
+                                    label={t("msh_feedback_box.f_input_textarea")}
+                                    className="mb-3"
+                                >
+                                    <Form.Control as="textarea" type="text" 
+                                    placeholder={t("msh_feedback_box.f_input_textarea")} 
+                                    style={{width: "100%", height: "30vh", resize: "none"}} 
+                                    value={formValue.feedback} name="feedback" onChange={handleChange} />
+                                </FloatingLabel>
                                 </Form.Group>
-                            </Form.Row>
+                            </div>
                         </div>
                     </Modal.Body>
                     <Modal.Footer>

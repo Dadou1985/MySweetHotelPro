@@ -309,28 +309,28 @@ const GuestDatabase = ({user, userDB}) =>{
                                                 ))}
                                             </ButtonGroup>
                                         </Form.Group>
-                                        <Form.Row>
+                                        <div>
                                             <Form.Group controlId="description">
                                             <Form.Label>{t("msh_crm.c_client")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.title} name="title" onChange={handleChange} />
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div>
                                             <Form.Group controlId="description">
                                             <Form.Label>{t("msh_crm.c_email")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} />
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div>
                                             <Form.Group controlId="description">
                                             <Form.Label>{t("msh_crm.c_phone")}</Form.Label>
                                             <Form.Control type="text" placeholder="ex: 0654789321" style={{width: "20vw"}} value={formValue.phone} name="phone" onChange={handleChange} />
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <Form.Label>{t("msh_crm.c_origin.o_label")}</Form.Label><br/>
-                                                <select class="selectpicker" value={formValue.origin} name="origin" onChange={handleChange} 
+                                                <Form.Select class="selectpicker" value={formValue.origin} name="origin" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
                                                 border: "1px solid lightgrey", 
@@ -343,14 +343,14 @@ const GuestDatabase = ({user, userDB}) =>{
                                                     <option value="es">Espagne</option>
                                                     <option value="it">Italie</option>
                                                     <option value="pt">Portugal</option>
-                                                </select>
+                                                </Form.Select>
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <Form.Label>{t("msh_crm.c_category.c_label")}</Form.Label><br/>
-                                            <select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
-                                            style={{width: "10vw", 
+                                            <Form.Select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
+                                            style={{width: "20vw", 
                                             height: "60%", 
                                             border: "1px solid lightgrey", 
                                             borderRadius: "3px",
@@ -359,9 +359,9 @@ const GuestDatabase = ({user, userDB}) =>{
                                                 <option></option>
                                                 <option>{t("msh_crm.c_category.c_tourisim")}</option>
                                                 <option>{t("msh_crm.c_category.c_business")}</option>
-                                            </select>
+                                            </Form.Select>
                                             </Form.Group>
-                                        </Form.Row>
+                                        </div>
                                     </div>
                         </Modal.Body>
                         {footerState && <Modal.Footer>

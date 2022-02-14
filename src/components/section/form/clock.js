@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, FloatingLabel } from 'react-bootstrap'
 import Timer from '../../../svg/timer.svg'
 import { db } from '../../../Firebase'
 import moment from 'moment'
@@ -180,7 +180,7 @@ const Clock = ({userDB}) =>{
                                     padding: "5%", 
                                     textAlign: "center"
                                 }}>
-                                    {!step && <Form.Row style={{
+                                    {!step && <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         alignItems: "center",
@@ -201,20 +201,30 @@ const Clock = ({userDB}) =>{
                                         />                                        
                                         </MuiPickersUtilsProvider>
                                         </Form.Group>
-                                    </Form.Row>}
+                                    </div>}
                                 {step && <>
-                                    <Form.Row>
+                                    <div>
                                     <Form.Group controlId="description">
-                                    <Form.Label>{t("msh_alarm.a_client")}</Form.Label>
-                                    <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label={t("msh_alarm.a_client")}
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                    </FloatingLabel>
                                     </Form.Group>
-                                </Form.Row>
-                                <Form.Row>
+                                </div>
+                                <div>
                                     <Form.Group controlId="description">
-                                    <Form.Label>{t("msh_alarm.a_room")}</Form.Label>
-                                    <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                    <FloatingLabel
+                                        controlId="floatingInput"
+                                        label={t("msh_alarm.a_room")}
+                                        className="mb-3"
+                                    >
+                                        <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                    </FloatingLabel>
                                     </Form.Group>
-                                </Form.Row>
+                                </div>
                                 </>}
                             </div>
                         </Tab>

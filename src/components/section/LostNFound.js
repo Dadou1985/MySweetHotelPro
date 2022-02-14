@@ -186,54 +186,52 @@ const LostNFound = ({userDB}) =>{
                                         padding: "5%",
                                         textAlign: "center"
                                     }}>
-                                        <Form.Row>
+                                        <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
-                                                <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
+                                                <Form.Select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option></option>
                                                     <option>High Tech</option>
                                                     <option>{t("msh_lost_found.l_second_tab_title")}</option>
                                                     <option>{t("msh_lost_found.l_third_tab_title")}</option>
                                                     <option>{t("msh_lost_found.l_fourth_tab_title")}</option>
-                                                </select>
+                                                </Form.Select>
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
-                                                <select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
+                                                <Form.Select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option></option>
                                                     <option>{t("msh_lost_found.l_place.p_hall")}</option>
                                                     <option>{t("msh_lost_found.l_place.p_restaurant")}</option>
                                                     <option>{t("msh_lost_found.l_place.p_parking")}</option>
                                                     <option>{t("msh_lost_found.l_place.p_toilet")}</option>
                                                     <option>{t("msh_lost_found.l_place.p_floors")}</option>
                                                     <option>{t("msh_lost_found.l_place.p_other")}</option>
-                                                </select>
+                                                </Form.Select>
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="description">
                                             <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
                                             <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
                                             </Form.Group>
-                                        </Form.Row>
-                                        <Form.Row>
+                                        </div>
+                                        <div>
                                             <Form.Group controlId="details">
                                                 <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
                                                 <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "30vh"}} value={formValue.details} name="details" onChange={handleChange}  />
                                             </Form.Group>
-                                        </Form.Row>
+                                        </div>
                                     </div>
                         </Modal.Body>
                         <Modal.Footer>

@@ -312,7 +312,7 @@ export default function RegisterFormSteps() {
                         setNow(25)
                 }}>
                 <h5 className="stepOne_title"><b>{t("msh_register_form.r_step.s_first.f_subtitle")}</b></h5>
-                <Form.Row className="stepOne_form_name_input">
+                <div className="stepOne_form_name_input">
                     <Form.Group controlId="description1">
                     <Form.Control type="text" placeholder={t("msh_register_form.r_step.s_first.f_first_name")} className="stepOne_name_input" value={formValue.firstName} name="firstName" onChange={handleChange} required />
                     </Form.Group>
@@ -320,11 +320,11 @@ export default function RegisterFormSteps() {
                     <Form.Group controlId="description2">
                     <Form.Control type="text" placeholder={t("msh_register_form.r_step.s_first.f_last_name")} className="stepOne_name_input" value={formValue.lastName} name="lastName" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
+                </div>
                     <Form.Group controlId="description3">
                     <Form.Control type="email" placeholder={t("msh_register_form.r_step.s_first.f_email")} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
-                {/*<Form.Row style={{
+                {/*<div style={{
                     display: "flex",
                     flexFlow: "column",
                     alignItems: "center",
@@ -338,7 +338,7 @@ export default function RegisterFormSteps() {
                     <Form.Group controlId="description5">
                     <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_confirmation")} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
                     </Form.Group>
-            </Form.Row>*/}
+            </div>*/}
                 <Button variant="success" className="stepOne_validation_button" type="submit">{t("msh_register_form.r_button.b_next")}</Button>
                 {alert.danger && <Alert variant="danger" className="stepOne_alert">
                     {t("msh_register_form.r_step.s_first.f_alert")}
@@ -347,7 +347,7 @@ export default function RegisterFormSteps() {
                 {stepTwo && <div className="stepTwo_container">
                         {findHotelForm ? <Button variant="outline-info" className="stepTwo_find_button" onClick={() => setfindHotelForm(false)}>{t("msh_register_form.r_button.b_search")}</Button> : <div className="stepTwo_find_container">
                         <h5 className="stepTwo_title"><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_find")}</b></h5>
-                        <Form.Row>
+                        <div>
                             <Form.Group className="stepTwo_find_input_container">
                             <Input 
                                 type="text" 
@@ -357,9 +357,9 @@ export default function RegisterFormSteps() {
                                 className="text-center stepTwo_find_input"
                                 pattern=".{5,}" />
                             </Form.Group>
-                        </Form.Row>
+                        </div>
 
-                        <Form.Row>
+                        <div>
                             <Form.Group className="stepTwo_find_dropdown_container">
                             <DropdownButton style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} id="dropdown-basic-button" title={t("msh_register_form.r_button.b_find")} drop="down" variant="dark" onClick={() => setFilter(initialFilter)}>
                             {info.map(details => {
@@ -388,7 +388,7 @@ export default function RegisterFormSteps() {
                                 return setShowFindHotelDrawer(true)
                                 }}>{t("msh_register_form.r_button.b_find")}</Button>
                             </Form.Group>
-                        </Form.Row>
+                        </div>
                         <div className="stepTwo_hotel_name_container"><b>{formValue.hotelName && formValue.hotelName}</b></div>
                         </div>}
                         <div className="stepTwo_separation">{t("msh_register_form.r_or")}</div>

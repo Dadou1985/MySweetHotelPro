@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover, FloatingLabel } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import ChangeRoom from '../../../svg/logout.png'
 import {  db, storage } from '../../../Firebase'
@@ -220,73 +220,103 @@ const Maid = ({userDB}) =>{
                                     padding: "5%",
                                     textAlign: "center",
                                 }}>
-                                    <Form.Row>
+                                    <div style={{marginBottom: "2vh"}}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "25vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_room_change.r_client")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control  placeholder="ex: Jane Doe" type="text" style={{width: "25vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row style={{
+                                    </div>
+                                    <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around",
-                                        width: "60%"
+                                        width: "50%",
+                                        marginBottom: "2vh"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_room_change.r_from")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 310" style={{width: "10vw"}} value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_room_change.r_from")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: 310" style={{width: "12vw"}} value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_room_change.r_to")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 409" style={{width: "10vw"}} value={formValue.toRoom} name="toRoom" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_room_change.r_to")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: 409" style={{width: "12vw"}} value={formValue.toRoom} name="toRoom" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row style={{
+                                    </div>
+                                    <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around",
-                                        width: "60%"
+                                        width: "50%",
+                                        marginBottom: "2vh"
                                     }}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
-                                        <select className="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
-                                        style={{width: "10vw", 
-                                        height: "60%", 
-                                        border: "1px solid lightgrey", 
-                                        borderRadius: "3px",
-                                        backgroundColor: "white", 
-                                        paddingLeft: "1vw"}}>
-                                            <option></option>
-                                            <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
-                                            <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
-                                            <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
-                                            <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                            <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
-                                        </select>
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_room_change.r_reason.r_label")}
+                                            className="mb-3"
+                                        >
+                                        <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
+                                            style={{width: "12vw", 
+                                            height: "60%", 
+                                            border: "1px solid lightgrey", 
+                                            borderRadius: "3px",
+                                            backgroundColor: "white", 
+                                            paddingLeft: "1vw"}}>
+                                                <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
+                                                <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
+                                                <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                                <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
+                                        </Form.Select>
+                                        </FloatingLabel>
                                     </Form.Group>
                                     
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
-                                        <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
-                                        style={{width: "10vw", 
-                                        height: "60%", 
-                                        border: "1px solid lightgrey", 
-                                        borderRadius: "3px",
-                                        backgroundColor: "white", 
-                                        paddingLeft: "1vw"}}>
-                                            <option></option>
-                                            <option>{t("msh_room_change.r_state.s_dirty")}</option>
-                                            <option>{t("msh_room_change.r_state.s_clean")}</option>
-                                        </select>
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_room_change.r_state.s_label")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                                                style={{width: "12vw", 
+                                                height: "60%", 
+                                                border: "1px solid lightgrey", 
+                                                borderRadius: "3px",
+                                                backgroundColor: "white", 
+                                                paddingLeft: "1vw"}}>
+                                                    <option>{t("msh_room_change.r_state.s_dirty")}</option>
+                                                    <option>{t("msh_room_change.r_state.s_clean")}</option>
+                                            </Form.Select>
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row>
+                                    </div>
+                                    <div>
                                         <Form.Group controlId="details">
-                                            <Form.Label>{t("msh_room_change.r_details")}</Form.Label>
-                                            <Form.Control as="textarea" rows="3" style={{width: "25vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                            <FloatingLabel
+                                                controlId="floatingInput"
+                                                label={t("msh_room_change.r_details")}
+                                                className="mb-3"
+                                            >
+                                                <Form.Control as="textarea" rows="3" style={{width: "25vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                            </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
+                                    </div>
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des délogements" title={t("msh_room_change.r_table_title")}>
@@ -321,17 +351,17 @@ const Maid = ({userDB}) =>{
                                                     overlay={
                                                     <Popover 
                                                         id="popover-positioned-top">
-                                                        <Popover.Title as="h3">
+                                                        <Popover.Header as="h3">
                                                             <Input 
                                                                 placeholder={t("msh_room_change.r_action.a_attribute_room")}
                                                                 value={formValue.toRoom}
                                                                 name="toRoom"
                                                                 onChange={(e) => setFormValue({toRoom: e.target.value})}
                                                                 />
-                                                        </Popover.Title>
-                                                        <Popover.Content className="text-center">
+                                                        </Popover.Header>
+                                                        <Popover.Body className="text-center">
                                                             <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id, flow.userId)}>{t("msh_general.g_button.b_send")}</Button>
-                                                        </Popover.Content>
+                                                        </Popover.Body>
                                                     </Popover>
                                                     }
                                                 >
@@ -347,7 +377,7 @@ const Maid = ({userDB}) =>{
                                                             overlay={
                                                             <Popover 
                                                                 id="popover-positioned-top">
-                                                                <Popover.Title as="h3" className="text-center">
+                                                                <Popover.Header as="h3" className="text-center">
                                                                 <h6>{t("msh_room_change.r_state.s_label")}</h6>
                                                                 <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                                                                     style={{width: "5vw", 
@@ -360,10 +390,10 @@ const Maid = ({userDB}) =>{
                                                                         <option>{t("msh_room_change.r_state.s_dirty")}</option>
                                                                         <option>{t("msh_room_change.r_state.s_clean")}</option>
                                                                     </select>
-                                                                </Popover.Title>
-                                                                <Popover.Content className="text-center">
+                                                                </Popover.Header>
+                                                                <Popover.Body className="text-center">
                                                                     <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoomState(flow.id)}>{t("msh_general.g_button.b_send")}</Button>
-                                                                </Popover.Content>
+                                                                </Popover.Body>
                                                             </Popover>
                                                             }
                                                         >

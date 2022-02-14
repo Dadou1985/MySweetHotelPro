@@ -197,19 +197,21 @@ const Caisse = () =>{
                     <Modal.Header closeButton className="bg-light">
                         <Modal.Title id="contained-modal-title-vcenter" style={{
                         display: "flex",
+                        flexFlow: "row",
                         justifyContent: "space-between", 
                         width: "90%"
                     }}>
                         {t("msh_safe.s_title")}
                         <div style={{
-                            maxWidth: "50%",
+                            maxWidth: "70%",
                             display: "flex",
                             flexFlow: "row",
-                            justifyContent: "space-between"
+                            justifyContent: "space-between",
+                            alignItems: "center"
                         }}>
+                        <div style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</div>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                            <Form.Label style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</Form.Label>
-                            <select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={handleChange} 
+                            <Form.Select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={handleChange} 
                             style={{width: "10vw", 
                             height: "4vh", 
                             border: "1px solid lightgrey", 
@@ -222,13 +224,15 @@ const Caisse = () =>{
                                 <option value="matin">{t("msh_safe.s_select.s_morning_shift")}</option>
                                 <option value="soir">{t("msh_safe.s_select.s_afternoon_shift")}</option>
                                 <option value="nuit">{t("msh_safe.s_select.s_night_shift")}</option>
-                            </select>
+                            </Form.Select>
                             </Form.Group>
                             {!footerState && <MuiPickersUtilsProvider utils={DateFnsUtils}>
                             <DatePicker
-                                variant="dialog"
+                                variant="inline"
                                 ampm={false}
                                 value={filterDate}
+                                label={t('msh_messenger.m_calendar')}
+                                disableFuture
                                 onChange={handleDateChange}
                                 onError={console.log}
                                 format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}

@@ -94,7 +94,6 @@ console.log(userDB && userDB.language)
                         onChange={handleDateChange}
                         onError={console.log}
                         autoOk
-                        inputVariant="outlined"
                         label={t('msh_messenger.m_calendar')}
                         disableFuture
                         format={userDB && userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}

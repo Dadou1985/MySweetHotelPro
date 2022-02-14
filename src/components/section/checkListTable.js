@@ -107,9 +107,7 @@ const CheckListTable = ({shift}) => {
                     }
                 }}
                 />
-                <InputGroup.Append>
-                <Button variant="outline-success" onClick={handleSubmit}>{t("msh_check_list.c_button.b_validate")}</Button>
-                </InputGroup.Append>
+                    <Button variant="outline-success" onClick={handleSubmit}>{t("msh_check_list.c_button.b_validate")}</Button>
             </InputGroup>
             <PerfectScrollbar style={{height: "55vh"}}>
                 <Table striped bordered hover size="sm" className="text-center">

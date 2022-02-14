@@ -1,5 +1,5 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, FloatingLabel } from 'react-bootstrap'
 import Maintenance from '../../../svg/repair.svg'
 import { db, storage } from '../../../Firebase'
 import moment from 'moment'
@@ -186,43 +186,62 @@ const Repair = ({userDB}) =>{
                                     padding: "5%",
                                     textAlign: "center"
                                 }}>
-                                    <Form.Row>
+                                    <div style={{marginBottom: "2vh"}}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_maintenance.m_client")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_maintenance.m_client")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.client} name="client" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row>
+                                    </div>
+                                    <div style={{marginBottom: "2vh"}}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_maintenance.m_room")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_maintenance.m_room")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: 409" style={{width: "20vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row>
+                                    </div>
+                                    <div style={{marginBottom: "2vh"}}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <Form.Label>{t("msh_maintenance.m_type.t_label")}</Form.Label><br/>
-                                        <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
-                                        style={{width: "20vw", 
-                                        height: "6vh", 
-                                        border: "1px solid lightgrey", 
-                                        borderRadius: "3px",
-                                        backgroundColor: "white", 
-                                        paddingLeft: "1vw"}}>
-                                            <option></option>
-                                            <option value="paint">{t("msh_room_change.r_reason.r_paint")}</option>
-                                            <option value="plumbery">{t("msh_room_change.r_reason.r_plumbery")}</option>
-                                            <option value="electricity">{t("msh_room_change.r_reason.r_electricity")}</option>
-                                            <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                            <option value="others">{t("msh_room_change.r_reason.r_other")}</option>
-                                        </select>
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_maintenance.m_type.t_label")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
+                                            style={{width: "20vw", 
+                                            border: "1px solid lightgrey", 
+                                            borderRadius: "3px",
+                                            backgroundColor: "white", 
+                                            paddingLeft: "1vw"}}>
+                                                <option></option>
+                                                <option value="paint">{t("msh_room_change.r_reason.r_paint")}</option>
+                                                <option value="plumbery">{t("msh_room_change.r_reason.r_plumbery")}</option>
+                                                <option value="electricity">{t("msh_room_change.r_reason.r_electricity")}</option>
+                                                <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                <option value="others">{t("msh_room_change.r_reason.r_other")}</option>
+                                            </Form.Select>
+                                        </FloatingLabel>
                                     </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row>
+                                    </div>
+                                    <div>
                                         <Form.Group controlId="details">
-                                            <Form.Label>{t("msh_maintenance.m_details")}</Form.Label>
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_maintenance.m_details")}
+                                            className="mb-3"
+                                        >
                                             <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
+                                    </div>
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des problèmes techniques" title={t("msh_maintenance.m_second_tab_title")}>

@@ -1333,6 +1333,7 @@ input[type=number] {
 
 .checkList_allSelected_button {
     margin-bottom: 2vh;
+    width: 100%;
 }
 
 

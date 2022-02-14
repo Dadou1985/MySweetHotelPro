@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, FloatingLabel } from 'react-bootstrap'
 import Taxi from '../../../svg/taxi.svg'
 import { db } from '../../../Firebase'
 import moment from 'moment'
@@ -182,7 +182,7 @@ const Cab = ({userDB}) =>{
                                     padding: "5%",
                                     textAlign: "center"
                                 }}>
-                                    {!step && <Form.Row style={{
+                                    {!step && <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         alignItems: "center",
@@ -203,59 +203,85 @@ const Cab = ({userDB}) =>{
                                         />                                        
                                         </MuiPickersUtilsProvider>
                                         </Form.Group>
-                                    </Form.Row>}
+                                    </div>}
                                     {step &&
                                         <>
-                                        <Form.Row style={{
+                                        <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         alignItems: "center",
                                         justifyContent: "space-around",
-                                        width: "70%"
+                                        width: "50%",
+                                        marginBottom: "2vh"
                                     }}>
                                         <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_cab.c_client")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "10vw"}} value={formValue.client} name="client" onChange={handleChange} required />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_client")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "12vw"}} value={formValue.client} name="client" onChange={handleChange} required /> 
+                                        </FloatingLabel>
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description2">
-                                        <Form.Label>{t("msh_cab.c_room")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 409" style={{width: "10vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_room")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder="ex: 409" style={{width: "12vw"}} value={formValue.room} name="room" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row style={{
+                                    </div>
+                                    <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         alignItems: "center",
                                         justifyContent: "space-around",
-                                        width: "70%"
+                                        width: "50%",
+                                        marginBottom: "2vh"
                                     }}>
                                         <Form.Group controlId="description5">
-                                        <Form.Label>{t("msh_cab.c_pax")}</Form.Label>
-                                        <Form.Control type="number" style={{width: "10vw"}} value={formValue.passenger} name="passenger" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_pax")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control placeholder={t("msh_cab.c_pax")} type="number" style={{width: "12vw"}} value={formValue.passenger} name="passenger" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
                                     
                                         <Form.Group controlId="description6">
-                                        <Form.Label>{t("msh_cab.c_vehicule.v_label")}</Form.Label><br/>
-                                        <select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
-                                        style={{width: "10vw", 
-                                        height: "4vh", 
-                                        border: "1px solid lightgrey", 
-                                        borderRadius: "3px",
-                                        backgroundColor: "white", 
-                                        paddingLeft: "1vw"}}>
-                                            <option></option>
-                                            <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
-                                            <option>{t("msh_cab.c_vehicule.v_van")}</option>
-                                        </select>
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_vehicule.v_label")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
+                                            style={{
+                                            width: "12vw", 
+                                            border: "1px solid lightgrey", 
+                                            borderRadius: "3px",
+                                            backgroundColor: "white", 
+                                            paddingLeft: "1vw"}}>
+                                                <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                                                <option>{t("msh_cab.c_vehicule.v_van")}</option>
+                                            </Form.Select>
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
-                                    <Form.Row>
+                                    </div>
+                                    <div>
                                         <Form.Group controlId="description7">
-                                        <Form.Label>{t("msh_cab.c_destination.d_label")}</Form.Label>
-                                        <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} style={{width: "28vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_destination.d_label")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} style={{width: "25vw"}} value={formValue.destination} name="destination" onChange={handleChange} />
+                                        </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Row>
+                                    </div>
                                     </>}
                                 </div>
                             </Tab>
