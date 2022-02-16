@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Form, Button, Modal} from 'react-bootstrap'
+import {Form, Button, Modal, FloatingLabel} from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
 
@@ -82,17 +82,23 @@ const AdminRegister = ({hide, userDB}) => {
 
     return (
         <div> 
-            <Modal.Body>
             <div style={{
                     display: "flex",
                     flexFlow: "column wrap",
                     justifyContent: "space-around",
                     alignItems: "center",
-                    padding: "5%",
+                    padding: "1%",
                     textAlign: "center"
                 }}>
+                <h5 style={{marginBottom: "2vh"}}>{t("msh_admin_board.a_first_tab_title")}</h5>
                 <Form.Group controlId="formGroupName">
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label={t("msh_admin_board.a_cowoker")}
+                    className="mb-3"
+                    >
                     <Form.Control style={{width: "20vw"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
+                </FloatingLabel>
                 </Form.Group>
                 {/*<Form.Group controlId="formGroupEmail">
                     <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
@@ -105,13 +111,25 @@ const AdminRegister = ({hide, userDB}) => {
                     <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
                 </Form.Group>*/}
                 <Form.Group controlId="formGroupRefHotel">
+                <FloatingLabel
+                    controlId="floatingInput"
+                    label={t("msh_admin_board.a_email")}
+                    className="mb-3"
+                    >
                     <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
+                </FloatingLabel>
                 </Form.Group>
             </div>
-            </Modal.Body>
-            <Modal.Footer>
+            <div style={{
+                display: "flex",
+                flexFlow: "row",
+                justifyContent: "end",
+                width: "100%", 
+                borderTop: "1px solid lightgrey", 
+                padding: "1vw", 
+                float: "right"}}>
                 <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
-            </Modal.Footer>
+            </div>
          </div>
     )
 }

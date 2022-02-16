@@ -395,31 +395,31 @@ export default function RegisterFormSteps() {
                     {findHotelForm ? <div className="stepTwo_create_hotel_container">
                         <h5 style={{marginBottom: "3vh"}}><b>{t("msh_register_form.r_step.s_second.s_subtitle.s_create")}</b></h5>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.hotelName} name="hotelName" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.hotelName} name="hotelName" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_hote_name")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.region} name="region" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_region")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.region} name="region" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_region")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.departement} name="departement" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_district")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.departement} name="departement" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_district")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.city} name="city" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_city")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.city} name="city" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_city")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.code_postal} name="code_postal" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.code_postal} name="code_postal" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_code_postal")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.standing} name="standing" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_standing")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.standing} name="standing" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_standing")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.room} name="room" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_capacity")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.room} name="room" type="number" placeholder={t("msh_register_form.r_step.s_second.s_input.i_capacity")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.adresse} name="adresse" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_address")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.adresse} name="adresse" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_address")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
-                            <Form.Control className="stepTwo_create_form_input" value={formValue.phone} name="phone" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_phone")} onChange={handleChange} required />
+                            <Form.Control className="stepTwo_create_form_input" style={{ marginBottom: "1vh"}} value={formValue.phone} name="phone" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_phone")} onChange={handleChange} required />
                         </Form.Group>
                         <Form.Group controlId="formGroupName">
                             <Form.Control className="stepTwo_create_form_input" value={formValue.website} name="website" type="text" placeholder={t("msh_register_form.r_step.s_second.s_input.i_web")} onChange={handleChange} required />

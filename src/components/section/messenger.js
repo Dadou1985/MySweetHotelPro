@@ -11,7 +11,7 @@ import Send from '../../svg/paper-plane.svg'
 import Close from '../../svg/close.svg'
 import Calendar from '../../svg/calendar.svg'
 import Plus from '../../svg/plus3.svg'
-import { Modal, Button, Tooltip, OverlayTrigger } from 'react-bootstrap'
+import { Modal, Button, Tooltip, OverlayTrigger, } from 'react-bootstrap'
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import YellowCircle from '../../svg/yellow-circle.svg'

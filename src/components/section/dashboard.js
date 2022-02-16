@@ -386,10 +386,12 @@ console.log("------------", maintenanceCategory)
             onClick={() => setShowMaintenanceModal(true)}>
               <h5 style={{textAlign: "center", marginBottom: "0vh"}}>Taux d'incidence technique</h5>
               <p style={{textAlign: "center", color: "gray"}}>Sur les 7 derniers jours</p>
-              {maintenanceCategory !== {paint: [], electricity: [], plumbery: [], cleaning: [], others: []} ? <Chart type="pie" data={maintenanceData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+              {maintenance.length > 0 ? <Chart type="pie" data={maintenanceData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
-                alignItems: "center"
+                alignItems: "center",
+                borderTop: "1px solid lightgrey",
+                width: "70%"
               }}>
                 <div style={{
                     display: "flex",
@@ -405,7 +407,7 @@ console.log("------------", maintenanceCategory)
                     height: "12vh",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
-                    marginTop: "2vh",
+                    marginTop: "5vh",
                     marginBottom: "2vh"
                   }}>
                     <img src={PieChart} style={{width: "3vw"}} />

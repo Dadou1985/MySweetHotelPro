@@ -52,6 +52,7 @@ const handleDateChange = (date) => {
   setFilterDate(date);
 };
 
+const isBrowser = () => typeof window !== "undefined"
 moment.locale("fr")
 console.log(userDB && userDB.language)
 
@@ -63,7 +64,7 @@ console.log(userDB && userDB.language)
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}  
         <div style={{
-            display: "flex"
+            display: "flex",
           }}>
           <ToolBar />
           <div id="iziChat"  style={{
@@ -72,7 +73,7 @@ console.log(userDB && userDB.language)
             justifyContent: "flex-start",
             height: "100%",
             width: "100%",
-            backgroundImage: typeof window && window.innerWidth > 768 ? `url(${Book})` : "none",
+            backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Book})` : "none",
             backgroundRepeat: "no-repeat",
             backgroundPositionY: "5vh",
           }}>
@@ -81,11 +82,11 @@ console.log(userDB && userDB.language)
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "end",
-                height: "83vh",
-                width: typeof window !== `undefined` && window.innerWidth > 768 ? "55%" : "100%",
+                height: "80vh",
+                width: isBrowser() && window.innerWidth > 768 ? "55%" : "100%",
                 marginTop: "3vh"
               }}>
-                <div style={{paddingRight: typeof window && window.innerWidth > 768 ? "0vw" : "2vw"}}>
+                <div style={{paddingRight: isBrowser() && window.innerWidth > 768 ? "0vw" : "2vw"}}>
                   <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >
                     <DatePicker
                         variant="inline"

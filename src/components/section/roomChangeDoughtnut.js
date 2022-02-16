@@ -8,6 +8,7 @@ import { Chart } from 'primereact/chart';
 import Dougnut from '../../images/doughtnut.png'
 
 const RoomChangeDoughtnut = ({userDB, filter}) => {
+    const [data, setData] = useState([])
     const [roomChangeCategory, setRoomChangeCategory] = useState({noise: [], temperature: [], maintenance: [], housekeeping: [], others: []});
 
     useEffect(() => {
@@ -33,7 +34,8 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
                     const maintenance = snapInfo && snapInfo.filter(reason => reason.reason === "Technique")
                     const housekeeping = snapInfo && snapInfo.filter(reason => reason.reason === "Ménage")
                     const others = snapInfo && snapInfo.filter(reason => reason.reason === "Autres")
-
+                    
+                    setData(snapInfo)
                     setRoomChangeCategory({
                         noise: noise,
                         temperature: temperature,
@@ -86,7 +88,7 @@ const RoomChangeDoughtnut = ({userDB, filter}) => {
             border: "transparent",
             justifyContent: "center",
         }}>
-            {roomChangeCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []}  ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ width: '70%' }} /> : <div style={{
+            {data.length > 0 ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ width: '70%' }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"

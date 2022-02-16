@@ -37,6 +37,8 @@ const ChatPage = () => {
     return unsubscribe
 }, [])
 
+const isBrowser = () => typeof window !== "undefined"
+
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
@@ -47,7 +49,7 @@ const ChatPage = () => {
           <div style={{
             display: "flex"
           }}>
-            {typeof window && window.innerWidth > 768 ?
+            {isBrowser() && window.innerWidth > 768 ?
             <>
               <ToolBar />
               <div id="iziChat" className="dark_messenger_communizi_container">

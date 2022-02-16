@@ -45,6 +45,8 @@ const SinglePage = () => {
     return unsubscribe
   }, [])
 
+  const isBrowser = () => typeof window !== "undefined"
+
   console.log("******", userDB)
   
   return (
@@ -56,7 +58,7 @@ const SinglePage = () => {
         <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
-          backgroundImage: typeof window && window.innerWidth > 768 ? `url(${Background})` : "none",
+          backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           backgroundPositionX: "5vw",
@@ -71,19 +73,19 @@ const SinglePage = () => {
             height: "100%",
             width: "95%"
           }}>
-            <div style={{width: typeof window && window.innerWidth > 768 ? "50%" : "100%"}}>
+            <div style={{width: isBrowser() && window.innerWidth > 768 ? "50%" : "100%"}}>
               <h3 style={{
                 paddingTop: "3vh", 
-                paddingLeft: typeof window && window.innerWidth > 768 ? "3vw" : "0", 
-                textAlign: typeof window && window.innerWidth > 768 ? "left" : "center"}}>{t("msh_dashboard.d_title")}</h3>
+                paddingLeft: isBrowser() && window.innerWidth > 768 ? "3vw" : "0", 
+                textAlign: isBrowser() && window.innerWidth > 768 ? "left" : "center"}}>{t("msh_dashboard.d_title")}</h3>
               <div style={{
                 display: "flex", 
                 flexFlow: "row", 
                 fontSize: "1em", 
-                marginLeft: typeof window && window.innerWidth > 768 ? "3vw" : "0", 
-                marginBottom: typeof window && window.innerWidth > 768 ? "0" : "5vh",
+                marginLeft: isBrowser() && window.innerWidth > 768 ? "3vw" : "0", 
+                marginBottom: isBrowser() && window.innerWidth > 768 ? "0" : "5vh",
                 color: "gray", 
-                justifyContent: typeof window && window.innerWidth > 768 ? "left" : "center"}}>{moment().format('LL')}</div>
+                justifyContent: isBrowser() && window.innerWidth > 768 ? "left" : "center"}}>{moment().format('LL')}</div>
               {!!userDB && !!user&&
               <Dashboard userDB={userDB} user={user} />}
             </div>

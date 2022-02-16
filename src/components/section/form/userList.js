@@ -42,6 +42,7 @@ const UserList = ({userDB}) => {
 
     return (
         <div>
+            <h5 style={{marginBottom: "2vh", textAlign: "center"}}>{t("msh_admin_board.a_second_tab_title")}</h5>
             <PerfectScrollbar style={{height: "55vh"}}>
                 <Table striped bordered hover className=" text-center">
                     <thead className="bg-dark text-light">

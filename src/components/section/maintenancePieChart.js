@@ -8,6 +8,7 @@ import { Chart } from 'primereact/chart';
 import PieChart from '../../images/pie-chart.png'
 
 const MaintenancePieChart = ({userDB, filter}) => {
+    const [data, setData] = useState([])
     const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], housekeeping: [], others: []});
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const MaintenancePieChart = ({userDB, filter}) => {
                     const housekeeping = snapInfo && snapInfo.filter(reason => reason.type === "Ménage")
                     const others = snapInfo && snapInfo.filter(reason => reason.type === "Autres")
     
+                    setData(snapInfo)
                     setMaintenanceCategory({
                         paint: paint,
                         electricity: electricity,
@@ -86,7 +88,7 @@ const MaintenancePieChart = ({userDB, filter}) => {
             border: "transparent",
             justifyContent: "center",
         }}>
-            {maintenanceCategory !== {paint: [], electricity: [], plumbery: [], housekeeping: [], others: []}  ? <Chart type="pie" data={roomChangeData} options={lightOptions} style={{ width: '100%' }} /> : <div style={{
+            {data.length > 0 ? <Chart type="pie" data={roomChangeData} options={lightOptions} style={{ width: '70%' }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -101,14 +103,14 @@ const MaintenancePieChart = ({userDB, filter}) => {
                     border: '1px solid lightgrey',
                     borderRadius: "100%",
                     padding: "2vw",
-                    width: "6vw",
-                    height: "12vh",
+                    width: "20vw",
+                    height: "40vh",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginTop: "2vh",
                     marginBottom: "2vh"
                 }}>
-                    <img src={PieChart} style={{width: "3vw"}} />
+                    <img src={PieChart} style={{width: "50%"}} />
                 </div>
                 <h6>Aucune donnée trouvé</h6>
                 </div>}

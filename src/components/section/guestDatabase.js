@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
-import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton } from 'react-bootstrap'
+import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel } from 'react-bootstrap'
 import { db, functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -311,32 +311,49 @@ const GuestDatabase = ({user, userDB}) =>{
                                         </Form.Group>
                                         <div>
                                             <Form.Group controlId="description">
-                                            <Form.Label>{t("msh_crm.c_client")}</Form.Label>
-                                            <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.title} name="title" onChange={handleChange} />
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_crm.c_client")}
+                                            className="mb-3"
+                                            >
+                                                <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.title} name="title" onChange={handleChange} />
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div>
                                             <Form.Group controlId="description">
-                                            <Form.Label>{t("msh_crm.c_email")}</Form.Label>
-                                            <Form.Control type="text" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} />
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_crm.c_email")}
+                                            className="mb-3"
+                                            >
+                                                <Form.Control type="text" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} />
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div>
                                             <Form.Group controlId="description">
-                                            <Form.Label>{t("msh_crm.c_phone")}</Form.Label>
-                                            <Form.Control type="text" placeholder="ex: 0654789321" style={{width: "20vw"}} value={formValue.phone} name="phone" onChange={handleChange} />
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_crm.c_phone")}
+                                            className="mb-3"
+                                            >
+                                                <Form.Control type="text" placeholder="ex: 0654789321" style={{width: "20vw"}} value={formValue.phone} name="phone" onChange={handleChange} />
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>{t("msh_crm.c_origin.o_label")}</Form.Label><br/>
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_crm.c_origin.o_label")}
+                                            className="mb-3"
+                                            >
                                                 <Form.Select class="selectpicker" value={formValue.origin} name="origin" onChange={handleChange} 
                                                 style={{width: "20vw", 
-                                                height: "4vh", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option></option>
                                                     <option value="fr">France</option>
                                                     <option value="en">Royaume-uni</option>
                                                     <option value="de">Allemagne</option>
@@ -344,22 +361,27 @@ const GuestDatabase = ({user, userDB}) =>{
                                                     <option value="it">Italie</option>
                                                     <option value="pt">Portugal</option>
                                                 </Form.Select>
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>{t("msh_crm.c_category.c_label")}</Form.Label><br/>
-                                            <Form.Select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
-                                            style={{width: "20vw", 
-                                            height: "60%", 
-                                            border: "1px solid lightgrey", 
-                                            borderRadius: "3px",
-                                            backgroundColor: "white", 
-                                            paddingLeft: "1vw"}}>
-                                                <option></option>
-                                                <option>{t("msh_crm.c_category.c_tourisim")}</option>
-                                                <option>{t("msh_crm.c_category.c_business")}</option>
-                                            </Form.Select>
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_crm.c_origin.o_label")}
+                                            className="mb-3"
+                                            >
+                                                <Form.Select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
+                                                style={{width: "20vw", 
+                                                height: "60%", 
+                                                border: "1px solid lightgrey", 
+                                                borderRadius: "3px",
+                                                backgroundColor: "white", 
+                                                paddingLeft: "1vw"}}>
+                                                    <option>{t("msh_crm.c_category.c_tourisim")}</option>
+                                                    <option>{t("msh_crm.c_category.c_business")}</option>
+                                                </Form.Select>
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                     </div>
@@ -418,7 +440,7 @@ const GuestDatabase = ({user, userDB}) =>{
                     </Card>
                 </PerfectScrollbar>
                 </div>
-                {guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />}
+                {/*guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />*/}
             </div>
 
             <Modal show={showChat}
