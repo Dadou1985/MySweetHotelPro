@@ -8,7 +8,8 @@
             "b_reset": "Zurücksetzen",
             "b_update": "Jetzt aktualisieren",
             "b_upload": "Hochladen",
-            "b_add_photo": "Foto hinzufügen"
+            "b_add_photo": "Foto hinzufügen",
+            "b_user": "Nutzer"
         },
         "g_table": {
             "t_client": "Kunde",
@@ -46,9 +47,50 @@
 
     },
     "msh_dashboard": {
-       "d_title": "Armaturenbrett",
-       "d_chat_room": "Aktive Gespräche" 
-    },
+        "d_title": "Dashboard",
+        "d_chat_room": "Aktive Chats",
+        "d_doughnut_chart": {
+            "d_title": "Dislokationsrate",
+            "d_subtitle": "In den letzten 7 Tagen"
+        },
+        "d_pie_chart": {
+             "p_title": "Technische Trefferquote",
+             "p_subtitle": "In den letzten 7 Tagen"
+        },
+        "d_no_data": "Keine Daten",
+        "d_rate": "Rate",
+        "d_data_modal": {
+            "d_period_title": "Perioden",
+            "d_period": {
+                "p_week": "letzte 7 Tage",
+                "p_month": "letzte 4 Wochen",
+                "p_semester": "letzte 6 Monate",
+                "p_year": "letzten 4 Quartale"
+            }
+        },
+        "room_change_data": {
+            "d_noise": "Rauschen",
+            "d_temperature": "Temperatur",
+            "d_maintenance": "Technische Wartung",
+            "d_cleaning": "Reinigung",
+            "d_others": "Andere"
+        },
+        "maintenance_data": {
+         "d_paint": "Malen",
+         "d_electricity": "Strom",
+         "d_plumbery": "Sanitär",
+         "d_cleaning": "Reinigung",
+         "d_others": "Andere"
+         },
+         "d_time_period": {
+             "t_day": "Tag",
+             "t_week": "Woche",
+             "t_month": "Monat",
+             "t_trimester": "Quartal",
+             "t_semester": "Semester",
+             "t_year": "Jahr"
+         }
+     },
     "msh_connexion": {
         "c_email_maj": "E-Mail",
         "c_email": "E-Mail",
@@ -290,15 +332,22 @@
         },
         "c_chat_title": "Diskussionsthread",
         "c_button": {
-            "b_add": "Kunden hinzufügen",
-            "b_send_mail": "Eine Willkommens-E-Mail senden",
-            "b_contact": "Kontaktieren Sie den Kunden",
+            "b_add": "Kunde hinzufügen",
+            "b_send_mail": "Willkommens-E-Mail senden",
+            "b_contact": "Kunden kontaktieren",
             "b_chat": "Chat anzeigen",
             "b_cancel": "Abbrechen",
-            "b_send_em_all": "E-Mails senden"
+            "b_send_em_all": "E-Mails senden",
+            "b_check_chat": "Chat prüfen"
         },
-        "c_notif": "Sie haben soeben einen Kunden zur Datenbank hinzugefügt!",
-        "c_notif_mails": "Die E-Mails wurden versendet!"
+        "c_chat_modal_title": "",
+        "c_notif": "Sie haben gerade einen Kunden zur Datenbank hinzugefügt!",
+        "c_notif_mails": "E-Mails erfolgreich versendet!",
+        "c_guest_line": {
+            "g_title": "Aufenthaltsliste",
+            "g_services": "Dienste",
+            "g_event": "Ereignisse"
+        }
     },
     "msh_check_list": {
         "c_title": "Check-Liste",

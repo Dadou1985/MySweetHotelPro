@@ -322,6 +322,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         })
     }
 
+    const isBrowser = () => typeof window !== "undefined"
       
     console.log("eeeeeeeeeeee", userDB)
 
@@ -340,13 +341,13 @@ const Dilema = ({user, userDB, setUserDB}) => {
                             <img src={Arrow} alt="arrow" style={{width: "1vw", cursor: "pointer", marginLeft: "1vw", transform: "rotate(0turn)"}} id="arrowTop" onClick={handleShowDetails} /> 
                         </div>*/}
                     </h1>
-                       <div style={{display: typeof window && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
+                       <div style={{display: isBrowser() && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
                         </div>
-                        <Divider style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
+                        <Divider style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
                 </div>
-                <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
+                <div style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdateEmail}>
@@ -362,7 +363,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         </div>
                     </div>
                 </div>
-                {userDB.adminStatus && <div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
+                {userDB.adminStatus && <div style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
@@ -393,11 +394,11 @@ const Dilema = ({user, userDB, setUserDB}) => {
             </Modal.Header>
             <Modal.Body>
             <div className="update_modal_container">
-            <Form.Row>
+            <div>
                 <Form.Group controlId="description">
                 <Form.Control type="text" placeholder={t("msh_user_panel.u_section.s_email.e_input_placeholder")} style={{width: "30vw", textAlign: "center"}} value={formValue.email} name="email" onChange={handleChange} />
                 </Form.Group>
-            </Form.Row>
+            </div>
             </div>
             </Modal.Body>
             <Modal.Footer>
@@ -422,11 +423,11 @@ const Dilema = ({user, userDB, setUserDB}) => {
             </Modal.Header>
             <Modal.Body>
             <div className="update_modal_container">
-            <Form.Row>
+            <div>
                 <Form.Group controlId="description">
                 <Form.Control type="text" placeholder={t("msh_user_panel.u_section.s_password.p_input_placeholder")} style={{width: "30vw", textAlign: "center"}} value={formValue.password} name="password" onChange={handleChange} />
                 </Form.Group>
-            </Form.Row>
+            </div>
             </div>
             </Modal.Body>
             <Modal.Footer>
@@ -542,7 +543,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         <Avatar alt="user-profile-photo" 
         src={user.photoURL ? user.photoURL : DefaultProfile}
         style={{
-            display: typeof window && window.innerWidth > 768 ? "none" : "flex",
+            display: isBrowser() && window.innerWidth > 768 ? "none" : "flex",
             position: "absolute",
             top: "35vh",
             left: "28vw",

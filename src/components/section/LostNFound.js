@@ -16,11 +16,13 @@ const LostNFound = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({type: "", place: "", details: "", description: ""})
+    const [formValue, setFormValue] = useState({type: "tech", place: "hall", details: "", description: ""})
+    const [typeClone, setTypeClone] = useState(null)
+    const [placeClone, setPlaceClone] = useState(null)
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const [filter, setFilter] = useState("High Tech")
+    const [filter, setFilter] = useState("tech")
     const [item, setItem] = useState({
         img: LostOnes,
         description: t("msh_lost_found.l_sheet.s_title"),
@@ -61,8 +63,10 @@ const LostNFound = ({userDB}) =>{
             description: formValue.description,
             details: formValue.details,
             place: formValue.place,
+            placeClone: placeClone !== null ? placeClone : t("msh_lost_found.l_place.p_hall"),
             markup: Date.now(),
             type: formValue.type,
+            typeClone: typeClone !== null ? typeClone : "High Tech",
             status: false
             })
         .then(handleClose)
@@ -110,10 +114,10 @@ const LostNFound = ({userDB}) =>{
                     padding: "1%",
                 }}>
                 <Tabs defaultActiveKey="High Tech" id="uncontrolled-tab-example" onSelect={(eventKey) => {
-                    if(eventKey === "High Tech") {return setFilter("High Tech")}
-                    if(eventKey === "Documents") {return setFilter("Documents Officiels")}
-                    if(eventKey === "Vêtements") {return setFilter("Vêtements")}
-                    if(eventKey === "Autres") {return setFilter("Autres")}
+                    if(eventKey === "High Tech") {return setFilter("tech")}
+                    if(eventKey === "Documents") {return setFilter("ids")}
+                    if(eventKey === "Vêtements") {return setFilter("clothes")}
+                    if(eventKey === "Autres") {return setFilter("others")}
                 }}>
                     <Tab eventKey="High Tech" title="High Tech"></Tab>
                     <Tab eventKey="Documents" title={t("msh_lost_found.l_second_tab_title")}></Tab>
@@ -142,7 +146,7 @@ const LostNFound = ({userDB}) =>{
                                         <td><img src={Picture} style={{width: "1vw"}} /></td>}
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
-                                        <td>{flow.place}</td>
+                                        <td>{flow.placeClone}</td>
                                         <td>{flow.author}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             return db.collection('hotels')
@@ -195,10 +199,10 @@ const LostNFound = ({userDB}) =>{
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option>High Tech</option>
-                                                    <option>{t("msh_lost_found.l_second_tab_title")}</option>
-                                                    <option>{t("msh_lost_found.l_third_tab_title")}</option>
-                                                    <option>{t("msh_lost_found.l_fourth_tab_title")}</option>
+                                                    <option value="tech" onClick={() => setTypeClone("High Tech")}>High Tech</option>
+                                                    <option value="ids" onClick={() => setTypeClone(t("msh_lost_found.l_second_tab_title"))} >{t("msh_lost_found.l_second_tab_title")}</option>
+                                                    <option value="clothes" onClick={() => setTypeClone(t("msh_lost_found.l_third_tab_title"))} >{t("msh_lost_found.l_third_tab_title")}</option>
+                                                    <option value="others" onClick={() => setTypeClone(t("msh_lost_found.l_fourth_tab_title"))} >{t("msh_lost_found.l_fourth_tab_title")}</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </div>
@@ -211,12 +215,12 @@ const LostNFound = ({userDB}) =>{
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option>{t("msh_lost_found.l_place.p_hall")}</option>
-                                                    <option>{t("msh_lost_found.l_place.p_restaurant")}</option>
-                                                    <option>{t("msh_lost_found.l_place.p_parking")}</option>
-                                                    <option>{t("msh_lost_found.l_place.p_toilet")}</option>
-                                                    <option>{t("msh_lost_found.l_place.p_floors")}</option>
-                                                    <option>{t("msh_lost_found.l_place.p_other")}</option>
+                                                    <option value="hall" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_hall"))}>{t("msh_lost_found.l_place.p_hall")}</option>
+                                                    <option value="restaurant" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_restaurant"))}>{t("msh_lost_found.l_place.p_restaurant")}</option>
+                                                    <option value="parking" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_parking"))}>{t("msh_lost_found.l_place.p_parking")}</option>
+                                                    <option value="toilet" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_toilet"))}>{t("msh_lost_found.l_place.p_toilet")}</option>
+                                                    <option value="floors" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_floors"))}>{t("msh_lost_found.l_place.p_floors")}</option>
+                                                    <option value="others" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_other"))}>{t("msh_lost_found.l_place.p_other")}</option>
                                                 </Form.Select>
                                             </Form.Group>
                                         </div>

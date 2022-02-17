@@ -8,7 +8,8 @@
             "b_reset": "Restablecer",
             "b_update": "Actualizar ahora",
             "b_upload": "Subir",
-            "b_add_photo": "Agregar una foto"
+            "b_add_photo": "Agregar una foto",
+            "b_user": "Usuario"
         },
         "g_table": {
             "t_client": "Cliente",
@@ -46,9 +47,50 @@
 
     },
     "msh_dashboard": {
-       "d_title": "Salpicadero",
-       "d_chat_room": "Conversaciones activas" 
-    },
+        "d_title": "Panel de control",
+        "d_chat_room": "Chats activos",
+        "d_donut_chart": {
+            "d_title": "Tasa de desalojo",
+            "d_subtitle": "Durante los últimos 7 días"
+        },
+        "d_pie_chart": {
+             "p_title": "Porcentaje de aciertos técnicos",
+             "p_subtitle": "Durante los últimos 7 días"
+        },
+        "d_no_data": "Sin datos",
+        "d_rate": "Calificar",
+        "d_data_modal": {
+            "d_period_title": "Períodos",
+            "d_period": {
+                "p_week": "últimos 7 días",
+                "p_month": "últimas 4 semanas",
+                "p_semester": "últimos 6 meses",
+                "p_year": "últimos 4 trimestres"
+            }
+        },
+        "room_change_data": {
+            "d_noise": "Ruido",
+            "d_temperature": "Temperatura",
+            "d_maintenance": "Mantenimiento técnico",
+            "d_cleaning": "Limpiando",
+            "d_others": "Otros"
+        },
+        "maintenance_data": {
+         "d_paint": "Pintar",
+         "d_electricity": "Electricidad",
+         "d_plumbery": "Plomería",
+         "d_cleaning": "Limpiando",
+         "d_others": "Otros"
+         },
+         "d_time_period": {
+             "t_day": "Día",
+             "t_week": "Semana",
+             "t_month": "Mois",
+             "t_trimester": "Trimestre",
+             "t_semester": "Semestre",
+             "t_year": "Année"
+         }
+     },
     "msh_connexion": {
         "c_email_maj": "Correo electrónico",
         "c_email": "correo electrónico",
@@ -290,15 +332,22 @@
         },
         "c_chat_title": "Hilo de discusión",
         "c_button": {
-            "b_add": "Agregar un cliente",
-            "b_send_mail": "Enviar un correo electrónico de bienvenida",
-            "b_contact": "Comuníquese con el cliente",
+            "b_add": "Agregar cliente",
+            "b_send_mail": "Enviar correo electrónico de bienvenida",
+            "b_contact": "Contactar con el cliente",
             "b_chat": "Mostrar chat",
             "b_cancel": "Cancelar",
-            "b_send_em_all": "Enviar correos electrónicos"
+            "b_send_em_all": "Enviar correos electrónicos",
+            "b_check_chat": "Comprobar chat"
         },
-        "c_notif": "¡Acaba de agregar un cliente a la base de datos!",
-        "c_notif_mails": "¡Los correos electrónicos han sido enviados!"
+        "c_chat_modal_title": "",
+        "c_notif": "¡Acabas de agregar un cliente a la base de datos!",
+        "c_notif_mails": "¡Correos electrónicos enviados con éxito!",
+        "c_guest_line": {
+            "g_title": "Lista de estancias",
+            "g_services": "Servicios",
+            "g_event": "Eventos"
+        }
     },
     "msh_check_list": {
         "c_title": "Lista de verificación",

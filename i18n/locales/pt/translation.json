@@ -8,7 +8,8 @@
             "b_reset": "Reiniciar",
             "b_update": "Atualizar agora",
             "b_upload": "Upload",
-            "b_add_photo": "Adicionar uma foto"
+            "b_add_photo": "Adicionar uma foto",
+            "b_user": "Do utilizador"
         },
         "g_table": {
             "t_client": "Cliente",
@@ -46,9 +47,50 @@
 
     },
     "msh_dashboard": {
-       "d_title": "Painel de controle",
-       "d_chat_room": "Conversas ativas" 
-    },
+        "d_title": "Painel",
+        "d_chat_room": "Chats ativos",
+        "d_doughnut_chart": {
+            "d_title": "Taxa de deslocamento",
+            "d_subtitle": "Nos últimos 7 dias"
+        },
+        "d_pie_chart": {
+             "p_title": "Taxa de acerto técnico",
+             "p_subtitle": "Nos últimos 7 dias"
+        },
+        "d_no_data": "Sem dados",
+        "d_rate": "Avaliar",
+        "d_data_modal": {
+            "d_period_title": "Períodos",
+            "d_period": {
+                "p_week": "últimos 7 dias",
+                "p_month": "últimas 4 semanas",
+                "p_semester": "últimos 6 meses",
+                "p_year": "últimos 4 trimestres"
+            }
+        },
+        "room_change_data": {
+            "d_noise": "Ruído",
+            "d_temperature": "Temperatura",
+            "d_maintenance": "Manutenção técnica",
+            "d_cleaning": "Limpeza",
+            "d_others": "Outros"
+        },
+        "maintenance_data": {
+         "d_paint": "Pintura",
+         "d_electricity": "Eletricidade",
+         "d_plumbery": "Encanamento",
+         "d_cleaning": "Limpeza",
+         "d_others": "Outros"
+         },
+         "d_time_period": {
+             "t_day": "Jornada",
+             "t_week": "Semana",
+             "t_mês": "Mais",
+             "t_trimester": "Trimestre",
+             "t_semestre": "Semestre",
+             "t_year": "Année"
+         }
+     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",
@@ -290,15 +332,22 @@
         },
         "c_chat_title": "Tópico de discussão",
         "c_button": {
-            "b_add": "Adicionar um cliente",
-            "b_send_mail": "Envie um e-mail de boas-vindas",
-            "b_contact": "Contactar o cliente",
+            "b_add": "Adicionar cliente",
+            "b_send_mail": "Enviar email de boas-vindas",
+            "b_contact": "Contatar cliente",
             "b_chat": "Mostrar bate-papo",
             "b_cancel": "Cancelar",
-            "b_send_em_all": "Enviar e-mails"
+            "b_send_em_all": "Enviar e-mails",
+            "b_check_chat": "Verificar bate-papo"
         },
+        "c_chat_modal_title": "",
         "c_notif": "Você acabou de adicionar um cliente ao banco de dados!",
-        "c_notif_mails": "Os emails foram enviados!"
+        "c_notif_mails": "E-mails enviados com sucesso!",
+        "c_guest_line": {
+            "g_title": "Lista de estadias",
+            "g_services": "Serviços",
+            "g_event": "Eventos"
+        }
     },
     "msh_check_list": {
         "c_title": "Lista de verificação",

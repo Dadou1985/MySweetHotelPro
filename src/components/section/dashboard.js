@@ -7,8 +7,7 @@ import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
 import Notebook from '../../svg/notebook.png'
 import ChatLogo from '../../images/chat.png'
-import PieChart from '../../images/pie-chart.png'
-import Dougnut from '../../images/doughtnut.png'
+import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate';
 
@@ -16,70 +15,94 @@ const Dashboard = ({user, userDB}) => {
   const { t, i18n } = useTranslation()
   const [consigne, setConsigne] = useState([]);
   const [chat, setChat] = useState([]);
-  const [taxi, setTaxi] = useState([]);
-  const [alarm, setAlarm] = useState([]);
   const [roomChange, setRoomChange] = useState([]);
   const [maintenance, setMaintenance] = useState([]);
-  const [roomChangeCategory, setRoomChangeCategory] = useState({noise: [], temperature: [], maintenance: [], cleaning: [], others: []});
-  const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], cleaning: [], others: []});
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
+  const reasonFilter = (array, start, end) => {
+    const arrayFiltered = array.filter(reason => {return reason.markup < start && reason.markup > end})
+    return arrayFiltered.length
+}
 
-  const roomChangeData = {
-    labels: ['Bruit', 'Température', 'Technique', 'Ménage', 'Autres'],
-    datasets: [
-        {
-            data: [roomChangeCategory.noise.length, roomChangeCategory.temperature.length, roomChangeCategory.maintenance.length, roomChangeCategory.cleaning.length, roomChangeCategory.others.length],
-            backgroundColor: [
-                "yellow",
-                "blue",
-                "red",
-                "green",
-                "orange"
-            ],
-            hoverBackgroundColor: [
-              "yellow",
-              "blue",
-              "red",
-              "green",
-              "orange"
-            ]
-        }]
-};
+const oneDayAgo = Date.now() - 86400000
+const twoDayAgo = Date.now() - 172800000
+const threeDayAgo = Date.now() - 259200000
+const fourDayAgo = Date.now() - 345600000
+const fiveDayAgo = Date.now() - 432000000
+const sixDayAgo = Date.now() - 518400000
+const sevenDayAgo = Date.now() - 604800000
 
-const lightOptions = {
-    plugins: {
-        legend: {
-            labels: {
-                color: '#495057',
-            },
-            position: "bottom"
-        }
-    }
-};
+const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
 
-const maintenanceData = {
-  labels: ['Peinture', 'Electricité', 'Plomberie', 'Ménage', 'Autres'],
+const roomChangeData = {
+  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`],
   datasets: [
     {
-      data: [maintenanceCategory.paint.length, maintenanceCategory.electricity.length, maintenanceCategory.plumbery.length, maintenanceCategory.cleaning.length, maintenanceCategory.others.length],
-      backgroundColor: [
-        "yellow",
-        "blue",
-        "red",
-        "green",
-        "orange"
-    ],
-    hoverBackgroundColor: [
-      "yellow",
-      "blue",
-      "red",
-      "green",
-      "orange"
-    ]
-  }]
+        data: [
+          reasonFilter(roomChange, sixDayAgo, sevenDayAgo),
+          reasonFilter(roomChange, fiveDayAgo, sixDayAgo),
+          reasonFilter(roomChange, fourDayAgo, fiveDayAgo),
+          reasonFilter(roomChange, threeDayAgo, fourDayAgo),
+          reasonFilter(roomChange, twoDayAgo, threeDayAgo),
+          reasonFilter(roomChange, oneDayAgo, twoDayAgo),
+          reasonFilter(roomChange, Date.now(), oneDayAgo)
+        ],
+        backgroundColor: "black",
+        label: t('msh_dashboard.d_rate')
+    }]
+};
+
+
+const maintenanceData = {
+  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`],
+  datasets: [
+    {
+      data: [
+        reasonFilter(maintenance, sixDayAgo, sevenDayAgo),
+        reasonFilter(maintenance, fiveDayAgo, sixDayAgo),
+        reasonFilter(maintenance, fourDayAgo, fiveDayAgo),
+        reasonFilter(maintenance, threeDayAgo, fourDayAgo),
+        reasonFilter(maintenance, twoDayAgo, threeDayAgo),
+        reasonFilter(maintenance, oneDayAgo, twoDayAgo),
+        reasonFilter(maintenance, Date.now(), oneDayAgo)
+      ],
+      backgroundColor: "black",
+      label: t('msh_dashboard.d_rate')
+    }]
 }
+
+
+let basicOptions = {
+  maintainAspectRatio: false,
+  aspectRatio: .8,
+  plugins: {
+      legend: {
+          labels: {
+              color: '#495057'
+          }
+      }
+  },
+  scales: {
+      x: {
+          ticks: {
+              color: '#495057'
+          },
+          grid: {
+              color: '#ebedef'
+          }
+      },
+      y: {
+          ticks: {
+              color: '#495057'
+          },
+          grid: {
+              color: '#ebedef'
+          }
+      }
+  }
+};
+
 
   useEffect(() => {
     const noteOnAir = () => {
@@ -131,57 +154,13 @@ const maintenanceData = {
     return unsubscribe
    },[])
 
-   useEffect(() => {
-    const toolOnAir = () => {
-        return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection("cab")
-        .orderBy("markup", "asc")
-    }
-
-    let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                const snapInfo = []
-              snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                  })        
-                });
-                console.log(snapInfo)
-                setTaxi(snapInfo)
-            });
-            return unsubscribe
- },[])
- useEffect(() => {
-  const toolOnAir = () => {
-      return db.collection('hotels')
-      .doc(userDB.hotelId)
-      .collection("clock")
-      .orderBy("markup", "asc")
-  }
-
-  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-              const snapInfo = []
-            snapshot.forEach(function(doc) {          
-              snapInfo.push({
-                  id: doc.id,
-                  ...doc.data()
-                })        
-              });
-              console.log(snapInfo)
-              setAlarm(snapInfo)
-          });
-          return unsubscribe
-},[])
-
-const roomChangeWeekAgo = Date.now() - 604800000
 
 useEffect(() => {
   const toolOnAir = () => {
       return db.collection('hotels')
       .doc(userDB.hotelId)
       .collection("roomChange")
-      .where("markup", ">=", roomChangeWeekAgo)
+      .where("markup", ">=", sevenDayAgo)
   }
 
   let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -194,32 +173,17 @@ useEffect(() => {
               });
               console.log(snapInfo)
               setRoomChange(snapInfo)
-
-              const noise = snapInfo && snapInfo.filter(reason => reason.reason === "noise")
-              const temperature = snapInfo && snapInfo.filter(reason => reason.reason === "temperature")
-              const maintenance = snapInfo && snapInfo.filter(reason => reason.reason === "maintenance")
-              const cleaning = snapInfo && snapInfo.filter(reason => reason.reason === "cleaning")
-              const others = snapInfo && snapInfo.filter(reason => reason.reason === "others")
-
-              setRoomChangeCategory({
-                noise: noise,
-                temperature: temperature,
-                maintenance: maintenance,
-                cleaning: cleaning,
-                others: others
-              })
           });
           return unsubscribe
 },[])
 
-const maintenanceWeekAgo = Date.now() - 604800000
 
 useEffect(() => {
   const toolOnAir = () => {
       return db.collection('hotels')
       .doc(userDB.hotelId)
       .collection("maintenance")
-      .where("markup", ">=", maintenanceWeekAgo)
+      .where("markup", ">=", sevenDayAgo)
   }
 
   let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
@@ -232,27 +196,10 @@ useEffect(() => {
               });
 
               setMaintenance(snapInfo)
-
-              const paint = snapInfo && snapInfo.filter(reason => reason.type === "paint")
-              const electricity = snapInfo && snapInfo.filter(reason => reason.type === "electricity")
-              const plumbery = snapInfo && snapInfo.filter(reason => reason.type === "plumbery")
-              const cleaning = snapInfo && snapInfo.filter(reason => reason.type === "cleaning")
-              const others = snapInfo && snapInfo.filter(reason => reason.type === "others")
-
-
-              console.log(snapInfo)
-              setMaintenanceCategory({
-                paint: paint,
-                electricity: electricity,
-                plumbery: plumbery,
-                cleaning: cleaning,
-                others: others
-              })
           });
           return unsubscribe
 },[])
 
-console.log("------------", maintenanceCategory)
 
   return <div style={{
       display: "flex",
@@ -277,15 +224,15 @@ console.log("------------", maintenanceCategory)
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: "4vw",
-                  height: "8vh",
+                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  height: typeof window && window.innerWidth > 768 ? "8vh" : "11vh",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={Notebook} style={{width: "2vw"}} />
+                  <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "7vw"}} />
                 </div>
-                <div style={{paddingLeft: "2vw"}}>
+                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
                   <h3>{consigne.length > 0 ? consigne.length : 0} </h3>
                   <h6 className='dashboard-note-title'>{t("msh_messenger.m_note_big_title")}</h6>
                 </div>
@@ -304,15 +251,15 @@ console.log("------------", maintenanceCategory)
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: "4vw",
-                  height: "8vh",
+                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  height: typeof window && window.innerWidth > 768 ? "8vh" : "11vh",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={ChatLogo} style={{width: "2vw"}} />
+                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "9vw"}} />
                 </div>
-                <div style={{paddingLeft: "2vw"}}>
+                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
                   <h3>{chat.length > 0 ? chat.length : 0}</h3>
                   <h6 className='dashboard-note-title'>{t("msh_dashboard.d_chat_room")}</h6>
                 </div>
@@ -322,28 +269,13 @@ console.log("------------", maintenanceCategory)
         <div style={{
           width: "100%",
           display: "flex",
-          flexFlow: "row",
+          flexFlow:  typeof window && window.innerWidth > 768 ? "row" : "column",
           justifyContent: "space-around"
         }}>
-          <div className="card" style={{
-            display: "flex",
-            flexFlow: "column",
-            alignItems: "center",
-            width: "45%", 
-            height: "40vh",
-            backgroundColor: "whitesmoke",
-            borderRadius: "10px",
-            border: "1px solid lightgrey", 
-            borderBottom: "2px solid lightgrey",
-            borderRight: "2px solid lightgrey",
-            padding: "3%",
-            cursor: "pointer"
-          }} 
-          className="dashboard-icon" 
-          onClick={() => setShowRoomChangeModal(true)}>
-              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>Taux de délogement en interne</h5>
-              <p style={{textAlign: "center", color: "gray"}}>Sur les 7 derniers jours</p>
-              {roomChange.length > 0 ? <Chart type="doughnut" data={roomChangeData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "3vh" }} /> : <div style={{
+          <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowRoomChangeModal(true)}>
+              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_doughnut_chart.d_title')}</h5>
+              <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_doughnut_chart.d_subtitle')}</p>
+              {roomChange.length > 0 ? <Chart type="bar" data={roomChangeData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -365,28 +297,15 @@ console.log("------------", maintenanceCategory)
                     marginTop: "2vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={Dougnut} style={{width: "3vw"}} />
+                    <img src={BarChart} style={{width: "3vw"}} />
                   </div>
-                  <h6>Aucune donnée trouvé</h6>
+                  <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}
           </div>
-          <div className="card" style={{
-            display: "flex",
-            flexFlow: "column",
-            alignItems: "center",
-            width: "45%", 
-            backgroundColor: "whitesmoke",
-            borderRadius: "10px",
-            border: "1px solid lightgrey", 
-            borderBottom: "2px solid lightgrey",
-            borderRight: "2px solid lightgrey",
-            padding: "3%",
-            cursor: "pointer"
-          }} className="dashboard-icon"
-            onClick={() => setShowMaintenanceModal(true)}>
-              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>Taux d'incidence technique</h5>
-              <p style={{textAlign: "center", color: "gray"}}>Sur les 7 derniers jours</p>
-              {maintenance.length > 0 ? <Chart type="pie" data={maintenanceData} options={lightOptions} style={{ position: 'relative', width: '75%', borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+          <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowMaintenanceModal(true)}>
+              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_pie_chart.p_title')}</h5>
+              <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_pie_chart.p_subtitle')}</p>
+              {maintenance.length > 0 ? <Chart type="bar" data={maintenanceData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center",
@@ -410,29 +329,15 @@ console.log("------------", maintenanceCategory)
                     marginTop: "5vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={PieChart} style={{width: "3vw"}} />
+                    <img src={BarChart} style={{width: "3vw"}} />
                   </div>
-                  <h6>Aucune donnée trouvé</h6>
+                  <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}
           </div>
         </div>
 
         <RoomChangeRate userDB={userDB} showModal={showRoomChangeModal} closeModal={() => setShowRoomChangeModal(false)} />
         <MaintenanceRate userDB={userDB} showModal={showMaintenanceModal} closeModal={() => setShowMaintenanceModal(false)} />
-      {/*<div className='dashboard-task-container'>
-        <div>
-          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
-              <img src={Taxi}  style={{width: "3vw"}} /><h5 style={{position: "absolute", marginLeft: "7vw"}}>{taxi.length}</h5>
-          </div>
-          <h6 style={{display: "flex", flexFlow: "row wrap", justifyContent: "center"}}>{t("msh_toolbar.tooltip_cab")}</h6>
-        </div>
-        <div>
-          <div className='dasboard-task-badge softSkin dashboard-circle-icon'>
-              <img src={Timer} style={{width: "3vw"}} /><h5 style={{position: "absolute", marginLeft: "7vw"}}>{alarm.length}</h5>
-          </div>
-          <h6 style={{display: "flex", flexFlow: "row wrap", justifyContent: "center"}}>{t("msh_toolbar.tooltip_alarm")}</h6>
-        </div>
-      </div>*/}
   </div>;
 }
 

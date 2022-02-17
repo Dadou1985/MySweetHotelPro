@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Form } from 'react-bootstrap'
-import Send from '../../../../svg/paper-plane.svg'
+import Send from '../../../../images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -181,7 +181,7 @@ export default function PhoneSupport({user, userDB}) {
             <div className={typeof window !== `undefined` && window.innerWidth < 768 && "communizi_form_input_div"}>
                 <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder={t("msh_support.s_input_placeholder")} onChange={handleChange} required />
-                    <img src={Send} alt="sendIcon" style={{width: "7vw", borderRadius: "100%"}} onClick={async() => {
+                    <img src={Send} alt="sendIcon" style={{width: "8%"}} onClick={async() => {
                     await getChatRoom()
                     if(chatRoom !== null) {
                         return updateRoomnameSubmit()

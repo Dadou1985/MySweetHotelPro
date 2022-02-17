@@ -1,6 +1,6 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
-import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel } from 'react-bootstrap'
+import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { db, functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -33,7 +33,6 @@ import TimeLine from './guestTimeLine'
 import ChatIcon from '../../images/dialog.png'
 import Services from '../../images/services.png'
 import Puzzle from '../../images/warning.png'
-import { Tooltip } from 'primereact/tooltip';
 import Binocular from '../../images/binoculars.png'
 
 const GuestDatabase = ({user, userDB}) =>{
@@ -42,10 +41,10 @@ const GuestDatabase = ({user, userDB}) =>{
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({title: "", gender: "", phone:"", email: "", category: ""})
+    const [categoryClone, setCategoryClone] = useState(null)
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const [filter, setFilter] = useState("High Tech")
     const [item, setItem] = useState({
         img: LostOnes,
         username: t("msh_crm.c_sheet.s_title"),
@@ -103,6 +102,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 gender: radioValueGender,
                 guestLanguage: formValue.origin,
                 guestCategory: formValue.category,
+                guestCategoryClone: categoryClone !== null ? categoryClone : t("msh_crm.c_category.c_tourisim"),
                 phone: formValue.phone,
                 markup: Date.now()
                 })
@@ -235,7 +235,7 @@ const GuestDatabase = ({user, userDB}) =>{
                                             </span>
                                         </td>
                                         <td style={{width: "5vw"}}>{flow.language && renderSwitchFlag(flow.language)}</td>
-                                        <td style={{paddingTop: "3vh"}}>{flow.guestCategory && flow.guestCategory}</td>
+                                        <td style={{paddingTop: "3vh"}}>{flow.guestCategoryClone && flow.guestCategoryClone}</td>
                                         {flow.hotelId === userDB.hotelId ? 
                                             <td style={{paddingTop: "3vh"}}><StyledBadge badgeContent="" color="primary">.</StyledBadge></td>
                                          : <td style={{paddingTop: "3vh"}}><StyledBadge badgeContent="" color="secondary">.</StyledBadge></td>}
@@ -378,8 +378,8 @@ const GuestDatabase = ({user, userDB}) =>{
                                                 borderRadius: "3px",
                                                 backgroundColor: "white", 
                                                 paddingLeft: "1vw"}}>
-                                                    <option>{t("msh_crm.c_category.c_tourisim")}</option>
-                                                    <option>{t("msh_crm.c_category.c_business")}</option>
+                                                    <option valeur="tourism" onClick={() => setCategoryClone(t("msh_crm.c_category.c_tourisim"))}>{t("msh_crm.c_category.c_tourisim")}</option>
+                                                    <option valeur="business" onClick={() => setCategoryClone(t("msh_crm.c_category.c_business"))}>{t("msh_crm.c_category.c_business")}</option>
                                                 </Form.Select>
                                             </FloatingLabel>
                                             </Form.Group>
@@ -429,9 +429,15 @@ const GuestDatabase = ({user, userDB}) =>{
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%", marginTop: "1vh"}}>
                                 {/*<Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>*/}
-                                <img src={Services} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter les services" onClick={() => setShowChat(true)} />
-                                <img src={Puzzle} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter les évènements" onClick={() => setShowChat(true)} />
-                                <img src={ChatIcon} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} tooltip="Consulter le Chat" onClick={() => setShowChat(true)} />
+                                <OverlayTrigger
+                                placement="bottom"
+                                overlay={
+                                <Tooltip id="title">
+                                    {t("msh_crm.c_button.b_check_chat")}
+                                </Tooltip>
+                                }>
+                                    <img src={ChatIcon} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} onClick={() => setShowChat(true)} />
+                                </OverlayTrigger>
                                 </div>}
                             {item.details && <Card.Text style={{textAlign: "center", marginBottom: "5vh", marginTop: "2vh", color: "gray"}}>
                                 {item.details}
@@ -440,7 +446,7 @@ const GuestDatabase = ({user, userDB}) =>{
                     </Card>
                 </PerfectScrollbar>
                 </div>
-                {/*guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />*/}
+                {guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />}
             </div>
 
             <Modal show={showChat}

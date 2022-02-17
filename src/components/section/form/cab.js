@@ -19,7 +19,8 @@ const Cab = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({room: "", client: "", date: new Date(), hour: new Date(), passenger:"", model:"", destination: ""})
+    const [formValue, setFormValue] = useState({room: "", client: "", date: new Date(), hour: new Date(), passenger:"", model:"limousin", destination: ""})
+    const [modelClone, setModelClone] = useState(null)
     const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
@@ -74,6 +75,7 @@ const Cab = ({userDB}) =>{
             room: formValue.room,
             pax: formValue.passenger,
             model: formValue.model,
+            modelClone: modelClone !== null ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
             markup: Date.now(),
             hour: moment(formValue.date).format('LT'),
             date: moment(formValue.date).format('L'),
@@ -265,8 +267,8 @@ const Cab = ({userDB}) =>{
                                             borderRadius: "3px",
                                             backgroundColor: "white", 
                                             paddingLeft: "1vw"}}>
-                                                <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
-                                                <option>{t("msh_cab.c_vehicule.v_van")}</option>
+                                                <option value="limousin" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_limousin"))}>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                                                <option value="Van" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_van"))}>{t("msh_cab.c_vehicule.v_van")}</option>
                                             </Form.Select>
                                         </FloatingLabel>
                                         </Form.Group>
@@ -309,7 +311,7 @@ const Cab = ({userDB}) =>{
                                             <td>{flow.date}</td>
                                             <td>{flow.hour}</td>
                                             <td>{flow.pax}</td>
-                                            <td>{flow.model}</td>
+                                            <td>{flow.modelClone}</td>
                                             <td>{flow.destination}</td>
                                             <td>
                                             <Switch

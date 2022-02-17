@@ -18,7 +18,7 @@ const Caisse = () =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
-    const [formValue, setFormValue] = useState({shift: "matin"})
+    const [formValue, setFormValue] = useState({shift: "matin", shiftClone: null})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const [filterDate, setFilterDate] = useState(new Date())
@@ -57,6 +57,7 @@ const Caisse = () =>{
             date: moment(new Date()).format('LL'),
             amount: caisse,
             shift: formValue.shift,
+            shiftClone: formValue.shiftClone !== null ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
             markup: Date.now()
             })
         .then(() => {
@@ -221,9 +222,9 @@ const Caisse = () =>{
                             fontSize: "15px", 
                             paddingLeft: "10px", 
                             marginRight: footerState ? "0px" : "2vw"}}>
-                                <option value="matin">{t("msh_safe.s_select.s_morning_shift")}</option>
-                                <option value="soir">{t("msh_safe.s_select.s_afternoon_shift")}</option>
-                                <option value="nuit">{t("msh_safe.s_select.s_night_shift")}</option>
+                                <option value="morning" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_morning_shift"))}>{t("msh_safe.s_select.s_morning_shift")}</option>
+                                <option value="evening" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_afternoon_shift"))}>{t("msh_safe.s_select.s_afternoon_shift")}</option>
+                                <option value="night" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_night_shift"))}>{t("msh_safe.s_select.s_night_shift")}</option>
                             </Form.Select>
                             </Form.Group>
                             {!footerState && <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -415,7 +416,7 @@ const Caisse = () =>{
                                         <tr key={key}>
                                         <td>{flow.author}</td>
                                         <td>{flow.amount} {t("msh_safe.s_currency")}</td>
-                                        <td>{flow.shift}</td>
+                                        <td>{flow.shiftClone}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                             return db.collection('hotels')

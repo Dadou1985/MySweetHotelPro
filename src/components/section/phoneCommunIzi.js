@@ -21,6 +21,7 @@ import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
+import defaultImg from "../../images/avatar-client.png"
 
 export default function CommunIzi({userDB, user}) {
     
@@ -229,6 +230,8 @@ export default function CommunIzi({userDB, user}) {
 
   console.log('testUser', payload)
 
+  let avatarColorRandomSelection = ["blue", "red", "yellow", "green"]
+
     return (
         <div className="communizi-container">  
           <PerfectScrollbar className='chat-perfectscrollbar'>
@@ -256,7 +259,7 @@ export default function CommunIzi({userDB, user}) {
                               round={true}
                               name={flow.id}
                               size="30"
-                              color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
+                              color={avatarColorRandomSelection[Math.floor(Math.random() * 5)]}
                               style={{marginRight: "1vw"}} />
                               {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>

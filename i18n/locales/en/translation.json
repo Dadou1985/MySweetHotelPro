@@ -8,7 +8,8 @@
             "b_reset": "Reset",
             "b_update": "Update now",
             "b_upload": "Upload",
-            "b_add_photo": "Add a photo"
+            "b_add_photo": "Add a photo",
+            "b_user": "User"
         },
         "g_table": {
             "t_client": "Customer",
@@ -47,7 +48,40 @@
     },
     "msh_dashboard": {
        "d_title": "Dashboard",
-       "d_chat_room": "Active conversations" 
+       "d_chat_room": "Active conversations",
+       "d_doughnut_chart": {
+           "d_title": "Room change rate",
+           "d_subtitle": "Over the last 7 days"
+       },
+       "d_pie_chart": {
+            "p_title": "Technical incidence rate",
+            "p_subtitle": "Over the last 7 days"
+       },
+       "d_no_data": "No data",
+       "d_rate": "Rate",
+       "d_data_modal": {
+           "d_period_title": "Periods",
+           "d_period": {
+               "p_week": "last 7 days",
+               "p_month": "last 4 weeks",
+               "p_semester": "last 6 months",
+               "p_year": "last 4 quaters"
+           }
+       },
+       "room_change_data": {
+           "d_noise": "Noise",
+           "d_temperature": "Temperature",
+           "d_maintenance": "Technical maintenance",
+           "d_cleaning": "Cleaning",
+           "d_others": "Others"
+       },
+       "maintenance_data": {
+        "d_paint": "Paint",
+        "d_electricity": "Electricity",
+        "d_plumbery": "Plumbery",
+        "d_cleaning": "Cleaning",
+        "d_others": "Others"
+        } 
     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
@@ -294,10 +328,16 @@
             "b_contact": "Contact the customer",
             "b_chat": "Show chat",
             "b_cancel": "Cancel",
-            "b_send_em_all": "Send emails"
+            "b_send_em_all": "Send emails",
+            "b_check_chat": "Consult the Chat"
         },
         "c_notif": "You have just added a customer to the database!",
-        "c_notif_mails": "The emails have been sent!"
+        "c_notif_mails": "The emails have been sent!",
+        "c_guest_line": {
+            "g_title": "List of stays",
+            "g_services": "Services",
+            "g_event": "Incident"
+        }
     },
     "msh_check_list": {
         "c_title": "Check-List",

@@ -17,11 +17,13 @@ const Maid = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "", state: ""})
+    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "noise", state: "dirty"})
     const [demandQty, setDemandQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
+    const [reasonBack, setReasonBack] = useState(null)
+    const [stateClone, setStateClone] = useState(null)
     const { t, i18n } = useTranslation()
 
     const handleClose = () => setList(false)
@@ -70,7 +72,9 @@ const Maid = ({userDB}) =>{
             markup: Date.now(),
             toRoom: formValue.toRoom,
             reason: formValue.reason,
+            reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
             state: formValue.state,
+            stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
             status: false
             })
         .then(handleClose)
@@ -278,11 +282,11 @@ const Maid = ({userDB}) =>{
                                             borderRadius: "3px",
                                             backgroundColor: "white", 
                                             paddingLeft: "1vw"}}>
-                                                <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
-                                                <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
-                                                <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
-                                                <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                                <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
+                                                <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
+                                                <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
+                                                <option value="maintenance" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}>{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                                <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
                                         </Form.Select>
                                         </FloatingLabel>
                                     </Form.Group>
@@ -300,8 +304,8 @@ const Maid = ({userDB}) =>{
                                                 borderRadius: "3px",
                                                 backgroundColor: "white", 
                                                 paddingLeft: "1vw"}}>
-                                                    <option>{t("msh_room_change.r_state.s_dirty")}</option>
-                                                    <option>{t("msh_room_change.r_state.s_clean")}</option>
+                                                    <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
+                                                    <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
                                             </Form.Select>
                                         </FloatingLabel>
                                         </Form.Group>
@@ -368,7 +372,7 @@ const Maid = ({userDB}) =>{
                                                     <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_attribute")}</Button>
                                                 </OverlayTrigger>
                                                         </td> : <td>{flow.toRoom}</td>}
-                                                <td>{flow.reason}</td>
+                                                <td>{flow.reasonClone}</td>
                                                 {flow.state === "" ? 
                                                     <td className="bg-dark">
                                                         <OverlayTrigger
@@ -386,9 +390,8 @@ const Maid = ({userDB}) =>{
                                                                     borderRadius: "3px",
                                                                     backgroundColor: "white", 
                                                                     paddingLeft: "1vw"}}>
-                                                                        <option></option>
-                                                                        <option>{t("msh_room_change.r_state.s_dirty")}</option>
-                                                                        <option>{t("msh_room_change.r_state.s_clean")}</option>
+                                                                        <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
+                                                                        <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
@@ -400,7 +403,7 @@ const Maid = ({userDB}) =>{
                                                     <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_check")}</Button>
                                                 </OverlayTrigger>
                                                     </td> : 
-                                                    <td>{flow.state}</td>}
+                                                    <td>{flow.stateClone}</td>}
                                                 <td>{flow.details}</td>
                                                 <td>{moment(flow.markup).format('L')}</td>
                                                 {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {

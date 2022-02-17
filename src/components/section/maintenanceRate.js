@@ -8,6 +8,7 @@ import MaintenancePieChart from "./maintenancePieChart"
 
 const MaintenanceRate = ({userDB, showModal, closeModal}) => {
     const [filter, setFilter] = useState(Date.now() - 604800000);
+    const { t, i18n } = useTranslation()
 
     const roomChangeWeekAgo = Date.now() - 604800000
     const roomChangeMonthAgo = Date.now() - 2678400000
@@ -24,7 +25,7 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
       enforceFocus={false}>
       <Modal.Header closeButton className="bg-light">
       <Modal.Title id="contained-modal-title-vcenter">
-        Taux d'incidence technique
+      {t('msh_dashboard.d_pie_chart.p_title')}
         </Modal.Title>
       </Modal.Header>
       <ModalBody style={{
@@ -32,13 +33,13 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
           flexFlow: "row wrap",
       }}>
         <div style={{
-            display: "flex",
+            display: typeof window && window.innerWidth > 768 ? "flex" : "none",
             flexFlow: "column",
             padding: "1vw",
             width: "20%",
             borderRight: "1px solid lightgrey"
         }}>
-            <h5 style={{paddingBottom: "4vh"}}>Périodes</h5>
+            <h5 style={{paddingBottom: "4vh"}}>{t('msh_dashboard.d_data_modal.d_period_title')}</h5>
             <div style={{
                 display: "flex",
                 flexFlow: "row",
@@ -59,7 +60,7 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
             onClick={() => {
                 setFilter(roomChangeWeekAgo)
                 setActiveTab("week")
-                }}>7 derniers jours</div>
+                }}>{t('msh_dashboard.d_data_modal.d_period.p_week')}</div>
             <div style={{
                 display: "flex",
                 flexFlow: "row",
@@ -80,7 +81,7 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
             onClick={() => {
                 setActiveTab("month")
                 setFilter(roomChangeMonthAgo)
-                }}>30 derniers jours</div>
+                }}>{t('msh_dashboard.d_data_modal.d_period.p_month')}</div>
             <div style={{
                 display: "flex",
                 flexFlow: "row",
@@ -101,7 +102,7 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
             onClick={() => {
                 setActiveTab("semester")
                 setFilter(roomChangeSixMonthsAgo)
-                }}>6 derniers mois</div>
+                }}>{t('msh_dashboard.d_data_modal.d_period.p_semester')}</div>
             <div style={{
                 display: "flex",
                 flexFlow: "row",
@@ -122,20 +123,20 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
             onClick={() => {
                 setActiveTab("year")
                 setFilter(roomChangeYearAgo)
-                }}>12 derniers mois</div>
+                }}>{t('msh_dashboard.d_data_modal.d_period.p_year')}</div>
         </div>
         
         <div style={{
             display: "flex",
             flexFlow: "column",
-            width: "80%",
+            width: typeof window && window.innerWidth > 768 ? "80%" : "100%",
             padding: "1vw"
         }}>
-            {activeTab === "week" && <h5 style={{textAlign: "center"}}>7 derniers jours</h5>}
-            {activeTab === "month" && <h5 style={{textAlign: "center"}}>30 derniers jours</h5>}
-            {activeTab === "semester" && <h5 style={{textAlign: "center"}}>6 derniers mois</h5>}
-            {activeTab === "year" && <h5 style={{textAlign: "center"}}>12 derniers mois</h5>}
-            <MaintenancePieChart filter={filter} userDB={userDB} />
+            {activeTab === "week" && <h5 style={{textAlign: "center"}}>{t('msh_dashboard.d_data_modal.d_period.p_week')}</h5>}
+            {activeTab === "month" && <h5 style={{textAlign: "center"}}>{t('msh_dashboard.d_data_modal.d_period.p_month')}</h5>}
+            {activeTab === "semester" && <h5 style={{textAlign: "center"}}>{t('msh_dashboard.d_data_modal.d_period.p_semester')}</h5>}
+            {activeTab === "year" && <h5 style={{textAlign: "center"}}>{t('msh_dashboard.d_data_modal.d_period.p_year')}</h5>}
+            <MaintenancePieChart filter={filter} period={activeTab} userDB={userDB} />
         </div>
       </ModalBody>
     </Modal>

@@ -17,7 +17,8 @@ const Repair = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({room: "", client: "", details: "", type: ""})
+    const [formValue, setFormValue] = useState({room: "", client: "", details: "", type: "paint"})
+    const [typeClone, setTypeClone] = useState(null)
     const [issueQty, setIssueQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
@@ -69,6 +70,7 @@ const Repair = ({userDB}) =>{
             room: formValue.room,
             markup: Date.now(),
             type: formValue.type,
+            typeClone: typeClone !== null ? typeClone : t("msh_dashboard.maintenance_data.d_paint"),
             status: false
             })
         .then(handleClose)
@@ -221,12 +223,11 @@ const Repair = ({userDB}) =>{
                                             borderRadius: "3px",
                                             backgroundColor: "white", 
                                             paddingLeft: "1vw"}}>
-                                                <option></option>
-                                                <option value="paint">{t("msh_room_change.r_reason.r_paint")}</option>
-                                                <option value="plumbery">{t("msh_room_change.r_reason.r_plumbery")}</option>
-                                                <option value="electricity">{t("msh_room_change.r_reason.r_electricity")}</option>
-                                                <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                                <option value="others">{t("msh_room_change.r_reason.r_other")}</option>
+                                                <option value="paint" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_paint"))}>{t("msh_dashboard.maintenance_data.d_paint")}</option>
+                                                <option value="plumbery" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_electricity"))}>{t("msh_dashboard.maintenance_data.d_electricity")}</option>
+                                                <option value="electricity" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_plumbery"))}>{t("msh_dashboard.maintenance_data.d_plumbery")}</option>
+                                                <option value="cleaning" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_cleaning"))}>{t("msh_dashboard.maintenance_data.d_cleaning")}</option>
+                                                <option value="others" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_others"))}>{t("msh_dashboard.maintenance_data.d_others")}</option>
                                             </Form.Select>
                                         </FloatingLabel>
                                     </Form.Group>
@@ -266,7 +267,7 @@ const Repair = ({userDB}) =>{
                                                 <tr key={flow.id}>
                                                 <td>{flow.client}</td>
                                                 <td>{flow.room}</td>
-                                                <td>{flow.type}</td>
+                                                <td>{flow.typeClone}</td>
                                                 <td>{flow.details}</td>
                                                 <td>{moment(flow.markup).format('L')}</td>
                                                 {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {

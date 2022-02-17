@@ -8,7 +8,8 @@
             "b_reset": "Reset",
             "b_update": "Actualiser maintenant",
             "b_upload": "Téléverser",
-            "b_add_photo": "Ajouter une photo"
+            "b_add_photo": "Ajouter une photo",
+            "b_user": "Utilisateur"
         },
         "g_table": {
             "t_client": "Client",
@@ -49,37 +50,46 @@
        "d_title": "Tableau de bord",
        "d_chat_room": "Conversations actives",
        "d_doughnut_chart": {
-           "d_title": "",
-           "d_subtitle": ""
+           "d_title": "Taux de délogement",
+           "d_subtitle": "Sur les 7 derniers jours"
        },
        "d_pie_chart": {
-            "p_title": "",
-            "p_subtitle": ""
+            "p_title": "Taux d'incidence technique",
+            "p_subtitle": "Sur les 7 derniers jours"
        },
-       "d_no_data": "",
+       "d_no_data": "Aucune donnée",
+       "d_rate": "Taux",
        "d_data_modal": {
-           "d_period_title": "",
+           "d_period_title": "Périodes",
            "d_period": {
-               "p_week": "",
-               "p_month": "",
-               "p_semester": "",
-               "p_year": ""
+               "p_week": "7 derniers jours",
+               "p_month": "4 derniers semaines",
+               "p_semester": "6 derniers mois",
+               "p_year": "4 derniers trimestres"
            }
        },
        "room_change_data": {
-           "d_noise": "",
-           "d_temperature": "",
-           "d_maintenance": "",
-           "d_housekeeping": "",
-           "d_others": ""
+           "d_noise": "Bruit",
+           "d_temperature": "Température",
+           "d_maintenance": "Maintenance technique",
+           "d_cleaning": "Nettoyage",
+           "d_others": "Autres"
        },
        "maintenance_data": {
-        "d_paint": "",
-        "d_electricity": "",
-        "d_plumbery": "",
-        "d_housekeeping": "",
-        "d_others": ""
-    }
+        "d_paint": "Peinture",
+        "d_electricity": "Electricité",
+        "d_plumbery": "Plomberie",
+        "d_cleaning": "Nettoyage",
+        "d_others": "Autres"
+        },
+        "d_time_period": {
+            "t_day": "Jour",
+            "t_week": "Semaine",
+            "t_month": "Mois",
+            "t_trimester": "Trimestre",
+            "t_semester": "Semestre",
+            "t_year": "Année"
+        }
     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
@@ -328,11 +338,17 @@
             "b_contact": "Contacter le client",
             "b_chat": "Afficher le chat",
             "b_cancel": "Annuler",
-            "b_send_em_all": "Envoyer les emails"
+            "b_send_em_all": "Envoyer les emails",
+            "b_check_chat": "Consulter le Chat"
         },
+        "c_chat_modal_title": "",
         "c_notif": "Vous venez d'ajouter un client à la base de données !",
-        "c_notif_mails": "Les e-mails ont bien été envoyés !"
-
+        "c_notif_mails": "Les e-mails ont bien été envoyés !",
+        "c_guest_line": {
+            "g_title": "Liste des séjours",
+            "g_services": "Services",
+            "g_event": "Evènements"
+        }
     },
     "msh_check_list": {
         "c_title": "Check-List",

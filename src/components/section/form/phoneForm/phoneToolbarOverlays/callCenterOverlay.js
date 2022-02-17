@@ -10,6 +10,7 @@ function CallCenterOverlay({userDB}) {
     useEffect(() => {
         const toolOnAir = () => {
           return db.collection("assistance")
+          .where("hotelId", "==", "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047")
         }
 
         let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {

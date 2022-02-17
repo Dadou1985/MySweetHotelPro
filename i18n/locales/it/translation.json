@@ -8,7 +8,8 @@
             "b_reset": "Ripristina",
             "b_update": "Aggiorna ora",
             "b_upload": "Carica",
-            "b_add_photo": "Aggiungi una foto"
+            "b_add_photo": "Aggiungi una foto",
+            "b_user": "Utente"
         },
         "g_table": {
             "t_client": "Cliente",
@@ -46,9 +47,50 @@
 
     },
     "msh_dashboard": {
-       "d_title": "Pannello",
-       "d_chat_room": "Conversazioni attive" 
-    },
+        "d_title": "Dashboard",
+        "d_chat_room": "Chat attive",
+        "d_doughnut_chart": {
+            "d_title": "Tasso di dislocazione",
+            "d_subtitle": "Negli ultimi 7 giorni"
+        },
+        "d_pie_chart": {
+             "p_title": "Tasso di successo tecnico",
+             "p_subtitle": "Negli ultimi 7 giorni"
+        },
+        "d_no_data": "Nessun dato",
+        "d_rate": "Valutare",
+        "d_data_modal": {
+            "d_period_title": "Periodo",
+            "d_period": {
+                "p_week": "ultimi 7 giorni",
+                "p_month": "ultime 4 settimane",
+                "p_semester": "ultimi 6 mesi",
+                "p_year": "ultimi 4 trimestri"
+            }
+        },
+        "room_change_data": {
+            "d_noise": "Rumore",
+            "d_temperature": "Temperatura",
+            "d_maintenance": "Manutenzione tecnica",
+            "d_cleaning": "Pulizia",
+            "d_others": "Altri"
+        },
+        "maintenance_data": {
+         "d_paint": "Vernice",
+         "d_electricity": "Elettricità",
+         "d_plumbery": "Idraulica",
+         "d_cleaning": "Pulizia",
+         "d_others": "Altri"
+         },
+         "d_time_period": {
+             "t_day": "Viaggio",
+             "t_week": "Semaine",
+             "t_month": "Mois",
+             "t_trimestre": "Trimestre",
+             "t_semestre": "Semestre",
+             "t_year": "Année"
+         }
+     },
     "msh_connexion": {
         "c_email_maj": "E-mail",
         "c_email": "e-mail",
@@ -290,15 +332,22 @@
         },
         "c_chat_title": "Thread di discussione",
         "c_button": {
-            "b_add": "Aggiungi un cliente",
-            "b_send_mail": "Invia un'email di benvenuto",
+            "b_add": "Aggiungi cliente",
+            "b_send_mail": "Invia email di benvenuto",
             "b_contact": "Contatta il cliente",
             "b_chat": "Mostra chat",
             "b_cancel": "Annulla",
-            "b_send_em_all": "Invia email"
+            "b_send_em_all": "Invia email",
+            "b_check_chat": "Controlla chat"
         },
+        "c_chat_modal_title": "",
         "c_notif": "Hai appena aggiunto un cliente al database!",
-        "c_notif_mails": "Le email sono state inviate!"
+        "c_notif_mails": "E-mail inviate con successo!",
+        "c_guest_line": {
+            "g_title": "Elenco soggiorni",
+            "g_services": "Servizi",
+            "g_event": "Eventi"
+        }
     },
     "msh_check_list": {
         "c_title": "Lista di controllo",
