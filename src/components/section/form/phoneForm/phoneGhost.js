@@ -152,7 +152,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
         }}>
             <h4 style={{marginBottom: "5vh", fontWeight: "bold"}}>Ghost Host</h4>
             <div style={{width: "90%", display: "flex", flexFlow: "column", alignItems: "center"}}>
-            <Form.Row>
+            <div>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -167,9 +167,9 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                     pattern=".{5,}"
                      />
                 </Form.Group>
-            </Form.Row>
+            </div>
 
-            <Form.Row>
+            <div>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -200,7 +200,7 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                     ))}
                 </DropdownButton>
                 </Form.Group>
-            </Form.Row>
+            </div>
             </div>
             <div>
                 <Button variant="success" style={{position: "absoute", bottom: "0", width: "100%", marginBottom: "2vh"}} onClick={() => {

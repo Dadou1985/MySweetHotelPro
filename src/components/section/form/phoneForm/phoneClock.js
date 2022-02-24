@@ -163,7 +163,7 @@ const PhoneClock = ({userDB}) =>{
         <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
                 <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_alarm.a_first_tab_title")}</h4>
-                {!step && <Form.Row style={{
+                {!step && <div style={{
                     display: "flex",
                     flexFlow: "row",
                     alignItems: "center",
@@ -184,20 +184,20 @@ const PhoneClock = ({userDB}) =>{
                     />                                        
                     </MuiPickersUtilsProvider>
                     </Form.Group>
-                </Form.Row>}
+                </div>}
                 {step && <>
-                <Form.Row>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_alarm.a_client")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_alarm.a_room")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
+                </div>
                 </>}
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>

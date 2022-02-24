@@ -235,13 +235,13 @@ const PhoneMaid = ({userDB}) =>{
                 <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                     <div  className="phone_container_drawer">
                     <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_room_change.r_phone_button.b_show_modal")}</h4>
-                    <Form.Row>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row style={{display: "flex", flexFlow: "row", justifyContent: "space-between", width: "90vw"}}>
+                </div>
+                <div style={{display: "flex", flexFlow: "row", justifyContent: "space-between", width: "90vw"}}>
                     <Form.Group controlId="description" className="phone_smallInput">
                     <Form.Label>{t("msh_room_change.r_from")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 310" value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
@@ -251,8 +251,8 @@ const PhoneMaid = ({userDB}) =>{
                     <Form.Label>{t("msh_room_change.r_to")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 409" value={formValue.toRoom} name="toRoom" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
@@ -265,8 +265,8 @@ const PhoneMaid = ({userDB}) =>{
                         <option>{t("msh_room_change.r_reason.r_other")}</option>
                     </select>
                 </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
@@ -276,13 +276,13 @@ const PhoneMaid = ({userDB}) =>{
                         <option>{t("msh_room_change.r_state.s_clean")}</option>
                     </select>
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="details" className="phone_textarea">
                         <Form.Label>{t("msh_room_change.r_details")}</Form.Label>
                         <Form.Control as="textarea" rows="2" value={formValue.details} name="details" onChange={handleChange}  />
                     </Form.Group>
-                </Form.Row>
+                </div>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
                         handleSubmit(event)
                         setActivate(false)

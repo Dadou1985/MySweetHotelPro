@@ -162,7 +162,7 @@ const PhoneCab = ({userDB}) =>{
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
                 <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_cab.c_phone_button.b_show_modal")}</h4>
-                {!step && <Form.Row style={{
+                {!step && <div style={{
                     display: "flex",
                     flexFlow: "row",
                     alignItems: "center",
@@ -183,27 +183,27 @@ const PhoneCab = ({userDB}) =>{
                     />                                        
                     </MuiPickersUtilsProvider>
                     </Form.Group>
-                </Form.Row>}
+                </div>}
                 {step && <>
-                <Form.Row>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_cab.c_client")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_cab.c_room")}</Form.Label>
                     <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_cab.c_pax")}</Form.Label>
                     <Form.Control type="number" value={formValue.passenger} name="passenger" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="description">
                     <Form.Label>{t("msh_cab.c_vehicule.v_label")}</Form.Label><br/>
                     <select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
@@ -213,13 +213,13 @@ const PhoneCab = ({userDB}) =>{
                         <option>{t("msh_cab.c_vehicule.v_van")}</option>
                     </select>
                     </Form.Group>
-                </Form.Row>
-                <Form.Row>
+                </div>
+                <div>
                     <Form.Group controlId="description" className="phone_input">
                     <Form.Label>{t("msh_cab.c_destination.d_label")}</Form.Label>
                     <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} value={formValue.destination} name="destination" onChange={handleChange} />
                     </Form.Group>
-                </Form.Row>
+                </div>
                 </>}
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>

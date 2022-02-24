@@ -189,7 +189,7 @@ const PhoneLost = ({userDB}) =>{
               <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
                 <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_lost_found.l_button.b_show_modal")}</h4>
-                <Form.Row>
+                <div>
                   <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
                       <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
@@ -201,8 +201,8 @@ const PhoneLost = ({userDB}) =>{
                         <option>{t("msh_lost_found.l_fourth_tab_title")}</option>
                       </select>
                   </Form.Group>
-              </Form.Row>
-              <Form.Row>
+              </div>
+              <div>
                   <Form.Group controlId="exampleForm.SelectCustom">
                   <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
                       <select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
@@ -216,25 +216,25 @@ const PhoneLost = ({userDB}) =>{
                         <option>{t("msh_lost_found.l_place.p_other")}</option>
                       </select>
                   </Form.Group>
-              </Form.Row>
-              <Form.Row>
+              </div>
+              <div>
                   <Form.Group controlId="description" className="phone_input">
                   <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
                   <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} value={formValue.description} name="description" onChange={handleChange} />
                   </Form.Group>
-              </Form.Row>
-              <Form.Row>
+              </div>
+              <div>
                   <Form.Group controlId="details" className="phone_textarea">
                       <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
                       <Form.Control as="textarea" rows="2" name="details" value={formValue.details} onChange={handleChange}  />
                   </Form.Group>
-              </Form.Row>
-              <Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+              </div>
+              <div style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
                 <input type="file" className="phone-camera-icon"
                     onChange={handleImgChange} />
                 <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
                 <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
-                </Form.Row>
+                </div>
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)

@@ -222,19 +222,19 @@ const PhoneRepair = ({userDB}) =>{
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
                 <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_maintenance.m_phone_button.b_show_modal")}</h4>
-                    <Form.Row>
+                    <div>
                         <Form.Group controlId="description" className="phone_input">
                         <Form.Label>{t("msh_maintenance.m_client")}</Form.Label>
                         <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
                         </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
+                    </div>
+                    <div>
                         <Form.Group controlId="description" className="phone_input">
                         <Form.Label>{t("msh_maintenance.m_room")}</Form.Label>
                         <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
                         </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
+                    </div>
+                    <div>
                         <Form.Group controlId="exampleForm.SelectCustom">
                         <Form.Label>{t("msh_maintenance.m_type.t_label")}</Form.Label><br/>
                         <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
@@ -247,19 +247,19 @@ const PhoneRepair = ({userDB}) =>{
                             <option>{t("msh_room_change.r_reason.r_other")}</option>
                         </select>
                     </Form.Group>
-                    </Form.Row>
-                    <Form.Row>
+                    </div>
+                    <div>
                         <Form.Group controlId="details" className="phone_textarea">
                             <Form.Label>{t("msh_maintenance.m_details")}</Form.Label>
                             <Form.Control as="textarea" rows="2" value={formValue.details} name="details" onChange={handleChange}  />
                         </Form.Group>
-                    </Form.Row>
-                    <Form.Row style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+                    </div>
+                    <div style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
                         <input type="file" className="phone-camera-icon"
                             onChange={handleImgChange} />
                         <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
                         <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
-                    </Form.Row>
+                    </div>
                 <Button variant="success" className="phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)

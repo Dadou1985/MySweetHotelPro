@@ -227,7 +227,7 @@ export default function PhoneMagic({user, userDB}) {
         }}>
 
             <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>Magic Box</h4>
-            <Form.Row>
+            <div>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -241,9 +241,9 @@ export default function PhoneMagic({user, userDB}) {
                     className="text-center"
                     pattern=".{5,}" />
                 </Form.Group>
-            </Form.Row>
+            </div>
 
-            <Form.Row>
+            <div>
                 <Form.Group style={{
                     display: "flex",
                     flexFlow: "column",
@@ -270,7 +270,7 @@ export default function PhoneMagic({user, userDB}) {
                     ))}
                 </DropdownButton>
                 </Form.Group>
-            </Form.Row>
+            </div>
             <div style={{
                 display: "flex",
                 flexFlow: "column",

@@ -60,14 +60,14 @@ function PhoneFeedback({userDB}) {
                         <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
                     </select>
 
-            <Form.Row>
+            <div>
                 <Form.Group controlId="description">
                 <Form.Control as="textarea" type="text" 
                 placeholder={t("msh_feedback_box.f_input_textarea")} 
                 style={{width: "90vw", height: "30vh", resize: "none", marginBottom: "30vh"}} 
                 value={formValue.feedback} name="feedback" onChange={handleChange} />
                 </Form.Group>
-            </Form.Row>
+            </div>
             <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} className="phone_submitButton" onClick={handleSubmitFeedback}>{t("msh_feedback_box.f_phone_button")}</Button>
         </div>
     )

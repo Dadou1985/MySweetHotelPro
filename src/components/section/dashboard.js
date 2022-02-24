@@ -290,14 +290,14 @@ useEffect(() => {
                     border: '1px solid lightgrey',
                     borderRadius: "100%",
                     padding: "2vw",
-                    width: "6vw",
+                    width: typeof window && window.innerWidth > 768 ? "6vw" : "20vw",
                     height: "12vh",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginTop: "2vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={BarChart} style={{width: "3vw"}} />
+                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />
                   </div>
                   <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}
@@ -309,7 +309,6 @@ useEffect(() => {
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center",
-                borderTop: "1px solid lightgrey",
                 width: "70%"
               }}>
                 <div style={{
@@ -322,14 +321,14 @@ useEffect(() => {
                     border: '1px solid lightgrey',
                     borderRadius: "100%",
                     padding: "2vw",
-                    width: "6vw",
+                    width: typeof window && window.innerWidth > 768 ? "6vw" : "20vw",
                     height: "12vh",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginTop: "5vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={BarChart} style={{width: "3vw"}} />
+                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />
                   </div>
                   <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}
