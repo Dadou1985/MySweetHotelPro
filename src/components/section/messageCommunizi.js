@@ -4,10 +4,9 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import DefaultImg from "../../images/avatar-client.png"
 import 'moment/locale/fr';
-import { useTranslation } from "react-i18next"
+import '../css/section/chatTemplate.css'
 
   const MessageCommunizi = ({author, text, date, userDB, translation, photo, title, key}) =>{
-    const { t, i18n } = useTranslation()
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(title === "host"){

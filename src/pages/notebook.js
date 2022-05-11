@@ -3,10 +3,8 @@ import Loader from '../components/section/common/shiftLoader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
-import DateFnsUtils from '@date-io/date-fns';
 import MomentUtils from "@date-io/moment";
 import Memo from '../components/section/memo'
-import Pens from '../images/pens.png'
 import Book from '../images/book2.png'
 import {
   MuiPickersUtilsProvider,
@@ -23,30 +21,19 @@ const NotebookPage = () => {
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
   const [filterDate, setFilterDate] = useState(new Date())
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
-  useEffect(() => {
+  useEffect(() => {     
+    if(!user && !userDB){
+      const userStorage = JSON.parse(sessionStorage.getItem('userStorage'))
+    const userAuth = JSON.parse(sessionStorage.getItem('userAuth'))
+    
+    setUser(userAuth)
+    setUserDB(userStorage)
+    return setHide("none")
+    }
         
-    let unsubscribe = auth.onAuthStateChanged(async(user) => {
-        if (user) {
-          await setUser(user)
-          await db.collection('businessUsers')
-          .doc(user.uid)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                console.log("+++++++", doc.data())
-                setUserDB(doc.data())
-              } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!")
-              }
-            })
-            return setHide("none")
-        }
-      })
-    return unsubscribe
-}, [])
+}, [user, userDB])
 
 const handleDateChange = (date) => {
   setFilterDate(date);
@@ -54,7 +41,6 @@ const handleDateChange = (date) => {
 
 const isBrowser = () => typeof window !== "undefined"
 moment.locale("fr")
-console.log(userDB && userDB.language)
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 

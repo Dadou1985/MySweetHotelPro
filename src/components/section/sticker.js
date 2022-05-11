@@ -5,11 +5,11 @@ import HousekkepingLogo from '../../svg/maid.svg'
 import RepairLogo from '../../svg/repair.svg'
 import TimerLogo from '../../svg/timer.svg'
 import CabLogo from '../../svg/taxi.svg'
-import '../css/sticker.css'
+import '../css/section/sticker.css'
 import { useTranslation } from "react-i18next"
 
 export default function Sticker({url, logo}) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
       console.log('STICKERURL', logo)
     return (

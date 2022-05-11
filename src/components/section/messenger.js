@@ -17,13 +17,13 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import YellowCircle from '../../svg/yellow-circle.svg'
 import RedCircle from '../../svg/red-circle.svg'
 import BlueCircle from '../../svg/blue-circle.svg'
-import Circle from '../../svg/circle.svg'
 import Upload from '../../svg/plus2.svg'
 import Drawer from '@material-ui/core/Drawer'
 import { FirebaseContext, db, storage } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
+import '../css/section/messenger.css'
 
 const Messenger = ({filterDate}) =>{
 
@@ -167,7 +167,7 @@ const Messenger = ({filterDate}) =>{
                         const notif = t("msh_messenger.m_notif") + moment(startDate).format('L') 
                         addNote(marker, url)
                         addNotification(notif)
-                        setStartDate(new Date)
+                        setStartDate(new Date())
                         handleHideDrawer()
                        return setShowModal(false)
                     }else{
@@ -189,7 +189,7 @@ const Messenger = ({filterDate}) =>{
                 const notif = t("msh_messenger.m_notif") + moment(startDate).format('L') 
                 addNote(marker, null)
                 addNotification(notif)
-                setStartDate(new Date)
+                setStartDate(new Date())
                 handleHideDrawer()
                 return setShowModal(false)
             }else{
@@ -208,8 +208,6 @@ const Messenger = ({filterDate}) =>{
     const hideCalendar = () => {
         setShowCalendar(false)
     }
-
-    console.log('*****', img)
     
     return(
         <div className="messenger_container">

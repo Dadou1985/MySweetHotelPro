@@ -4,36 +4,23 @@ import Support from '../components/section/assistance'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
-import { useTranslation } from "react-i18next"
 
 function Assistance() {
     const [hide, setHide] = useState("flex")
     const [userDB, setUserDB] = useState(null)
     const [user, setUser] = useState(null)
-    const { t, i18n } = useTranslation()
 
-    useEffect(() => {
+    useEffect(() => {     
+      if(!user && !userDB){
+        const userStorage = JSON.parse(sessionStorage.getItem('userStorage'))
+      const userAuth = JSON.parse(sessionStorage.getItem('userAuth'))
+      
+      setUser(userAuth)
+      setUserDB(userStorage)
+      return setHide("none")
+      }
           
-      let unsubscribe = auth.onAuthStateChanged(async(user) => {
-          if (user) {
-            await setUser(user)
-            await db.collection('businessUsers')
-            .doc(user.uid)
-              .get()
-              .then((doc) => {
-                if (doc.exists) {
-                  console.log("+++++++", doc.data())
-                  setUserDB(doc.data())
-                } else {
-                  // doc.data() will be undefined in this case
-                  console.log("No such document!")
-                }
-              })
-              return setHide("none")
-          }
-        })
-      return unsubscribe
-  }, [])
+  }, [user, userDB])
 
     return (
        <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 

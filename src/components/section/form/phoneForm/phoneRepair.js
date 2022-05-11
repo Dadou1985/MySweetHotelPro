@@ -9,6 +9,7 @@ import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 const PhoneRepair = ({userDB}) =>{
 
@@ -42,7 +43,6 @@ const PhoneRepair = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const addTechnicalProblem = (event, photo) => {
@@ -118,7 +118,6 @@ const PhoneRepair = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

@@ -2,13 +2,11 @@ import React, {useState, useEffect } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db } from '../../Firebase'
-import { useTranslation } from "react-i18next"
 
 export default function ChatRoom({user, userDB, title}) {
 
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState([])
-    const { t, i18n } = useTranslation()
 
     useEffect(() => {
         const chatRoomOnAir = () => {
@@ -29,7 +27,6 @@ export default function ChatRoom({user, userDB, title}) {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setMessages(snapInfo)
                 });
                 return unsubscribe
@@ -51,13 +48,10 @@ export default function ChatRoom({user, userDB, title}) {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setChatRoom(snapInfo)
                 });
                 return unsubscribe
      },[])
-
-console.log(chatRoom)
 
     return (
         <div>
@@ -77,28 +71,6 @@ console.log(chatRoom)
                                photo={flow.photo}
                                title={flow.title}
                                 />
-                            case 'ja':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.ja}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'ko':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.ko}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
                             case 'pt':
                                 return <Message 
                                 key={key}
@@ -110,11 +82,11 @@ console.log(chatRoom)
                                photo={flow.photo}
                                title={flow.title}
                                 />
-                            case 'ar':
+                            case 'de':
                                 return <Message 
                                 key={key}
                                 author={flow.author}
-                                translation={flow.translated.ar}
+                                translation={flow.translated.de}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}
@@ -143,11 +115,11 @@ console.log(chatRoom)
                                photo={flow.photo}
                                title={flow.title}
                                 />
-                            case 'zh':
+                            case 'fr':
                                 return <Message 
                                 key={key}
                                 author={flow.author}
-                                translation={flow.translated.zh}
+                                translation={flow.translated.fr}
                                 date={flow.markup}
                                user={user}
                                userDB={userDB}

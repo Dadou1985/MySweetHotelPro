@@ -1,7 +1,7 @@
 import React from "react"
 import { Puff } from "react-loader-spinner"
 import Mascott from '../../../svg/receptionist.svg'
-import '../../css/loader.css'
+import '../../css/common/loader.css'
 
 const ShiftLoader = ({hide}) => {
 

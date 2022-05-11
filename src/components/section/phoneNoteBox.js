@@ -13,13 +13,12 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { FirebaseContext, db } from '../../Firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
-import { useTranslation } from "react-i18next"
+import '../css/section/accordion.css'
 
 const NoteBox = ({filterDate}) => {
 
     const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
-    const { t, i18n } = useTranslation()
     const {userDB} = useContext(FirebaseContext)
 
     useEffect(() => {
@@ -40,7 +39,6 @@ const NoteBox = ({filterDate}) => {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapMessages)
                     setMessages(snapMessages)
                 });
                 return unsubscribe
@@ -66,8 +64,6 @@ const NoteBox = ({filterDate}) => {
       },
       checked: {},
     })((props) => <Checkbox color="default" {...props} />);
-
-     console.log(filterDate)
 
     return (
         <Accordion allowZeroExpanded className="accordion-note">

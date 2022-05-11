@@ -16,7 +16,7 @@ const SinglePage = () => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   useEffect(() => {
         
@@ -28,14 +28,12 @@ const SinglePage = () => {
             .get()
             .then((doc) => {
               if (doc.exists) {
-                console.log("+++++++", doc.data())
                 setUserDB(doc.data())
                 let userState = JSON.stringify(doc.data())
                 let userAuth = JSON.stringify(user)
                 sessionStorage.setItem("userStorage", userState)
                 sessionStorage.setItem("userAuth", userAuth)
               } else {
-                // doc.data() will be undefined in this case
                 console.log("No such document!")
               }
             })
@@ -47,8 +45,6 @@ const SinglePage = () => {
 
   const isBrowser = () => typeof window !== "undefined"
 
-  console.log("******", userDB)
-  
   return (
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>
       <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
@@ -89,16 +85,6 @@ const SinglePage = () => {
               {!!userDB && !!user&&
               <Dashboard userDB={userDB} user={user} />}
             </div>
-            {/*<div style={{
-              display: "flex",
-              flexFlow: "column",
-              alignItems: "center",
-              width: "50%",
-              paddingTop: "3vh",
-            }}>
-              {!!user && !! userDB &&
-              <Memo user={user} userDB={userDB} />}
-              </div>*/}
           </div>
       </div>
     </FirebaseContext.Provider>

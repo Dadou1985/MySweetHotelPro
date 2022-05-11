@@ -23,7 +23,7 @@ const Repair = ({userDB}) =>{
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -51,7 +51,6 @@ const Repair = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -102,7 +101,6 @@ const Repair = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe
@@ -125,7 +123,6 @@ const Repair = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setIssueQty(snapInfo)
                 });
                 return unsubscribe
@@ -224,8 +221,8 @@ const Repair = ({userDB}) =>{
                                             backgroundColor: "white", 
                                             paddingLeft: "1vw"}}>
                                                 <option value="paint" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_paint"))}>{t("msh_dashboard.maintenance_data.d_paint")}</option>
-                                                <option value="plumbery" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_electricity"))}>{t("msh_dashboard.maintenance_data.d_electricity")}</option>
-                                                <option value="electricity" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_plumbery"))}>{t("msh_dashboard.maintenance_data.d_plumbery")}</option>
+                                                <option value="electricity" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_electricity"))}>{t("msh_dashboard.maintenance_data.d_electricity")}</option>
+                                                <option value="plumbery" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_plumbery"))}>{t("msh_dashboard.maintenance_data.d_plumbery")}</option>
                                                 <option value="cleaning" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_cleaning"))}>{t("msh_dashboard.maintenance_data.d_cleaning")}</option>
                                                 <option value="others" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_others"))}>{t("msh_dashboard.maintenance_data.d_others")}</option>
                                             </Form.Select>

@@ -1,12 +1,11 @@
-import React, {useState} from 'react'
+import React from 'react'
 import StickList from './stickList'
-import '../css/memo.css'
+import '../css/section/memo.css'
 import Divider from '@material-ui/core/Divider'
-  import { useTranslation } from "react-i18next"
-
+import { useTranslation } from "react-i18next"
 
 const Memo =({userDB})=>{
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return(
         

@@ -1,17 +1,16 @@
 import React, { useState } from 'react'
 import { auth } from '../Firebase'
 import { navigate } from 'gatsby'
-import Logo from '../svg/new-logo-msh-pro2.png'
-import MshLogo from '../svg/msh-newLogo-transparent.png'
-import MshLogoPro from '../svg/mshPro-newLogo-transparent.png'
+import Logo from '../svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../i18n/withTrans'
+import './css/section/connection.css'
 
 const Connection = () => {
 
   const [formValue, setFormValue] = useState ({username: "", email: "", password: ""})
      
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
       const handleChange = (event) =>{
         event.persist()
@@ -43,18 +42,10 @@ const Connection = () => {
             <form 
               method="post"
               className="text-center p-5"
-              onSubmit={(event) => handleSubmit(event)}>
-
-            {/*<input 
-                value={formValue.username}
-                type="text" 
-                name="username" 
-                className="form-control mb-4" 
-                placeholder="Nom d'utilisateur"
-                onChange={handleChange}
-            required />*/}   
+              onSubmit={(event) => handleSubmit(event)}>  
 
             <input 
+                style={{zIndex: "1000"}}
                 value={formValue.email}
                 type="email" 
                 name="email" 
@@ -74,22 +65,8 @@ const Connection = () => {
 
             <div id="warning"></div>
 
-            <button className="btn btn-info btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
+            <button className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
             </form>
-            {/*<Modal show={list}
-                size="md"
-                aria-labelledby="contained-modal-title-vcenter"
-                centered
-                onHide={handleClose}
-                >
-              <Modal.Header closeButton>
-                <Modal.Title id="contained-modal-title-vcenter">
-                Formulaire d'inscription
-                </Modal.Title>
-            </Modal.Header>
-            {!!firebase &&  
-            <Register firebase={firebase} hide={handleClose} />}
-            </Modal>*/}
         </div>
     )
 }

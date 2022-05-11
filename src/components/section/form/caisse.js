@@ -14,7 +14,7 @@ import {
   import { useTranslation } from "react-i18next"
 
 const Caisse = () =>{
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
@@ -40,7 +40,6 @@ const Caisse = () =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -162,7 +161,6 @@ const Caisse = () =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

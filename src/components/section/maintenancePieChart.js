@@ -1,16 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next"
-import { Modal, Button, Tab, Tabs, Table, ModalBody, Nav, Row, Col } from 'react-bootstrap'
 import {db} from '../../Firebase'
-import moment from 'moment'
-import 'moment/locale/fr';
 import { Chart } from 'primereact/chart';
 import BarChart from '../../images/barChart.png'
 
 const MaintenancePieChart = ({userDB, filter, period}) => {
     const [data, setData] = useState([])
     const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], cleaning: [], others: []});
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const oneDayAgo = Date.now() - 86400000
     const twoDayAgo = Date.now() - 172800000
@@ -55,7 +52,6 @@ const MaintenancePieChart = ({userDB, filter, period}) => {
                         ...doc.data()
                         })        
                     });
-                    console.log(snapInfo)
     
                     const paint = snapInfo && snapInfo.filter(reason => reason.type === "paint")
                     const electricity = snapInfo && snapInfo.filter(reason => reason.type === "electricity")
@@ -76,13 +72,13 @@ const MaintenancePieChart = ({userDB, filter, period}) => {
         },[filter])   
 
         const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
-        const dMonth = t("msh_dashboard.d_time_period.t_month").charAt(0)
-        const dSemester = t("msh_dashboard.d_time_period.t_semester").charAt(0)
-        const dYear = t("msh_dashboard.d_time_period.t_year").charAt(0)
+        const dMonth = t("msh_dashboard.d_time_period.t_week").charAt(0)
+        const dSemester = t("msh_dashboard.d_time_period.t_month").charAt(0)
+        const dYear = t("msh_dashboard.d_time_period.t_trimester").charAt(0)
 
 
         const stackedDataWeek = {
-            labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`],
+            labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
             datasets: [{
                 type: 'bar',
                 label: t('msh_dashboard.maintenance_data.d_paint'),

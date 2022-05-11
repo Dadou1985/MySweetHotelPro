@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import { db } from '../../../../Firebase'
 import { Input } from 'reactstrap'
-import { useTranslation } from "react-i18next"
 
 export default function PhoneGhost({user, userDB, setUserDB}) {
     const [formValue, setFormValue] = useState({
@@ -28,7 +27,6 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
-    const { t, i18n } = useTranslation()
 
     const handleChangeInitialfilter = event =>{
         setInitialFilter(event.currentTarget.value)
@@ -48,7 +46,6 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setInfo(snapInfo)
         });
         return unsubscribe
@@ -60,7 +57,6 @@ export default function PhoneGhost({user, userDB, setUserDB}) {
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
     
     const ghostIn = () => {

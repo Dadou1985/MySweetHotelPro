@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {Form, Button, Modal, FloatingLabel} from 'react-bootstrap'
+import {Form, Button, FloatingLabel} from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
 
@@ -7,7 +7,7 @@ const AdminRegister = ({hide, userDB}) => {
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()
@@ -28,7 +28,6 @@ const AdminRegister = ({hide, userDB}) => {
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const sendWelcomeMail = () => {
@@ -77,8 +76,6 @@ const AdminRegister = ({hide, userDB}) => {
             sendWelcomeMail()
         })
       }
-
-      console.log("$$$$$", formValue)
 
     return (
         <div> 

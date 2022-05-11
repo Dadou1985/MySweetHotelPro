@@ -1,6 +1,5 @@
 import React from 'react'
 import AppVisual from '../../images/msh-front-app.png'
-import HotelLogo from '../../images/les-forteresses.png'
 
 export default function MshAppScreenBand({logo}) {
     return (

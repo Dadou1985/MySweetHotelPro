@@ -1,0 +1,40 @@
+@media screen and (max-width: 768px) {
+    
+    .header-toggle-container {
+        justify-content: space-around;
+        margin-top: 5vh;
+    }
+    
+    .user-profile-details {font-size: 12px;}
+
+    .drawer-container {
+        display: flex;
+        flex-flow: column;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 5%;
+        max-height: 90vh;
+        width: 100%;
+    }
+
+    .drawer-container input {
+        width: 80vw;
+        border: none;
+        border-bottom: 1px solid lightgrey;
+        margin-bottom: 2vh;
+    }
+
+    .userProfile-header-toggle-container{
+        display: flex;
+        flex-flow: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 5vh;
+    }
+
+    .userProfile-update-profile-button {
+        float: right;
+        margin-bottom: 2vh;
+    }
+}

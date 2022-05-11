@@ -107,9 +107,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
 
     const handleCloseUpdatePhoto = () => setConfModal(false)
 
-      console.log("$$$$$$", img)
-
-
       useEffect(() => {
         const iziUserOnAir2 = () => {
             return db.collection('businessUsers')
@@ -124,7 +121,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                
@@ -138,7 +134,6 @@ const UserProfile = ({user, userDB, setUserDB}) => {
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const handleChangeEmail = () => {

@@ -1,0 +1,139 @@
+.dashboard-icon {
+    filter: drop-shadow(2px 4px 6px gray);
+ }
+ 
+ .dashboard-icon:hover {
+     filter: drop-shadow(4px 8px 12px gray);
+ }
+ 
+ .dashboard-circle-icon {
+     filter: drop-shadow(2px 4px 6px);
+ }
+ 
+ .dashboard-circle-icon:hover {
+     filter: drop-shadow(4px 8px 12px);
+ }
+ 
+ .dashboard-note-container {
+     display: flex;
+     flex-flow: row;
+     justify-content: space-around;
+ }
+ 
+ .dashboard-note-card {
+     display: flex;
+     flex-flow: row;
+     width: 45%;
+     height: 15vh; 
+     padding: 3%;
+     border-radius: 10px;
+     border: 1px solid lightgrey; 
+     background-color: whitesmoke;
+ }
+ 
+ .dasbhboard-rate-card {
+     display: flex;
+     flex-flow: column;
+     align-items: center;
+     width: 45%;
+     background-color: whitesmoke;
+     border-radius: 10px;
+     border: 1px solid lightgrey;
+     border-bottom: 2px solid lightgrey;
+     border-right: 2px solid lightgrey;
+     padding: 3%;
+     cursor: pointer;
+ }
+ 
+ .dashboard-note-title {
+     text-align: center; 
+     margin-top: 1vh;
+     color: gray;
+ }
+ 
+ .dashboard-chat-title {
+     margin-top: 4vh;
+ }
+ 
+ .dashboard-chat-card {
+     display: flex;
+     flex-flow: row;
+     justify-content: space-between;
+     width: 90%;
+     height: 10vh;
+     margin-left: 2vw;
+     padding: 1%; 
+     border-radius: 10px;
+     background-color: transparent;
+     border: 1px solid lightgrey;
+     border-bottom: 15px solid gray;
+     border-right: 5px solid gray;
+     color: gray;
+     background-color: whitesmoke;
+ }
+ 
+ .dashboard-task-container {
+     display: flex;
+     width: 90%;
+     flex-flow: row;
+     justify-content: space-between;
+     margin-top: 7vh;
+     margin-left: 2vw;
+ }
+ 
+ .dasboard-task-badge {
+     display: flex;
+     flex-flow: row;
+     justify-content: center;
+     padding: 1%;
+     width: 7vw; 
+     height: 14vh;
+     border: 1px solid lightgrey;
+     border-radius: 50%; 
+     margin-bottom: 1vh;
+     cursor: pointer;
+ }
+
+
+ @media screen and (max-width: 768px) {
+    .dashboard-note-container {
+        flex-flow: column;
+        align-items: center;
+    }
+    
+    .dashboard-note-card {
+        width: 90%;
+        height: 15vh; 
+        margin-bottom: 1vh;
+        margin-left: 5vw;
+    }
+    
+    .dashboard-note-title {
+        text-align: center; 
+        margin-top: 3vh;
+    }
+
+    .dashboard-chat-title {
+        margin-top: 3vh;
+        text-align: center;
+    }
+    
+    .dashboard-chat-card {
+        display: flex;
+        justify-content: flex-start;
+        flex-flow: column;
+        width: 90%;
+        height: 15vh;
+        margin-left: 7vw;
+    }
+    
+    .dashboard-task-container {
+        display: none;
+    }
+
+    .dasbhboard-rate-card {
+        width: 90%;
+        margin-left: 7vw;
+        margin-bottom: 2vh;
+    }
+}

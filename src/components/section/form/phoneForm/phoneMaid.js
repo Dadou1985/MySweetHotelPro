@@ -9,6 +9,7 @@ import Switch from '@material-ui/core/Switch';
 import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 const PhoneMaid = ({userDB}) =>{
 
@@ -19,11 +20,12 @@ const PhoneMaid = ({userDB}) =>{
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [newRoom, setNewRoom] = useState(false)
-    const [newState, setNewState] = useState(false)
     const [roomState, setRoomState] = useState(false)
     const [currentRoom, setCurrentRoom] = useState("")
     const [guestId, setGuestId] = useState("")
-    const { t, i18n } = useTranslation()
+    const [reasonBack, setReasonBack] = useState(null)
+    const [stateClone, setStateClone] = useState(null)
+    const { t } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()
@@ -59,7 +61,9 @@ const PhoneMaid = ({userDB}) =>{
             markup: Date.now(),
             toRoom: formValue.toRoom,
             reason: formValue.reason,
+            reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
             state: formValue.state,
+            stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
             status: false
             })
     }
@@ -255,26 +259,24 @@ const PhoneMaid = ({userDB}) =>{
                 <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
-                    <select class="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
+                    <Form.Select class="Form.Selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
                     className="phonePage_select">
-                        <option></option>
-                        <option>{t("msh_room_change.r_reason.r_paint")}</option>
-                        <option>{t("msh_room_change.r_reason.r_plumbery")}</option>
-                        <option>{t("msh_room_change.r_reason.r_electricity")}</option>
-                        <option>{t("msh_room_change.r_reason.r_cleaning")}</option>
-                        <option>{t("msh_room_change.r_reason.r_other")}</option>
-                    </select>
+                        <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
+                        <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
+                        <option value="maintenance" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}>{t("msh_room_change.r_reason.r_maintenance")}</option>
+                        <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                        <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
+                    </Form.Select>
                 </Form.Group>
                 </div>
                 <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
                     <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
-                    <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                    <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
                     className="phonePage_select">
-                        <option></option>
-                        <option>{t("msh_room_change.r_state.s_dirty")}</option>
-                        <option>{t("msh_room_change.r_state.s_clean")}</option>
-                    </select>
+                        <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
+                        <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
+                    </Form.Select>
                     </Form.Group>
                 </div>
                 <div>

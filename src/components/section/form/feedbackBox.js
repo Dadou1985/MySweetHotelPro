@@ -8,7 +8,7 @@ const FeedbackBox = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -41,7 +41,6 @@ const FeedbackBox = ({userDB}) =>{
                 content: notif,
                 hotelId: userDB.hotelId,
                 markup: Date.now()})
-                .then(doc => console.log('nouvelle notitfication'))
         .then(handleClose)
     }
 

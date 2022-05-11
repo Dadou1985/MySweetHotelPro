@@ -15,12 +15,13 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { useTranslation } from "react-i18next"
 import Arrow from '../../svg/arrowDown.svg'
+import '../css/section/accordion.css'
 
 const NoteBox = ({filterDate}) => {
 
     const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const [reception, setReception] = useState(false);
 
     const {userDB} = useContext(FirebaseContext)
@@ -42,7 +43,7 @@ const NoteBox = ({filterDate}) => {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapMessages)
+
                     const noteFiltered = snapMessages.length > 0 && snapMessages.filter(note => note.status == "darkgoldenrod")
                     setMessages(noteFiltered)
                 });
@@ -69,8 +70,6 @@ const NoteBox = ({filterDate}) => {
       },
       checked: {},
     })((props) => <Checkbox color="default" {...props} />);
-
-     console.log(filterDate)
 
     return (
       <>

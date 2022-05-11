@@ -3,9 +3,10 @@ import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../../itemList'
 import StyleBadge from '../../common/badgeMaker'
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 function PhoneHouseKeeping() {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <div className="phoneCheckList_container">

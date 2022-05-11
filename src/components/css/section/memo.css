@@ -1,0 +1,28 @@
+.memo_container {
+    width: 95%;
+    height: 65vh;
+    background-image: url("../../../images/tableau.jpg");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position-x: center;
+    padding: 1%;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.memo_title {
+    text-align: center;
+    padding: 1%; 
+    padding-Top: 2%;
+    padding-bottom: 2%;
+    border-bottom: 1px solid lightgrey;
+    width: 90%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .memo_container {
+        display: none;
+    }
+}

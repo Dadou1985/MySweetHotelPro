@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import PostIt from './postIt'
 import CreateSticker from './createSticker'
 import { db } from '../../Firebase'

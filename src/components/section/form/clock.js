@@ -23,7 +23,7 @@ const Clock = ({userDB}) =>{
     const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -55,7 +55,6 @@ const Clock = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const handleSubmit = event => {
@@ -107,7 +106,6 @@ const Clock = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe
@@ -130,7 +128,6 @@ const Clock = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setDemandQty(snapInfo)
                 });
                 return unsubscribe

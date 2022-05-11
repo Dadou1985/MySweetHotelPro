@@ -1,0 +1,83 @@
+
+@media screen and (max-width: 768px) {
+    .drawer {
+        visibility: visible;
+    }
+
+    .shuttDown_button {
+        width: 10%;
+        cursor: pointer;
+        margin-right: 1vw;
+        margin-left: 1vw;
+        background-color: white;
+        color: black;
+        border-radius: 25px;
+    }
+    
+    .drawer {
+        visibility: hidden;
+    }
+    
+    .drawer_list {
+        width: 250;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .drawer_fullList{
+        width: 25vw;
+    }
+    
+    .drawer_title {
+        text-align: center;
+        padding-top: 1vh;
+    }
+    
+    .drawer_listIcons {
+        display: flex;
+        flex-flow: column;
+        height: 18vh;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    .drawer_listIcons2 {
+        display: flex;
+        flex-flow: column;
+        height: 40vh;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    .drawer_listIcons3 {
+        display: flex;
+        flex-flow: column;
+        height: 25vh;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid lightgray;
+    }
+    
+    .drawer_listIcons4 {
+        display: flex;
+        flex-flow: column;
+        height: 8vh;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .drawer_icons {
+        width: 2vw;
+    }
+    
+    #drawer_icons2 {
+        font-size: 8vw;
+        width: 70%;
+    }
+    
+}
+

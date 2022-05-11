@@ -1,0 +1,23 @@
+.sticker_img {
+    width: 4vw;
+    height: 8vh;
+    filter: drop-shadow(1px 1px 1px); 
+    margin-right: 15%;
+    cursor: pointer;
+    margin-bottom: 4vh; 
+}
+
+.sticker_modalTitle_input {
+    width: 50%;
+    border: transparent;
+    margin-right: 1vw;
+    background-color: transparent;
+    margin-right: 30%;
+}
+
+.sticker_modalBody_textarea {
+    width: 100%;
+    min-height: 10vh;
+    max-height: 20vh;
+    border: transparent; 
+}

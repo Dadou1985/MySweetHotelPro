@@ -1,0 +1,606 @@
+.register_form_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    padding: 5%;
+    width: 100vw;
+}
+
+.register_logo_container {
+    display: flex;
+    flex-flow: row;
+    justify-content: center;
+    margin-bottom: 3vh;
+}
+
+.register_form_logo {
+    width: 15vw;
+    margin: 0;
+}
+
+.form_title {
+    filter: drop-shadow(1px 1px 1px)
+}
+
+.step_title {
+    margin-bottom: 5vh;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.progress_container {
+    display: flex;
+    flex-flow: row;
+    justify-content: center; 
+    width: 100vw;
+}
+
+.progress_bar {
+    width: 30vw;
+}
+
+
+/*Step One*/
+
+.stepOne_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 30vw;
+    margin-top: 5vh;
+}
+
+.stepOne_form_name_input {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-top: 3vh;
+    margin-bottom: 1vh;
+}
+
+.stepOne_name_input {
+    width: 14vw;
+}
+
+.stepOne_input {
+    width: 30vw;
+}
+
+.stepOne_validation_button {
+    margin-top: 3vh;
+    width: 30vw;
+}
+
+.stepOne_alert {
+    margin-top: 3vh;
+}
+
+
+
+/*Step Two*/
+
+.stepTwo_container {
+    display: flex;
+    flex-flow: column wrap;
+    align-items: center;
+    width: 30vw;
+}
+
+.stepTwo_find_button {
+    margin-bottom: 5vh; 
+    margin-top: 5vh;
+}
+
+.stepTwo_find_container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+    margin-top: 5vh;
+    margin-bottom: 3vh;
+    width: 100%;
+}
+
+.stepTwo_find_input_container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 2vh;
+}
+
+.stepTwo_find_input {
+    width: 20vw;
+    margin-right: 1vw;
+}
+
+.stepTwo_find_dropdown_container {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.stepTwo_hotel_name_container {
+    font-size: 2em;
+}
+
+.stepTwo_separation {
+    width: 30vw; 
+    margin-bottom: 2vh;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.stepTwo_create_hotel_container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    width: 30vw;
+    margin-top: 3vh;
+}
+
+.stepTwo_create_form_input {
+    width: 30vw;
+}
+
+.stepTwo_button_container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 5vh;
+}
+
+.stepTwo_button {
+    margin-top: 3vh;
+}
+
+
+
+/*step Three*/
+
+
+.stepThree_title {
+    margin-top: 5vh;
+}
+
+.stepThree_upload_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    cursor: pointer;
+    border: 3px dashed black; 
+    padding: 5%;
+    border-radius: 15px;
+    width: 30vw;
+    height: 25vh;
+}
+
+.steps-camera-icon{
+    position: absolute; 
+    width: 30%;
+    height: 25vh;
+    z-index: 5;
+    left: 28%; 
+    opacity: 0;
+    cursor: pointer;
+    margin-left: 7vw;
+    border: 1px solid black;
+    margin-bottom: 2vh;
+}
+
+.stepThree_upload_logo {
+    width: 30%;
+    margin-top: 2vh;
+}
+
+.stepThree_button_container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.stepThree_button {
+    margin-top: 3vh;
+}
+
+.stepThree_alert {
+    margin-top: 3vh;
+}
+
+
+
+/*Step Four*/
+
+
+.stepFour_logo_contaner {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-bottom: 5vh;
+}
+
+.stepFour_logo_img {
+    margin-top: 5vh;
+    width: 5vw; 
+    margin-bottom: 1vh;
+}
+
+.stepFour_divider {
+    width: 100%; 
+    margin-bottom: 2vh;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.stepFour_hotel_data_container {
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+}
+
+.stepFour_hotel_data_title {
+    margin-bottom: 2vh;
+}
+
+.stepFour_manager_data_container {
+    margin-top: 2vh;
+
+    margin-bottom: 5vh;
+}
+
+.stepFour_manager_data_title {
+    margin-bottom: 2vh;
+}
+
+.stpeFour_button {
+    padding-left: 5vw; 
+    padding-right: 5vw;
+}
+
+
+
+/*Final Step*/
+
+
+.finalStep_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.finalStep_greeting_message_container {
+    width: 25vw; 
+}
+
+.finalStep_visual_container {
+    border: 1px solid lightgray;
+    margin-bottom: 2vh;
+    border-radius: 1px; 
+    filter: drop-shadow(2px 2px 2px) 
+}
+
+.finalStep_divider {
+    width: 50%; 
+    margin-bottom: 5vh; 
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.finalStep_modal {
+    padding: 2vw; 
+    text-align: center;
+}
+
+
+
+
+/************************MEDIA QUERIES***************************/
+
+
+@media screen and (max-width: 768px) {
+    
+    .register_form_logo {
+        width: 30vw;
+        margin: 0;
+    }
+
+    .form_title {
+        font-size: 2em;
+        filter: drop-shadow(1px 1px 1px)
+    }
+
+    .step_title {
+        font-size: 1.5em;
+        margin-bottom: 5vh;
+        filter: drop-shadow(1px 1px 1px);
+        padding-left: 10vw;
+        padding-right: 10vw;
+    }
+
+    .progress_container {
+        display: flex;
+        flex-flow: row;
+        justify-content: center; 
+        width: 100vw;
+    }
+
+    .progress_bar {
+        width: 90vw;
+    }
+
+
+    /*Step One*/
+
+    .stepOne_container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        width: 90vw;
+        margin-top: 5vh;
+    }
+
+    .stepOne_title {
+        font-size: 1.5em;
+    }
+
+    .stepOne_form_name_input {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        margin-top: 3vh;
+    }
+
+    .stepOne_name_input {
+        width: 90vw;
+        margin-bottom: 3vh;
+    }
+
+    .stepOne_input {
+        width: 90vw;
+    }
+
+    .stepOne_validation_button {
+        margin-top: 3vh;
+        width: 100%;
+    }
+
+    .stepOne_alert {
+        margin-top: 3vh;
+    }
+
+
+
+    /*Step Two*/
+
+    .stepTwo_container {
+        display: flex;
+        flex-flow: column wrap;
+        align-items: center;
+        width: 90vw;
+    }
+
+    .stepTwo_title {
+        width: 90vw;
+        font-size: 1.5em;
+    }
+
+    .stepTwo_find_button {
+        margin-bottom: 5vh; 
+        margin-top: 5vh;
+    }
+
+    .stepTwo_find_container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        margin-top: 5vh;
+        margin-bottom: 3vh;
+        width: 90vw;
+    }
+
+    .stepTwo_find_input_container {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        margin-top: 2vh;
+        width: 90vw;
+    }
+
+    .stepTwo_find_input {
+        width: 90vw;
+    }
+
+    .stepTwo_find_dropdown_container {
+        flex-flow: column;
+        align-items: center;
+        margin-top: 0vh;
+        width: 90vw;
+    }
+
+    #dropdown-basic-button {
+        width: 90vw;
+    }
+
+    .stepTwo_hotel_name_container {
+        font-size: 1.2em;
+    }
+
+    .stepTwo_separation {
+        width: 30vw; 
+        margin-bottom: 2vh;
+        filter: drop-shadow(1px 1px 1px);
+    }
+
+    .stepTwo_create_hotel_container {
+        display: flex;
+        flex-flow: column;
+        justify-content: space-around;
+        align-items: center;
+        text-align: center;
+        width: 30vw;
+        margin-top: 3vh;
+    }
+
+    .stepTwo_create_form_input {
+        width: 90vw;
+        margin-bottom: 2vh;
+    }
+
+    .stepTwo_button_container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        margin-top: 5vh;
+    }
+
+    .stepTwo_button {
+        margin-top: 3vh;
+    }
+
+
+
+    /*step Three*/
+
+
+    .stepThree_title {
+        font-size: 1.5em;
+        margin-top: 5vh;
+    }
+
+    .stepThree_upload_container {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        margin-top: 5vh;
+        margin-bottom: 5vh;
+        cursor: pointer;
+        border: 3px dashed black; 
+        padding: 5%;
+        border-radius: 5%;
+        width: 90vw;
+    }
+
+    .steps-camera-icon{
+        position: absolute; 
+        width: 85vw;
+        height: 30vh;
+        z-index: 5;
+        opacity: 0;
+        cursor: pointer;
+        left: 0;
+    }
+
+    .stepThree_upload_logo {
+        width: 50%;
+        margin-top: 2vh;
+    }
+
+    .stepThree_button_container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .stepThree_button {
+        margin-top: 3vh;
+    }
+
+    .stepThree_alert {
+        margin-top: 3vh;
+    }
+
+
+
+    /*Step Four*/
+
+
+    .stepFour_logo_contaner {
+        display: flex;
+        flex-flow: column;
+        align-items: center;
+        margin-bottom: 5vh;
+        margin-top: 2vh;
+    }
+
+    .stepFour_logo_img {
+        width: 25vw; 
+        margin-bottom: 1vh;
+    }
+
+    .stepFour_divider {
+        width: 100%; 
+        margin-bottom: 2vh;
+        filter: drop-shadow(1px 1px 1px);
+    }
+
+    .stepFour_hotel_data_container {
+        margin-bottom: 5vh;
+    }
+
+    .stepFour_hotel_data_title {
+        font-size: 1.5em;
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+    }
+
+    .stepFour_manager_data_container {
+        margin-bottom: 5vh;
+    }
+
+    .stepFour_manager_data_title {
+        font-size: 1.5em;
+        margin-top: 3vh;
+        margin-bottom: 3vh;
+    }
+
+    .stepFour_button {
+        padding-left: 5vw; 
+        padding-right: 5vw;
+    }
+
+
+
+    /*Final Step*/
+
+
+    .finalStep_container {
+        display: flex;
+        flex-flow: column;
+        margin-bottom: 15vh;
+
+    }
+
+    .finalStep_greeting_message_container {
+        width: 90vw; 
+    }
+
+
+
+    .finalStep_divider {
+        width: 50%; 
+        margin-bottom: 5vh; 
+        filter: drop-shadow(1px 1px 1px);
+    }
+
+    .finalStep_modal {
+        padding: 2vw; 
+        text-align: center;
+    }
+}

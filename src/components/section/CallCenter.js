@@ -10,7 +10,7 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import Bubble from "../../svg/bubble.svg"
 import { useTranslation } from "react-i18next"
-
+import '../css/section/chatTemplate.css'
 
 export default function CallCenter({user, userDB}) {
     const [list, setList] = useState(false)
@@ -20,7 +20,7 @@ export default function CallCenter({user, userDB}) {
     const [adminSpeakStatus, setAdminSpeakStatus] = useState([])
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -43,7 +43,6 @@ export default function CallCenter({user, userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setMessages(snapInfo)
         });
         return unsubscribe
@@ -136,7 +135,6 @@ export default function CallCenter({user, userDB}) {
                       ...doc.data()
                     })        
                   });
-                  console.log(snapInfo)
                   setAdminSpeakStatus(snapInfo)
               });
               return unsubscribe

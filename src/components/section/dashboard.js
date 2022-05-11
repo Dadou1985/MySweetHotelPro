@@ -10,9 +10,10 @@ import ChatLogo from '../../images/chat.png'
 import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate';
+import '../css/section/dashboard.css'
 
-const Dashboard = ({user, userDB}) => {
-  const { t, i18n } = useTranslation()
+const Dashboard = ({userDB}) => {
+  const { t } = useTranslation()
   const [consigne, setConsigne] = useState([]);
   const [chat, setChat] = useState([]);
   const [roomChange, setRoomChange] = useState([]);
@@ -36,7 +37,7 @@ const sevenDayAgo = Date.now() - 604800000
 const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
 
 const roomChangeData = {
-  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`],
+  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
   datasets: [
     {
         data: [
@@ -55,7 +56,7 @@ const roomChangeData = {
 
 
 const maintenanceData = {
-  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`],
+  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
   datasets: [
     {
       data: [
@@ -121,7 +122,6 @@ let basicOptions = {
               ...doc.data()
             })        
           });
-          console.log(snapInfo)
 
           setConsigne(snapInfo)
       });
@@ -145,7 +145,6 @@ let basicOptions = {
             ...doc.data()
           })        
         });
-        console.log(snapInfo)
         
         const chatStatus = snapInfo && snapInfo.filter(chat => chat.status === true)
 
@@ -171,7 +170,7 @@ useEffect(() => {
                   ...doc.data()
                 })        
               });
-              console.log(snapInfo)
+
               setRoomChange(snapInfo)
           });
           return unsubscribe
@@ -325,7 +324,7 @@ useEffect(() => {
                     height: "12vh",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
-                    marginTop: "5vh",
+                    marginTop: "2vh",
                     marginBottom: "2vh"
                   }}>
                     <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />

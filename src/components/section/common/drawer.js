@@ -13,16 +13,12 @@ import Fom from '../../../svg/fom.svg'
 import Notebook from '../../../svg/notebook.png'
 import Feedback from '../../../svg/feedbackBox.svg'
 import { auth } from '../../../Firebase'
-import Chat from '../form/phoneForm/phoneToolbarOverlays/chatOverlay'
 import Housekeeping from '../form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
-import Cab from '../form/phoneForm/phoneToolbarOverlays/cabOverlay'
-import Clock from '../form/phoneForm/phoneToolbarOverlays/clockOverlay'
-import Repair from '../form/phoneForm/phoneToolbarOverlays/repairOverlay'
-import RoomChange from '../form/phoneForm/phoneToolbarOverlays/roomChangeOverlay'
 import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
 import Connection from '../../../images/admin.png'
+import PhoneOverlay from '../../customHooks/phoneOverlayHook'
 import { t } from 'i18next';
-
+import '../../css/common/drawer.css'
 
 export default function TemporaryDrawer({userDB, user}) {
   const [state, setState] = React.useState({left: false,});
@@ -50,7 +46,7 @@ export default function TemporaryDrawer({userDB, user}) {
         <List className="drawer_listIcons">
         <img src={Dasboard} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
         {!!user && !!userDB &&
-        <Chat user={user} userDB={userDB} />}
+        <PhoneOverlay category="chat" userDB={userDB} index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
         </List>
         <Divider />
@@ -58,13 +54,13 @@ export default function TemporaryDrawer({userDB, user}) {
         {!!user && !!userDB &&
         <Housekeeping user={user} userDB={userDB} />}
         {!!user && !!userDB &&
-        <Cab user={user} userDB={userDB} />}
+        <PhoneOverlay category="cab" userDB={userDB} index={0} />}
         {!!user && !!userDB &&
-        <Clock user={user} userDB={userDB} />}
+        <PhoneOverlay category="clock" userDB={userDB} index={1} />}
         {!!user && !!userDB &&
-        <Repair user={user} userDB={userDB} />}
+        <PhoneOverlay category="maintenance" userDB={userDB} index={2} />}
         {!!user && !!userDB &&
-        <RoomChange user={user} userDB={userDB} />}
+        <PhoneOverlay category="roomChange" userDB={userDB} index={4} />}
         <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
       </List>
       <Divider />

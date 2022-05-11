@@ -1,7 +1,7 @@
 import React, { useEffect } from "react"
 import Loader from "react-loader-spinner"
 import Mascott from '../../../svg/receptionist.svg'
-import "../../css/smartLoader.css"
+import "../../css/common/smartLoader.css"
 
 const SmartLoader = ({hide}) => {
 

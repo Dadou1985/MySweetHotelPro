@@ -24,7 +24,7 @@ const Cab = ({userDB}) =>{
     const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -56,7 +56,6 @@ const Cab = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const handleSubmit = event => {
@@ -112,7 +111,6 @@ const Cab = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe
@@ -134,7 +132,6 @@ const Cab = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setDemandQty(snapInfo)
                 });
                 return unsubscribe
@@ -151,7 +148,7 @@ const Cab = ({userDB}) =>{
                     {t("msh_toolbar.tooltip_cab")}
                 </Tooltip>
                 }>
-                    <img src={Taxi} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
+                    <img src={Taxi} alt="contact" onClick={handleShow} style={{width: "2vw"}} />
                 </OverlayTrigger>
             </StyledBadge>
 

@@ -1,0 +1,20 @@
+.toolbar_container {
+    display: flex;
+    flex-flow: column;
+    width: 5%;
+    height: 93vh;
+    border-right: 1px solid lightgrey;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    padding-bottom: 3%;
+}
+
+
+@media screen and (max-width: 768px) {
+    .toolbar_container {
+        display: none;
+    }
+}
+
+

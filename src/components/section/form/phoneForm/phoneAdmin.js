@@ -4,6 +4,7 @@ import { db, functions } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 function PhoneAdmin({userDB}) {
     const [formValue, setFormValue] = useState({username: "", email: ""})
@@ -11,7 +12,7 @@ function PhoneAdmin({userDB}) {
     const [info, setInfo] = useState([])
     const [expand, setExpand] = useState(false)
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()
@@ -30,7 +31,6 @@ function PhoneAdmin({userDB}) {
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const createUser = functions.httpsCallable('createUser')
@@ -91,7 +91,6 @@ function PhoneAdmin({userDB}) {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

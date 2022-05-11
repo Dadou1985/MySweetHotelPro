@@ -11,27 +11,17 @@ const Lost = () => {
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
 
-  useEffect(() => {
+  useEffect(() => {     
+    if(!user && !userDB){
+      const userStorage = JSON.parse(sessionStorage.getItem('userStorage'))
+    const userAuth = JSON.parse(sessionStorage.getItem('userAuth'))
+    
+    setUser(userAuth)
+    setUserDB(userStorage)
+    return setHide("none")
+    }
         
-    let unsubscribe = auth.onAuthStateChanged(async(user) => {
-        if (user) {
-          await setUser(user)
-          await db.collection('businessUsers')
-          .doc(user.uid)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                setUserDB(doc.data())
-              } else {
-                // doc.data() will be undefined in this case
-                console.log("No such document!")
-              }
-            })
-            return setHide("none")
-        }
-      })
-    return unsubscribe
-}, [])
+}, [user, userDB])
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 

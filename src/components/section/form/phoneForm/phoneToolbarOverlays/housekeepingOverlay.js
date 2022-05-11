@@ -34,7 +34,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setTowel(snapInfo)
         });
         return unsubscribe
@@ -50,7 +49,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setSoap(snapInfo)
         });
         return unsubscribe
@@ -66,7 +64,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setToiletPaper(snapInfo)
         });
         return unsubscribe
@@ -82,7 +79,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setHairDryer(snapInfo)
         });
         return unsubscribe
@@ -98,7 +94,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setPillow(snapInfo)
         });
         return unsubscribe
@@ -114,7 +109,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setBlanket(snapInfo)
         });
         return unsubscribe
@@ -130,7 +124,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setIron(snapInfo)
         });
         return unsubscribe
@@ -146,7 +139,6 @@ function HousekeepingOverlay({userDB}) {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setBabyBed(snapInfo)
         });
         return unsubscribe

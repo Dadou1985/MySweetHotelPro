@@ -23,7 +23,7 @@ export default function Notifications() {
                         ...doc.data()
                       })        
                     })
-                    console.log(snapStick)
+                    
                     setInfo(snapStick)
                 });
                 return unsubscribe

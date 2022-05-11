@@ -21,7 +21,6 @@ function CallCenterOverlay({userDB}) {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setChatRoomQty(snapInfo)
                 });
                 return unsubscribe
@@ -53,7 +52,7 @@ function CallCenterOverlay({userDB}) {
                       color: "white", 
                       textAlign: "center", 
                       fontSize: "12px"}} />
-                  }
+                  }else{}
                 })}
         </div>
     )

@@ -24,7 +24,7 @@ const Maid = ({userDB}) =>{
     const [footerState, setFooterState] = useState(true)
     const [reasonBack, setReasonBack] = useState(null)
     const [stateClone, setStateClone] = useState(null)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -52,7 +52,6 @@ const Maid = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -97,6 +96,7 @@ const Maid = ({userDB}) =>{
             .then(() => 
                 setFormValue("")
             )
+            //!!!ajouter un update room pour le chat
     }
 
     const handleUpdateRoomState = (demandId) => {
@@ -106,7 +106,8 @@ const Maid = ({userDB}) =>{
             .collection('roomChange')
             .doc(demandId)
             .update({
-                state: formValue.state
+                state: formValue.state,
+                stateClone: stateClone
             })
     }
 
@@ -136,7 +137,6 @@ const Maid = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe
@@ -159,7 +159,6 @@ const Maid = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setDemandQty(snapInfo)
                 });
                 return unsubscribe

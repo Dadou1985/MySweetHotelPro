@@ -12,7 +12,7 @@ const Annuaire = () =>{
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
 
     const handleClose = () => setList(false)
@@ -32,7 +32,6 @@ const Annuaire = () =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
     const handleSubmit = event => {
@@ -68,7 +67,6 @@ const Annuaire = () =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

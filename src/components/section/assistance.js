@@ -3,9 +3,8 @@ import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../images/paper-plane.png'
-import Plus from '../../svg/plus3.svg'
 import SupportRoom from './supportRoom'
-import { OverlayTrigger, Tooltip, Button, DropdownButton, Dropdown } from 'react-bootstrap'
+import { Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
   Accordion,
   AccordionItem,
@@ -19,6 +18,8 @@ import Drawer from '@material-ui/core/Drawer'
 import { db } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
+import '../css/section/chat.css'
+import '../css/section/accordion.css'
 
 export default function Assistance({userDB, user}) {
     
@@ -34,14 +35,6 @@ export default function Assistance({userDB, user}) {
         setNote(event.currentTarget.value)
     }
 
-    const handleShow = () => {
-      if(window.innerWidth > 768) {
-          setShowModal(true)
-      }else{
-          setActivate(true)
-      }
-  }
-
   const handleHideDrawer = () => {
     setActivate(false)
   }
@@ -53,7 +46,6 @@ export default function Assistance({userDB, user}) {
         markup: Date.now(),
         hotelId: userDB.hotelId
       })
-        .then(doc => console.log('nouvelle notitfication'))
 }
 
 const changeAdminSpeakStatus = (roomName) => {
@@ -109,7 +101,6 @@ const changeAdminSpeakStatus = (roomName) => {
               ...doc.data()
             })        
           });
-          console.log(snapInfo)
           setInfo(snapInfo)
       });
       return unsubscribe
@@ -162,15 +153,6 @@ const changeAdminSpeakStatus = (roomName) => {
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
-                     {/*<OverlayTrigger
-                        placement="top"
-                        overlay={
-                          <Tooltip id="title">
-                            Créer une conversation
-                          </Tooltip>
-                        }>
-                        <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-                      </OverlayTrigger>*/}
                         <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
                       </div>
                 </Form>

@@ -20,7 +20,6 @@ function SupportOverlay() {
                       ...doc.data()
                     })        
                   });
-                  console.log(snapInfo)
                   setChatRoomQty(snapInfo)
               });
               return unsubscribe

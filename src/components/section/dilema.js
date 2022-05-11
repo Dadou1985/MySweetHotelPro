@@ -1,5 +1,4 @@
 import React, {useState, useEffect, useRef } from 'react'
-import Fom from '../../svg/fom.svg'
 import { navigate } from 'gatsby'
 import { Form, Button, Modal, OverlayTrigger, Tooltip, Spinner, Alert } from 'react-bootstrap'
 import DefaultProfile from "../../svg/profile.png"
@@ -17,14 +16,14 @@ import LogoSticker from '../../images/qr_code.png'
 import LogoFlyer from '../../images/flyer.png'
 import LogoBand from '../../images/band.png'
 import LogoHotel from '../../images/hotelLogo.png'
-import { PDFExport, savePDF } from "@progress/kendo-react-pdf"
+import { PDFExport } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
+import '../css/section/dilema.css'
 
 const Dilema = ({user, userDB, setUserDB}) => {
 
     const [showModal, setShowModal] = useState(false)
-    const [showDetails, setShowDetails] = useState(false)
     const [confModal, setConfModal] = useState(true)
     const [info, setInfo] = useState([])
     const [listEmail, setListEmail] = useState(false)
@@ -43,27 +42,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const stickerPdfRef = useRef(null)
     const flyerPdfRef = useRef(null)
     const bandPdfRef = useRef(null)
-    const { loading, error, data } = useShortenUrl(url);
-    const { t, i18n } = useTranslation()
-    const [allHotelData, setAllHotelData] = useState(null);
+    const { data } = useShortenUrl(url);
+    const { t } = useTranslation()
 
     const exportPDF = (pdf) => {
         if (pdf.current) {
             pdf.current.save();
         }
       };
-    
-    const handleWorkspace = () => {
-        if(!userDB.username) {
-            if(window.innerWidth > 768) {
-                setShowModal(true)
-            }else{
-                setShowDialog(true)
-            }
-        }else{
-            navigate('/singlePage')
-        }
-    }  
 
     const hotelNameForUrl = userDB.hotelName
 
@@ -101,7 +87,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             if(data){
                 snapInfo.map((user) => {
                     return handleUpdateAdminAccount(user.userId, data.link)
@@ -285,7 +270,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                
@@ -299,7 +283,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
      const handleChangeEmail = () => {
@@ -323,9 +306,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     }
 
     const isBrowser = () => typeof window !== "undefined"
-      
-    console.log("eeeeeeeeeeee", userDB)
-
+    
     return (
         info.map((flow, key) => (
 
@@ -335,11 +316,6 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <h1>
                         <div style={{color: "black", fontWeight: "bold", fontSize: "1em"}}>{flow.username}</div>
                         <div style={{fontSize: "15px"}}>{flow.email}</div>
-                       { /*<div className="header-profile">
-                            <img src={Tips} alt="tips" className="tips" /> 
-                            {flow.tips} tips 
-                            <img src={Arrow} alt="arrow" style={{width: "1vw", cursor: "pointer", marginLeft: "1vw", transform: "rotate(0turn)"}} id="arrowTop" onClick={handleShowDetails} /> 
-                        </div>*/}
                     </h1>
                        <div style={{display: isBrowser() && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>

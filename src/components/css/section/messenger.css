@@ -1,0 +1,289 @@
+.messenger_container {
+    display: flex;
+    flex-flow: column;
+    padding: 1%;
+    height: 100%;
+    width: 100%;
+    margin-top: 2vh;
+}
+
+.messenger_title {
+    text-align: center;
+    border-radius: 1%;
+    height: 3%; 
+    padding: 1%;
+    filter: drop-shadow(1px 1px 1px)
+}
+
+.messenger_notebox {
+    max-height: 100%;
+    padding: 1%;
+}
+
+.messenger_form {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 3vh;
+    width: 75%;
+    margin-left: 10%;
+}
+
+.messenger_form_input_container {
+    width: 85%;
+}
+
+#message {
+    width: 100%;
+    margin-bottom: 2vh;
+    margin-top: 1vh;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+}
+
+.messenger_form_footer {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: c;
+}
+
+.icon-add-note-container {
+    display: flex;
+    padding-left: 6vw;
+    width: 90%;
+    cursor: pointer;
+    margin-top: 2vh;
+    margin-bottom: 4vh;
+    flex-flow: row;
+    justify-content: start;
+}
+
+.icon-add-note {
+    width: 1%; 
+    filter: drop-shadow(2px 2px 2px);
+    margin-right: 1vw;
+}
+
+.perfect-scrollbar {
+    height: 100% !important;
+}
+
+.modal-note-title {
+    border: none; 
+    width: 100%;
+    color: black;
+    font-weight: 100;
+    background-color: transparent;
+    margin-bottom: 2vh;
+}
+
+.modal-note-input {
+    border-top: none;
+    border-left: none; 
+    border-right: none;
+    
+}
+
+.modal-note-button-container {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: flex-end;
+}
+
+.white-band {
+    width: 60%; 
+    z-index: 5;
+}
+
+.modal-note-file-input {
+    position: absolute; 
+    width: 5%;
+    height: 8vh;
+    z-index: 20;
+    opacity: 0;
+    margin-top: 1vh;
+    margin-right: 7vw;
+    cursor: pointer;
+}
+
+.modal-note-file-icon {
+    width: 5%;
+    margin-right: 1vw;
+}
+
+.modal-note-calendar-icon {
+    width: 5%; 
+    cursor: pointer;
+    filter: drop-shadow(2px 2px 2px);
+}
+
+.modal-note-send-icon {
+    width: 5%;
+    cursor: pointer;
+    border-radius: 50%;
+    margin-left: 2vw;
+    filter: drop-shadow(2px 2px 2px);
+}
+
+.modal-note-list {
+    height: 80%;
+    margin-top: 4vh;
+    margin-right: 15%;
+    width: 6%;
+}
+
+.modal-note-circle {
+    width: 5%;
+    cursor: pointer; 
+    margin-right: 1vw;
+    filter: drop-shadow(2px 2px 2px);
+}
+
+.modal-note-list-circle {
+    cursor: pointer;
+    margin-bottom: 1vw;
+}
+
+.MuiPickersStaticWrapper-staticWrapperRoot {
+    height: fit-content;
+    filter: drop-shadow(2px 4px 6px black);
+    margin-top: 3vh;
+    margin-left: 2vw;
+}
+
+@media screen and (max-width: 768px) {
+    .messenger_container {
+        width: 100%;
+        height: 75vh;
+    }
+
+    .perfect-scrollbar {
+        height: 75vh !important;
+    }
+
+    .messenger_notebox {
+        width: 100%;
+        height: 60vh;
+    }
+
+    .messenger_input_note {
+        width: 98vw;
+        height: 6vh;
+        margin-bottom: 0vh;
+        margin-top: 2vh;
+    }
+
+    .messenger_form_input_container {
+        margin-top: 1vh;
+        position: sticky;
+    }
+
+    #noteButton {
+        width: 98vw;
+        margin-bottom: 1vh;
+    }
+
+    .ps__rail-y {display: none !important;}
+    
+    .icon-add-note-container {
+        display: flex;
+        margin-left: 20%;
+        width: 60%;
+        cursor: pointer;
+        bottom: 2vh;
+    }
+
+    .icon-add-note {
+        width: 10%;
+        bottom: 25px;
+        margin-right: 3vw;
+    }
+
+    .modal-note-title {
+        border: none; 
+        width: 100%;
+        color: white;
+        font-weight: bolder;
+        margin-bottom: 1vh;
+    }
+    
+    .modal-note-input {
+        border-top: none;
+        border-left: none; 
+        border-right: none;
+        margin-bottom: 3vh;
+    }
+
+    .modal-note-button-container {
+        display: flex;
+        flex-flow: row;
+        justify-content: space-around;
+        width: 100%;
+        padding: 2%;
+    }
+
+    .white-band {
+        position: absolute;
+        z-index:4;
+        height: 5vh;
+        width: 55%;
+        background-color: white; 
+    }
+    
+    .modal-note-file-input {
+        position: absolute; 
+        width: 8%;
+        height: 4vh;
+        z-index: 2;
+        left: 13%; 
+        opacity: 0;
+        cursor: pointer;
+        border: 1px solid black;
+    }
+    
+    .modal-note-file-icon {
+        width: 9%;
+        margin-right: 1vw;
+    }
+    
+    .modal-note-calendar-icon {
+        width: 9%; 
+        z-index: 5;
+    }
+    
+    .modal-note-send-icon {
+        width: 9%;
+        margin-left: 2vw;
+        z-index: 5;
+    }
+
+    .modal-note-list {
+        height: 3%;
+        width: 100%;
+    }
+
+    .modal-note-circle {
+        width: 9%;
+        z-index: 5;
+    }
+    
+    .modal-note-list-circle {
+        width: 30%;
+        margin-right: 1vw;
+    }
+
+    .react-datepicker {
+        left: 17%;
+    }
+
+    .MuiListItemIcon-root {
+        width: 22vw !important;
+        display: flex;
+        justify-content: center;
+    }
+    
+}

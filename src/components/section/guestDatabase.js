@@ -1,12 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
-import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap'
 import { db, functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
-import Picture from '../../svg/picture.svg'
-import Close from '../../svg/close.svg'
-import Plus from '../../svg/plus3.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Avatar from 'react-avatar'
 import defaultImg from "../../images/avatar-client.png"
@@ -20,23 +17,18 @@ import Mail from '../../images/email.png'
 import Room from '../../images/room2.png'
 import Phone from '../../images/phone.png'
 import Birthday from '../../images/calendar.png'
-import SendMail from '../../images/mail.png'
-import Category from '../../images/categories.png'
 import CheckoutDate from '../../images/checkout.png'
 import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
 import Loader from "react-loader-spinner"
-import '../css/loader.css'
+import '../css/common/loader.css'
 import Chat from './chatRoom'
 import { useTranslation } from "react-i18next"
 import TimeLine from './guestTimeLine'
 import ChatIcon from '../../images/dialog.png'
-import Services from '../../images/services.png'
-import Puzzle from '../../images/warning.png'
-import Binocular from '../../images/binoculars.png'
 
 const GuestDatabase = ({user, userDB}) =>{
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
@@ -84,7 +76,6 @@ const GuestDatabase = ({user, userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -123,7 +114,6 @@ const GuestDatabase = ({user, userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setInfo(snapInfo)
         });
         return unsubscribe
@@ -261,9 +251,9 @@ const GuestDatabase = ({user, userDB}) =>{
                         {sendingMail ? 
                             IsLoading ? <Loader type="Puff" color="#000" height={15} width={15} timeout={10000} /> : <span>
                             <Button variant="light" style={{filter: "drop-shadow(2px 4px 6px)", marginRight: "1vw"}} onClick={() => setSendingMail(false)}>{t("msh_crm.c_button.b_cancel")}</Button>
-                            <Button variant="dark" onClick={async() => {
-                            await handleMailSent()
-                            return handleMailSended()
+                            <Button variant="dark" onClick={() => {
+                            return handleMailSent()
+                            .then(handleMailSended())
                             }}>{t("msh_crm.c_button.b_send_em_all")}</Button>
                         </span>
                             : <Button variant="light" style={{filter: "drop-shadow(2px 4px 6px)"}} onClick={() => setSendingMail(true)}>{t("msh_crm.c_button.b_send_mail")}</Button>}

@@ -1,0 +1,13 @@
+.checkList_title {
+    text-align: center;
+    color: white;
+}
+
+.checkList_input {
+    width: 80%;
+}
+
+.checkList_allSelected_button {
+    margin-bottom: 2vh;
+    width: 100%;
+}

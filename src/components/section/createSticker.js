@@ -3,13 +3,13 @@ import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Plus from '../../images/postItPlus.png'
 import { db } from '../../Firebase'
 import { useTranslation } from "react-i18next"
-
+import '../css/section/createSticker.css'
 
 const CreateSticker = ({userDB}) => {
 
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const showSticker = () => {
         setVisible(true)
@@ -38,7 +38,6 @@ const CreateSticker = ({userDB}) => {
       }
     
     const handleClose = (event) => {
-        console.log(event)
         setVisible(false)
     }
 
@@ -68,12 +67,12 @@ const CreateSticker = ({userDB}) => {
                     width: "100%"
                 }}>
                 <input value={formValue.title} name="title" type="text" placeholder={t("msh_memo.m_create_sticker.s_title")} onChange={handleChange} 
-                className="memo_modalTitle_input" required />
+                className="sticker_modalTitle_input" required />
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
                 <textarea value={formValue.text} name="text" placeholder={t("msh_memo.m_create_sticker.s_body")} onChange={handleChange} 
-                className="memo_modalBody_textarea" required></textarea>
+                className="sticker_modalBody_textarea" required></textarea>
             </Modal.Body>
             <Modal.Footer>
                 <Button variant="outline-secondary" onClick={handleClose}>{t("msh_memo.m_create_sticker.s_close_button")}</Button>

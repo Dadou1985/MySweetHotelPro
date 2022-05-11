@@ -1,11 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
-import { Form, Button, Table, Tabs, Tab, Card, Modal } from 'react-bootstrap'
+import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
 import { db } from '../../Firebase'
 import moment from 'moment'
 import Picture from '../../svg/picture.svg'
-import Close from '../../svg/close.svg'
-import Plus from '../../svg/plus3.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 
@@ -21,7 +19,6 @@ const LostNFound = ({userDB}) =>{
     const [placeClone, setPlaceClone] = useState(null)
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
-    const [footerState, setFooterState] = useState(true)
     const [filter, setFilter] = useState("tech")
     const [item, setItem] = useState({
         img: LostOnes,
@@ -46,7 +43,6 @@ const LostNFound = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -89,14 +85,11 @@ const LostNFound = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe
            
      },[filter])
-
-     console.log("/*/**/*/*", filter)
 
     return(
         <div style={{width: "95%"}}>
@@ -192,7 +185,10 @@ const LostNFound = ({userDB}) =>{
                                     }}>
                                         <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_lost_found.l_type.t_label")}
+                                            className="mb-3">
                                                 <Form.Select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
@@ -204,11 +200,15 @@ const LostNFound = ({userDB}) =>{
                                                     <option value="clothes" onClick={() => setTypeClone(t("msh_lost_found.l_third_tab_title"))} >{t("msh_lost_found.l_third_tab_title")}</option>
                                                     <option value="others" onClick={() => setTypeClone(t("msh_lost_found.l_fourth_tab_title"))} >{t("msh_lost_found.l_fourth_tab_title")}</option>
                                                 </Form.Select>
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
-                                            <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_lost_found.l_place.p_label")}
+                                            className="mb-3">
                                                 <Form.Select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
                                                 style={{width: "20vw", 
                                                 height: "4vh", 
@@ -222,18 +222,27 @@ const LostNFound = ({userDB}) =>{
                                                     <option value="floors" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_floors"))}>{t("msh_lost_found.l_place.p_floors")}</option>
                                                     <option value="others" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_other"))}>{t("msh_lost_found.l_place.p_other")}</option>
                                                 </Form.Select>
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div style={{marginBottom: "2vh"}}>
                                             <Form.Group controlId="description">
-                                            <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
-                                            <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
+                                            <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_lost_found.l_description.d_label")}
+                                            className="mb-3">                                            
+                                                <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
+                                            </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                         <div>
                                             <Form.Group controlId="details">
-                                                <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
-                                                <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "30vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                                <FloatingLabel
+                                                controlId="floatingInput"
+                                                label={t("msh_lost_found.l_details")}
+                                                className="mb-3">
+                                                    <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "30vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                                </FloatingLabel>
                                             </Form.Group>
                                         </div>
                                     </div>

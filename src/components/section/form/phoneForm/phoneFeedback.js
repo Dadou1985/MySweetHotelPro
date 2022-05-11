@@ -3,9 +3,10 @@ import { Form, Button } from 'react-bootstrap'
 import { db } from '../../../../Firebase'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 function PhoneFeedback({userDB}) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
@@ -40,9 +41,9 @@ function PhoneFeedback({userDB}) {
                 content: notif,
                 hotelId: userDB.hotelId,
                 markup: Date.now()})
-                .then(doc => console.log('nouvelle notitfication'))
-        .then(handleClose)
+                .then(handleClose)
     }
+    
     return (
         <div className="phone_container">
                 <h4 style={{marginBottom: "5vh"}}>{t("msh_feedback_box.f_title")}</h4>

@@ -3,13 +3,13 @@ import Stick from '../../images/postIt.png'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { db } from '../../Firebase'
 import Avatar from 'react-avatar'
-import  '../css/post-it.css'
+import  '../css/section/post-it.css'
 import { useTranslation } from "react-i18next"
 
 const PostIt = ({author, title, text, markup, userDB}) => {
 
     const [visible, setVisible] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const showSticker = () => {
         setVisible(true)

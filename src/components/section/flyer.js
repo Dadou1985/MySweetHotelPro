@@ -1,15 +1,13 @@
 import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
-import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenFlyer"
-import '../css/flyer.css'
+import '../css/section/flyer.css'
 import { useTranslation } from "react-i18next"
-import MshTitle from '../../svg/msh-newLogo-transparent.png'
 import MshLogo from '../../svg/new-logo-msh.png'
 
 export default function Flyer({url, logo}) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <div style={{
@@ -24,7 +22,6 @@ export default function Flyer({url, logo}) {
             backgroundColor: "white",
             backgroundSize: "contain",
             backgroundRepeat: "no-repeat",
-            backgroundSize: "20vw",
             backgroundPosition: "center"
         }}>
             <div>

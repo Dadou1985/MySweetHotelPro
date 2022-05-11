@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useTranslation } from "react-i18next"
-import { Modal, Button, Tab, Tabs, Table, ModalBody, Nav, Row, Col } from 'react-bootstrap'
-import {db} from '../../Firebase'
-import moment from 'moment'
-import 'moment/locale/fr';
+import { Modal, ModalBody } from 'react-bootstrap'
 import MaintenancePieChart from "./maintenancePieChart"
 
 const MaintenanceRate = ({userDB, showModal, closeModal}) => {
     const [filter, setFilter] = useState(Date.now() - 604800000);
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const roomChangeWeekAgo = Date.now() - 604800000
     const roomChangeMonthAgo = Date.now() - 2678400000

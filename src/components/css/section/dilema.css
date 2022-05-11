@@ -1,0 +1,362 @@
+.global-container {
+    display: flex;
+    flex-flow: column;
+    align-items: flex-end;
+    padding: 2%;
+    height: 93vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.profile-container {
+    display: flex;
+    flex-flow: column;
+    width: 40%;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.profile-container h1 {
+    font-size: 5em;
+    margin-bottom: 3vh; 
+}
+
+.header-profile{
+    display: flex; 
+    flex-flow: row;
+    align-items: center;
+    margin-left: 1vw;
+    font-size: 20px;
+}
+
+.header-toggle-container{
+    flex-flow: row;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.tips {width: 2vw}
+
+.profile-details {
+    font-size: 1em;
+}
+
+.update-profile-button {
+    float: right;
+    margin-bottom: 1vh;
+}
+
+.space-container {
+    flex-flow: row wrap;
+    width: 40%;
+    margin: 2vw;
+}
+
+.space-box {
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    margin-left: 1vw;
+}
+
+.space-card {
+    filter: drop-shadow(-5px 5px 5px);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 15vw;
+    height: 20vh;
+    border: 1px solid lightgrey;
+    border-bottom-left-radius: 2%;
+    border-top-left-radius: 2%;
+    border-bottom-right-radius: 2%;
+    border-top-right-radius: 2%;
+    color: gray;
+    cursor: pointer;
+}
+
+.space-card-shadow {
+    filter: drop-shadow(-5px 5px 5px);
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    width: 20vw;
+    height: 40vh;
+    border: 1px solid lightgrey;
+    border-bottom-left-radius: 2%;
+    border-top-left-radius: 2%;
+    border-bottom-right-radius: 2%;
+    border-top-right-radius: 2%;
+    color: gray;
+    cursor: pointer;
+}
+
+.white-fom-icon{
+    width: 5vw;
+    filter: invert() drop-shadow(1px 1px 1px);
+}
+
+.black-fom-icon {
+    width: 10vw;
+    filter: drop-shadow(-1px 1px 1px);
+    opacity: 0.7;
+}
+
+.doors:hover {filter: drop-shadow(-10px 10px 10px);}
+
+.boomSkakalaka {
+    background: rgb(25,23,25);
+    background: linear-gradient(30deg, rgba(25,23,25,1) 0%, rgba(13,2,2,1) 50%, rgba(2,5,32,1) 100%);
+}
+
+.softSkin {
+    background: rgb(255,255,255);
+    background: linear-gradient(30deg, rgba(255,255,255,1) 0%, rgba(254,250,250,1) 50%, rgba(243,244,255,1) 100%);
+}
+
+.dilema-sentence {
+    color: lightgrey;
+    filter: drop-shadow(-1px 1px 1px); 
+    margin-top: 3vh;
+}
+
+.modal-tab-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5%;
+    text-align: center;
+}
+
+.dialog-tab-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: space-around;
+    align-items: center;
+    text-align: center;
+    width: 100vw;
+}
+
+.create-space-form {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    margin-bottom: 2vh;
+}
+
+.create-space-input {
+    width: 25vw;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+}
+
+.join-space-form {
+    display: flex;
+    flex-flow: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 70%;
+    margin-bottom: 2vh;
+}
+
+.join-space-input {
+    width: 20vw;
+    border: none;
+    border-bottom: 1px solid lightgrey;
+    text-align: center;
+}
+
+.update_modal_container {
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5%;
+    text-align: center; 
+}
+
+
+.update-profile-select {
+    width: 20vw;
+    height: 6vh; 
+    border: 1px solid lightgrey;
+    border-radius: 3px;
+    background-color: white; 
+    padding-left: 1vw;
+}
+
+.visuel_modal_container {
+    display: flex;
+    flex-flow: row;
+    justify-content: space-around;
+    align-items: center;
+    padding: 5%;
+    text-align: center; 
+}
+
+.visuel {
+    position: absolute;
+    top: 0px;
+    right: 10000px;
+}
+
+.dilema-add-photo-input {
+    position: absolute;
+    width: 4vw;
+    height: 8vh; 
+    z-index: 2;
+    left: 3%; 
+    bottom: 5vh;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.dilema-add-photo-icon {
+    width: 4%;
+    position: absolute;
+    filter: invert(50%);
+    left: 3vw;
+    bottom: 5vh;
+}
+
+.dilema-add-photo-input-mask {
+    width: 11%;
+    height: 4vh; 
+    position: absolute;
+    background-color: gray;
+    left: 7vw; 
+    bottom: 9vh;
+    z-index: 10; 
+    opacity: 0;
+}
+
+.dilema_upload_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5vh;
+    margin-bottom: 5vh;
+    cursor: pointer;
+    border: 3px dashed black; 
+    padding: 5%;
+    border-radius: 5%;
+    width: 50%;
+}
+
+.dilema-camera-icon{
+    position: absolute; 
+    width: 50%;
+    height: 30vh;
+    z-index: 5;
+    left: 25%; 
+    opacity: 0;
+    cursor: pointer;
+    margin-left: 0vw;
+    border: 1px solid black;
+}
+
+.dilema_upload_logo {
+    width: 50%;
+    margin-top: 2vh;
+}
+
+@media screen and (max-width: 768px) {
+    .space-container {
+        position: absolute;
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        height: 100%;
+        bottom: 0;
+        left: 0;
+        background: rgb(25,23,25);
+        background: linear-gradient(30deg, rgba(25,23,25,1) 0%, rgba(13,2,2,1) 50%, rgba(2,5,32,1) 100%);
+    }
+
+    .space-card {
+        flex-flow: column;
+        justify-content: space-between;
+        width: 100vw;
+        height: 50vh;
+        color: black;
+        padding: 5%;
+        border: none;
+    }
+
+    .space-card-shadow {
+        flex-flow: column-reverse;
+        justify-content: space-between;
+        width: 100vw;
+        height: 50vh;
+        color: white;
+        padding: 5%;
+        border: none;
+    }
+
+    .space-box img {margin-top: 4vh;}
+
+    .space-box h2 {display: none;}
+
+    .space-box h4 {
+        position: relative;
+        top: 10vh;
+        right: 20vw;
+    }
+
+    .space-box-shadow h2 {display: none;}
+
+    .space-box-shadow h4 {
+        position: relative;
+        bottom: 23vh;
+        left: 23vw;
+    }
+
+    .dilema-sentence {
+        display: none;
+    }
+
+    .white-fom-icon{
+        width: 50vw;
+        filter: invert() drop-shadow(-2px 2px 2px);
+        position: absolute;
+        margin-bottom: 6vh;
+    }
+
+    .black-fom-icon {
+        width: 50vw;
+        filter: drop-shadow(-1px 1px 1px);
+        transform: scaleX(-1);
+        opacity: 0.7;
+        position: absolute;
+        margin-bottom: 6vh;
+    }
+
+    .create-space-form {
+        width: 80%;
+    }
+
+    .join-space-form {
+        width: 80%;
+    }
+
+    .create-space-input {
+        border: none;
+    }
+
+    .profile-container {display: none;}
+
+    .dilema-add-photo-input {display: none;}
+    
+    .dilema-add-photo-icon {display: none;}
+    
+    .dilema-add-photo-input-mask {display: none;}
+
+}

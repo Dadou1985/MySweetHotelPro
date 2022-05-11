@@ -3,12 +3,13 @@ import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext, db } from '../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
+import '../css/section/checkList.css'
 
 const CheckListTable = ({shift}) => {
 
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({task: "", status: false})
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const { userDB } = useContext(FirebaseContext)
 
@@ -65,7 +66,6 @@ const CheckListTable = ({shift}) => {
                 ...doc.data()
                 })        
             });
-            console.log(snapInfo)
             setInfo(snapInfo)
         });
         return unsubscribe

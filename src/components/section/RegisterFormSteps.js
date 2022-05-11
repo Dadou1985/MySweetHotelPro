@@ -12,8 +12,7 @@ import Fom from '../../svg/fom.svg'
 import Home from '../../svg/home.svg'
 import Close from '../../svg/close.svg'
 import Drawer from '@material-ui/core/Drawer'
-import '../css/registerFormSteps.css'
-import { navigate } from 'gatsby-link'
+import '../css/section/registerFormSteps.css'
 import { useTranslation } from "react-i18next"
 
 export default function RegisterFormSteps() {
@@ -27,7 +26,6 @@ export default function RegisterFormSteps() {
     const [initialFilter, setInitialFilter] = useState("")
     const [info, setInfo] = useState([])
     const [url, setUrl] = useState("")
-    const [imgType, setImgType] = useState("")
     const [now, setNow] = useState(0)
     const [isRegistrated, setIsRegistrated] = useState(false)
     const [baseUrl, setBaseUrl] = useState("")
@@ -38,7 +36,7 @@ export default function RegisterFormSteps() {
     const [showFindHotelDrawer, setShowFindHotelDrawer] = useState(false)
     const [findHotelForm, setfindHotelForm] = useState(false)
     const [showCreateHotelDrawer, setShowCreateHotelDrawer] = useState(false)
-    const { loading, error, data } = useShortenUrl(url);
+    const { data } = useShortenUrl(url);
     const [formValue, setFormValue] = useState({
         firstName: "",
         lastName: "",
@@ -56,7 +54,7 @@ export default function RegisterFormSteps() {
         website: "", 
         hotelName: "", 
     })
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()
@@ -65,19 +63,6 @@ export default function RegisterFormSteps() {
           [event.target.name]: event.target.value
         }))
       }
-
-    const handleDeleteImg = (imgId) => {
-        const storageRef = storage.refFromURL(imgId)
-        const imageRef = storage.ref(storageRef.fullPath)
-
-        imageRef.delete()
-        .then(() => {
-            console.log(`${imgId} has been deleted succesfully`)
-        })
-        .catch((e) => {
-            console.log('Error while deleting the image ', e)
-        })
-    }
 
     const handleImgChange = async(event) => {
         if (event.target.files[0]){
@@ -151,15 +136,14 @@ export default function RegisterFormSteps() {
         }
 
     const mailNewSubscriber = functions.httpsCallable("sendNewSubscriber")
-    const mailWelcomeLogo = functions.httpsCallable("sendWelcomeMailLogo")
-    const mailWelcomeNoLogo = functions.httpsCallable("sendWelcomeMailNoLogo")
+    const mailWelcome = functions.httpsCallable("sendWelcomeMail")
 
     const sendwelcomeMail = (url) => {
         mailNewSubscriber({subscriber: `${formValue.firstName} ${formValue.lastName}`, hotel: formValue.hotelName, standing: formValue.standing, country: "FRANCE", city: formValue.city, capacity: formValue.room})
         if(url){
-            return mailWelcomeLogo({firstName: formValue.firstName, email: formValue.email, fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+            return mailWelcome({firstName: formValue.firstName, email: formValue.email, fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png"})
         }else{
-            return mailWelcomeNoLogo({firstName: formValue.firstName, email: formValue.email,fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"})
+            return mailWelcome({firstName: formValue.firstName, email: formValue.email,fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png"})
         }
     }
     
@@ -217,7 +201,6 @@ export default function RegisterFormSteps() {
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setInfo(snapInfo)
         });
         return unsubscribe
@@ -264,23 +247,18 @@ export default function RegisterFormSteps() {
           // on reader load somthing...
           reader.onload = () => {
             // Make a fileInfo Object
-            console.log("Called", reader);
             baseURL = reader.result;
-            console.log(baseURL);
             resolve(baseURL);
           };
-          console.log(fileInfo);
         });
       };
 
       const handleFileInputChange = e => {
-        console.log(e.target.files[0]);    
         const file = e.target.files[0];
     
         getBase64(file)
           .then(result => {
             file["base64"] = result;
-            console.log("File Is", file);
             setBaseUrl(result);
           })
           .catch(err => {
@@ -288,14 +266,11 @@ export default function RegisterFormSteps() {
           });
       };
 
-    console.log('SHORTENURL', url)
-
     return (<div className="register_form_container">
             <div style={{textAlign: "center"}}>
                 <div>
                 <div className="register_logo_container">
-                    <img src={MshLogo} className="register_form_logo" />
-                    <img src={MshLogoPro} className="register_form_logo" />
+                    <img src="https://i.postimg.cc/h40kFMNY/new-logo-msh.png" className="register_form_logo" />
                 </div>
                 {finalStep ? <h1 className="form_title"><b>{t("msh_register_form.r_step.s_final.f_title")}</b></h1> : <h1 className="form_title"><b>{t("msh_register_form.r_title")}</b></h1>}
                 </div>
@@ -324,21 +299,6 @@ export default function RegisterFormSteps() {
                     <Form.Group controlId="description3">
                     <Form.Control type="email" placeholder={t("msh_register_form.r_step.s_first.f_email")} className="stepOne_input" value={formValue.email} name="email" onChange={handleChange} required />
                     </Form.Group>
-                {/*<div style={{
-                    display: "flex",
-                    flexFlow: "column",
-                    alignItems: "center",
-                    justifyContent: "space-around",
-                    width: "70%",
-                }}>
-                    <Form.Group controlId="description4">
-                    <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_password")} className="stepOne_input" value={formValue.password} name="password" onChange={handleChange} required />
-                    </Form.Group>
-            
-                    <Form.Group controlId="description5">
-                    <Form.Control type="password" placeholder={t("msh_register_form.r_step.s_first.f_confirmation")} className="stepOne_input" value={formValue.confPassword} name="confPassword" onChange={handleChange} required />
-                    </Form.Group>
-            </div>*/}
                 <Button variant="success" className="stepOne_validation_button" type="submit">{t("msh_register_form.r_button.b_next")}</Button>
                 {alert.danger && <Alert variant="danger" className="stepOne_alert">
                     {t("msh_register_form.r_step.s_first.f_alert")}
@@ -572,10 +532,10 @@ export default function RegisterFormSteps() {
                 {finalStep && 
                 <div className="finalStep_container">
                     <div className="finalStep_greeting_message_container" style={{marginTop: "5vh"}}>
-                        <p>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</p>
+                        <p><b>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</b></p>
                         <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")}</p>
-                        <p><b>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
-                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></b></p>
+                        <p>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
+                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></p>
                         {/*!url && <p><b>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</b></p>*/}
                         <p>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</p>
                     </div>
@@ -586,7 +546,7 @@ export default function RegisterFormSteps() {
                         cursor: "pointer", 
                         color: "black"
                     }}>
-                        <img src={Home} style={{width: "15%", marginTop: "5vh", marginBottom: "1vh"}} />
+                        <img src={Home} style={{width: "10%", marginTop: "5vh", marginBottom: "1vh"}} />
                         <b>{t("msh_register_form.r_step.s_final.f_message.hidden_paragraph")}</b>
                     </a >
                </div> }

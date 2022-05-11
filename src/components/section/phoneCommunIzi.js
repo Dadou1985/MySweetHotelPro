@@ -3,9 +3,8 @@ import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../images/paper-plane.png'
-import Plus from '../../svg/plus3.svg'
 import ChatRoom from './phoneChatRoom'
-import { OverlayTrigger, Tooltip, Modal, Button, DropdownButton, Alert } from 'react-bootstrap'
+import { Modal, Button, DropdownButton, Alert } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import {
   Accordion,
@@ -21,7 +20,7 @@ import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
-import defaultImg from "../../images/avatar-client.png"
+import '../css/section/chat.css'
 
 export default function CommunIzi({userDB, user}) {
     
@@ -36,8 +35,7 @@ export default function CommunIzi({userDB, user}) {
     const [payload, setPayload] = useState({token:{}, logo:"", language:"", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting:""})
     const [showAlert, setShowAlert] = useState(false)
     const [img, setImg] = useState(null)
-    const [url, setUrl] = useState("")
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)
@@ -48,19 +46,6 @@ export default function CommunIzi({userDB, user}) {
       setShowModal(false)
       setInitialFilter('Liste Clients Présents')
     }
-    const handleShow = () => {
-      if(window.innerWidth > 768) {
-          setShowModal(true)
-      }else{
-          setActivate(true)
-      }
-    }
-
-    const handleImgChange = (event) => {
-      if (event.target.files[0]){
-          setImg(event.target.files[0])
-      }
-  }
 
   const handleHideDrawer = () => {
     setActivate(false)
@@ -155,7 +140,6 @@ export default function CommunIzi({userDB, user}) {
               ...doc.data()
             })        
           });
-          console.log(snapInfo)
           setInfo(snapInfo)
       });
       return unsubscribe
@@ -175,7 +159,6 @@ export default function CommunIzi({userDB, user}) {
               ...doc.data()
             })        
           });
-          console.log(snapInfo)
           setGuestList(snapInfo)
       });
       return unsubscribe
@@ -198,7 +181,7 @@ export default function CommunIzi({userDB, user}) {
               ...doc.data()
             })        
           });
-          console.log("info",snapInfo)
+
           snapInfo.map(doc => setPayload({
             token: doc.token,
             logo: userDB.logo,
@@ -219,7 +202,6 @@ export default function CommunIzi({userDB, user}) {
           content: notification,
           hotelId: userDB.hotelId,
           markup: Date.now()})
-          .then(doc => console.log('nouvelle notitfication'))
   }
 
   const handleShowList = () => setList(true)

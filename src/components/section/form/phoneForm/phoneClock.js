@@ -11,6 +11,7 @@ import {
   KeyboardDateTimePicker
 } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 const PhoneClock = ({userDB}) =>{
 
@@ -19,7 +20,7 @@ const PhoneClock = ({userDB}) =>{
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleChange = (event) =>{
         event.persist()
@@ -39,7 +40,6 @@ const PhoneClock = ({userDB}) =>{
             content: notification,
             hotelId: userDB.hotelId,
             markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
     }
 
       const handleSubmit = event => {
@@ -89,7 +89,6 @@ const PhoneClock = ({userDB}) =>{
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

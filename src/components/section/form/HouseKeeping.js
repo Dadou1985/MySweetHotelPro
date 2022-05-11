@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../itemList'
 import Maid from '../../../svg/maid.svg'
-import { db, auth } from '../../../Firebase'
+import { db } from '../../../Firebase'
 import Badge from '@material-ui/core/Badge'
 import StyleBadge from '../common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
@@ -12,7 +12,6 @@ import { useTranslation } from "react-i18next"
 const HouseKeeping = ({userDB}) =>{
 
     const [list, setList] = useState(false)
-    const [user, setUser] = useState(auth.currentUser)
     const [towel, setTowel] = useState([])
     const [soap, setSoap] = useState([])
     const [toiletPaper, setToiletPaper] = useState([])
@@ -21,7 +20,7 @@ const HouseKeeping = ({userDB}) =>{
     const [pillow, setPillow] = useState([])
     const [iron, setIron] = useState([])
     const [babyBed, setBabyBed] = useState([])
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     
     const handleClose = () => setList(false)
@@ -46,7 +45,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setTowel(snapInfo)
         });
         return unsubscribe
@@ -62,7 +60,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setSoap(snapInfo)
         });
         return unsubscribe
@@ -78,7 +75,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setToiletPaper(snapInfo)
         });
         return unsubscribe
@@ -94,7 +90,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setHairDryer(snapInfo)
         });
         return unsubscribe
@@ -110,7 +105,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setPillow(snapInfo)
         });
         return unsubscribe
@@ -126,7 +120,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setBlanket(snapInfo)
         });
         return unsubscribe
@@ -142,7 +135,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setIron(snapInfo)
         });
         return unsubscribe
@@ -158,7 +150,6 @@ const HouseKeeping = ({userDB}) =>{
                 ...doc.data()
               })        
             });
-            console.log(snapInfo)
             setBabyBed(snapInfo)
         });
         return unsubscribe
@@ -193,7 +184,7 @@ const HouseKeeping = ({userDB}) =>{
                     {t("msh_housekeeping.h_title")}                
                 </Tooltip>
                 }>
-                        <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "2vw"}} />
+                <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "2vw"}} />
             </OverlayTrigger>
         </StyledBadge>
 

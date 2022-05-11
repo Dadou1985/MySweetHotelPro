@@ -1,16 +1,13 @@
 import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
-import AppVisual from '../../images/msh-front-app.png'
 import MshScreen from "./mshAppScreenBand"
-import '../css/band.css'
-import HotelLogo from '../../images/les-forteresses.png'
-import MshTitle from '../../svg/msh-newLogo-transparent.png'
+import '../css/section/band.css'
 import MshLogo from '../../svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
 
 export default function Band({url, logo}) {
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     return (
         <div style={{

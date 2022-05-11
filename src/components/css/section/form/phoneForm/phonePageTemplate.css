@@ -1,0 +1,89 @@
+.phone_container {
+    display: flex;
+    flex-flow: column;
+    padding: 5%;
+    align-items: center;
+    height: 90vh;
+    overflow: hidden;
+}
+
+.phone_container_drawer {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    padding: 5%;
+}
+
+.phone_title {
+    margin-bottom: 3vh;
+    text-align: center;
+}
+
+.phonePage_select {
+    width: 90vw;
+    height: 6vh;
+    border: 1px solid lightgrey; 
+    border-radius: 3px;
+    background-color: white;
+}
+
+.phone_input {
+    width: 90vw;
+}
+
+.phone_smallInput {
+    width: 40vw;
+}
+
+.phone_textarea {
+    width: 90vw;
+    height: 15vh;
+}
+
+.phone_submitButton_container {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
+
+.phone_return {
+    width: 90vw;
+    margin-bottom: 2vh;
+}
+
+.phone_submitButton {
+    width: 90vw;
+}
+
+.phone-table {
+    width: 50px !important;
+    overflow-x: scroll;
+}
+
+.phone-camera-icon{
+    position: absolute; 
+    width: 40%;
+    height: 5vh;
+    z-index: 5;
+    left: 20%; 
+    opacity: 0;
+    cursor: pointer;
+    margin-left: 7vw;
+    border: 1px solid black;
+}
+
+/*PhoneCheckList.js*/
+
+.phoneCheckList_container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+/*PhoneSupport*/
+
+.assistance-scrollbar {
+    height: 75vh !important;
+    padding-top: 3vh;
+}

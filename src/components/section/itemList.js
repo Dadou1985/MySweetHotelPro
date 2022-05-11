@@ -9,7 +9,7 @@ import { useTranslation } from "react-i18next"
 const ItemList = ({item}) => {
 
     const [info, setInfo] = useState([])
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
     const { userDB } = useContext(FirebaseContext)
 
     useEffect(() => {
@@ -30,7 +30,6 @@ const ItemList = ({item}) => {
                         ...doc.data()
                       })        
                     });
-                    console.log(snapInfo)
                     setInfo(snapInfo)
                 });
                 return unsubscribe

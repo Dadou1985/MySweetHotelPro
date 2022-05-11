@@ -1,21 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'gatsby'
-import { Navbar, OverlayTrigger, Tooltip, Modal, Button, Tab, Tabs, Form, FloatingLabel, Row, Col, Nav } from 'react-bootstrap'
-import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
-import AdminBoard from './form/adminBoard'
-import FeedbackBox from './form/feedbackBox'
+import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
 import Drawer from './common/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
-import Logout from '../../images/logout.png'
 import SuperAdmin from '../../svg/superhero.svg'
 import Magician from '../../svg/magician.svg'
 import Ghost from '../../svg/ghost.svg'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
-import '../css/navigation.css'
+import '../css/section/navigation.css'
 import Notifications from './notifications'
 import { db, auth, storage } from '../../Firebase'
 import List from '@material-ui/core/List';
-import Logo from '../../svg/mshPro-newLogo-transparent.png'
+import Logo from '../../svg/msh-newLogo-transparent.png'
 import moment from 'moment'
 import 'moment/locale/fr';
 import 'moment/locale/de';
@@ -24,12 +20,10 @@ import 'moment/locale/es';
 import 'moment/locale/pt';
 import 'moment/locale/en-gb';
 import { useTranslation } from "react-i18next"
-import Avatar from 'react-avatar'
 import { Link } from 'gatsby'
 import { Menubar } from 'primereact/menubar';
 import AdminRegister from './form/adminRegister'
 import UserList from './form/userList'
-import Divider from '@material-ui/core/Divider';
 
 const Navigation = ({user, userDB}) =>{
 
@@ -39,7 +33,7 @@ const Navigation = ({user, userDB}) =>{
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
     const [showAdminModal, setShowAdminModal] = useState(false)
     const [showFeedbackModal, setShowFeedbackModal] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -71,7 +65,6 @@ const Navigation = ({user, userDB}) =>{
                     ...doc.data()
                 })        
                 });
-                console.log(snapMessages)
                 setOldNote(snapMessages)
             });
             return unsubscribe
@@ -105,8 +98,7 @@ const Navigation = ({user, userDB}) =>{
                 content: notif,
                 hotelId: userDB.hotelId,
                 markup: Date.now()})
-                .then(doc => console.log('nouvelle notitfication'))
-        .then(handleClose)
+                .then(handleClose)
     }
 
 
@@ -171,8 +163,8 @@ const Navigation = ({user, userDB}) =>{
             }
         ];
 
-    console.log("///////", listImg)
     moment.locale(userDB.language)
+
     return(
         <div className="shadow-lg bg-white">
             <Navbar expand="lg" style={{
@@ -204,35 +196,6 @@ const Navigation = ({user, userDB}) =>{
                     </div>
                     <div className="nav_container">
                     <Menubar model={items} style={{backgroundColor: "white", border: "none"}} />
-                    {/*<OverlayTrigger
-                        placement="bottom"
-                        overlay={
-                          <Tooltip id="title">
-                            {t("msh_navigation.tooltip_user_profile")}
-                          </Tooltip>
-                        }>
-                        <Avatar 
-                        name={userDB.username}
-                        round={true}
-                        size="25"
-                        color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
-                        style={{cursor: "pointer"}}
-                        onClick={()=>navigate('/doorsStage')}
-                        />
-                    </OverlayTrigger>
-                    {userDB && user&&
-                        <AdminBoard user={user} userDB={userDB} />}
-                    {userDB && user&&
-                        <FeedbackBox user={user} userDB={userDB} />}
-                    <OverlayTrigger
-                        placement="bottom"
-                        overlay={
-                          <Tooltip id="title">
-                            {t("msh_navigation.tooltip_deconnexion")}
-                          </Tooltip>
-                        }>
-                    <img src={Logout} alt="Fom" className="nav_icons" alt="connect" onClick={handleShow} />
-                    </OverlayTrigger>*/}
                 </div>
             </Navbar>
 
