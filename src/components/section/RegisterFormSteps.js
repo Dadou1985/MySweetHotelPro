@@ -6,8 +6,6 @@ import HotelLogo from '../../svg/hotel.svg'
 import { useShortenUrl } from 'react-shorten-url';
 import { sha256 } from 'js-sha256';
 import Divider from '@material-ui/core/Divider';
-import MshLogo from '../../svg/msh-newLogo-transparent.png'
-import MshLogoPro from '../../svg/mshPro-newLogo-transparent.png'
 import Fom from '../../svg/fom.svg'
 import Home from '../../svg/home.svg'
 import Close from '../../svg/close.svg'

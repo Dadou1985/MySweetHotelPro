@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Input } from 'reactstrap'
 import NoteBox from './noteBox'
-import NoteBoxHousekeeping from './noteBoxHousekeeping'
-import NoteBoxMaintenance from './noteBoxMaintenance'
 import PhoneNoteBox from './phoneNoteBox'
 import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
@@ -39,6 +37,24 @@ const Messenger = ({filterDate}) =>{
     const [showCalendar, setShowCalendar] = useState(false)
     const { t, i18n } = useTranslation()
     const { userDB, setUserDB, user } = useContext(FirebaseContext)
+
+    const noteBoxType = [
+        {
+            id: 1,
+            category: "darkgoldenrod", 
+            title: 'msh_messenger.m_reception_team'
+        },
+        {
+            id: 2,
+            category: "cornflowerblue", 
+            title: 'msh_messenger.m_housekeeping_team'
+        },
+        {
+            id: 3,
+            category: "red", 
+            title: 'msh_maintenance.m_title'
+        }
+    ]
 
     const handleChangeNote = event =>{
         setNote(event.currentTarget.value)
@@ -208,38 +224,24 @@ const Messenger = ({filterDate}) =>{
     const hideCalendar = () => {
         setShowCalendar(false)
     }
+
+    
     
     return(
         <div className="messenger_container">
             {typeof window !== `undefined` && window.innerWidth > 768 ?
             <PerfectScrollbar className="perfect-scrollbar">
-                <div className="messenger_notebox"> 
-                    {!!userDB && !!setUserDB && !!filterDate &&
-                    <NoteBox filterDate={filterDate} />}
+                {noteBoxType.map((data) => 
+                    <div className="messenger_notebox" key={data.id}> 
+                    {!!filterDate &&
+                    <NoteBox filterDate={filterDate} category={data.category} title={data.title} />}
                     <div className="icon-add-note-container" onClick={() => {
-                        setStatus("darkgoldenrod")
+                        setStatus(data.category)
                         handleShow()}}>
                         <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                     </div>
                 </div>
-                <div className="messenger_notebox">
-                    {!!userDB && !!setUserDB && !!filterDate &&
-                        <NoteBoxHousekeeping filterDate={filterDate} />}
-                    <div className="icon-add-note-container" onClick={() => {
-                        setStatus("cornflowerblue")
-                        handleShow()}}>
-                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
-                    </div>
-                </div>
-                <div className="messenger_notebox">
-                    {!!userDB && !!setUserDB && !!filterDate &&
-                    <NoteBoxMaintenance filterDate={filterDate} />}
-                    <div className="icon-add-note-container" onClick={() => {
-                        setStatus("red")
-                        handleShow()}}>
-                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
-                    </div>
-                </div>
+                )}
 
                 <Modal show={showModal} 
                     size="lg"

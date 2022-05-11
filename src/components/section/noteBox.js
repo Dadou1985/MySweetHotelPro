@@ -17,12 +17,12 @@ import { useTranslation } from "react-i18next"
 import Arrow from '../../svg/arrowDown.svg'
 import '../css/section/accordion.css'
 
-const NoteBox = ({filterDate}) => {
+const NoteBox = ({filterDate, category, title}) => {
 
     const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
     const { t } = useTranslation()
-    const [reception, setReception] = useState(false);
+    const [data, setData] = useState(false);
 
     const {userDB} = useContext(FirebaseContext)
 
@@ -44,7 +44,7 @@ const NoteBox = ({filterDate}) => {
                       })        
                     });
 
-                    const noteFiltered = snapMessages.length > 0 && snapMessages.filter(note => note.status == "darkgoldenrod")
+                    const noteFiltered = snapMessages.length > 0 && snapMessages.filter(note => note.status == category)
                     setMessages(noteFiltered)
                 });
                 return unsubscribe
@@ -73,19 +73,19 @@ const NoteBox = ({filterDate}) => {
 
     return (
       <>
-      <h6 style={{color:"darkgoldenrod", borderBottom: "1px solid darkgoldenrod"}}>
-        <b>{t('msh_messenger.m_reception_team')}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <img src={Arrow} style={{
+      <h6 style={{color: category, borderBottom: `1px solid ${category}`}}>
+        <b>{t(title)}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <img src={Arrow} style={{
           width: "2vw", 
           color: "red", 
           float: "right", 
-          transform: reception ? "rotate(180deg)" : "rotate(0deg)", 
-          backgroundColor: "darkgoldenrod", 
+          transform: data ? "rotate(180deg)" : "rotate(0deg)", 
+          backgroundColor: category, 
           borderRadius: "50%",
           padding: "1%"}} 
-          onClick={() => setReception(!reception)} />
+          onClick={() => setData(!data)} />
       </h6>
         <Accordion allowZeroExpanded className="accordion-note">
-                {reception && messages.length > 0 && messages.map((flow, index) => {
+                {data && messages.length > 0 && messages.map((flow, index) => {
                   return <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
                     <AccordionItemHeading style={{
                       paddingLeft: "1%",
