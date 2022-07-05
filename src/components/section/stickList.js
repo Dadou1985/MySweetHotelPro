@@ -1,11 +1,13 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PostIt from './postIt'
 import CreateSticker from './createSticker'
 import { db } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 
-const StickList = ({userDB}) => {
+const StickList = () => {
 
     const [postIt, setPostIt] = useState([])
+    const {userDB} = useContext(FirebaseContext)
 
     useEffect(() => {
         const stickerOnAir = () => {
