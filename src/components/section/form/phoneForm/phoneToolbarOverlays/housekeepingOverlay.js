@@ -1,10 +1,10 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Maid from '../../../../../svg/maid.svg'
 import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
+import { FirebaseContext } from '../../../../../Firebase'
 
-function HousekeepingOverlay({userDB}) {
-    const [list, setList] = useState(false)
+function HousekeepingOverlay() {
     const [towel, setTowel] = useState([])
     const [soap, setSoap] = useState([])
     const [toiletPaper, setToiletPaper] = useState([])
@@ -13,6 +13,7 @@ function HousekeepingOverlay({userDB}) {
     const [pillow, setPillow] = useState([])
     const [iron, setIron] = useState([])
     const [babyBed, setBabyBed] = useState([])
+    const {user, userDB} = useContext(FirebaseContext)
 
     const itemList = (item) => {
       return db.collection('hotels')
@@ -26,7 +27,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('towel').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('towel').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -41,7 +42,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('soap').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('soap').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -71,7 +72,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('hairDryer').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('hairDryer').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -86,7 +87,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('pillow').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('pillow').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -101,7 +102,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('blanket').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('blanket').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -116,7 +117,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('iron').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('iron').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -131,7 +132,7 @@ function HousekeepingOverlay({userDB}) {
 
     useEffect(() => {
         
-        let unsubscribe = itemList('babyBed').onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && itemList('babyBed').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({

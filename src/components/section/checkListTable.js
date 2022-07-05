@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, useContext, memo } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext, db } from '../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -147,4 +147,4 @@ const CheckListTable = ({shift}) => {
     )
 }
 
-export default CheckListTable
+export default memo(CheckListTable)

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import ChatLogo from '../../svg/chat.png'
 import HousekkepingLogo from '../../svg/maid.svg'
@@ -8,7 +8,7 @@ import CabLogo from '../../svg/taxi.svg'
 import '../css/section/sticker.css'
 import { useTranslation } from "react-i18next"
 
-export default function Sticker({url, logo}) {
+const Sticker = ({url, logo}) => {
     const { t } = useTranslation()
 
       console.log('STICKERURL', logo)
@@ -33,3 +33,5 @@ export default function Sticker({url, logo}) {
         </div>
     )
 }
+
+export default memo(Sticker)

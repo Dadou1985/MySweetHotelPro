@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { Modal, Table, Tabs, Tab } from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
@@ -323,4 +323,4 @@ const GuestTimeLine = ({userDB, guestId}) => {
 
 }
 
-export default GuestTimeLine
+export default memo(GuestTimeLine)

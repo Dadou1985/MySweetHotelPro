@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import AppVisual from '../../images/msh-front-app.png'
 
-export default function MshAppScreenFlyer({logo}) {
+const MshAppScreenFlyer = ({logo}) => {
     return (
         <div style={{
             width: "60%",
@@ -16,3 +16,5 @@ export default function MshAppScreenFlyer({logo}) {
         </div>
     )
 }
+
+export default memo(MshAppScreenFlyer)

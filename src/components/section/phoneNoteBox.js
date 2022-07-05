@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, useContext, memo } from 'react'
 import {
     Accordion,
     AccordionItem,
@@ -122,4 +122,4 @@ const NoteBox = ({filterDate}) => {
     )
 }
 
-export default NoteBox
+export default memo(NoteBox)

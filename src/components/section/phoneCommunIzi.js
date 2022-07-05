@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, memo } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -22,7 +22,7 @@ import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 
-export default function CommunIzi({userDB, user}) {
+const CommunIzi = ({userDB, user}) => {
     
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
@@ -412,3 +412,5 @@ export default function CommunIzi({userDB, user}) {
         </div>
     )
 }
+
+export default memo(CommunIzi)

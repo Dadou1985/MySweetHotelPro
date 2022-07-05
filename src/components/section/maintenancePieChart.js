@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, memo } from 'react';
 import { useTranslation } from "react-i18next"
 import {db} from '../../Firebase'
 import { Chart } from 'primereact/chart';
@@ -414,4 +414,4 @@ const renderSwitch = (time) => {
         </div>
 }
 
-export default MaintenancePieChart;
+export default memo(MaintenancePieChart);

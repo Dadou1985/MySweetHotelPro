@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useCallback } from 'react'
 import { Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-bootstrap'
 import Connection from '../../../images/admin.png'
 import AdminRegister from './adminRegister'
@@ -11,7 +11,7 @@ const AdminBoard = ({user, userDB}) =>{
     const [tab, setTab] = useState(false)
     const { t, i18n } = useTranslation()
 
-    const handleCloseTab = () => setTab(false)
+    const handleCloseTab = useCallback(() => setTab(false), [tab])
     const handleShowTab = () => setTab(true)
 
     if(userDB.adminStatus === true){

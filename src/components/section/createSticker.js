@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Plus from '../../images/postItPlus.png'
 import { db } from '../../Firebase'

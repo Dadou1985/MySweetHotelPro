@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, useContext, memo } from 'react'
 import {
     Accordion,
     AccordionItem,
@@ -35,7 +35,7 @@ const NoteBox = ({filterDate, category, title}) => {
           .orderBy('markup', "desc")
       }
 
-        let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && noteOnAir().onSnapshot(function(snapshot) {
                     const snapMessages = []
                   snapshot.forEach(function(doc) {          
                       snapMessages.push({
@@ -143,4 +143,4 @@ const NoteBox = ({filterDate, category, title}) => {
     )
 }
 
-export default NoteBox
+export default memo(NoteBox)

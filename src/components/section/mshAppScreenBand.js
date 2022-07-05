@@ -1,7 +1,7 @@
-import React from 'react'
+import React, { memo } from 'react'
 import AppVisual from '../../images/msh-front-app.png'
 
-export default function MshAppScreenBand({logo}) {
+const MshAppScreenBand = ({logo}) => {
     return (
         <div style={{
             width: "80%",
@@ -16,3 +16,5 @@ export default function MshAppScreenBand({logo}) {
         </div>
     )
 }
+
+export default memo(MshAppScreenBand)

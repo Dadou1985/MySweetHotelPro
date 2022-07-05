@@ -1,11 +1,13 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PostIt from './postIt'
 import CreateSticker from './createSticker'
 import { db } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 
-const StickList = ({userDB}) => {
+const StickList = () => {
 
     const [postIt, setPostIt] = useState([])
+    const {userDB} = useContext(FirebaseContext)
 
     useEffect(() => {
         const stickerOnAir = () => {
@@ -14,7 +16,7 @@ const StickList = ({userDB}) => {
                 .collection('stickers')
         }
 
-        let unsubscribe = stickerOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && stickerOnAir().onSnapshot(function(snapshot) {
                     const snapStick = []
                   snapshot.forEach(function(doc) {          
                     snapStick.push({

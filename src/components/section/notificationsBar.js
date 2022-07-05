@@ -1,9 +1,9 @@
-import React, {useState } from 'react'
+import React, { useState, memo } from 'react'
 import { Snackbar } from '@material-ui/core'
 import { db } from '../../Firebase'
 
 
-export default function NotificationsBar({message, markup}) {
+const NotificationsBar = ({message, markup}) => {
 
     const [visible, setVisible] = useState(true)
 
@@ -23,3 +23,5 @@ export default function NotificationsBar({message, markup}) {
         />
     )
 }
+
+export default memo(NotificationsBar)

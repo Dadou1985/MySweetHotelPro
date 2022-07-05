@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, memo } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
@@ -131,4 +131,4 @@ const AdminRegister = ({hide, userDB}) => {
     )
 }
 
-export default AdminRegister
+export default memo(AdminRegister)

@@ -1,16 +1,17 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, memo, useContext } from 'react'
 import Cab from '../../svg/taxi.svg'
 import Clock from '../../svg/timer.svg'
 import Maintenance from '../../svg/repair.svg'
 import Chat from '../../svg/chat.png'
 import RoomChange from '../../svg/logout.svg'
-
+import { FirebaseContext } from '../../Firebase'
 import { db } from '../../Firebase'
 import { navigate } from 'gatsby'
 
-function PhoneOverlayHook({userDB, category, index}) {
+function PhoneOverlayHook({category, index}) {
     const [quantity, setQuantity] = useState([])
     const imgSrc = [Cab, Clock, Maintenance, Chat, RoomChange]
+    const {user, userDB} = useContext(FirebaseContext)
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -20,7 +21,7 @@ function PhoneOverlayHook({userDB, category, index}) {
               .where("status", "==", true)
         }
 
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && toolOnAir().onSnapshot(function(snapshot) {
                     const snapInfo = []
                   snapshot.forEach(function(doc) {          
                     snapInfo.push({
@@ -49,4 +50,4 @@ function PhoneOverlayHook({userDB, category, index}) {
     )
 }
 
-export default PhoneOverlayHook
+export default memo(PhoneOverlayHook)

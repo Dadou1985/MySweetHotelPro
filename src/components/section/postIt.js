@@ -1,4 +1,4 @@
-import React, {useState } from 'react'
+import React, { useState, memo } from 'react'
 import Stick from '../../images/postIt.png'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { db } from '../../Firebase'
@@ -83,4 +83,4 @@ const PostIt = ({author, title, text, markup, userDB}) => {
   )
 }
 
-export default PostIt
+export default memo(PostIt)

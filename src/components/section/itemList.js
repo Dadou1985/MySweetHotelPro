@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, useContext, memo } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { FirebaseContext, db } from '../../Firebase'
 import moment from 'moment'
@@ -81,4 +81,4 @@ const ItemList = ({item}) => {
     )
 }
 
-export default ItemList
+export default memo(ItemList)

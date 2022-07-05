@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, memo } from "react"
 import Loader from "react-loader-spinner"
 import Mascott from '../../../svg/receptionist.svg'
 import "../../css/common/smartLoader.css"
@@ -32,4 +32,4 @@ const SmartLoader = ({hide}) => {
   )
 }
 
-export default SmartLoader;
+export default memo(SmartLoader);

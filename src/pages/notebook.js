@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect, useState, useCallback } from "react"
 import Loader from '../components/section/common/shiftLoader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Notebook from '../components/section/messenger'
@@ -35,9 +35,9 @@ const NotebookPage = () => {
         
 }, [user, userDB])
 
-const handleDateChange = (date) => {
+const handleDateChange = useCallback((date) => {
   setFilterDate(date);
-};
+}, [filterDate]);
 
 const isBrowser = () => typeof window !== "undefined"
 moment.locale("fr")
@@ -47,8 +47,7 @@ moment.locale("fr")
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
           <Loader hide={hide} />
         </div>     
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}  
+        <Navigation />  
         <div style={{
             display: "flex",
           }}>
@@ -87,8 +86,8 @@ moment.locale("fr")
                     />   
                     </MuiPickersUtilsProvider>
                 </div>
-                {!!userDB && !!user && !!filterDate &&
-                <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
+                {filterDate &&
+                <Notebook filterDate={filterDate} />}
               </div>
               <div style={{
                       display: "flex",
@@ -96,8 +95,7 @@ moment.locale("fr")
                       alignItems: "center",
                       width: "45%"
                     }}>
-                      {!!user && !! userDB &&
-                      <Memo user={user} userDB={userDB} />}
+                      <Memo />
                   </div>
           </div>
         </div>

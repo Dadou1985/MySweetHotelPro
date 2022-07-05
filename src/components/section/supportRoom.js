@@ -1,9 +1,9 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, memo } from 'react'
 import Message from './messageSupport'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db } from '../../Firebase'
 
-export default function SupportRoom({user, userDB, title}) {
+const SupportRoom = ({user, userDB, title}) => {
 
     const [messages, setMessages] = useState([])
 
@@ -45,3 +45,5 @@ export default function SupportRoom({user, userDB, title}) {
         </div>
     )
 }
+
+export default memo(SupportRoom)

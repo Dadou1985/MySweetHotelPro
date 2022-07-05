@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
 import Drawer from './common/drawer'
@@ -24,8 +24,9 @@ import { Link } from 'gatsby'
 import { Menubar } from 'primereact/menubar';
 import AdminRegister from './form/adminRegister'
 import UserList from './form/userList'
+import { FirebaseContext } from '../../Firebase'
 
-const Navigation = ({user, userDB}) =>{
+const Navigation = () =>{
 
     const [list, setList] = useState(false)
     const [activate, setActivate] = useState(false)
@@ -34,6 +35,7 @@ const Navigation = ({user, userDB}) =>{
     const [showAdminModal, setShowAdminModal] = useState(false)
     const [showFeedbackModal, setShowFeedbackModal] = useState(false)
     const { t } = useTranslation()
+    const {user, userDB} = useContext(FirebaseContext)
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -57,7 +59,7 @@ const Navigation = ({user, userDB}) =>{
             .where("markup", "<", previousDays)
         }
 
-        let unsubscribe = handleDeleteImgNote().onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && handleDeleteImgNote().onSnapshot(function(snapshot) {
             const snapMessages = []
             snapshot.forEach(function(doc) {          
                 snapMessages.push({
@@ -163,7 +165,7 @@ const Navigation = ({user, userDB}) =>{
             }
         ];
 
-    moment.locale(userDB.language)
+    moment.locale(userDB && userDB.language)
 
     return(
         <div className="shadow-lg bg-white">
@@ -173,12 +175,12 @@ const Navigation = ({user, userDB}) =>{
                     justifyContent: "space-between",
                     height: "7vh"
                 }}>
-                {!!user && userDB &&
-                <Drawer className="drawer" user={user} userDB={userDB} style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />}
+                
+                <Drawer className="drawer" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
-                        <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" /></Navbar.Brand>
-                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} onClick={() => handleShowDrawer()} />}
+                        <img src={userDB && userDB.logo ? userDB.logo : Logo} className="logo-msh" /></Navbar.Brand>
+                    {user && user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} onClick={() => handleShowDrawer()} />}
                     {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
                         display: "flex",

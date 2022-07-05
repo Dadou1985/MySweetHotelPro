@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
 import MshScreen from "./mshAppScreenBand"
@@ -6,7 +6,7 @@ import '../css/section/band.css'
 import MshLogo from '../../svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
 
-export default function Band({url, logo}) {
+const Band = ({url, logo}) => {
     const { t } = useTranslation()
 
     return (
@@ -69,3 +69,5 @@ export default function Band({url, logo}) {
         </div>
     )
 }
+
+export default memo(Band)

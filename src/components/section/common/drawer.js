@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -19,9 +19,11 @@ import Connection from '../../../images/admin.png'
 import PhoneOverlay from '../../customHooks/phoneOverlayHook'
 import { t } from 'i18next';
 import '../../css/common/drawer.css'
+import { FirebaseContext } from '../../../Firebase'
 
-export default function TemporaryDrawer({userDB, user}) {
+export default function TemporaryDrawer() {
   const [state, setState] = React.useState({left: false,});
+  const {user, userDB} = useContext(FirebaseContext)
 
   const toggleDrawer = (anchor, open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
@@ -45,31 +47,24 @@ export default function TemporaryDrawer({userDB, user}) {
         <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
         <img src={Dasboard} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
-        {!!user && !!userDB &&
-        <PhoneOverlay category="chat" userDB={userDB} index={3} />}
+        <PhoneOverlay category="chat" index={3} />
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
         </List>
         <Divider />
       <List className="drawer_listIcons2">
-        {!!user && !!userDB &&
-        <Housekeeping user={user} userDB={userDB} />}
-        {!!user && !!userDB &&
-        <PhoneOverlay category="cab" userDB={userDB} index={0} />}
-        {!!user && !!userDB &&
-        <PhoneOverlay category="clock" userDB={userDB} index={1} />}
-        {!!user && !!userDB &&
-        <PhoneOverlay category="maintenance" userDB={userDB} index={2} />}
-        {!!user && !!userDB &&
-        <PhoneOverlay category="roomChange" userDB={userDB} index={4} />}
+        <Housekeeping />
+        <PhoneOverlay category="cab" index={0} />
+        <PhoneOverlay category="clock" index={1} />
+        <PhoneOverlay category="maintenance" index={2} />
+        <PhoneOverlay category="roomChange" index={4} />
         <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
       </List>
       <Divider />
       <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
-        {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
+        {userDB && userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
-        {!!user && !!userDB &&
-        <Support user={user} userDB={userDB} />}
+        <Support />
       </List>
       <Divider />
       <List className="drawer_listIcons4">

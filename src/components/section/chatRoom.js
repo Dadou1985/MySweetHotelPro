@@ -1,9 +1,9 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, memo } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db } from '../../Firebase'
 
-export default function ChatRoom({user, userDB, title}) {
+const ChatRoom = ({user, userDB, title}) => {
 
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState([])
@@ -162,3 +162,5 @@ export default function ChatRoom({user, userDB, title}) {
         </div>
     )
 }
+
+export default memo(ChatRoom)

@@ -1,11 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Assistance from '../../../../../svg/support-technique.svg'
 import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
+import { FirebaseContext } from '../../../../../Firebase'
 
-function CallCenterOverlay({userDB}) {
+function CallCenterOverlay() {
     const [chatRoomQty, setChatRoomQty] = useState([])
+    const {user, userDB} = useContext(FirebaseContext)
 
     useEffect(() => {
         const toolOnAir = () => {
@@ -13,7 +15,7 @@ function CallCenterOverlay({userDB}) {
           .where("hotelId", "==", "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047")
         }
 
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = userDB && toolOnAir().onSnapshot(function(snapshot) {
                     const snapInfo = []
                   snapshot.forEach(function(doc) {          
                     snapInfo.push({
@@ -29,7 +31,7 @@ function CallCenterOverlay({userDB}) {
 
      const updateAdminSpeakStatus = () => {
       return db.collection('assistance')
-            .doc(userDB.hotelName)
+            .doc(userDB && userDB.hotelName)
             .update({
                 adminSpeak: false,
             })      

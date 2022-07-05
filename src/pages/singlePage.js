@@ -22,7 +22,7 @@ const SinglePage = () => {
         
     let unsubscribe = auth.onAuthStateChanged(async(user) => {
         if (user) {
-          await setUser(user)
+          setUser(user)
            await db.collection('businessUsers')
             .doc(user.uid)
             .get()
@@ -50,8 +50,7 @@ const SinglePage = () => {
       <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
         <Loader hide={hide} />
       </div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}
+        <Navigation />
         <div style={{
           display: "flex",
           backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
@@ -82,8 +81,7 @@ const SinglePage = () => {
                 marginBottom: isBrowser() && window.innerWidth > 768 ? "0" : "5vh",
                 color: "gray", 
                 justifyContent: isBrowser() && window.innerWidth > 768 ? "left" : "center"}}>{moment().format('LL')}</div>
-              {!!userDB && !!user&&
-              <Dashboard userDB={userDB} user={user} />}
+              <Dashboard />
             </div>
           </div>
       </div>

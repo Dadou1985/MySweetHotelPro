@@ -26,10 +26,8 @@ export default function Assistance({userDB, user}) {
     const [info, setInfo] = useState([])
     const [note, setNote] = useState('')
     const [expanded, setExpanded] = useState('')
-    const [showModal, setShowModal] = useState(false)
     const [activate, setActivate] = useState(false)
     const [initialFilter, setInitialFilter] = useState('')
-    const { t, i18n } = useTranslation()
 
     const handleChange = event =>{
         setNote(event.currentTarget.value)

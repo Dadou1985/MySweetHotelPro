@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
@@ -68,4 +68,4 @@ import '../css/section/chatTemplate.css'
     
   }
 
-  export default MessageSupport
+  export default memo(MessageSupport)

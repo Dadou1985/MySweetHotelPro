@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect, memo } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
@@ -88,4 +88,4 @@ const UserList = ({userDB}) => {
     )
 }
 
-export default UserList
+export default memo(UserList)

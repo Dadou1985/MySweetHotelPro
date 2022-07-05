@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, memo } from 'react';
 import { useTranslation } from "react-i18next"
 import { Modal, ModalBody } from 'react-bootstrap'
 import MaintenancePieChart from "./maintenancePieChart"
@@ -140,4 +140,4 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
   </div>;
 }
 
-export default MaintenanceRate;
+export default memo(MaintenanceRate);

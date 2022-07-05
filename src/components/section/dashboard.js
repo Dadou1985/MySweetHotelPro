@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import {db} from '../../Firebase'
 import moment from 'moment'
@@ -11,8 +11,9 @@ import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate';
 import '../css/section/dashboard.css'
+import { FirebaseContext } from '../../Firebase'
 
-const Dashboard = ({userDB}) => {
+const Dashboard = () => {
   const { t } = useTranslation()
   const [consigne, setConsigne] = useState([]);
   const [chat, setChat] = useState([]);
@@ -20,6 +21,7 @@ const Dashboard = ({userDB}) => {
   const [maintenance, setMaintenance] = useState([]);
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
+  const {user, userDB} = useContext(FirebaseContext)
 
   const reasonFilter = (array, start, end) => {
     const arrayFiltered = array.filter(reason => {return reason.markup < start && reason.markup > end})
@@ -104,6 +106,9 @@ let basicOptions = {
   }
 };
 
+const handleCloseRoomChangeModal = useCallback(() => setShowRoomChangeModal(false), [showRoomChangeModal])
+
+const handleCloseMaintenanceModal = useCallback(() => setShowMaintenanceModal(false), [showMaintenanceModal])
 
   useEffect(() => {
     const noteOnAir = () => {
@@ -114,7 +119,7 @@ let basicOptions = {
         .orderBy('markup', "desc")
     }
 
-      let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
+      let unsubscribe = userDB && noteOnAir().onSnapshot(function(snapshot) {
         const snapInfo = []
         snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -137,7 +142,7 @@ let basicOptions = {
         .where("checkoutDate", "!=", "")
       }
 
-    let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
+    let unsubscribe = userDB && chatOnAir().onSnapshot(function(snapshot) {
         const snapInfo = []
       snapshot.forEach(function(doc) {          
         snapInfo.push({
@@ -162,7 +167,7 @@ useEffect(() => {
       .where("markup", ">=", sevenDayAgo)
   }
 
-  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+  let unsubscribe = userDB && toolOnAir().onSnapshot(function(snapshot) {
               const snapInfo = []
             snapshot.forEach(function(doc) {          
               snapInfo.push({
@@ -185,7 +190,7 @@ useEffect(() => {
       .where("markup", ">=", sevenDayAgo)
   }
 
-  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+  let unsubscribe = userDB && toolOnAir().onSnapshot(function(snapshot) {
               const snapInfo = []
             snapshot.forEach(function(doc) {          
               snapInfo.push({
@@ -334,8 +339,8 @@ useEffect(() => {
           </div>
         </div>
 
-        <RoomChangeRate userDB={userDB} showModal={showRoomChangeModal} closeModal={() => setShowRoomChangeModal(false)} />
-        <MaintenanceRate userDB={userDB} showModal={showMaintenanceModal} closeModal={() => setShowMaintenanceModal(false)} />
+        <RoomChangeRate userDB={userDB} showModal={showRoomChangeModal} closeModal={handleCloseRoomChangeModal} />
+        <MaintenanceRate userDB={userDB} showModal={showMaintenanceModal} closeModal={handleCloseMaintenanceModal} />
   </div>;
 }
 
