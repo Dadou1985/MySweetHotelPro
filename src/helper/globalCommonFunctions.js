@@ -1,6 +1,7 @@
 import {storage} from '../Firebase'
+import { db } from '../Firebase'
 
-const handleDeleteImg = (imgId) => {
+export const handleDeleteImg = (imgId) => {
     const storageRef = storage.refFromURL(imgId)
     const imageRef = storage.ref(storageRef.fullPath)
 
@@ -10,5 +11,14 @@ const handleDeleteImg = (imgId) => {
     })
     .catch((e) => {
         console.log('Error while deleting the image ', e)
+    })
+}
+
+export const addNotification = (notification, hotelId) => {
+    return db.collection('notifications')
+        .add({
+        content: notification,
+        hotelId: hotelId,
+        markup: Date.now()
     })
 }

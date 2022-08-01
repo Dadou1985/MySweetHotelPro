@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
-import Drawer from './common/drawer'
+import Drawer from '../../helper/common/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
 import SuperAdmin from '../../svg/superhero.svg'
 import Magician from '../../svg/magician.svg'

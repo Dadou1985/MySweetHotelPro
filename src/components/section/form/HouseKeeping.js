@@ -4,7 +4,7 @@ import ItemList from '../itemList'
 import Maid from '../../../svg/maid.svg'
 import { db } from '../../../Firebase'
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../common/badgeMaker'
+import StyleBadge from '../../../helper/common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next"
 

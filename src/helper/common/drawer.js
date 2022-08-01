@@ -3,22 +3,22 @@ import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
-import Lost from '../../../svg/lost-items.svg'
-import Dasboard from "../../../images/dashboard.png"
-import CheckList from '../../../svg/todoList.svg'
+import Lost from '../../svg/lost-items.svg'
+import Dasboard from "../../images/dashboard.png"
+import CheckList from '../../svg/todoList.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'
-import Notifications from '../notifications'
-import Fom from '../../../svg/fom.svg'
-import Notebook from '../../../svg/notebook.png'
-import Feedback from '../../../svg/feedbackBox.svg'
-import { auth } from '../../../Firebase'
-import Housekeeping from '../form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
-import Support from '../form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
-import Connection from '../../../images/admin.png'
-import PhoneOverlay from '../../customHooks/phoneOverlayHook'
+import Notifications from '../../components/section/notifications'
+import Fom from '../../svg/fom.svg'
+import Notebook from '../../svg/notebook.png'
+import Feedback from '../../svg/feedbackBox.svg'
+import { auth } from '../../Firebase'
+import Housekeeping from '../../components/section/form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
+import Support from '../../components/section/form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
+import Connection from '../../images/admin.png'
+import PhoneOverlay from '../../components/customHooks/phoneOverlayHook'
 import { t } from 'i18next';
-import '../../css/common/drawer.css'
+import '../../components/css/common/drawer.css'
 
 export default function TemporaryDrawer({userDB, user}) {
   const [state, setState] = React.useState({left: false,});

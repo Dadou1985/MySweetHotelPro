@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Loader from '../components/section/common/shiftLoader'
+import Loader from '../helper/common/mshLoader'
 import ToolBar from "../components/section/toolbar"
 import Navigation from '../components/section/navigation'
 import {FirebaseContext, db, auth} from '../Firebase'

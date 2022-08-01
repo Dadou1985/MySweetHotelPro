@@ -1,17 +1,17 @@
-export const handleChange = (event, setFormValue) =>{
+import { db } from '../Firebase'
+import { addNotification } from "./globalCommonFunctions"
+
+export const handleChange = (event, setState) =>{
     event.persist()
-    setFormValue(currentValue =>({
+    setState(currentValue =>({
         ...currentValue,
         [event.target.name]: event.target.value
     }))
 }
 
-export const handleSubmit = (event, hotelId, collection, data) => {
+export const handleSubmit = (event, notif, hotelId, collection, data, handleClose) => {
     event.preventDefault()
-    setFormValue("")
-    setStep(false)
-    const notif = t("msh_cab.c_notif") 
-    addNotification(notif)
+    addNotification(notif, hotelId)
         return db.collection('hotels')
         .doc(hotelId)
         .collection(collection)
@@ -33,15 +33,6 @@ export const handleUpdateUserData = (userId, data) => {
     .update(data)
 }
 
-export const addNotification = (notification, hotelId) => {
-    return db.collection('notifications')
-        .add({
-        content: notification,
-        hotelId: hotelId,
-        markup: Date.now()
-    })
-}
-
 export const fetchCollectionBySorting = (hotelId, collection) => {
     return db.collection('hotels')
     .doc(hotelId)
@@ -54,4 +45,17 @@ export const fetchCollectionBySearching = (hotelId, collection) => {
     .doc(hotelId)
     .collection(collection)
     .where("status", "==", true)
+}
+
+export const deleteData = async (hotelId, collection, documentId) => {
+    try {
+        await db.collection('hotels')
+            .doc(hotelId)
+            .collection(collection)
+            .doc(documentId)
+            .delete()
+        console.log("Document successfully deleted!")
+    } catch (error) {
+        console.log(error)
+    }
 }

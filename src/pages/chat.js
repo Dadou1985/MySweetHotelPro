@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import Loader from '../components/section/common/shiftLoader'
+import Loader from '../helper/common/mshLoader'
 import {FirebaseContext, db, auth} from '../Firebase'
 import Chat from '../components/section/communIzi'
 import PhoneChat from '../components/section/phoneCommunIzi'

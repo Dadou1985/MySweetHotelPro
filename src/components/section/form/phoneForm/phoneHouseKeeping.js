@@ -1,7 +1,7 @@
 import React from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../../itemList'
-import StyleBadge from '../../common/badgeMaker'
+import StyleBadge from '../../../../helper/common/badgeMaker'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 

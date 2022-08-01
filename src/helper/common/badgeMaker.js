@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from 'react'
-import { FirebaseContext, db } from '../../../Firebase'
+import { FirebaseContext, db } from '../../Firebase'
 import Badge from '@material-ui/core/Badge';
 import { withStyles } from '@material-ui/core/styles';
 

@@ -1,7 +1,7 @@
 import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
 
-const StyledBadge = withStyles((theme) => ({
+export const StyledBadge = withStyles((theme) => ({
     badge: {
         right: -3,
         top: 13,
@@ -9,3 +9,4 @@ const StyledBadge = withStyles((theme) => ({
         padding: '0 4px',
     }
 }))(Badge);
+
