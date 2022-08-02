@@ -1,5 +1,14 @@
 import React, {useState, useEffect, useRef, useContext } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
+import { 
+    Form, 
+    Button, 
+    Table, 
+    Tabs, 
+    Tab, 
+    Tooltip, 
+    OverlayTrigger, 
+    Modal 
+} from 'react-bootstrap'
 import Safe from '../../../svg/vault.svg'
 import { useReactToPrint } from 'react-to-print';
 import { FirebaseContext, db } from '../../../Firebase'
@@ -11,122 +20,57 @@ import {
     MuiPickersUtilsProvider,
     DatePicker
   } from '@material-ui/pickers';
-  import { useTranslation } from "react-i18next"
+import { useTranslation } from "react-i18next"
+import { handleDeleteImg } from '../../../helper/globalCommonFunctions'
+import { StyledBadge } from '../../../helper/formCommonUI'
+import InputElement from "../../../helper/common/InputElement"
+import BadgeContent from '../../../helper/common/badgeContent'
+import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
+import TextareaElement from '../../../helper/common/textareaElement'
+import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
+import SafeTableRow from '../../../helper/common/safeTableRow'
+import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../helper/common/safeDetailSheet'
+import {
+    handleChange,
+    handleSubmit,
+    handleUpdateHotelData,
+    fetchCollectionBySorting,
+    fetchCollectionBySearching,
+    deleteData,
+    safeTotal,
+    safeAmount
+} from '../../../helper/formCommonFunctions'
 
 const Caisse = () =>{
-    const { t } = useTranslation()
-
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
     const [formValue, setFormValue] = useState({shift: "matin", shiftClone: null})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const [filterDate, setFilterDate] = useState(new Date())
+    const { t } = useTranslation()
 
-    const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
+    const handleClose = () => {
+        setList(false)
         setFormValue("")
-        const notif = t("msh_safe.s_notif")
-        addNotification(notif)
-        let caisse = document.getElementById("montant").value
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('safe')
-            .add({
-            author: userDB.username,
-            date: moment(new Date()).format('LL'),
-            amount: caisse,
-            shift: formValue.shift,
-            shiftClone: formValue.shiftClone !== null ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
-            markup: Date.now()
-            })
-        .then(() => {
-            handleReset()
-            return handleClose()})
+        handleReset()
     }
 
+    const caisse = document.getElementById("montant") != null && document.getElementById("montant").value
+    const notif = t("msh_safe.s_notif")
+    const dataStatus = {status: false} 
+    const tooltipTitle = t("msh_coolbar.tooltip_safe")
+    const modalTitle = t("msh_safe.s_title")
     const componentRef = useRef();
-    const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-    });
 
-    const change = (a, b, c) => {
-        let x = document.getElementById(a).value * b
-        const outputValue = document.getElementById(c).value = x.toFixed(2)
-        return outputValue
-    }
-
-    const total = () => {
-        const total = document.getElementById("total").innerHTML = Number(document.getElementById("bank").value) 
-        + Number(document.getElementById("bank2").value) 
-        + Number(document.getElementById("bank3").value)
-        + Number(document.getElementById("bank4").value)
-        + Number(document.getElementById("bank5").value) 
-        + Number(document.getElementById("bank6").value) 
-        + Number(document.getElementById("bank7").value) 
-        + Number(document.getElementById("bank8").value)
-        + Number(document.getElementById("bank9").value) 
-        + Number(document.getElementById("bank10").value) 
-        + Number(document.getElementById("bank11").value) 
-        + Number(document.getElementById("bank12").value)
-        + Number(document.getElementById("bank13").value) 
-        + Number(document.getElementById("bank14").value) 
-        + Number(document.getElementById("bank15").value) 
-        + Number(document.getElementById("bank16").value)
-        + Number(document.getElementById("bank17").value) 
-        + Number(document.getElementById("bank18").value)
-        + Number(document.getElementById("bank19").value)
-        + Number(document.getElementById("bank20").value) 
-        + Number(document.getElementById("bank21").value)
-        + Number(document.getElementById("bank22").value) 
-        + Number(document.getElementById("bank23").value)
-        return total.toFixed(2)
-    }
-
-    const montant = () => {
-        const total = document.getElementById("montant").innerHTML = Number(document.getElementById("test").value) 
-        + Number(document.getElementById("test2").value) 
-        + Number(document.getElementById("test3").value)
-        + Number(document.getElementById("test4").value)
-        + Number(document.getElementById("test5").value) 
-        + Number(document.getElementById("test6").value) 
-        + Number(document.getElementById("test7").value) 
-        + Number(document.getElementById("test8").value)
-        + Number(document.getElementById("test9").value) 
-        + Number(document.getElementById("test10").value) 
-        + Number(document.getElementById("test11").value) 
-        + Number(document.getElementById("test12").value)
-        + Number(document.getElementById("test13").value) 
-        + Number(document.getElementById("test14").value) 
-        + Number(document.getElementById("test15").value) 
-        + Number(document.getElementById("test16").value)
-        + Number(document.getElementById("test17").value) 
-        + Number(document.getElementById("test18").value)
-        + Number(document.getElementById("test19").value)
-        + Number(document.getElementById("test20").value) 
-        + Number(document.getElementById("test21").value)
-        + Number(document.getElementById("test22").value) 
-        + Number(document.getElementById("test23").value)
-        return total.toFixed(2)
+    const newData = {
+        author: userDB.username,
+        date: moment(new Date()).format('LL'),
+        amount: caisse,
+        shift: formValue.shift,
+        shiftClone: formValue.shiftClone !== null ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
+        markup: Date.now()
     }
 
     const handleReset = async() =>{
@@ -167,7 +111,9 @@ const Caisse = () =>{
            
      },[filterDate])
 
-
+     const handlePrint = useReactToPrint({
+        content: () => componentRef.current,
+    })
 
     return(
         <div style={{
@@ -176,25 +122,17 @@ const Caisse = () =>{
             justifyContent: "center",
             width: "33%"
         }}>
-            <OverlayTrigger
-            placement="right"
-            overlay={
-              <Tooltip id="title">
-                {t("msh_coolbar.tooltip_safe")}
-              </Tooltip>
-            }>
-                <img src={Safe} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
-            </OverlayTrigger>
-
-
+            <StyledBadge color="secondary">
+                <BadgeContent tooltipTitle={tooltipTitle} icon={Safe} handleShow={handleShow} />
+            </StyledBadge>
             <Modal show={list}
-                    size="xl"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    onHide={handleClose}
-                    >
-                    <Modal.Header closeButton className="bg-light">
-                        <Modal.Title id="contained-modal-title-vcenter" style={{
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={handleClose}
+                >
+                <Modal.Header closeButton className="bg-light">
+                    <Modal.Title id="contained-modal-title-vcenter" style={{
                         display: "flex",
                         flexFlow: "row",
                         justifyContent: "space-between", 
@@ -210,7 +148,7 @@ const Caisse = () =>{
                         }}>
                         <div style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</div>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                            <Form.Select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={handleChange} 
+                            <Form.Select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={(event) => handleChange(event, setFormValue)} 
                             style={{width: "10vw", 
                             height: "4vh", 
                             border: "1px solid lightgrey", 
@@ -242,16 +180,14 @@ const Caisse = () =>{
                         </Modal.Title>
                     </Modal.Header>
                     <form id="moneyBoxes"> 
-
-                    <Modal.Body>
-                   
-                    <Tabs defaultActiveKey="Caisse du shift" id="uncontrolled-tab-example" onSelect={(eventKey) => {
-                        if(eventKey === 'Journal des caisses'){
-                            return setFooterState(false)
-                        }else{
-                            return setFooterState(true)
-                        }
-                    }}>
+                        <Modal.Body>
+                            <Tabs defaultActiveKey="Caisse du shift" id="uncontrolled-tab-example" onSelect={(eventKey) => {
+                                if(eventKey === 'Journal des caisses'){
+                                    return setFooterState(false)
+                                }else{
+                                    return setFooterState(true)
+                                }
+                            }}>
                             <Tab eventKey="Caisse du shift" title={t("msh_safe.s_second_tab_title")}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover variant="dark" size="sm" className="text-center">
@@ -263,124 +199,33 @@ const Caisse = () =>{
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>500.00</td>
-                                        <td><input id="bank" type="text" onInput={()=> change("bank", 500, "test")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>200.00</td>
-                                        <td><input id="bank2" type="text" onInput={()=> change("bank2", 200, "test2")} onInputCapture={()=>total()}  onChange={()=>montant()}></input></td>
-                                        <td><output id="test2">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>100.00</td>
-                                        <td><input id="bank3" type="text" onInput={()=> change("bank3", 100, "test3")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test3">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>50.00</td>
-                                        <td><input id="bank4" type="text" onInput={()=> change("bank4", 50, "test4")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test4">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>20.00</td>
-                                        <td><input id="bank5" type="text" onInput={()=> change("bank5", 20, "test5")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test5">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>10.00</td>
-                                        <td><input id="bank6" type="text" onInput={()=> change("bank6", 10, "test6")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test6">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>5.00</td>
-                                        <td><input id="bank7" type="text" onInput={()=> change("bank7", 5, "test7")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test7">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2.00</td>
-                                        <td><input id="bank8" type="text" onInput={()=> change("bank8", 2, "test8")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test8">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.00</td>
-                                        <td><input id="bank9" type="text" onInput={()=> change("bank9", 1, "test9")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test9">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.50</td>
-                                        <td><input id="bank10" type="text" onInput={()=> change("bank10", 0.5, "test10")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test10">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.20</td>
-                                        <td><input id="bank11" type="text" onInput={()=> change("bank11", 0.2, "test11")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test11">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.10</td>
-                                        <td><input id="bank12" type="text" onInput={()=> change("bank12", 0.1, "test12")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test12">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.05</td>
-                                        <td><input id="bank13" type="text" onInput={()=> change("bank13", 0.05, "test13")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test13">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.02</td>
-                                        <td><input id="bank14" type="text" onInput={()=> change("bank14", 0.02, "test14")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test14">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.01</td>
-                                        <td><input id="bank15" type="text" onInput={()=> change("bank15", 0.01, "test15")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test15">0.00</output></td>
-                                    </tr>
+                                    {safeTableDetailsCoins.map((details) => {
+                                        return (
+                                            <SafeTableRow
+                                                rowId={details.id}
+                                                labelValue={details.labelValue}
+                                                cellLabelValue={details.labelCellValue}
+                                                cellInputId={details.cellInputId}
+                                                cellOutputId={details.cellOutputId}
+                                                safeTotal={safeTotal}
+                                                safeAmount={safeAmount}
+                                            />)
+                                    })}
                                     <tr>
                                         <td colSpan="3">{t("msh_general.g_table.t_rolls")}</td>
                                     </tr>
-                                    <tr>
-                                        <td>2.00</td>
-                                        <td><input id="bank16" type="text" onInput={()=> change("bank16", 50, "test16")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test16">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>1.00</td>
-                                        <td><input id="bank17" type="text" onInput={()=> change("bank17", 25, "test17")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test17">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.50</td>
-                                        <td><input id="bank18" type="text" onInput={()=> change("bank18", 20, "test18")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test18">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.20</td>
-                                        <td><input id="bank19" type="text" onInput={()=> change("bank19", 8, "test19")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test19">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.10</td>
-                                        <td><input id="bank20" type="text" onInput={()=> change("bank20", 4, "test20")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test20">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.05</td>
-                                        <td><input id="bank21" type="text" onInput={()=> change("bank21", 2.5, "test21")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test21">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.02</td>
-                                        <td><input id="bank22" type="text" onInput={()=> change("bank22", 1.5, "test22")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test22">0.00</output></td>
-                                    </tr>
-                                    <tr>
-                                        <td>0.01</td>
-                                        <td><input id="bank23" type="text" onInput={()=> change("bank23", 0.5, "test23")} onInputCapture={()=>total()} onChange={()=>montant()}></input></td>
-                                        <td><output id="test23">0.00</output></td>
-                                    </tr>
+                                    {safeTableDetailsRolls.map((details) => {
+                                        return (
+                                            <SafeTableRow
+                                                rowId={details.id}
+                                                labelValue={details.labelValue}
+                                                cellLabelValue={details.labelCellValue}
+                                                cellInputId={details.cellInputId}
+                                                cellOutputId={details.cellOutputId}
+                                                safeTotal={safeTotal}
+                                                safeAmount={safeAmount}
+                                            />)
+                                    })}
                                 </tbody>
                                 <tfoot>
                                     <tr>
