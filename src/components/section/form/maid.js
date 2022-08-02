@@ -1,23 +1,52 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table, Tabs, Tab, Tooltip, OverlayTrigger, Modal, Popover, FloatingLabel } from 'react-bootstrap'
+import { 
+    Form, 
+    Button, 
+    Table, 
+    Tabs, 
+    Tab, 
+    Modal, 
+    FloatingLabel,
+    Popover,
+    OverlayTrigger
+} from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import ChangeRoom from '../../../svg/logout.png'
-import {  db, storage } from '../../../Firebase'
 import moment from 'moment'
-import 'moment/locale/fr';
-import Switch from '@material-ui/core/Switch';
-import Badge from '@material-ui/core/Badge'
-import { withStyles } from '@material-ui/core/styles';
+import 'moment/locale/fr'
+import Switch from '@material-ui/core/Switch'
 import Picture from '../../../svg/picture.svg'
-import Close from '../../../svg/close.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
+import { handleDeleteImg } from '../../../helper/globalCommonFunctions'
+import { StyledBadge } from '../../../helper/formCommonUI'
+import InputElement from "../../../helper/common/InputElement"
+import BadgeContent from '../../../helper/common/badgeContent'
+import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
+import TextareaElement from '../../../helper/common/textareaElement'
+import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
+import {
+    handleChange,
+    handleSubmit,
+    handleUpdateHotelData,
+    handleUpdateUserData,
+    fetchCollectionBySorting,
+    fetchCollectionBySearching,
+    deleteData
+} from '../../../helper/formCommonFunctions'
 
 const Maid = ({userDB}) =>{
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
-    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: "", reason: "noise", state: "dirty"})
+    const [formValue, setFormValue] = useState({
+        client: "", 
+        details: "", 
+        fromRoom: "", 
+        toRoom: "", 
+        reason: "noise", 
+        state: "dirty"
+    })
     const [demandQty, setDemandQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
@@ -26,187 +55,82 @@ const Maid = ({userDB}) =>{
     const [stateClone, setStateClone] = useState(null)
     const { t } = useTranslation()
 
-    const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const StyledBadge = withStyles((theme) => ({
-        badge: {
-          right: -3,
-          top: 13,
-          border: `2px solid ${theme.palette.background.paper}`,
-          padding: '0 4px',
-        },
-      }))(Badge);
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
+    const handleClose = () => {
+        setList(false)
         setFormValue("")
-        const notif = t("msh_room_change.r_notif") 
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .add({
-            author: userDB.username,
-            date: new Date(),
-            details: formValue.details,
-            client: formValue.client,
-            fromRoom: formValue.fromRoom,
-            markup: Date.now(),
-            toRoom: formValue.toRoom,
-            reason: formValue.reason,
-            reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
-            state: formValue.state,
-            stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
-            status: false
-            })
-        .then(handleClose)
     }
 
-    const handleUpdateRoom = async(demandId, guestId) => {
-        await db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .doc(demandId)
-            .update({
-                toRoom: formValue.toRoom,
-            })
-
-        return db.collection('guestUsers')
-            .doc(`${guestId}`)
-            .update({
-                room: formValue.toRoom
-            })
-            .then(() => 
-                setFormValue("")
-            )
-            //!!!ajouter un update room pour le chat
+    const notif = t("msh_room_change.r_notif")
+    const dataStatus = {status: false} 
+    const hotelRoomData = {toRoom: formValue.toRoom}
+    const userRoomData = {room: formValue.toRoom}
+    const roomState = {
+        state: formValue.state,
+        stateClone: stateClone
     }
+    const tooltipTitle = t("msh_toolbar.tooltip_room_change")
+    const modalTitle = t("msh_room_change.r_title")
 
-    const handleUpdateRoomState = (demandId) => {
-        setFormValue("")
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .doc(demandId)
-            .update({
-                state: formValue.state,
-                stateClone: stateClone
-            })
+    const newData = {
+        author: userDB.username,
+        date: new Date(),
+        details: formValue.details,
+        client: formValue.client,
+        fromRoom: formValue.fromRoom,
+        markup: Date.now(),
+        toRoom: formValue.toRoom,
+        reason: formValue.reason,
+        reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
+        state: formValue.state,
+        stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
+        status: false
     }
-
-    const changeDemandStatus = (document) => {
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-          .collection('roomChange')
-          .doc(document)
-          .update({
-            status: false,
-        })      
-      }
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "roomChange").onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe
            
      },[])
 
      useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .where("status", "==", true)
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setDemandQty(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionBySearching(userDB.hotelId, "roomChange").onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setDemandQty(snapInfo)
+        });
+        return unsubscribe
            
      },[])
-
-     const handleDeleteImg = (imgId) => {
-        const storageRef = storage.refFromURL(imgId)
-        const imageRef = storage.ref(storageRef.fullPath)
-
-        imageRef.delete()
-        .then(() => {
-            console.log(`${imgId} has been deleted succesfully`)
-        })
-        .catch((e) => {
-            console.log('Error while deleting the image ', e)
-        })
-      }
-  
 
     return(
         <div>
             <StyledBadge badgeContent={demandQty.length} color="secondary">
-                <OverlayTrigger
-                placement="right"
-                overlay={
-                <Tooltip id="title">
-                    {t("msh_toolbar.tooltip_room_change")}
-                </Tooltip>
-                }>
-                        <img src={ChangeRoom} className="icon" alt="contact" onClick={handleShow} style={{width: "2vw"}} />
-                </OverlayTrigger>
-            </StyledBadge>
-
-            <Modal show={list}
-                    size="xl"
-                    aria-labelledby="contained-modal-title-vcenter"
-                    centered
-                    onHide={handleClose}
-                    enforceFocus={false}
-                    >
-                    <Modal.Header closeButton className="bg-light">
-                        <Modal.Title id="contained-modal-title-vcenter">
-                        {t("msh_room_change.r_title")}
-                        </Modal.Title>
-                    </Modal.Header>
-                    <Modal.Body>
-                    
+                <BadgeContent tooltipTitle={tooltipTitle} icon={ChangeRoom} handleShow={handleShow} />
+            </StyledBadge>  
+           <Modal show={list}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={handleClose}
+                enforceFocus={false}
+                >
+                <ModalHeaderFormTemplate title={modalTitle} />
+                <Modal.Body>   
                     <Tabs defaultActiveKey="Déloger un client" id="uncontrolled-tab-example" onSelect={(eventKey) => {
                         if(eventKey === 'Liste des délogements'){
                             return setFooterState(false)
@@ -214,7 +138,7 @@ const Maid = ({userDB}) =>{
                             return setFooterState(true)
                         }
                     }}>
-                            <Tab eventKey="Déloger un client" title={t("msh_room_change.r_phone_button.b_show_modal")}>
+                        <Tab eventKey="Déloger un client" title={t("msh_room_change.r_phone_button.b_show_modal")}>
                             <div style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -223,17 +147,16 @@ const Maid = ({userDB}) =>{
                                     padding: "5%",
                                     textAlign: "center",
                                 }}>
-                                    <div style={{marginBottom: "2vh"}}>
-                                        <Form.Group controlId="description">
-                                        <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_room_change.r_client")}
-                                            className="mb-3"
-                                        >
-                                            <Form.Control  placeholder="ex: Jane Doe" type="text" style={{width: "25vw"}} value={formValue.client} name="client" onChange={handleChange} />
-                                        </FloatingLabel>
-                                        </Form.Group>
-                                    </div>
+                                    <InputElement
+                                        containerStyle={{marginBottom: "2vh"}} 
+                                        label={t("msh_room_change.r_client")}
+                                        placeholder="ex: Jane Doe"
+                                        size="25vw"
+                                        value={formValue.client}
+                                        name="client"
+                                        handleChange={handleChange}
+                                        setFormValue={setFormValue}
+                                    />
                                     <div style={{
                                         display: "flex",
                                         flexFlow: "row",
@@ -241,25 +164,26 @@ const Maid = ({userDB}) =>{
                                         width: "50%",
                                         marginBottom: "2vh"
                                     }}>
-                                        <Form.Group controlId="description">
-                                        <FloatingLabel
-                                            controlId="floatingInput"
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
                                             label={t("msh_room_change.r_from")}
-                                            className="mb-3"
-                                        >
-                                            <Form.Control type="text" placeholder="ex: 310" style={{width: "12vw"}} value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
-                                        </FloatingLabel>
-                                        </Form.Group>
-                                    
-                                        <Form.Group controlId="description">
-                                        <FloatingLabel
-                                            controlId="floatingInput"
+                                            placeholder="ex: 310"
+                                            size="12vw"
+                                            value={formValue.fromRoom}
+                                            name="fromRoom"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
                                             label={t("msh_room_change.r_to")}
-                                            className="mb-3"
-                                        >
-                                            <Form.Control type="text" placeholder="ex: 409" style={{width: "12vw"}} value={formValue.toRoom} name="toRoom" onChange={handleChange} />
-                                        </FloatingLabel>
-                                        </Form.Group>
+                                            placeholder="ex: 409"
+                                            size="12vw"
+                                            value={formValue.toRoom}
+                                            name="toRoom"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
                                     </div>
                                     <div style={{
                                         display: "flex",
@@ -269,57 +193,55 @@ const Maid = ({userDB}) =>{
                                         marginBottom: "2vh"
                                     }}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
-                                        <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_room_change.r_reason.r_label")}
-                                            className="mb-3"
-                                        >
-                                        <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
-                                            style={{width: "12vw", 
-                                            height: "60%", 
-                                            border: "1px solid lightgrey", 
-                                            borderRadius: "3px",
-                                            backgroundColor: "white", 
-                                            paddingLeft: "1vw"}}>
-                                                <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
-                                                <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
-                                                <option value="maintenance" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}>{t("msh_room_change.r_reason.r_maintenance")}</option>
-                                                <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                                <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
-                                        </Form.Select>
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    
-                                        <Form.Group controlId="exampleForm.SelectCustom">
-                                        <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_room_change.r_state.s_label")}
-                                            className="mb-3"
-                                        >
-                                            <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                                            <FloatingLabel
+                                                controlId="floatingInput"
+                                                label={t("msh_room_change.r_reason.r_label")}
+                                                className="mb-3"
+                                            >
+                                            <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} 
                                                 style={{width: "12vw", 
                                                 height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white", 
                                                 paddingLeft: "1vw"}}>
-                                                    <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
-                                                    <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
+                                                    <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
+                                                    <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
+                                                    <option value="maintenance" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}>{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                                    <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                    <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
                                             </Form.Select>
-                                        </FloatingLabel>
+                                            </FloatingLabel>
                                         </Form.Group>
-                                    </div>
-                                    <div>
-                                        <Form.Group controlId="details">
+                                    
+                                        <Form.Group controlId="exampleForm.SelectCustom">
                                             <FloatingLabel
                                                 controlId="floatingInput"
-                                                label={t("msh_room_change.r_details")}
+                                                label={t("msh_room_change.r_state.s_label")}
                                                 className="mb-3"
                                             >
-                                                <Form.Control as="textarea" rows="3" style={{width: "25vw", maxHeight: "15vh"}} value={formValue.details} name="details" onChange={handleChange}  />
+                                                <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} 
+                                                    style={{width: "12vw", 
+                                                    height: "60%", 
+                                                    border: "1px solid lightgrey", 
+                                                    borderRadius: "3px",
+                                                    backgroundColor: "white", 
+                                                    paddingLeft: "1vw"}}>
+                                                        <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
+                                                        <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
+                                                </Form.Select>
                                             </FloatingLabel>
                                         </Form.Group>
                                     </div>
+                                    <TextareaElement
+                                        label={t("msh_room_change.r_details")}
+                                        row="3"
+                                        value={formValue.details} 
+                                        name="details" 
+                                        handleChange={handleChange}
+                                        setFormValue={setFormValue}
+                                        size={{width: "25vw", maxHeight: "15vh"}}
+                                    />
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des délogements" title={t("msh_room_change.r_table_title")}>
@@ -363,7 +285,11 @@ const Maid = ({userDB}) =>{
                                                                 />
                                                         </Popover.Header>
                                                         <Popover.Body className="text-center">
-                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoom(flow.id, flow.userId)}>{t("msh_general.g_button.b_send")}</Button>
+                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => {
+                                                                handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, hotelRoomData)
+                                                                handleUpdateUserData(flow.userId, userRoomData)
+                                                            }}>{t("msh_general.g_button.b_send")}
+                                                            </Button>
                                                         </Popover.Body>
                                                     </Popover>
                                                     }
@@ -382,7 +308,7 @@ const Maid = ({userDB}) =>{
                                                                 id="popover-positioned-top">
                                                                 <Popover.Header as="h3" className="text-center">
                                                                 <h6>{t("msh_room_change.r_state.s_label")}</h6>
-                                                                <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                                                                <select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} 
                                                                     style={{width: "5vw", 
                                                                     height: "100%", 
                                                                     border: "1px solid lightgrey", 
@@ -394,7 +320,7 @@ const Maid = ({userDB}) =>{
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
-                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateRoomState(flow.id)}>{t("msh_general.g_button.b_send")}</Button>
+                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Body>
                                                             </Popover>
                                                             }
@@ -414,7 +340,7 @@ const Maid = ({userDB}) =>{
                                                 <td>
                                                 <Switch
                                                     checked={flow.status}
-                                                    onChange={() => changeDemandStatus(flow.id)}
+                                                    onChange={() => handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, dataStatus)}
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                 />
                                                 </td>
@@ -422,38 +348,30 @@ const Maid = ({userDB}) =>{
                                                     if(flow.img) {
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                    return db.collection('hotels')
-                                                    .doc(userDB.hotelId)
-                                                    .collection("roomChange")
-                                                    .doc(flow.id)
-                                                    .delete()
-                                                    .then(function() {
-                                                    console.log("Document successfully deleted!");
-                                                    }).catch(function(error) {
-                                                        console.log(error);
-                                                    });
+                                                    deleteData(userDB.hotelId, "roomChange", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </Table>
                                 </PerfectScrollbar> : 
-                            <div style={{
-                                display: "flex",
-                                flexFlow: 'column',
-                                alignItems: "center",
-                                padding: "2%"
-                            }}>
-                                <div style={{width: "100%"}}>
-                                    <img src={Close} style={{width: "1vw", float: "right", cursor: "pointer"}} onClick={() => setImgFrame(false)} /> 
-                                </div>
-                                <img src={img} style={{width: "70%"}} />
-                            </div>}
+                                <ModalFormImgLayout
+                                    setImgFrame={setImgFrame}
+                                    img={img}
+                                />}
                             </Tab>
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                        <Button variant="dark" onClick={(event) => {
+                            return handleSubmit(
+                                event, 
+                                notif, 
+                                userDB.hotelId, 
+                                "roomChange", 
+                                newData, 
+                                handleClose)
+                        }}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}
                 </Modal>
         </div>

@@ -49,7 +49,6 @@ const Repair = ({userDB}) =>{
     const { t } = useTranslation()
 
     const handleShow = () => setList(true)
-
     const handleClose = () => {
         setList(false)
         setFormValue("")
@@ -59,6 +58,7 @@ const Repair = ({userDB}) =>{
     const dataStatus = {status: false} 
     const tooltipTitle = t("msh_toolbar.tooltip_technical")
     const modalTitle = t("msh_maintenance.m_title")
+    
     const newData = {
         author: userDB.username,
         date: new Date(),
@@ -104,7 +104,6 @@ const Repair = ({userDB}) =>{
             <StyledBadge badgeContent={issueQty.length} color="secondary">
                 <BadgeContent tooltipTitle={tooltipTitle} icon={Maintenance} handleShow={handleShow} />
             </StyledBadge>            
-
             <Modal show={list}
                 size="xl"
                 aria-labelledby="contained-modal-title-vcenter"
@@ -112,16 +111,15 @@ const Repair = ({userDB}) =>{
                 onHide={handleClose}
                 >
                 <ModalHeaderFormTemplate title={modalTitle} />
-                    <Modal.Body>
-                    
-                        <Tabs defaultActiveKey="Signaler un problème technique" id="uncontrolled-tab-example" onSelect={(eventKey) => {
-                            if(eventKey === 'Liste des problèmes techniques'){
-                                return setFooterState(false)
-                            }else{
-                                return setFooterState(true)
-                            }
-                        }}>
-                            <Tab eventKey="Signaler un problème technique" title={t("msh_maintenance.m_first_tab_title")}>
+                <Modal.Body>
+                    <Tabs defaultActiveKey="Signaler un problème technique" id="uncontrolled-tab-example" onSelect={(eventKey) => {
+                        if(eventKey === 'Liste des problèmes techniques'){
+                            return setFooterState(false)
+                        }else{
+                            return setFooterState(true)
+                        }
+                    }}>
+                        <Tab eventKey="Signaler un problème technique" title={t("msh_maintenance.m_first_tab_title")}>
                             <div style={{
                                     display: "flex",
                                     flexFlow: "column",
@@ -225,17 +223,17 @@ const Repair = ({userDB}) =>{
                                                     if(flow.img){
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                    deleteData(userDB.hotelId, "maintenance", flow.id)
+                                                        deleteData(userDB.hotelId, "maintenance", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </Table>
                                 </PerfectScrollbar> : 
-                            <ModalFormImgLayout
-                                setImgFrame={setImgFrame}
-                                img={img}
-                            />}
+                                <ModalFormImgLayout
+                                    setImgFrame={setImgFrame}
+                                    img={img}
+                                />}
                             </Tab>
                         </Tabs>
                     </Modal.Body>
