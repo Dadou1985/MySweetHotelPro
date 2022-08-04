@@ -5,8 +5,6 @@ import {
     Table, 
     Tabs, 
     Tab, 
-    Tooltip, 
-    OverlayTrigger, 
     Modal 
 } from 'react-bootstrap'
 import Safe from '../../../svg/vault.svg'
@@ -21,30 +19,27 @@ import {
     DatePicker
   } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
-import { handleDeleteImg } from '../../../helper/globalCommonFunctions'
 import { StyledBadge } from '../../../helper/formCommonUI'
-import InputElement from "../../../helper/common/InputElement"
 import BadgeContent from '../../../helper/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import TextareaElement from '../../../helper/common/textareaElement'
-import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
 import SafeTableRow from '../../../helper/common/safeTableRow'
 import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../helper/common/safeDetailSheet'
+import { fetchCollectionByMapping } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
-    handleUpdateHotelData,
-    fetchCollectionBySorting,
-    fetchCollectionBySearching,
     deleteData,
     safeTotal,
     safeAmount
 } from '../../../helper/formCommonFunctions'
 
+/* 
+    ! FIX => BUG SUBMIT DATA (TOTAL AMOUNT AND SHIFT CLONE)
+ */
+
 const Caisse = () =>{
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([""])
-    const [formValue, setFormValue] = useState({shift: "matin", shiftClone: null})
+    const [formValue, setFormValue] = useState({shift: "matin", shiftClone: ""})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const [filterDate, setFilterDate] = useState(new Date())
@@ -57,7 +52,6 @@ const Caisse = () =>{
         handleReset()
     }
 
-    const caisse = document.getElementById("montant") != null && document.getElementById("montant").value
     const notif = t("msh_safe.s_notif")
     const dataStatus = {status: false} 
     const tooltipTitle = t("msh_coolbar.tooltip_safe")
@@ -67,7 +61,7 @@ const Caisse = () =>{
     const newData = {
         author: userDB.username,
         date: moment(new Date()).format('LL'),
-        amount: caisse,
+        amount: document.getElementById("montant") != null && document.getElementById("montant").value,
         shift: formValue.shift,
         shiftClone: formValue.shiftClone !== null ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
         markup: Date.now()
@@ -90,30 +84,23 @@ const Caisse = () =>{
       };
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('safe')
-            .where("date", "==", moment(filterDate).format('LL'))
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionByMapping(userDB.hotelId, "safe", "date", "==", moment(filterDate).format('LL')).onSnapshot(function(snapshot) {
+        const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe
            
      },[filterDate])
 
-     const handlePrint = useReactToPrint({
-        content: () => componentRef.current,
-    })
+    //  const handlePrint = useReactToPrint({
+    //     content: () => componentRef.current,
+    // })
 
     return(
         <div style={{
@@ -148,7 +135,7 @@ const Caisse = () =>{
                         }}>
                         <div style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</div>
                         <Form.Group controlId="exampleForm.SelectCustom">
-                            <Form.Select class="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={(event) => handleChange(event, setFormValue)} 
+                            <Form.Select className="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={(event) => handleChange(event, setFormValue)} 
                             style={{width: "10vw", 
                             height: "4vh", 
                             border: "1px solid lightgrey", 
@@ -212,7 +199,9 @@ const Caisse = () =>{
                                             />)
                                     })}
                                     <tr>
-                                        <td colSpan="3">{t("msh_general.g_table.t_rolls")}</td>
+                                        <td></td>
+                                        <td><b>{t("msh_general.g_table.t_rolls")}</b></td>
+                                        <td></td>
                                     </tr>
                                     {safeTableDetailsRolls.map((details) => {
                                         return (
@@ -230,8 +219,8 @@ const Caisse = () =>{
                                 <tfoot>
                                     <tr>
                                         <td></td>
-                                        <td >{t("msh_general.g_table.t_total_qty")}</td>
-                                        <td>{t("msh_general.g_table.t_total")}</td>
+                                        <td ><b>{t("msh_general.g_table.t_total_qty")}</b></td>
+                                        <td><b>{t("msh_general.g_table.t_total")}</b></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -257,22 +246,15 @@ const Caisse = () =>{
                                 <tbody>
                                     {info.map((flow, key) =>(
                                         <tr key={key}>
-                                        <td>{flow.author}</td>
-                                        <td>{flow.amount} {t("msh_safe.s_currency")}</td>
-                                        <td>{flow.shiftClone}</td>
-                                        <td>{moment(flow.markup).format('L')}</td>
-                                        <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("safe")
-                                            .doc(flow.id)
-                                            .delete()
-                                            .then(function() {
-                                              console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
-                                        }}>{t("msh_general.g_button.b_delete")}</Button></td>
+                                            <td>{flow.author}</td>
+                                            <td>{flow.amount} {t("msh_safe.s_currency")}</td>
+                                            <td>{flow.shiftClone}</td>
+                                            <td>{moment(flow.markup).format('L')}</td>
+                                            <td className="bg-dark">
+                                                <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "safe", flow.id)}>
+                                                    {t("msh_general.g_button.b_delete")}
+                                                </Button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -284,7 +266,15 @@ const Caisse = () =>{
                     <Modal.Footer>
                         {footerState && <>
                             <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>{t("msh_general.g_button.b_reset")}</Button>
-                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                            <Button variant="dark" onClick={(event) => {
+                            return handleSubmit(
+                                event, 
+                                notif, 
+                                userDB.hotelId, 
+                                "safe", 
+                                newData, 
+                                handleClose)
+                        }}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
                         {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}
                     </Modal.Footer>

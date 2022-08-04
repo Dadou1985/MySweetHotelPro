@@ -33,20 +33,6 @@ export const handleUpdateUserData = (userId, data) => {
     .update(data)
 }
 
-export const fetchCollectionBySorting = (hotelId, collection) => {
-    return db.collection('hotels')
-    .doc(hotelId)
-    .collection(collection)
-    .orderBy("markup", "asc")
-}
-
-export const fetchCollectionBySearching = (hotelId, collection) => {
-    return db.collection('hotels')
-    .doc(hotelId)
-    .collection(collection)
-    .where("status", "==", true)
-}
-
 export const deleteData = async (hotelId, collection, documentId) => {
     try {
         await db.collection('hotels')
@@ -113,3 +99,4 @@ export const safeAmount = () => {
     + Number(document.getElementById("test23").value)
     return total.toFixed(2)
 }
+

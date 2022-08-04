@@ -11,6 +11,13 @@ import {
 } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../../helper/globalCommonFunctions'
+import {
+    handleChange,
+    handleSubmit,
+    handleUpdateHotelData,
+    deleteData
+} from '../../../../helper/formCommonFunctions'
 
 const PhoneCab = ({userDB}) =>{
 
@@ -19,84 +26,53 @@ const PhoneCab = ({userDB}) =>{
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
+    const [modelClone, setModelClone] = useState("")
     const { t } = useTranslation()
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const handleDateChange = (date) => {
-        setFormValue({date: date});
-      };
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
+    const handleShow = () => setActivate(true)
+    const handleHide = () => {
+        setActivate(false)
         setFormValue("")
         setStep(false)
-        const notif = t("msh_cab.c_notif") 
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('cab')
-            .add({
-            author: userDB.username,
-            destination: formValue.destination,
-            client: formValue.client,
-            room: formValue.room,
-            pax: formValue.passenger,
-            model: formValue.model,
-            markup: Date.now(),
-            hour: moment(formValue.date).format('LT'),
-            date: moment(formValue.date).format('L'),            
-            status: false
-            })
     }
 
-    const changeDemandStatus = (document) => {
-        return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('cab')
-          .doc(document)
-          .update({
-            status: false,
-        })      
-      }
+    const handleDateChange = (date) => {
+    setFormValue({date: date});
+    };
+
+    const notif = t("msh_cab.c_notif")
+    const dataStatus = {status: false} 
+    const tooltipTitle = t("msh_toolbar.tooltip_cab")
+    const modalTitle = t("msh_cab.c_title")
+
+    const newData = {
+        author: userDB.username,
+        destination: formValue.destination,
+        client: formValue.client,
+        room: formValue.room,
+        pax: formValue.passenger,
+        model: formValue.model,
+        modelClone: modelClone !== null ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
+        markup: Date.now(),
+        hour: moment(formValue.date).format('LT'),
+        date: moment(formValue.date).format('L'),
+        status: false,
+        hotelId: userDB.hotelId
+    }
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('cab')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
-     },[])
-
-     const handleShow = () => setActivate(true)
-     const handleHide = () => setActivate(false)
+        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe
+    },[])
 
     return(
         <div className="phone_container">
@@ -133,7 +109,7 @@ const PhoneCab = ({userDB}) =>{
                         <td>
                         <Switch
                             checked={flow.status}
-                            onChange={() => changeDemandStatus(flow.id)}
+                            onChange={() => handleUpdateHotelData(userDB.hotelId, "cab", flow.id, dataStatus)}
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         </td>

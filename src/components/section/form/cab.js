@@ -23,12 +23,12 @@ import { StyledBadge } from '../../../helper/formCommonUI'
 import InputElement from "../../../helper/common/InputElement"
 import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
+import TableTemplate from '../../../helper/common/tableTemplate';
+import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
     handleUpdateHotelData,
-    fetchCollectionBySorting,
-    fetchCollectionBySearching,
     deleteData
 } from '../../../helper/formCommonFunctions'
 
@@ -83,7 +83,7 @@ const Cab = ({userDB}) =>{
     }
 
     useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "cab").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -97,7 +97,7 @@ const Cab = ({userDB}) =>{
     },[])
 
      useEffect(() => {
-        let unsubscribe = fetchCollectionBySearching(userDB.hotelId, "cab").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByMapping(userDB.hotelId, "cab", "status", "==", true).onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -246,46 +246,7 @@ const Cab = ({userDB}) =>{
                         </Tab>
                         <Tab eventKey="Liste des réservations" title={t("msh_cab.c_table_title")}>
                         <PerfectScrollbar style={{height: "55vh"}}>
-                            <Table striped bordered hover size="sm" className="text-center">
-                                <thead className="bg-dark text-center text-light">
-                                    <tr>
-                                    <th>{t("msh_general.g_table.t_client")}</th>
-                                    <th>{t("msh_general.g_table.t_room")}</th>
-                                    <th>{t("msh_general.g_table.t_date")}</th>
-                                    <th>{t("msh_general.g_table.t_time")}</th>
-                                    <th>{t("msh_general.g_table.t_passenger")}</th>
-                                    <th>{t("msh_general.g_table.t_type_of_car")}</th>
-                                    <th>{t("msh_general.g_table.t_destination")}</th>
-                                    <th>{t("msh_general.g_table.t_statut")}</th>
-                                    <th className="bg-dark"></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {info.map(flow =>(
-                                        <tr key={flow.id}>
-                                        <td>{flow.client}</td>
-                                        <td>{flow.room}</td>
-                                        <td>{flow.date}</td>
-                                        <td>{flow.hour}</td>
-                                        <td>{flow.pax}</td>
-                                        <td>{flow.modelClone}</td>
-                                        <td>{flow.destination}</td>
-                                        <td>
-                                        <Switch
-                                            checked={flow.status}
-                                            onChange={() => handleUpdateHotelData(userDB.hotelId, "cab", flow.id, dataStatus)}
-                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                        />
-                                        </td>
-                                        <td className="bg-dark">
-                                            <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "cab", flow.id)}>
-                                                {t("msh_general.g_button.b_delete")}
-                                            </Button>
-                                        </td>
-                                    </tr>
-                                    ))}
-                                </tbody>
-                            </Table>
+                            <TableTemplate data={info} scale={true} userDB={userDB} dataStatus={dataStatus} />
                         </PerfectScrollbar>
                         </Tab>
                     </Tabs>

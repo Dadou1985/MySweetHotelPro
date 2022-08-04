@@ -22,3 +22,17 @@ export const addNotification = (notification, hotelId) => {
         markup: Date.now()
     })
 }
+
+export const fetchCollectionBySorting = (hotelId, collection, field, order) => {
+    return db.collection('hotels')
+    .doc(hotelId)
+    .collection(collection)
+    .orderBy(field, order)
+}
+
+export const fetchCollectionByMapping = (hotelId, collection, field, operator, data) => {
+    return db.collection('hotels')
+    .doc(hotelId)
+    .collection(collection)
+    .where(field, operator, data)
+}

@@ -22,12 +22,11 @@ import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
 import TextareaElement from '../../../helper/common/textareaElement'
 import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
+import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
     handleUpdateHotelData,
-    fetchCollectionBySorting,
-    fetchCollectionBySearching,
     deleteData
 } from '../../../helper/formCommonFunctions'
 
@@ -72,7 +71,7 @@ const Repair = ({userDB}) =>{
     }
     
     useEffect(() => {
-       let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "maintenance").onSnapshot(function(snapshot) {
+       let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "maintenance", "markup", "asc").onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -86,7 +85,7 @@ const Repair = ({userDB}) =>{
      },[])
 
      useEffect(() => {
-        let unsubscribe = fetchCollectionBySearching(userDB.hotelId, "maintenance").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByMapping(userDB.hotelId, "maintenance", "status", "==", true).onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
