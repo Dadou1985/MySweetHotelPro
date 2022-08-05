@@ -9,12 +9,12 @@ export const handleChange = (event, setState) =>{
     }))
 }
 
-export const handleSubmit = (event, notif, hotelId, collection, data, handleClose) => {
+export const handleSubmit = (event, notif, hotelId, collection, document, subCollection, data, handleClose) => {
     event.preventDefault()
     addNotification(notif, hotelId)
-        return db.collection('hotels')
-        .doc(hotelId)
-        .collection(collection)
+        return db.collection(collection)
+        .doc(document)
+        .collection(subCollection)
         .add(data)
         .then(handleClose)
 }

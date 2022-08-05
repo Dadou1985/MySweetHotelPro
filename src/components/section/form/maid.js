@@ -347,7 +347,7 @@ const Maid = ({userDB}) =>{
                                                     if(flow.img) {
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                    deleteData(userDB.hotelId, "roomChange", flow.id)
+                                                    return deleteData(userDB.hotelId, "roomChange", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -366,6 +366,8 @@ const Maid = ({userDB}) =>{
                             return handleSubmit(
                                 event, 
                                 notif, 
+                                userDB.hotelId,
+                                "hotels",
                                 userDB.hotelId, 
                                 "roomChange", 
                                 newData, 

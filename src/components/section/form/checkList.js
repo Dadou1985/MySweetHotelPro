@@ -8,7 +8,7 @@ import '../../css/section/checkList.css'
 const CheckList = () =>{
 
     const [list, setList] = useState(false)
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)

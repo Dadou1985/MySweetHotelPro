@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import { 
     Form, 
     Button, 
-    Table, 
     Tabs, 
     Tab, 
     Modal, 
@@ -11,7 +10,6 @@ import {
 import Taxi from '../../../svg/taxi.svg'
 import moment from 'moment'
 import 'moment/locale/fr';
-import Switch from '@material-ui/core/Switch';
 import DateFnsUtils from '@date-io/date-fns';
 import {
   MuiPickersUtilsProvider,
@@ -28,8 +26,6 @@ import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../hel
 import {
     handleChange,
     handleSubmit,
-    handleUpdateHotelData,
-    deleteData
 } from '../../../helper/formCommonFunctions'
 
 const Cab = ({userDB}) =>{
@@ -258,6 +254,8 @@ const Cab = ({userDB}) =>{
                             return handleSubmit(
                                 event, 
                                 notif, 
+                                userDB.hotelId,
+                                "hotels",
                                 userDB.hotelId, 
                                 "cab", 
                                 newData, 

@@ -270,6 +270,8 @@ const Caisse = () =>{
                             return handleSubmit(
                                 event, 
                                 notif, 
+                                userDB.hotelId,
+                                "hotels",
                                 userDB.hotelId, 
                                 "safe", 
                                 newData, 

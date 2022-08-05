@@ -227,6 +227,8 @@ const Clock = ({userDB}) =>{
                             return handleSubmit(
                                 event, 
                                 notif, 
+                                userDB.hotelId,
+                                "hotels",
                                 userDB.hotelId, 
                                 "clock", 
                                 newData, 

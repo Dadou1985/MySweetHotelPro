@@ -222,7 +222,7 @@ const Repair = ({userDB}) =>{
                                                     if(flow.img){
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                        deleteData(userDB.hotelId, "maintenance", flow.id)
+                                                        return deleteData(userDB.hotelId, "maintenance", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -241,6 +241,8 @@ const Repair = ({userDB}) =>{
                             return handleSubmit(
                                 event, 
                                 notif, 
+                                userDB.hotelId,
+                                "hotels",
                                 userDB.hotelId, 
                                 "maintenance", 
                                 newData, 

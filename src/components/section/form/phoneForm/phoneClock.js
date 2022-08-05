@@ -1,6 +1,5 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { db } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -12,91 +11,68 @@ import {
 } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import InputElement from '../../../../helper/common/InputElement'
+import { fetchCollectionBySorting } from '../../../../helper/globalCommonFunctions'
+import {
+    handleChange,
+    handleSubmit,
+    handleUpdateHotelData,
+    deleteData
+} from '../../../../helper/formCommonFunctions'
 
 const PhoneClock = ({userDB}) =>{
 
-    const [formValue, setFormValue] = useState({room: "", client: "", hour: new Date(), date: new Date()})
+    const [formValue, setFormValue] = useState({
+        room: "", 
+        client: "", 
+        hour: new Date(), 
+        date: new Date()
+    })
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
     const { t } = useTranslation()
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const handleDateChange = (date) => {
-        setFormValue({date: date});
-      };
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
+    const handleShow = () => setActivate(true)
+    const handleHide = () => {
+        setActivate(false)
         setFormValue("")
         setStep(false)
-        const notif = t("msh_alarm.a_notif")
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('clock')
-            .add({
-            author: userDB.username,
-            client: formValue.client,
-            room: formValue.room,
-            day: new Date(),
-            markup: Date.now(),
-            hour: moment(formValue.date).format('LT'),
-            date: moment(formValue.date).format('L'),            
-            status: false
-            })
     }
 
-    const changeDemandStatus = (document) => {
-        return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('clock')
-          .doc(document)
-          .update({
-            status: false,
-        })      
-      }
+    const handleDateChange = (date) => {
+    setFormValue({date: date});
+    };
+
+    const notif = t("msh_alarm.a_notif")
+    const dataStatus = {status: false} 
+
+    const newData = {
+        author: userDB.username,
+        client: formValue.client,
+        room: formValue.room,
+        day: Date.now(),
+        markup: Date.now(),
+        hour: moment(formValue.date).format('LT'),
+        date: moment(formValue.date).format('L'),            
+        status: false
+    }
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('clock')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "clock", "markup", "asc").onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe
            
      },[])
-
-     const handleShow = () => setActivate(true)
-     const handleHide = () => setActivate(false)
 
     return(
 
@@ -134,24 +110,17 @@ const PhoneClock = ({userDB}) =>{
                                     <td>
                                         <Switch
                                             checked={flow.status}
-                                            onChange={() => changeDemandStatus(flow.id)}
+                                            onChange={() => handleUpdateHotelData(userDB.hotelId, "clock", flow.id, dataStatus)}
                                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                                         />
                                         </td>
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
-                                    {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("clock")
-                                            .doc(flow.id)
-                                            .delete()
-                                            .then(function() {
-                                              console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
-                                        }}>{t("msh_general.g_button.b_delete")}</Button></td>}
+                                    {expand && <td className="bg-dark">
+                                            <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "clock", flow.id)}>
+                                                {t("msh_general.g_button.b_delete")}
+                                            </Button>
+                                        </td>}
                                     </tr>
                                 ))}
                             </tbody>
@@ -185,24 +154,39 @@ const PhoneClock = ({userDB}) =>{
                     </Form.Group>
                 </div>}
                 {step && <>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_alarm.a_client")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
-                    </Form.Group>
-                </div>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_alarm.a_room")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
-                    </Form.Group>
-                </div>
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_alarm.a_client")}
+                        placeholder="ex: Jane Doe"
+                        size="90vw"
+                        value={formValue.client}
+                        name="client"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    />  
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_alarm.a_room")}
+                        placeholder="ex: 409"
+                        size="90vw"
+                        value={formValue.room}
+                        name="room"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    />  
                 </>}
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
-                    handleSubmit(event)
-                    setActivate(false)
+                        return handleSubmit(
+                            event, 
+                            notif, 
+                            userDB.hotelId,
+                            "hotels",
+                            userDB.hotelId, 
+                            "clock", 
+                            newData, 
+                            handleHide)
                     }}>{t("msh_alarm.a_phone_button.b_validation")}</Button>                
                 </>}
                 {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}

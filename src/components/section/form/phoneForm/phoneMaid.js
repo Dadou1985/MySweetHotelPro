@@ -1,7 +1,6 @@
 import React, {useState, useEffect } from 'react'
-import { Form, Button, Table } from 'react-bootstrap'
+import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { db, storage } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -10,10 +9,32 @@ import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import { handleDeleteImg } from '../../../../helper/globalCommonFunctions'
+import InputElement from '../../../../helper/common/InputElement'
+import TextareaElement from '../../../../helper/common/textareaElement'
+import { fetchCollectionBySorting } from '../../../../helper/globalCommonFunctions'
+import {
+    handleChange,
+    handleSubmit,
+    handleUpdateHotelData,
+    handleUpdateUserData,
+    deleteData
+} from '../../../../helper/formCommonFunctions'
+
+/* 
+    ! FIX => PHOTO SUBMISSION
+*/
 
 const PhoneMaid = ({userDB}) =>{
 
-    const [formValue, setFormValue] = useState({client: "", details: "", fromRoom: "", toRoom: null, reason: "", state: ""})
+    const [formValue, setFormValue] = useState({
+        client: "", 
+        details: "", 
+        fromRoom: "", 
+        toRoom: null, 
+        reason: "", 
+        state: ""
+    })
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
@@ -24,123 +45,53 @@ const PhoneMaid = ({userDB}) =>{
     const [currentRoom, setCurrentRoom] = useState("")
     const [guestId, setGuestId] = useState("")
     const [reasonBack, setReasonBack] = useState(null)
-    const [stateClone, setStateClone] = useState(null)
+    const [stateClone, setStateClone] = useState("")
     const { t } = useTranslation()
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
+    const handleShow = () => setActivate(true)
+    const handleHide = () => {
+        setActivate(false)
+        setFormValue("")
     }
 
-      const handleSubmit = event => {
-        event.preventDefault()
-        setFormValue("")
-        const notif = t("msh_room_change.r_notif")  
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .add({
-            author: userDB.username,
-            date: new Date(),
-            details: formValue.details,
-            client: formValue.client,
-            fromRoom: formValue.fromRoom,
-            markup: Date.now(),
-            toRoom: formValue.toRoom,
-            reason: formValue.reason,
-            reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
-            state: formValue.state,
-            stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
-            status: false
-            })
+    const notif = t("msh_room_change.r_notif")
+    const dataStatus = {status: false} 
+    const hotelRoomData = {toRoom: formValue.toRoom}
+    const userRoomData = {room: formValue.toRoom}
+    const roomStateUpdated = {
+        state: formValue.state,
+        stateClone: stateClone
     }
 
-    const changeDemandStatus = (document) => {
-        return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('roomChange')
-          .doc(document)
-          .update({
-            status: false,
-        })      
-      }
-
-    const handleUpdateRoom = (demandId) => {
-        setFormValue("")
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .doc(demandId)
-            .update({
-                toRoom: formValue.toRoom,
-            })
-    }
-
-    const handleUpdateRoomState = (demandId) => {
-        setFormValue("")
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .doc(demandId)
-            .update({
-                state: formValue.state
-            })
+    const newData = {
+        author: userDB.username,
+        date: new Date(),
+        details: formValue.details,
+        client: formValue.client,
+        fromRoom: formValue.fromRoom,
+        markup: Date.now(),
+        toRoom: formValue.toRoom,
+        reason: formValue.reason,
+        reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
+        state: formValue.state,
+        stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
+        status: false
     }
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('roomChange')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    console.log(snapInfo)
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "roomChange", "markup", "asc").onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe
            
-     },[])
-
-     const handleDeleteImg = (imgId) => {
-        const storageRef = storage.refFromURL(imgId)
-        const imageRef = storage.ref(storageRef.fullPath)
-
-        imageRef.delete()
-        .then(() => {
-            console.log(`${imgId} has been deleted succesfully`)
-        })
-        .catch((e) => {
-            console.log('Error while deleting the image ', e)
-        })
-      }
-
-     const handleShow = () => setActivate(true)
-     const handleHide = () => setActivate(false)
-
-     console.log("TOROOM", formValue.toRoom)
-     
+     },[])     
 
     return(
         
@@ -191,7 +142,7 @@ const PhoneMaid = ({userDB}) =>{
                             <td>
                             <Switch
                                 checked={flow.status}
-                                onChange={() => changeDemandStatus(flow.id)}
+                                onChange={() => handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, dataStatus)}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             </td>
@@ -206,16 +157,7 @@ const PhoneMaid = ({userDB}) =>{
                                 if(flow.img){
                                     handleDeleteImg(flow.img)
                                 }
-                                return db.collection('hotels')
-                                .doc(userDB.hotelId)
-                                .collection("roomChange")
-                                .doc(flow.id)
-                                .delete()
-                                .then(function() {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function(error) {
-                                    console.log(error);
-                                });
+                                return deleteData(userDB.hotelId, "roomChange", flow.id)
                             }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             
                             </tr>
@@ -239,27 +181,46 @@ const PhoneMaid = ({userDB}) =>{
                 <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                     <div  className="phone_container_drawer">
                     <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_room_change.r_phone_button.b_show_modal")}</h4>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_room_change.r_client")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
-                    </Form.Group>
-                </div>
+                    <InputElement
+                        containerStyle={{marginBottom: "2vh"}} 
+                        label={t("msh_room_change.r_client")}
+                        placeholder="ex: Jane Doe"
+                        size="90vw"
+                        value={formValue.client}
+                        name="client"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    />
                 <div style={{display: "flex", flexFlow: "row", justifyContent: "space-between", width: "90vw"}}>
-                    <Form.Group controlId="description" className="phone_smallInput">
-                    <Form.Label>{t("msh_room_change.r_from")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: 310" value={formValue.fromRoom} name="fromRoom" onChange={handleChange} />
-                    </Form.Group>
-
-                    <Form.Group controlId="description" className="phone_smallInput">
-                    <Form.Label>{t("msh_room_change.r_to")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: 409" value={formValue.toRoom} name="toRoom" onChange={handleChange} />
-                    </Form.Group>
+                <InputElement
+                    containerStyle={{marginBottom: "0"}} 
+                    label={t("msh_room_change.r_from")}
+                    placeholder="ex: 310"
+                    size="40vw"
+                    value={formValue.fromRoom}
+                    name="fromRoom"
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                />
+                <InputElement
+                    containerStyle={{marginBottom: "0"}} 
+                    label={t("msh_room_change.r_to")}
+                    placeholder="ex: 409"
+                    size="40vw"
+                    value={formValue.toRoom}
+                    name="toRoom"
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                />
                 </div>
                 <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label>{t("msh_room_change.r_reason.r_label")}</Form.Label><br/>
-                    <Form.Select class="Form.Selectpicker" value={formValue.reason} name="reason" onChange={handleChange} 
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label={t("msh_room_change.r_reason.r_label")}
+                        className="mb-3"
+                    >
+                    <Form.Select class="Form.Selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} 
                     className="phonePage_select">
                         <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
                         <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
@@ -267,27 +228,45 @@ const PhoneMaid = ({userDB}) =>{
                         <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
                         <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
                     </Form.Select>
+                    </FloatingLabel>
                 </Form.Group>
                 </div>
                 <div>
                     <Form.Group controlId="exampleForm.SelectCustom">
-                    <Form.Label>{t("msh_room_change.r_state.s_label")}</Form.Label><br/>
-                    <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
+                    <FloatingLabel
+                        controlId="floatingInput"
+                        label={t("msh_room_change.r_state.s_label")}
+                        className="mb-3"
+                    >                    
+                    <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} 
                     className="phonePage_select">
                         <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
                         <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
                     </Form.Select>
+                    </FloatingLabel>
                     </Form.Group>
                 </div>
                 <div>
-                    <Form.Group controlId="details" className="phone_textarea">
-                        <Form.Label>{t("msh_room_change.r_details")}</Form.Label>
-                        <Form.Control as="textarea" rows="2" value={formValue.details} name="details" onChange={handleChange}  />
-                    </Form.Group>
+                <TextareaElement
+                    label={t("msh_room_change.r_details")}
+                    row="2"
+                    value={formValue.details} 
+                    name="details" 
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                    size={{width: "90vw", maxHeight: "15vh"}}
+                />
                 </div>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
-                        handleSubmit(event)
-                        setActivate(false)
+                        return handleSubmit(
+                            event, 
+                            notif,
+                            userDB.hotelId,
+                            "hotels", 
+                            userDB.hotelId, 
+                            "roomChange", 
+                            newData, 
+                            handleHide)
                         }}>{t("msh_room_change.r_phone_button.b_validation")}</Button>
                     </div>
                 </Drawer>
@@ -304,8 +283,10 @@ const PhoneMaid = ({userDB}) =>{
                         />
                     </div>
                     <Button variant="success" size="md" onClick={() => {
-                        handleUpdateRoom(currentRoom, guestId)
-                        setNewRoom(false)}}>{t("msh_register_form.r_button.b_phone_validation")}</Button>
+                        handleUpdateHotelData(userDB.hotelId, "roomChange", currentRoom, hotelRoomData)
+                        handleUpdateUserData(guestId, userRoomData)
+                        setNewRoom(false)}}>{t("msh_register_form.r_button.b_phone_validation")}
+                    </Button>
                 </Drawer>
 
                 <Drawer anchor="bottom" open={roomState} onClose={() => setRoomState(false)}  className="phone_container_drawer">
@@ -326,8 +307,8 @@ const PhoneMaid = ({userDB}) =>{
                         </select>
                         </div>
                     <Button variant="success" onClick={() => {
-                            handleUpdateRoomState(currentRoom)
-                            setRoomState(false)
+                        handleUpdateHotelData(userDB.hotelId, "roomChange", currentRoom, roomStateUpdated)
+                        setRoomState(false)
                     }}>{t("msh_register_form.r_button.b_phone_validation")}</Button>
                 </Drawer>
             </div>

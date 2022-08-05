@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { Form, Button, Table } from 'react-bootstrap'
-import { db } from '../../../../Firebase'
+import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import moment from 'moment'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
@@ -11,7 +10,8 @@ import {
 } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../../helper/globalCommonFunctions'
+import InputElement from '../../../../helper/common/InputElement'
+import { fetchCollectionBySorting } from '../../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
@@ -21,7 +21,15 @@ import {
 
 const PhoneCab = ({userDB}) =>{
 
-    const [formValue, setFormValue] = useState({room: "", client: "", date: new Date(), hour: new Date(), passenger:"", model:"", destination: ""})
+    const [formValue, setFormValue] = useState({
+        room: "", 
+        client: "", 
+        date: new Date(), 
+        hour: new Date(), 
+        passenger:"", 
+        model:"", 
+        destination: ""
+    })
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
@@ -42,8 +50,6 @@ const PhoneCab = ({userDB}) =>{
 
     const notif = t("msh_cab.c_notif")
     const dataStatus = {status: false} 
-    const tooltipTitle = t("msh_toolbar.tooltip_cab")
-    const modalTitle = t("msh_cab.c_title")
 
     const newData = {
         author: userDB.username,
@@ -83,7 +89,7 @@ const PhoneCab = ({userDB}) =>{
                 {expand ? "Rétrécir" : "Agrandir"}
                 {expand ? <img src={Left} style={{width: "3vw", marginRight: "1vw"}} /> : <img src={Right} style={{width: "3vw", marginLeft: "1vw"}} />}
                 </span>
-    </div>*/}
+            </div>*/}
             <Table striped bordered hover size="sm" responsive="sm" className="text-center">
                 <thead className="bg-dark text-center text-light">
                     <tr>
@@ -115,18 +121,11 @@ const PhoneCab = ({userDB}) =>{
                         </td>
                         {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
-                        {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('hotels')
-                            .doc(userDB.hotelId)
-                            .collection("cab")
-                            .doc(flow.id)
-                            .delete()
-                            .then(function() {
-                                console.log("Document successfully deleted!");
-                            }).catch(function(error) {
-                                console.log(error);
-                            });
-                        }}>{t("msh_general.g_button.b_delete")}</Button></td>}
+                        {expand && <td className="bg-dark">
+                            <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "cab", flow.id)}>
+                                {t("msh_general.g_button.b_delete")}
+                            </Button>
+                        </td>}
                     </tr>
                     ))}
                 </tbody>
@@ -160,47 +159,77 @@ const PhoneCab = ({userDB}) =>{
                     </Form.Group>
                 </div>}
                 {step && <>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_cab.c_client")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: Jane Doe" value={formValue.client} name="client" onChange={handleChange} />
-                    </Form.Group>
-                </div>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_cab.c_room")}</Form.Label>
-                    <Form.Control type="text" placeholder="ex: 409" value={formValue.room} name="room" onChange={handleChange} />
-                    </Form.Group>
-                </div>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_cab.c_pax")}</Form.Label>
-                    <Form.Control type="number" value={formValue.passenger} name="passenger" onChange={handleChange} />
-                    </Form.Group>
-                </div>
-                <div>
-                    <Form.Group controlId="description">
-                    <Form.Label>{t("msh_cab.c_vehicule.v_label")}</Form.Label><br/>
-                    <select class="selectpicker" value={formValue.model} name="model" onChange={handleChange} 
-                    className="phonePage_select">
-                        <option></option>
-                        <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
-                        <option>{t("msh_cab.c_vehicule.v_van")}</option>
-                    </select>
-                    </Form.Group>
-                </div>
-                <div>
-                    <Form.Group controlId="description" className="phone_input">
-                    <Form.Label>{t("msh_cab.c_destination.d_label")}</Form.Label>
-                    <Form.Control type="text" placeholder={t("msh_cab.c_destination.d_placeholder")} value={formValue.destination} name="destination" onChange={handleChange} />
-                    </Form.Group>
-                </div>
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_cab.c_client")}
+                        placeholder="ex: Jane Doe"
+                        size="90vw"
+                        value={formValue.client}
+                        name="client"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    />  
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_cab.c_room")}
+                        placeholder="ex: 409"
+                        size="90vw"
+                        value={formValue.room}
+                        name="room"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    /> 
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_cab.c_pax")}
+                        placeholder={t("msh_cab.c_pax")}
+                        size="90vw"
+                        value={formValue.passenger}
+                        name="passenger"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    /> 
+                    <div>
+                        <Form.Group controlId="description">
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label={t("msh_cab.c_vehicule.v_label")}
+                            className="mb-3"
+                        >
+                        <select class="selectpicker" value={formValue.model} name="model" onChange={(event) => handleChange(event, setFormValue)} 
+                        className="phonePage_select">
+                            <option></option>
+                            <option>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                            <option>{t("msh_cab.c_vehicule.v_van")}</option>
+                        </select>
+                        </FloatingLabel>
+                        </Form.Group>
+                    </div>
+                    <div>
+                    <InputElement
+                        containerStyle={{marginBottom: "0"}} 
+                        label={t("msh_cab.c_destination.d_label")}
+                        placeholder={t("msh_cab.c_destination.d_placeholder")}
+                        size="90vw"
+                        value={formValue.destination}
+                        name="destination"
+                        handleChange={handleChange}
+                        setFormValue={setFormValue}
+                    /> 
+                    </div>
                 </>}
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
-                    handleSubmit(event)
-                    setActivate(false)
+                        return handleSubmit(
+                            event, 
+                            notif,
+                            userDB.hotelId,
+                            "hotels", 
+                            userDB.hotelId, 
+                            "cab", 
+                            newData, 
+                            handleHide)
                     }}>{t("msh_cab.c_phone_button.b_validation")}</Button>                
                 </>}
                 {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
