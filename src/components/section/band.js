@@ -5,6 +5,7 @@ import MshScreen from "./mshAppScreenBand"
 import '../css/section/band.css'
 import MshLogo from '../../svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
+import { StaticImage } from 'gatsby-plugin-image'
 
 export default function Band({url, logo}) {
     const { t } = useTranslation()
@@ -43,7 +44,7 @@ export default function Band({url, logo}) {
                 alignItems: "center",
                 width: "30%"
             }}>
-                <img src={MshLogo} style={{width: "70%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
+                <StaticImage src='../../svg/new-logo-msh.png' placeholder="blurred" style={{width: "70%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
                 <MshScreen logo={MshLogo} />
             </div>}
             <div style={{

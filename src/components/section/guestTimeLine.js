@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Table, Tabs, Tab } from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import Housekeeping from '../../svg/maid.svg'
-import RoomChange from "../../svg/logout.svg"
-import Cab from "../../svg/taxi.svg"
-import Maintenance from '../../svg/repair.svg'
-import Alarm from '../../svg/timer.svg'
-import HotelIcon from '../../svg/hotel.svg'
 import { db, functions } from '../../Firebase'
+import { StaticImage } from 'gatsby-plugin-image'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
 import TimelineSeparator from '@mui/lab/TimelineSeparator';
@@ -135,17 +130,17 @@ const GuestTimeLine = ({userDB, guestId}) => {
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around"}}>
-                                        <img src={Alarm} style={{width: "15%", filter: data.clock.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        <img src={Cab} style={{width: "15%", filter: data.cab.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        {/*<img src={Housekeeping} style={{width: "15%", filter: data.housekeeping.length > 0 ? "invert(0%)" : "invert(90%)"}} />*/}
+                                        <StaticImage placeholder='blurred' src='../../svg/timer.svg' style={{width: "15%", filter: data.clock.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage placeholder='blurred' src="../../svg/taxi.svg" style={{width: "15%", filter: data.cab.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        {/*<StaticImage placeholder='blurred' src='../../svg/maid.svg' style={{width: "15%", filter: data.housekeeping.length > 0 ? "invert(0%)" : "invert(90%)"}} />*/}
                                     </div>
                                     <h6 style={{fontSize: "0.6rem", color: "black", borderTop: "1px solid lightgrey", paddingTop: "1vh", marginTop: "1vh"}}>{t("msh_crm.c_guest_line.g_event")}</h6>
                                     <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around"}}>
-                                        <img src={RoomChange} style={{width: "15%", filter: data.roomChange.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        <img src={Maintenance} style={{width: "15%", filter: data.maintenance.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage placeholder='blurred' src="../../svg/logout.svg" style={{width: "15%", filter: data.roomChange.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage placeholder='blurred' src='../../svg/repair.svg' style={{width: "15%", filter: data.maintenance.length > 0 ? "invert(0%)" : "invert(90%)"}} />
                                     </div>
                                 </div>
                             </TimelineContent>
@@ -217,7 +212,7 @@ const GuestTimeLine = ({userDB, guestId}) => {
                         </Table>
                     </PerfectScrollbar>
                     </Tab>
-                    {/*<Tab eventKey="housekeeping" title="Conciergerie">
+                    {/* <Tab eventKey="housekeeping" title="Conciergerie">
                         <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover size="sm" className="text-center">
                                 <thead className="bg-dark text-center text-light">
@@ -265,7 +260,7 @@ const GuestTimeLine = ({userDB, guestId}) => {
                                 </tbody>
                             </Table>
                         </PerfectScrollbar>
-                                            </Tab>*/}
+                                            </Tab> */}
                     <Tab eventKey="roomChange" title="Délogement">
                         <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover size="sm" className="text-center"  style={{overflowX: "auto",

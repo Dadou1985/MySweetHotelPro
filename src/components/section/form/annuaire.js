@@ -4,6 +4,7 @@ import Contact from '../../../svg/contacts.svg'
 import { FirebaseContext, db } from '../../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
+import { StaticImage } from 'gatsby-plugin-image'
 
 const Annuaire = () =>{
 
@@ -86,7 +87,7 @@ const Annuaire = () =>{
                 {t("msh_coolbar.tooltip_phone_book")}
               </Tooltip>
             }>
-                <img src={Contact} className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
+                <StaticImage src='../../../svg/contacts.svg' placeholder="blurred" className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
             </OverlayTrigger>
 
 

@@ -3,6 +3,7 @@ import Assistance from '../../../../../svg/support-technique.svg'
 import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
+import { StaticImage } from 'gatsby-plugin-image'
 
 function CallCenterOverlay({userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
@@ -43,7 +44,7 @@ function CallCenterOverlay({userDB}) {
             }} />
             {chatRoomQty.map(status => {
                   if(status.adminSpeak) {
-                    return <img src={Bubble} style={{
+                    return <StaticImage src="../../../../../svg/bubble.svg" style={{
                       borderRadius: "50%", 
                       backgroundColor: "red", 
                       position: "absolute", 

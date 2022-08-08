@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next"
 import {db} from '../../Firebase'
-import { Chart } from 'primereact/chart';
-import BarChart from '../../images/barChart.png'
+import { Chart } from 'primereact/chart'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const MaintenancePieChart = ({userDB, filter, period}) => {
     const [data, setData] = useState([])
@@ -407,7 +407,7 @@ const renderSwitch = (time) => {
                     marginTop: "2vh",
                     marginBottom: "2vh"
                 }}>
-                    <img src={BarChart} style={{width: "50%"}} />
+                    <StaticImage src='../../images/barChart.png' style={{width: "50%"}} />
                 </div>
                 <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}

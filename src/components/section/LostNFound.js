@@ -4,6 +4,7 @@ import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'reac
 import { db } from '../../Firebase'
 import moment from 'moment'
 import Picture from '../../svg/picture.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 
@@ -136,7 +137,7 @@ const LostNFound = ({userDB}) =>{
                                         setImg(flow.img)
                                         setImgFrame(true)
                                         }}><img src={flow.img} style={{width: "5vw", borderRadius: "5%"}} /></td> : 
-                                        <td><img src={Picture} style={{width: "1vw"}} /></td>}
+                                        <td><StaticImage src='../../svg/picture.svg' style={{width: "1vw"}} /></td>}
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td>{flow.placeClone}</td>

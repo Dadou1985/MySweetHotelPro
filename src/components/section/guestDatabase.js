@@ -1,31 +1,20 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
-import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip, Spinner } from 'react-bootstrap'
+import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { db, functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Avatar from 'react-avatar'
-import defaultImg from "../../images/avatar-client.png"
-import FrenchFlag from '../../images/france.png'
-import GermanFlag from '../../images/allemagne.png'
-import ItalianFlag from '../../images/italie.png'
-import SpanishFlag from '../../images/espagne.png'
-import PortugueseFlag from '../../images/le-portugal.png'
-import EnglishFlag from '../../images/royaume-uni.png'
-import Mail from '../../images/email.png'
-import Room from '../../images/room2.png'
-import Phone from '../../images/phone.png'
-import Birthday from '../../images/calendar.png'
-import CheckoutDate from '../../images/checkout.png'
 import Badge from '@material-ui/core/Badge'
 import { withStyles } from '@material-ui/core/styles';
-import Loader from "react-loader-spinner"
-import '../css/common/loader.css'
+import {Loader} from "react-loader-spinner"
 import Chat from './chatRoom'
 import { useTranslation } from "react-i18next"
 import TimeLine from './guestTimeLine'
-import ChatIcon from '../../images/dialog.png'
+import defaultImg from "../../images/avatar-client.png"
+import { StaticImage } from 'gatsby-plugin-image'
+import '../css/common/loader.css'
 
 const GuestDatabase = ({user, userDB}) =>{
     const { t } = useTranslation()
@@ -153,25 +142,25 @@ const GuestDatabase = ({user, userDB}) =>{
       const renderSwitchFlag = (country) => {
         switch(country) {
             case 'fr':
-                return <img src={FrenchFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/france.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'en':
-                return <img src={EnglishFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/royaume-uni.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'es':
-                return <img src={SpanishFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/espagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'de':
-                return <img src={GermanFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/allemagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'it':
-                return <img src={ItalianFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/italie.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'pt':
-                return <img src={PortugueseFlag} 
+                return <StaticImage placeholder="blurred" src='../../images/le-portugal.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             default:
-                return <img src={FrenchFlag} 
+                return <StaticImage placeholder="blurred" src={'../../images/france.png'} 
                 style={{width: "50%", paddingTop: "1vh"}} />
         }
     }
@@ -398,24 +387,24 @@ const GuestDatabase = ({user, userDB}) =>{
                                             textAlign: "center", 
                                             paddingBottom: "1vh"}}>{item.username}</Card.Title>
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <img src={Mail} style={{width: "5%", marginRight: "1vw"}} />
-                            {item.email}
+                                <StaticImage placeholder="blurred" src='../../images/email.png' style={{width: "5%", marginRight: "1vw"}} />
+                                {item.email}
                             </Card.Text>}
                             {item.room && item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                            <img src={Room} style={{width: "5%", marginRight: "1vw"}} />
-                            {item.room}
+                                <StaticImage placeholder="blurred" src='../../images/room2.png' style={{width: "5%", marginRight: "1vw"}} />
+                                {item.room}
                             </Card.Text>}
                             {item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                            <img src={CheckoutDate} style={{width: "5%", marginRight: "1vw"}} />
-                            {item.checkoutDate}
+                                <StaticImage placeholder="blurred" src='../../images/checkout.png' style={{width: "5%", marginRight: "1vw"}} />
+                                {item.checkoutDate}
                             </Card.Text>}
                             {item.phone && <Card.Text style={{paddingLeft: "1vw"}}>
-                            <img src={Phone} style={{width: "5%", marginRight: "1vw"}} />
-                            {item.phone}
+                                <StaticImage placeholder="blurred" src='../../images/phone.png' style={{width: "5%", marginRight: "1vw"}} />
+                                {item.phone}
                             </Card.Text>}
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                            <img src={Birthday} style={{width: "5%", marginRight: "1vw"}} />
-                            {moment(item.lastTimeConnected).format('LL')}
+                                <StaticImage placeholder="blurred" src='../../images/calendar.png' style={{width: "5%", marginRight: "1vw"}} />
+                                {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%", marginTop: "1vh"}}>
                                 {/*<Button variant="outline-dark">{t("msh_crm.c_button.b_contact")}</Button>*/}
@@ -426,7 +415,9 @@ const GuestDatabase = ({user, userDB}) =>{
                                     {t("msh_crm.c_button.b_check_chat")}
                                 </Tooltip>
                                 }>
-                                    <img src={ChatIcon} style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} onClick={() => setShowChat(true)} />
+                                    <div onClick={() => setShowChat(true)}>
+                                        <StaticImage src='../../images/dialog.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} />
+                                    </div>
                                 </OverlayTrigger>
                                 </div>}
                             {item.details && <Card.Text style={{textAlign: "center", marginBottom: "5vh", marginTop: "2vh", color: "gray"}}>

@@ -1,9 +1,9 @@
 import React, {useState } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import Plus from '../../images/postItPlus.png'
 import { db } from '../../Firebase'
 import { useTranslation } from "react-i18next"
 import '../css/section/createSticker.css'
+import { StaticImage } from 'gatsby-plugin-image'
 
 const CreateSticker = ({userDB}) => {
 
@@ -50,7 +50,7 @@ const CreateSticker = ({userDB}) => {
                     {t("msh_memo.m_create_sticker.s_tooltip")}
                     </Tooltip>
                 }>
-                <img src={Plus} alt="post-it" className="sticker_img" onClick={showSticker} />
+                <StaticImage src='../../images/postItPlus.png' placeholder="blurred" alt="post-it" className="sticker_img" onClick={showSticker} />
                 </OverlayTrigger>
 
             <Modal show={visible}

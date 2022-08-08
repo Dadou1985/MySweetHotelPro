@@ -2,7 +2,7 @@ import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import Send from '../../images/paper-plane.png'
+import { StaticImage } from 'gatsby-plugin-image'
 import SupportRoom from './supportRoom'
 import { Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
@@ -153,7 +153,7 @@ const changeAdminSpeakStatus = (roomName) => {
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
-                        <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
+                        <StaticImage src='../../images/paper-plane.png' placeholder="blurred" alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
                       </div>
                 </Form>
             </div>

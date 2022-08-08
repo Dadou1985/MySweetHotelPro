@@ -2,7 +2,6 @@ import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import Send from '../../images/paper-plane.png'
 import ChatRoom from './chatRoom'
 import { Tab, Tabs, Table } from 'react-bootstrap'
 import Avatar from 'react-avatar'
@@ -12,7 +11,7 @@ import { db, functions, storage } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import Bubbles from '../../images/bubbles.png'
-import Binocular from '../../images/binoculars.png'
+import { StaticImage } from 'gatsby-plugin-image'
 import '../css/section/chat.css'
 
 export default function CommunIzi({userDB, user}) {
@@ -247,7 +246,7 @@ export default function CommunIzi({userDB, user}) {
                           }>
                           <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
                         </OverlayTrigger>*/}
-                          <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
+                          <StaticImage src='../../images/paper-plane.png' placeholder="blurred" alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                             if(expanded) {
                               if(note) {
                                 handleSubmit(event)
@@ -311,7 +310,7 @@ export default function CommunIzi({userDB, user}) {
                             filter: "drop-shadow(2px 4px 6px)", 
                             marginBottom: "1vh"
                           }}>
-                            <img src={Binocular} style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                            <StaticImage src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                           </div>
                           <h6 style={{
                               width: "10vw",
@@ -365,7 +364,7 @@ export default function CommunIzi({userDB, user}) {
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginBottom: "1vh"
                   }}>
-                    <img src={Binocular} style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                    <StaticImage src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                   </div>
                   <h6 style={{
                       width: "10vw",

@@ -6,16 +6,10 @@ import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import Send from '../../svg/paper-plane.svg'
-import Close from '../../svg/close.svg'
-import Calendar from '../../svg/calendar.svg'
-import Plus from '../../svg/plus3.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import { Modal, Button, Tooltip, OverlayTrigger, } from 'react-bootstrap'
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import YellowCircle from '../../svg/yellow-circle.svg'
-import RedCircle from '../../svg/red-circle.svg'
-import BlueCircle from '../../svg/blue-circle.svg'
-import Upload from '../../svg/plus2.svg'
 import Drawer from '@material-ui/core/Drawer'
 import { FirebaseContext, db, storage } from '../../Firebase'
 import moment from 'moment'
@@ -94,7 +88,7 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
         </OverlayTrigger>
           case 'red':
             return <OverlayTrigger
@@ -104,7 +98,7 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <img src={RedCircle} alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <StaticImage placeholder='blurred' src='../../svg/red-circle.svg' alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
         </OverlayTrigger>
           case 'lightskyblue':
             return <OverlayTrigger
@@ -114,7 +108,7 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-             <img src={BlueCircle} alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
+             <StaticImage placeholder='blurred' src='../../svg/blue-circle.svg' alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
         </OverlayTrigger>
         default:
             return <OverlayTrigger
@@ -124,7 +118,7 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <img src={YellowCircle} alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
         </OverlayTrigger>
         }
       }
@@ -238,7 +232,7 @@ const Messenger = ({filterDate}) =>{
                     <div className="icon-add-note-container" onClick={() => {
                         setStatus(data.category)
                         handleShow()}}>
-                        <img src={Plus} alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
+                        <StaticImage placeholder='blurred' src='../../svg/plus3.svg' alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                     </div>
                 </div>
                 )}
@@ -260,7 +254,7 @@ const Messenger = ({filterDate}) =>{
                         <Modal.Footer style={{borderTop: "none"}}>
                             <div className="modal-note-button-container">
                                 <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
-                            <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
+                            <StaticImage placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                                 <DatePicker
                                     id="calendar"
                                     className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
@@ -271,7 +265,7 @@ const Messenger = ({filterDate}) =>{
                                     locale="fr-FR"
                                     dateFormat="d MMMM yyyy"
                                 />
-                                <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" />
+                                <StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
                                 <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                             </div>
                         </Modal.Footer>
@@ -294,7 +288,7 @@ const Messenger = ({filterDate}) =>{
                     padding: "5%", 
                     maxHeight: "90vh"}}>
                         <div style={{width: "100%",}}>
-                            <img src={Close} style={{width: "5%", float: "right"}} onClick={handleHideDrawer} />
+                            <StaticImage placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} onClick={handleHideDrawer} />
                         </div>
                     <h4 style={{textAlign: "center", marginBottom: "3vh"}}>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
@@ -317,9 +311,9 @@ const Messenger = ({filterDate}) =>{
                         <span className="white-band"></span>
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
-                      <img src={Upload} className="modal-note-file-icon" alt="uploadIcon" />
+                      <StaticImage placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                         {renderSwitch(status)}
-                        <img src={Calendar} alt="sendIcon" className="modal-note-calendar-icon" onClick={changeDrawerHeight} />
+                        <StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" onClick={changeDrawerHeight} />
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                     </div>
                     <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
@@ -337,7 +331,7 @@ const Messenger = ({filterDate}) =>{
                                         {t("msh_messenger.m_reception_team")}
                                     </Tooltip>
                                     }>
-                                    <img src={YellowCircle} alt="important" className="modal-note-list-circle" onClick={() => {
+                                    <StaticImage placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" onClick={() => {
                                         setStatus('darkgoldenrod')
                                         setChecked(false)}} />
                                 </OverlayTrigger>
@@ -352,7 +346,7 @@ const Messenger = ({filterDate}) =>{
                                         {t("msh_messenger.m_housekeeping_team")}
                                     </Tooltip>
                                     }>
-                                    <img src={BlueCircle} alt="info" className="modal-note-list-circle" onClick={() => {
+                                    <StaticImage placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" onClick={() => {
                                         setStatus("lightskyblue")
                                         setChecked(false)}} />
                                 </OverlayTrigger>
@@ -367,7 +361,7 @@ const Messenger = ({filterDate}) =>{
                                         {t("msh_messenger.m_technical_team")}
                                     </Tooltip>
                                     }>
-                                    <img src={RedCircle} alt="urgent" className="modal-note-list-circle" onClick={() => {
+                                    <StaticImage placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" onClick={() => {
                                         setStatus('red')
                                         setChecked(false)}} />
                                 </OverlayTrigger>

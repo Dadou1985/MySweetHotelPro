@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Form, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Assistance from '../../svg/support-technique.svg'
-import Send from '../../images/paper-plane.png'
+import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -269,7 +269,7 @@ export default function CallCenter({user, userDB}) {
                           }
                         }} 
                         required />
-                        <img src={Send} alt="sendIcon" style={{width: "5%", borderRadius: "50px"}} onClick={async() => {
+                        <StaticImage src='../../images/paper-plane.png' placeholder="blurred" alt="sendIcon" style={{width: "5%", borderRadius: "50px"}} onClick={async() => {
                         await getChatRoom()
                         if(chatRoom !== null) {
                             return updateRoomnameSubmit()

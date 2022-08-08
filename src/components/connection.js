@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { auth } from '../Firebase'
 import { navigate } from 'gatsby'
-import Logo from '../svg/new-logo-msh.png'
+import { StaticImage } from 'gatsby-plugin-image'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../i18n/withTrans'
 import './css/section/connection.css'
@@ -37,7 +37,7 @@ const Connection = () => {
     return (
         <div className="connection_container">
             <div id="jumbo" fluid className="bg-light">
-            <img src={Logo} className="connection-logo" />
+            <StaticImage src="../svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" />
             </div>
             <form 
               method="post"
