@@ -3,15 +3,11 @@ import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
 import Drawer from '../../helper/common/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
-import SuperAdmin from '../../svg/superhero.svg'
-import Magician from '../../svg/magician.svg'
-import Ghost from '../../svg/ghost.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
-import '../css/section/navigation.css'
 import Notifications from './notifications'
 import { db, auth, storage } from '../../Firebase'
 import List from '@material-ui/core/List';
-import Logo from '../../svg/msh-newLogo-transparent.png'
 import moment from 'moment'
 import 'moment/locale/fr';
 import 'moment/locale/de';
@@ -24,6 +20,8 @@ import { Link } from 'gatsby'
 import { Menubar } from 'primereact/menubar';
 import AdminRegister from './form/adminRegister'
 import UserList from './form/userList'
+import Logo from '../../svg/msh-newLogo-transparent.png'
+import '../css/section/navigation.css'
 
 const Navigation = ({user, userDB}) =>{
 
@@ -178,7 +176,9 @@ const Navigation = ({user, userDB}) =>{
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
                         <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" /></Navbar.Brand>
-                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <img src={SuperAdmin} className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} onClick={() => handleShowDrawer()} />}
+                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <div onClick={() => handleShowDrawer()}>
+                            <StaticImage placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
+                        </div>}
                     {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
                         display: "flex",
@@ -333,8 +333,10 @@ const Navigation = ({user, userDB}) =>{
                 <h4 className="drawer_title">Super Menu</h4>
                     <List className="drawer_listIcons3">
                     <Support />
-                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><img src={Magician} alt="Magic box" className="drawer_icons" /></a>
-                    <img src={Ghost} alt="Ghost Host" className="drawer_icons" onClick={()=>{navigate("/ghostHost")}} />
+                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><StaticImage placeholder='blurred' src='../../svg/magician.svg' alt="Magic box" className="drawer_icons" /></a>
+                    <div onClick={()=>{navigate("/ghostHost")}}>
+                        <StaticImage placeholder="blurred" src='../../svg/ghost.svg' alt="Ghost Host" className="drawer_icons" />
+                    </div>
                     </List>
                </div>
             </SuperAdminDrawer>}

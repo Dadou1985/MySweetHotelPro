@@ -1,5 +1,6 @@
 import React from 'react'
 import AppVisual from '../../images/msh-front-app.png'
+import { StaticImage } from 'gatsby-plugin-image'
 
 export default function MshAppScreenBand({logo}) {
     return (
@@ -12,7 +13,7 @@ export default function MshAppScreenBand({logo}) {
             backgroundSize: "100%",
             backgroundPosition: "center"
         }}>
-            <img src={logo} style={{width: "32%", height: "28%", marginBottom: "34%", marginTop: "10%"}} />
+            <StaticImage placeholder='blurred' src='../../images/msh-front-app.png' style={{width: "32%", height: "28%", marginBottom: "34%", marginTop: "10%"}} />
         </div>
     )
 }

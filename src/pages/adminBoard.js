@@ -25,8 +25,8 @@ function AdminBoard() {
     return (
        <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-                <Loader hide={hide} />
-            </div>   
+            <Loader hide={hide} />
+        </div>   
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}    
         {!!user && !!userDB &&

@@ -11,7 +11,7 @@ import {
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
-import { fetchCollectionBySorting } from '../../../../helper/globalCommonFunctions'
+import { fetchCollectionBySorting2 } from '../../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
@@ -67,7 +67,7 @@ const PhoneCab = ({userDB}) =>{
     }
 
     useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({

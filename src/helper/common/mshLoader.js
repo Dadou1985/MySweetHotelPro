@@ -1,5 +1,6 @@
 import React from "react"
 import { Puff } from "react-loader-spinner"
+import { StaticImage } from 'gatsby-plugin-image'
 import Mascott from '../../svg/receptionist.svg'
 import '../../components/css/common/loader.css'
 
@@ -23,7 +24,7 @@ const ShiftLoader = ({hide}) => {
                 timeout={10000}
               />}
         </div>
-        <img src={Mascott} className="Loader-img" />
+        <StaticImage placeholder="blurred" src='../../svg/receptionist.svg' className="Loader-img" />
     </div>
   )
 }

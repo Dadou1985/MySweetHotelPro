@@ -23,16 +23,46 @@ export const addNotification = (notification, hotelId) => {
     })
 }
 
-export const fetchCollectionBySorting = (hotelId, collection, field, order) => {
-    return db.collection('hotels')
-    .doc(hotelId)
-    .collection(collection)
+export const fetchCollectionBySorting1 = (collection, field, order, limit = 1000) => {
+    return db.collection(collection)
     .orderBy(field, order)
+    .limit(limit)
 }
 
-export const fetchCollectionByMapping = (hotelId, collection, field, operator, data) => {
-    return db.collection('hotels')
-    .doc(hotelId)
-    .collection(collection)
+export const fetchCollectionBySorting2 = (collection1, document, collection2, field, order, limit = 1000) => {
+    return db.collection(collection1)
+    .doc(document)
+    .collection(collection2)
+    .orderBy(field, order)
+    .limit(limit)
+}
+export const fetchCollectionBySorting3 = (collection1, document1, collection2, document2, collection3, field, order, limit = 1000) => {
+    return db.collection(collection1)
+    .doc(document1)
+    .collection(collection2)
+    .doc(document2)
+    .collection(collection3)
+    .orderBy(field, order)
+    .limit(limit)
+}
+
+
+export const fetchCollectionByMapping1 = (collection, field, operator, data) => {
+    return db.collection(collection)
+    .where(field, operator, data)
+}
+
+export const fetchCollectionByMapping2 = (collection1, document, collection2, field, operator, data) => {
+    return db.collection(collection1)
+    .doc(document)
+    .collection(collection2)
+    .where(field, operator, data)
+}
+export const fetchCollectionByMapping3 = (collection1, document1, collection2, document2, collection3, field, operator, data) => {
+    return db.collection(collection1)
+    .doc(document1)
+    .collection(collection2)
+    .doc(document2)
+    .collection(collection3)
     .where(field, operator, data)
 }

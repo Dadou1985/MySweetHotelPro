@@ -2,7 +2,6 @@ import React, {useState, useEffect } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import { StaticImage } from 'gatsby-plugin-image'
 import SupportRoom from './supportRoom'
 import { Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
@@ -20,60 +19,48 @@ import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
+import {
+    handleChange,
+    handleSubmit
+} from '../../helper/formCommonFunctions'
 
 export default function Assistance({userDB, user}) {
     
-    const [info, setInfo] = useState([])
-    const [note, setNote] = useState('')
-    const [expanded, setExpanded] = useState('')
-    const [showModal, setShowModal] = useState(false)
-    const [activate, setActivate] = useState(false)
-    const [initialFilter, setInitialFilter] = useState('')
-    const { t, i18n } = useTranslation()
-
-    const handleChange = event =>{
-        setNote(event.currentTarget.value)
-    }
+  const [info, setInfo] = useState([])
+  const [note, setNote] = useState('')
+  const [expanded, setExpanded] = useState('')
+  const [showModal, setShowModal] = useState(false)
+  const [activate, setActivate] = useState(false)
+  const [initialFilter, setInitialFilter] = useState('')
+  const { t, i18n } = useTranslation()
 
   const handleHideDrawer = () => {
     setActivate(false)
+    setNote('')
+    setInitialFilter('')
   }
 
-  const addNotification = (notification) => {
-    return db.collection('notifications')
-        .add({
-        content: notification,
-        markup: Date.now(),
-        hotelId: userDB.hotelId
-      })
-}
+  const notif = `Votre message a bien été envoyé à l'hôtel ${expanded}`
+  const dataStatus = {status: false} 
+  const tooltipTitle = t("msh_toolbar.tooltip_technical")
+  const modalTitle = t("msh_maintenance.m_title")
 
-const changeAdminSpeakStatus = (roomName) => {
-  return db.collection('assistance')
-    .doc(roomName)
-    .update({
-      adminSpeak: true,
-  })      
-}
+  const changeAdminSpeakStatus = (roomName) => {
+    return db.collection('assistance')
+      .doc(roomName)
+      .update({
+        adminSpeak: true,
+    })      
+  }
 
-    const handleSubmit = async(event) =>{
-        event.preventDefault()
-        await changeAdminSpeakStatus(expanded)
-        return db.collection('assistance')
-          .doc(`${expanded}`)
-          .collection('chatRoom')
-          .add({
-            author: userDB.username,
-            text: note,
-            date: new Date(),
-            userId: user.uid,
-            markup: Date.now(),
-            photo: user.photoURL
-          })
-          .then(() => {
-            setNote("")
-          })
-    }
+  const newData = {
+    author: userDB.username,
+    text: note,
+    date: new Date(),
+    userId: user.uid,
+    markup: Date.now(),
+    photo: user.photoURL
+  }
 
     const changeRoomStatus = (roomName) => {
       return db.collection('assistance')
@@ -149,11 +136,21 @@ const changeAdminSpeakStatus = (roomName) => {
                 <FormGroup  className="communizi_form_input_container"> 
                     <Input type="text" placeholder="Répondre au client..."  
                     value={note}
-                    onChange={handleChange}
+                    onChange={(event) => handleChange(event, setNote)}
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
-                        <StaticImage src='../../images/paper-plane.png' placeholder="blurred" alt="sendIcon" className="communizi-send-button" onClick={handleSubmit} />          
+                        <img src='../../images/paper-plane.png' alt="sendIcon" className="communizi-send-button" onClick={(event) => {
+                          return handleSubmit(
+                            event, 
+                            notif, 
+                            userDB.hotelId,
+                            "assistance",
+                            `${expanded}`, 
+                            "chatRoom", 
+                            newData, 
+                            handleHideDrawer)
+                        }} />          
                       </div>
                 </Form>
             </div>
@@ -184,14 +181,18 @@ const changeAdminSpeakStatus = (roomName) => {
                         borderRight: "none", 
                         marginTop: "2vh"}} 
                       maxLength="60" 
-                      onChange={handleChange} />
+                      onChange={(event) => handleChange(event, setNote)} />
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
-                      const notif = `Votre message a bien été envoyé à l'hôtel ${expanded}` 
-                      handleSubmit(event)
-                      handleHideDrawer()
-                      setInitialFilter('')
-                      addNotification(notif)
+                 return handleSubmit(
+                  event, 
+                  notif, 
+                  userDB.hotelId,
+                  "assistance",
+                  `${expanded}`, 
+                  "chatRoom", 
+                  newData, 
+                  handleHideDrawer)
                     }}>Envoyer</Button>
             </Drawer>
         </div>

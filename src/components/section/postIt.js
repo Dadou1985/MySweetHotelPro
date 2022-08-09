@@ -5,6 +5,7 @@ import { db } from '../../Firebase'
 import Avatar from 'react-avatar'
 import  '../css/section/post-it.css'
 import { useTranslation } from "react-i18next"
+import { StaticImage } from 'gatsby-plugin-image'
 
 const PostIt = ({author, title, text, markup, userDB}) => {
 
@@ -43,11 +44,13 @@ const PostIt = ({author, title, text, markup, userDB}) => {
         {title}
       </Tooltip>
     }>
-      <img src={Stick} alt="stick" className="stick" onClick={showSticker} style={{
+      <div onClick={showSticker}>
+        <StaticImage placeholder='blurred' src='../../images/postIt.png' alt="stick" className="stick" style={{
             width: "100%",
             height: "100%",
             cursor: "pointer"
         }} />
+      </div>
       
     </OverlayTrigger>
     <Avatar 

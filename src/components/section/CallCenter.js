@@ -10,6 +10,9 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import Bubble from "../../svg/bubble.svg"
 import { useTranslation } from "react-i18next"
+import {
+  handleChange
+} from '../../helper/formCommonFunctions'
 import '../css/section/chatTemplate.css'
 
 export default function CallCenter({user, userDB}) {
@@ -21,10 +24,6 @@ export default function CallCenter({user, userDB}) {
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
     const { t } = useTranslation()
-
-    const handleChange = event =>{
-        setNote(event.currentTarget.value)
-    }
 
     useEffect(() => {
         const getMessages = () => {
@@ -255,7 +254,7 @@ export default function CallCenter({user, userDB}) {
                         name="note" 
                         type="text" 
                         placeholder={t("msh_support.s_input_placeholder")}
-                        onChange={handleChange}
+                        onChange={(event) => handleChange(event, setNote)}
                         onKeyDown={async(e) => {
                           if(e.key === "Enter") {
                             await getChatRoom()

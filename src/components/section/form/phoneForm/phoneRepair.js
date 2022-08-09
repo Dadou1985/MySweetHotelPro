@@ -13,7 +13,7 @@ import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import { handleDeleteImg } from '../../../../helper/globalCommonFunctions'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
-import { fetchCollectionBySorting } from '../../../../helper/globalCommonFunctions'
+import { fetchCollectionBySorting2 } from '../../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
@@ -113,7 +113,7 @@ const PhoneRepair = ({userDB}) =>{
     }
 
     useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "maintenance", "markup", "asc").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "maintenance", "markup", "asc").onSnapshot(function(snapshot) {
              const snapInfo = []
              snapshot.forEach(function(doc) {          
              snapInfo.push({

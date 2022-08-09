@@ -4,27 +4,23 @@ import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
 import { StaticImage } from 'gatsby-plugin-image'
+import { fetchCollectionByMapping1 } from '../../../../../helper/globalCommonFunctions'
 
 function CallCenterOverlay({userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
 
     useEffect(() => {
-        const toolOnAir = () => {
-          return db.collection("assistance")
-          .where("hotelId", "==", "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setChatRoomQty(snapInfo)
-                });
-                return unsubscribe
+      let unsubscribe = fetchCollectionByMapping1("assistance", "hotelId", "==", "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047").onSnapshot(function(snapshot) {
+        const snapInfo = []
+        snapshot.forEach(function(doc) {          
+          snapInfo.push({
+              id: doc.id,
+              ...doc.data()
+            })        
+          });
+          setChatRoomQty(snapInfo)
+        });
+        return unsubscribe
      },[])
      
 

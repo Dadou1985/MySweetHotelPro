@@ -22,7 +22,7 @@ import { StyledBadge } from '../../../helper/formCommonUI'
 import InputElement from "../../../helper/common/InputElement"
 import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import { fetchCollectionBySorting, fetchCollectionByMapping } from '../../../helper/globalCommonFunctions'
+import { fetchCollectionBySorting2, fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
@@ -73,7 +73,7 @@ const Clock = ({userDB}) =>{
     }
 
     useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting(userDB.hotelId, "clock", "markup", "asc").onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "clock", "markup", "asc").onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -88,7 +88,7 @@ const Clock = ({userDB}) =>{
      },[])
 
      useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping(userDB.hotelId, "clock", "status", "==", true).onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "clock", "status", "==", true).onSnapshot(function(snapshot) {
             const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({

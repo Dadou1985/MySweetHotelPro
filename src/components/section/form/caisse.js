@@ -23,7 +23,7 @@ import { StyledBadge } from '../../../helper/formCommonUI'
 import BadgeContent from '../../../helper/common/badgeContent'
 import SafeTableRow from '../../../helper/common/safeTableRow'
 import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../helper/common/safeDetailSheet'
-import { fetchCollectionByMapping } from '../../../helper/globalCommonFunctions'
+import { fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
     handleSubmit,
@@ -84,7 +84,7 @@ const Caisse = () =>{
       };
 
     useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping(userDB.hotelId, "safe", "date", "==", moment(filterDate).format('LL')).onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "safe", "date", "==", moment(filterDate).format('LL')).onSnapshot(function(snapshot) {
         const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({

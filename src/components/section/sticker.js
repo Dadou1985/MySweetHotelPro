@@ -1,7 +1,7 @@
 import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
 import ChatLogo from '../../svg/chat.png'
-import HousekkepingLogo from '../../svg/maid.svg'
+import HousekeepingLogo from '../../svg/maid.svg'
 import RepairLogo from '../../svg/repair.svg'
 import TimerLogo from '../../svg/timer.svg'
 import CabLogo from '../../svg/taxi.svg'
@@ -16,7 +16,7 @@ export default function Sticker({url, logo}) {
         <div className="sticker_container">
             <div className="sticker_logo_container">
                 <img src={ChatLogo} className="sticker_logo" />
-                <img src={HousekkepingLogo} className="sticker_logo" />
+                <img src={HousekeepingLogo} className="sticker_logo" />
                 <img src={CabLogo} className="sticker_logo" />
                 <img src={TimerLogo} className="sticker_logo" />
                 <img src={RepairLogo} className="sticker_logo" />

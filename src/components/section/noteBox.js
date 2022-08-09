@@ -15,6 +15,7 @@ import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import { useTranslation } from "react-i18next"
 import Arrow from '../../svg/arrowDown.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import '../css/section/accordion.css'
 
 const NoteBox = ({filterDate, category, title}) => {
@@ -74,15 +75,17 @@ const NoteBox = ({filterDate, category, title}) => {
     return (
       <>
       <h6 style={{color: category, borderBottom: `1px solid ${category}`}}>
-        <b>{t(title)}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <img src={Arrow} style={{
-          width: "2vw", 
-          color: "red", 
-          float: "right", 
-          transform: data ? "rotate(180deg)" : "rotate(0deg)", 
-          backgroundColor: category, 
-          borderRadius: "50%",
-          padding: "1%"}} 
-          onClick={() => setData(!data)} />
+        <b>{t(title)}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <div onClick={() => setData(!data)}>
+          <StaticImage placeholder='blurred' src='../../svg/arrowDown.svg' style={{
+            width: "1vw", 
+            color: "red", 
+            float: "right", 
+            transform: data ? "rotate(180deg)" : "rotate(0deg)", 
+            backgroundColor: category, 
+            borderRadius: "50%",
+            padding: "1%"}} 
+            />
+        </div>
       </h6>
         <Accordion allowZeroExpanded className="accordion-note">
                 {data && messages.length > 0 && messages.map((flow, index) => {

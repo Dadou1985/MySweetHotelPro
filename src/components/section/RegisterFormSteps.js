@@ -2,16 +2,16 @@ import React, {useState, useEffect } from 'react'
 import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal, ProgressBar } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import { auth, db, storage, functions } from '../../Firebase'
-import HotelLogo from '../../svg/hotel.svg'
 import { useShortenUrl } from 'react-shorten-url';
 import { sha256 } from 'js-sha256';
 import Divider from '@material-ui/core/Divider';
-import Fom from '../../svg/fom.svg'
-import Home from '../../svg/home.svg'
-import Close from '../../svg/close.svg'
+import { StaticImage } from 'gatsby-plugin-image'
 import Drawer from '@material-ui/core/Drawer'
 import '../css/section/registerFormSteps.css'
 import { useTranslation } from "react-i18next"
+
+import HotelLogo from '../../svg/hotel.svg'
+import Close from '../../svg/close.svg'
 
 export default function RegisterFormSteps() {
     const [stepOne, setStepOne] = useState(true)
@@ -428,7 +428,7 @@ export default function RegisterFormSteps() {
                     <div className="stepThree_upload_container">
                         <input type="file" className="steps-camera-icon"
                             onChange={handleImgChange} />
-                        <img src={HotelLogo} className="stepThree_upload_logo" />
+                        <StaticImage placeholder="blurred" src='../../svg/hotel.svg' className="stepThree_upload_logo" />
                     </div>
                     <div>{newImg && newImg.name}</div>
                     <Button variant="outline-dark" style={{marginTop: "1vh"}} onClick={() => {
@@ -533,7 +533,15 @@ export default function RegisterFormSteps() {
                         <p><b>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</b></p>
                         <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")}</p>
                         <p>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
-                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <img src={Fom} alt="Fom" style={{width: "5%", marginLeft: "1vw", marginRight: "1vw", filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></p>
+                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <StaticImage 
+                            placeholder='blurred' 
+                            src='../../svg/fom.svg' 
+                            alt="Fom" 
+                            style={{
+                                width: "5%", 
+                                marginLeft: "1vw", 
+                                marginRight: "1vw", 
+                                filter: "drop-shadow(1px 1px 1px)"}} /> {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_three")}<br/></p>
                         {/*!url && <p><b>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</b></p>*/}
                         <p>{t("msh_register_form.r_step.s_final.f_message.fourth_paragraph")}</p>
                     </div>
@@ -544,7 +552,7 @@ export default function RegisterFormSteps() {
                         cursor: "pointer", 
                         color: "black"
                     }}>
-                        <img src={Home} style={{width: "10%", marginTop: "5vh", marginBottom: "1vh"}} />
+                        <StaticImage placeholder='blurred' src='../../svg/home.svg' style={{width: "10%", marginTop: "5vh", marginBottom: "1vh"}} />
                         <b>{t("msh_register_form.r_step.s_final.f_message.hidden_paragraph")}</b>
                     </a >
                </div> }
