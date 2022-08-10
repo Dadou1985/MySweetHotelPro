@@ -9,17 +9,17 @@ function SupportOverlay() {
 
   useEffect(() => {
       let unsubscribe = fetchCollectionByMapping1("assistance", "status", "==", true).onSnapshot(function(snapshot) {
-        const snapInfo = []
-        snapshot.forEach(function(doc) {          
-          snapInfo.push({
-              id: doc.id,
-              ...doc.data()
-            })        
-          });
-          setChatRoomQty(snapInfo)
-      });
-      return unsubscribe
-    },[]);
+      const snapInfo = []
+      snapshot.forEach(function(doc) {          
+        snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
+        setChatRoomQty(snapInfo)
+    });
+    return unsubscribe
+  },[]);
 
   return (
       <div>

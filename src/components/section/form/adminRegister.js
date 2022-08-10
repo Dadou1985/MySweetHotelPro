@@ -2,6 +2,9 @@ import React, { useState } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
 import { db, functions } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
+import { handleChange } from '../../../helper/formCommonFunctions'
+import { handleCreateData1, addNotification } from '../../../helper/globalCommonFunctions'
+import InputElement from '../../../helper/common/InputElement'
 
 const AdminRegister = ({hide, userDB}) => {
 
@@ -9,45 +12,10 @@ const AdminRegister = ({hide, userDB}) => {
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
     const { t } = useTranslation()
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
     const createUser = functions.httpsCallable('createUser')
     const sendNewCoworkerAccountMail = functions.httpsCallable('sendNewCoworkerAccountMail')
 
-    let newUid = userDB.hotelId + Date.now()
-
-    const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-    const sendWelcomeMail = () => {
-        return sendNewCoworkerAccountMail({
-            adminName: userDB.username, 
-            coworkerName: formValue.username, 
-            coworkerMail: formValue.email,
-            mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
-            mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"
-        })
-    }
- 
-    const handleSubmit = async(event) => {
-        event.preventDefault()
-        //setFormValue("")
-        const notif = t("msh_admin_board.a_notif") 
-        await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return db.collection('businessUsers')
-        .doc(newUid)
-        .set({  
+    const createdData = {  
         username: formValue.username, 
         adminStatus: false, 
         email: formValue.email,
@@ -69,7 +37,26 @@ const AdminRegister = ({hide, userDB}) => {
         adresse: userDB.adresse,
         website: userDB.website ? userDB.website : null,
         pricingModel: userDB.pricingModel
-        }) 
+    }
+
+    let newUid = userDB.hotelId + Date.now()
+
+    const sendWelcomeMail = () => {
+        return sendNewCoworkerAccountMail({
+            adminName: userDB.username, 
+            coworkerName: formValue.username, 
+            coworkerMail: formValue.email,
+            mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
+            mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"
+        })
+    }
+ 
+    const handleSubmit = async(event) => {
+        event.preventDefault()
+        //setFormValue("")
+        const notif = t("msh_admin_board.a_notif") 
+        await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
+        return handleCreateData1("bussinessUsers", newUid, createdData) 
         .then(() => {
             hide()
             addNotification(notif)
@@ -88,34 +75,26 @@ const AdminRegister = ({hide, userDB}) => {
                     textAlign: "center"
                 }}>
                 <h5 style={{marginBottom: "2vh"}}>{t("msh_admin_board.a_first_tab_title")}</h5>
-                <Form.Group controlId="formGroupName">
-                <FloatingLabel
-                    controlId="floatingInput"
+                <InputElement
+                    containerStyle={{marginBottom: "2vh"}} 
                     label={t("msh_admin_board.a_cowoker")}
-                    className="mb-3"
-                    >
-                    <Form.Control style={{width: "20vw"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
-                </FloatingLabel>
-                </Form.Group>
-                {/*<Form.Group controlId="formGroupEmail">
-                    <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
-                </Form.Group>
-                <Form.Group controlId="formGroupPassword">
-                    <Form.Control style={{width: "20vw"}} value={formValue.password} name="password" type="password" placeholder="Entrer un mot de passe" onChange={handleChange} required />
-                </Form.Group>
-                {!!errorMessage && <div id="wrongConf" style={{color: 'red', textAlign: 'center'}}>{errorMessage}</div>}
-                <Form.Group controlId="formGroupConfPassword">
-                    <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
-                </Form.Group>*/}
-                <Form.Group controlId="formGroupRefHotel">
-                <FloatingLabel
-                    controlId="floatingInput"
+                    placeholder={t("msh_admin_board.a_cowoker")}
+                    size="20vw"
+                    value={formValue.username}
+                    name="username"
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                />
+                <InputElement
+                    containerStyle={{marginBottom: "2vh"}} 
                     label={t("msh_admin_board.a_email")}
-                    className="mb-3"
-                    >
-                    <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
-                </FloatingLabel>
-                </Form.Group>
+                    placeholder={t("msh_admin_board.a_email")}
+                    size="20vw"
+                    value={formValue.email}
+                    name="email"
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                />
             </div>
             <div style={{
                 display: "flex",

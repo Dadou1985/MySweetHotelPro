@@ -3,10 +3,9 @@ import { Form, Button } from 'react-bootstrap'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import {
-    handleChange,
-    handleSubmit
-} from '../../../../helper/formCommonFunctions'
+import { handleSubmitData2, addNotification } from '../../../../helper/globalCommonFunctions';
+import { handleChange } from '../../../../helper/formCommonFunctions'
+import TextareaElement from '../../../../helper/common/textareaElement'
 
 function PhoneFeedback({userDB}) {
     
@@ -34,7 +33,7 @@ function PhoneFeedback({userDB}) {
         <div className="phone_container">
             <h4 style={{marginBottom: "5vh"}}>{t("msh_feedback_box.f_title")}</h4>
             <select class="selectpicker" 
-                value={formValue.categorie} name="categorie" onChange={handleChange} 
+                value={formValue.categorie} name="categorie" onChange={(event) => handleChange(event, setFormValue)} 
                 style={{width: "90vw", 
                 height: "6vh", 
                 border: "1px solid lightgrey", 
@@ -46,12 +45,15 @@ function PhoneFeedback({userDB}) {
                     <option value="satisfaction">{t("msh_feedback_box.f_comment.c_satisfaction")}</option>
             </select>
             <div>
-                <Form.Group controlId="description">
-                <Form.Control as="textarea" type="text" 
-                placeholder={t("msh_feedback_box.f_input_textarea")} 
-                style={{width: "90vw", height: "30vh", resize: "none", marginBottom: "30vh"}} 
-                value={formValue.feedback} name="feedback" onChange={handleChange} />
-                </Form.Group>
+                <TextareaElement
+                    label={t("msh_feedback_box.f_input_textarea")}
+                    row="3"
+                    value={formValue.feedback} 
+                    name="feedback" 
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                    size={{width: "90vw", height: "30vh", resize: "none", marginBottom: "30vh"}}
+                />
             </div>
             <Button 
                 variant="success" 
@@ -59,15 +61,9 @@ function PhoneFeedback({userDB}) {
                 style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} 
                 className="phone_submitButton" 
                 onClick={(event) => {
-                    return handleSubmit(
-                        event, 
-                        notif, 
-                        userDB.hotelId,
-                        "feedbacks",
-                        "category", 
-                        formValue.categorie, 
-                        newData, 
-                        handleClose)
+                    handleSubmitData2(event, "feedbacks", "category", formValue.categorie, newData)
+                    addNotification(notif, userDB.hotelId)
+                    return handleClose()
                 }}>{t("msh_feedback_box.f_phone_button")}</Button>
         </div>
     )

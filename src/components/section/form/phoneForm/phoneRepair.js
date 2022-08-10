@@ -13,11 +13,15 @@ import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import { handleDeleteImg } from '../../../../helper/globalCommonFunctions'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
-import { fetchCollectionBySorting2 } from '../../../../helper/globalCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    handleSubmitData2, 
+    addNotification,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../../helper/globalCommonFunctions'
 import {
     handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
     deleteData
 } from '../../../../helper/formCommonFunctions'
 
@@ -34,7 +38,7 @@ const PhoneRepair = ({userDB}) =>{
         type: "", 
         url: ""
     })
-    const [typeClone, setTypeClone] = useState(null)
+    const [typeClone, setTypeClone] = useState("")
     const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
@@ -67,7 +71,7 @@ const PhoneRepair = ({userDB}) =>{
         room: formValue.room,
         markup: Date.now(),
         type: formValue.type,
-        typeClone: typeClone !== null ? typeClone : t("msh_dashboard.maintenance_data.d_paint"),
+        typeClone: typeClone !== "" ? typeClone : t("msh_dashboard.maintenance_data.d_paint"),
         status: false,
         photo: url
     }
@@ -87,27 +91,17 @@ const PhoneRepair = ({userDB}) =>{
               .getDownloadURL()
               .then(url => {
                 const uploadTask = () => {
-                    handleSubmit(
-                        event, 
-                        notif, 
-                        userDB.hotelId,
-                        "hotels",
-                        userDB.hotelId, 
-                        "maintenance", 
-                        newData, 
-                        handleHide)
+                    handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
+                    addNotification(notif, userDB.hotelId)
+                    return handleHide()
                 }
                   return setUrl(url, uploadTask())})
           }
         )
         }else{
-            handleSubmit(
-                event, 
-                notif, 
-                userDB.hotelId, 
-                "maintenance", 
-                newData, 
-                handleHide)
+            handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
+            addNotification(notif, userDB.hotelId)
+            return handleHide()
         }
         
     }
@@ -160,7 +154,7 @@ const PhoneRepair = ({userDB}) =>{
                             <td>
                             <Switch
                                 checked={flow.status}
-                                onChange={() => handleUpdateHotelData(userDB.hotelId, "maintenance", flow.id, dataStatus)}
+                                onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             </td>
@@ -175,7 +169,7 @@ const PhoneRepair = ({userDB}) =>{
                                 if(flow.img){
                                     handleDeleteImg(flow.img)
                                 }
-                                return deleteData(userDB.hotelId, "maintenance", flow.id)
+                                return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
                             }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             </tr>
                         ))}

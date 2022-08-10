@@ -1,10 +1,17 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
-import Contact from '../../../svg/contacts.svg'
 import { FirebaseContext, db } from '../../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
+import { handleChange } from '../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    handleSubmitData2, 
+    addNotification, 
+    handleDeleteData2 
+} from '../../../helper/globalCommonFunctions'
+import InputElement from '../../../helper/common/InputElement'
 
 const Annuaire = () =>{
 
@@ -15,63 +22,33 @@ const Annuaire = () =>{
     const [footerState, setFooterState] = useState(true)
     const { t } = useTranslation()
 
+    const notif = t("msh_phone_book.p_notif") 
 
-    const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
+    const handleClose = () => {
+        setFormValue("")
+        setList(false)
     }
 
-    const handleSubmit = event => {
-    event.preventDefault()
-    setFormValue("")
-    const notif = t("msh_phone_book.p_notif") 
-    addNotification(notif)
-    return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('contact')
-            .add({
-            name: formValue.name,
-            mobile: formValue.mobile,
-            fix: formValue.fix,
-            markup: Date.now()
-            })
-            .then(handleClose)
+    const newData = {
+        name: formValue.name,
+        mobile: formValue.mobile,
+        fix: formValue.fix,
+        markup: Date.now()
     }
 
     useEffect(() => {
-        const contactOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('contact')
-            .orderBy("name")
-        }
-        
-        let unsubscribe = contactOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
+        let unsubscribe = fetchCollectionBySorting2('hotels', userDB.hotelId, 'contact', "name", "asc").onSnapshot(function(snapshot) {
+            const snapInfo = []
+                snapshot.forEach(function(doc) {          
+                snapInfo.push({
+                    id: doc.id,
+                    ...doc.data()
+                    })        
                 });
-                return unsubscribe
-           
+                setInfo(snapInfo)
+            });
+        return unsubscribe
      },[])
 
     return(
@@ -127,16 +104,7 @@ const Annuaire = () =>{
                                             <br /><i>{t("msh_phone_book.p_local")} : {flow.fix}</i></p>
                                         </div>
                                             <Button variant="outline-danger" size="sm" onClick={() => {
-                                                return db.collection('hotels')
-                                                .doc(userDB.hotelId)
-                                                .collection("contact")
-                                                .doc(flow.id)
-                                                .delete()
-                                                .then(function() {
-                                                console.log("Document successfully deleted!");
-                                                }).catch(function(error) {
-                                                    console.log(error);
-                                                })
+                                                return handleDeleteData2('hotels', user, 'contact', flow.id)
                                             }}>{t("msh_general.g_button.b_delete")}</Button>
                                     </div>
                                 ))}
@@ -152,10 +120,16 @@ const Annuaire = () =>{
                                     textAlign: "center"
                                 }}>
                                     <Form.Row>
-                                        <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_phone_book.p_contact")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "25vw"}} value={formValue.name} name="name" onChange={handleChange} />
-                                        </Form.Group>
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
+                                            label={t("msh_phone_book.p_contact")}
+                                            placeholder="ex: Jane Doe"
+                                            size="25vw"
+                                            value={formValue.name}
+                                            name="name"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
                                     </Form.Row>
                                     <Form.Row style={{
                                         display: "flex",
@@ -163,15 +137,26 @@ const Annuaire = () =>{
                                         justifyContent: "space-around",
                                         width: "50%"
                                     }}>
-                                        <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_phone_book.p_mobile")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 0656872674" style={{width: "11vw"}} value={formValue.mobile} name="mobile" onChange={handleChange} />
-                                        </Form.Group>
-                                    
-                                        <Form.Group controlId="description">
-                                        <Form.Label>{t("msh_phone_book.p_local")}</Form.Label>
-                                        <Form.Control type="text" placeholder="ex: 0130987654" style={{width: "11vw"}} value={formValue.fix} name="fix" onChange={handleChange} />
-                                        </Form.Group>
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
+                                            label={t("msh_phone_book.p_mobile")}
+                                            placeholder="ex: 0656872674"
+                                            size="11vw"
+                                            value={formValue.mobile}
+                                            name="mobile"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
+                                            label={t("msh_phone_book.p_local")}
+                                            placeholder="ex: 0130987654"
+                                            size="11vw"
+                                            value={formValue.fix}
+                                            name="fix"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
                                     </Form.Row>
                                 </div>
                             </Tab>
@@ -179,7 +164,11 @@ const Annuaire = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                            <Button variant="dark" onClick={(event) => {
+                                handleSubmitData2(event, "hotel", userDB.hotelId, 'contact', newData)
+                                addNotification(notif, userDB.hotelId)
+                                return handleClose()
+                            }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}
                     </Modal.Footer>
                 </Modal>

@@ -12,13 +12,14 @@ import {
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
-import { fetchCollectionBySorting2 } from '../../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
-    deleteData
-} from '../../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    handleSubmitData2, 
+    addNotification,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../../helper/formCommonFunctions'
 
 const PhoneClock = ({userDB}) =>{
 
@@ -110,14 +111,14 @@ const PhoneClock = ({userDB}) =>{
                                     <td>
                                         <Switch
                                             checked={flow.status}
-                                            onChange={() => handleUpdateHotelData(userDB.hotelId, "clock", flow.id, dataStatus)}
+                                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "clock", flow.id, dataStatus)}
                                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                                         />
                                         </td>
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark">
-                                            <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "clock", flow.id)}>
+                                            <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "clock", flow.id)}>
                                                 {t("msh_general.g_button.b_delete")}
                                             </Button>
                                         </td>}
@@ -178,15 +179,9 @@ const PhoneClock = ({userDB}) =>{
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
-                        return handleSubmit(
-                            event, 
-                            notif, 
-                            userDB.hotelId,
-                            "hotels",
-                            userDB.hotelId, 
-                            "clock", 
-                            newData, 
-                            handleHide)
+                        handleSubmitData2(event, "hotels", userDB.hotelId, "clock", newData)
+                        addNotification(notif, userDB.hotelId)
+                        return handleHide()
                     }}>{t("msh_alarm.a_phone_button.b_validation")}</Button>                
                 </>}
                 {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}

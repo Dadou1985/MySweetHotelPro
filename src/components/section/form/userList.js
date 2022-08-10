@@ -1,42 +1,29 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useEffect } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { db, functions } from '../../../Firebase'
+import { functions } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-
+import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from '../../../helper/globalCommonFunctions';
 
 const UserList = ({userDB}) => {
     const [info, setInfo] = useState([])
-    const { t, i18n } = useTranslation()
+    const { t } = useTranslation()
 
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('businessUsers')
-            .where('hotelId', "==", userDB.hotelId)
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    console.log(snapInfo)
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionByMapping1('businessUsers', "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
+        const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            console.log(snapInfo)
+            setInfo(snapInfo)
+        });
+        return unsubscribe
      },[])
-
-     const changeUserStatus = (documentId, status) => {
-        return db.collection('businessUsers')
-          .doc(documentId)
-          .update({
-            adminStatus: status,
-        })      
-      }
 
     const deleteUser = functions.httpsCallable('deleteUser')
 
@@ -63,20 +50,12 @@ const UserList = ({userDB}) => {
                                 checked={flow.adminStatus}
                                 onChange={() => {
                                     let userStatus = !flow.adminStatus
-                                    return changeUserStatus(flow.id, userStatus)}}
+                                    return handleUpdateData1("businessUsers", flow.id, {adminStatus: userStatus})}}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                         </td>
                         <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
-                            await db.collection('businessUsers')
-                            .doc(flow.id)
-                            .delete()
-                            .then(function() {
-                            console.log("Document successfully deleted!");
-                            }).catch(function(error) {
-                                console.log(error);
-                            })
-
+                            await handleDeleteData1('businessUsers', flow.id)
                             return deleteUser({uid: flow.userId})
                         }}>{t("msh_general.g_button.b_delete")}</Button></td>
                     </tr>

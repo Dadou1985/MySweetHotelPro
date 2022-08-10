@@ -11,13 +11,14 @@ import {
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
-import { fetchCollectionBySorting2 } from '../../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
-    deleteData
-} from '../../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    handleSubmitData2, 
+    addNotification,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../../helper/formCommonFunctions'
 
 const PhoneCab = ({userDB}) =>{
 
@@ -58,7 +59,7 @@ const PhoneCab = ({userDB}) =>{
         room: formValue.room,
         pax: formValue.passenger,
         model: formValue.model,
-        modelClone: modelClone !== null ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
+        modelClone: modelClone !== "" ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
         markup: Date.now(),
         hour: moment(formValue.date).format('LT'),
         date: moment(formValue.date).format('L'),
@@ -115,14 +116,14 @@ const PhoneCab = ({userDB}) =>{
                         <td>
                         <Switch
                             checked={flow.status}
-                            onChange={() => handleUpdateHotelData(userDB.hotelId, "cab", flow.id, dataStatus)}
+                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "cab", flow.id, dataStatus)}
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         </td>
                         {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
                         {expand && <td className="bg-dark">
-                            <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "cab", flow.id)}>
+                            <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "cab", flow.id)}>
                                 {t("msh_general.g_button.b_delete")}
                             </Button>
                         </td>}
@@ -221,15 +222,9 @@ const PhoneCab = ({userDB}) =>{
                 {step && <>
                     <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                     <Button variant="success" className="phone_submitButton" onClick={(event) => {
-                        return handleSubmit(
-                            event, 
-                            notif,
-                            userDB.hotelId,
-                            "hotels", 
-                            userDB.hotelId, 
-                            "cab", 
-                            newData, 
-                            handleHide)
+                         handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
+                         addNotification(notif, userDB.hotelId)
+                         return handleHide()
                     }}>{t("msh_cab.c_phone_button.b_validation")}</Button>                
                 </>}
                 {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}

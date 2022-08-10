@@ -22,11 +22,17 @@ import InputElement from "../../../helper/common/InputElement"
 import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
 import TableTemplate from '../../../helper/common/tableTemplate';
-import { fetchCollectionBySorting2, fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-} from '../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    fetchCollectionByMapping2,
+    handleSubmitData2,
+    addNotification,
+} from '../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../helper/formCommonFunctions'
+
+/* 
+ ! FIX => SELECT DEFAULT OPTION
+*/
 
 const Cab = ({userDB}) =>{
 
@@ -70,7 +76,7 @@ const Cab = ({userDB}) =>{
         room: formValue.room,
         pax: formValue.passenger,
         model: formValue.model,
-        modelClone: modelClone !== null ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
+        modelClone: modelClone !== "" ? modelClone : t("msh_cab.c_vehicule.v_limousin"),
         markup: Date.now(),
         hour: moment(formValue.date).format('LT'),
         date: moment(formValue.date).format('L'),
@@ -127,7 +133,7 @@ const Cab = ({userDB}) =>{
                         }
                     }}>
                         <Tab eventKey="Réserver" title={t("msh_cab.c_phone_button.b_show_modal")}>
-                            <div  style={{
+                            <form  style={{
                                 display: "flex",
                                 flexFlow: "column",
                                 justifyContent: "space-around",
@@ -212,13 +218,15 @@ const Cab = ({userDB}) =>{
                                         label={t("msh_cab.c_vehicule.v_label")}
                                         className="mb-3"
                                     >
-                                        <Form.Select className="selectpicker" value={formValue.model} name="model" onChange={(event) => handleChange(event, setFormValue)} 
-                                        style={{
-                                        width: "12vw", 
-                                        border: "1px solid lightgrey", 
-                                        borderRadius: "3px",
-                                        backgroundColor: "white", 
-                                        paddingLeft: "1vw"}}>
+                                        <Form.Select className="selectpicker" defaultValue={formValue.model} name="model" onChange={(event) => handleChange(event, setFormValue)} 
+                                            style={{
+                                            width: "12vw", 
+                                            border: "1px solid lightgrey", 
+                                            borderRadius: "3px",
+                                            backgroundColor: "white", 
+                                            paddingLeft: "1vw"}}
+                                            required>
+                                            <option></option>
                                             <option value="limousin" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_limousin"))}>{t("msh_cab.c_vehicule.v_limousin")}</option>
                                             <option value="Van" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_van"))}>{t("msh_cab.c_vehicule.v_van")}</option>
                                         </Form.Select>
@@ -238,7 +246,7 @@ const Cab = ({userDB}) =>{
                                     /> 
                                 </div>
                                 </>}
-                            </div>
+                            </form>
                         </Tab>
                         <Tab eventKey="Liste des réservations" title={t("msh_cab.c_table_title")}>
                         <PerfectScrollbar style={{height: "55vh"}}>
@@ -251,15 +259,9 @@ const Cab = ({userDB}) =>{
                     {step && <>
                         <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                         <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "hotels",
-                                userDB.hotelId, 
-                                "cab", 
-                                newData, 
-                                handleClose)
+                            handleSubmitData2(event, "hotels", userDB.hotelId, "cab", newData)
+                            addNotification(notif, userDB.hotelId,)
+                            return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </>}
                     {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}

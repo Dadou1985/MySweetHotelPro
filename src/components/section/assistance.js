@@ -19,17 +19,14 @@ import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
-import {
-    handleChange,
-    handleSubmit
-} from '../../helper/formCommonFunctions'
+import { handleChange } from '../../helper/formCommonFunctions'
+import { handleUpdateData1, fetchCollectionBySorting1, handleSubmitData2, addNotification } from '../../helper/globalCommonFunctions'
 
 export default function Assistance({userDB, user}) {
     
   const [info, setInfo] = useState([])
   const [note, setNote] = useState('')
   const [expanded, setExpanded] = useState('')
-  const [showModal, setShowModal] = useState(false)
   const [activate, setActivate] = useState(false)
   const [initialFilter, setInitialFilter] = useState('')
   const { t, i18n } = useTranslation()
@@ -62,37 +59,26 @@ export default function Assistance({userDB, user}) {
     photo: user.photoURL
   }
 
-    const changeRoomStatus = (roomName) => {
-      return db.collection('assistance')
-        .doc(roomName)
-        .update({
-          status: false,
-          markup: Date.now()
-      })      
-    }
+  const newRoomData = {
+    status: false,
+    markup: Date.now()
+  }
 
-    const handleChangeExpanded = (title) => setExpanded(title)
+  const handleChangeExpanded = (title) => setExpanded(title)
   
-
-    useEffect(() => {
-      const chatOnAir = () => {
-        return db.collection('assistance')
-            .orderBy("markup")
-        }
-
-      let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
-          const snapInfo = []
-        snapshot.forEach(function(doc) {          
-          snapInfo.push({
-              id: doc.id,
-              ...doc.data()
-            })        
-          });
-          setInfo(snapInfo)
-      });
-      return unsubscribe
-     },[])
-
+  useEffect(() => {
+    let unsubscribe = fetchCollectionBySorting1("assistance", "markup", "desc").onSnapshot(function(snapshot) {
+        const snapInfo = []
+      snapshot.forEach(function(doc) {          
+        snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
+        setInfo(snapInfo)
+    });
+    return unsubscribe
+    },[])
 
     return (
         <div className="communizi-container">
@@ -115,7 +101,7 @@ export default function Assistance({userDB, user}) {
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
-                                onChange={() => changeRoomStatus(flow.id)}
+                                onChange={() => handleUpdateData1("assistance", flow.id, newRoomData)}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                               />
                               <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
@@ -141,15 +127,9 @@ export default function Assistance({userDB, user}) {
                 </FormGroup>
                     <div className="communizi-button-container">
                         <img src='../../images/paper-plane.png' alt="sendIcon" className="communizi-send-button" onClick={(event) => {
-                          return handleSubmit(
-                            event, 
-                            notif, 
-                            userDB.hotelId,
-                            "assistance",
-                            `${expanded}`, 
-                            "chatRoom", 
-                            newData, 
-                            handleHideDrawer)
+                          handleSubmitData2(event, "assistance", `${expanded}`, "chatRoom", newData)
+                          addNotification(notif, userDB.hotelId)
+                          return handleHideDrawer()
                         }} />          
                       </div>
                 </Form>
@@ -184,15 +164,9 @@ export default function Assistance({userDB, user}) {
                       onChange={(event) => handleChange(event, setNote)} />
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
-                 return handleSubmit(
-                  event, 
-                  notif, 
-                  userDB.hotelId,
-                  "assistance",
-                  `${expanded}`, 
-                  "chatRoom", 
-                  newData, 
-                  handleHideDrawer)
+                handleSubmitData2(event, "assistance", `${expanded}`, "chatRoom", newData)
+                addNotification(notif, userDB.hotelId)
+                return handleHideDrawer()
                     }}>Envoyer</Button>
             </Drawer>
         </div>

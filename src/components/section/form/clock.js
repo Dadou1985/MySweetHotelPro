@@ -15,20 +15,22 @@ import DateFnsUtils from '@date-io/date-fns'
 import {
     MuiPickersUtilsProvider,
     KeyboardDateTimePicker
-  } from '@material-ui/pickers';
+} from '@material-ui/pickers';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { StyledBadge } from '../../../helper/formCommonUI'
 import InputElement from "../../../helper/common/InputElement"
 import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import { fetchCollectionBySorting2, fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
-    deleteData
-} from '../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    fetchCollectionByMapping2, 
+    handleSubmitData2, 
+    addNotification,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../helper/formCommonFunctions'
 
 const Clock = ({userDB}) =>{
 
@@ -202,13 +204,13 @@ const Clock = ({userDB}) =>{
                                             <td>
                                                 <Switch
                                                     checked={flow.status}
-                                                    onChange={() => handleUpdateHotelData(userDB.hotelId, "clock", flow.id, dataStatus)}
+                                                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "clock", flow.id, dataStatus)}
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                 />
                                                 </td>
                                             <td>{flow.author}</td>
                                             <td className="bg-dark">
-                                                <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "clock", flow.id)}>
+                                                <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "clock", flow.id)}>
                                                     {t("msh_general.g_button.b_delete")}
                                                 </Button>
                                             </td>
@@ -224,15 +226,9 @@ const Clock = ({userDB}) =>{
                         {step && <>
                             <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                             <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "hotels",
-                                userDB.hotelId, 
-                                "clock", 
-                                newData, 
-                                handleClose)
+                                handleSubmitData2(event, "hotels", userDB.hotelId, "clock", newData)
+                                addNotification(notif, userDB.hotelId)
+                                return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
                         {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}

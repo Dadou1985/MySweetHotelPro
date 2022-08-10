@@ -4,7 +4,7 @@ import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
 import { StaticImage } from 'gatsby-plugin-image'
-import { fetchCollectionByMapping1 } from '../../../../../helper/globalCommonFunctions'
+import { fetchCollectionByMapping1, handleUpdateData1 } from '../../../../../helper/globalCommonFunctions'
 
 function CallCenterOverlay({userDB}) {
     const [chatRoomQty, setChatRoomQty] = useState([])
@@ -23,19 +23,12 @@ function CallCenterOverlay({userDB}) {
         return unsubscribe
      },[])
      
-
-     const updateAdminSpeakStatus = () => {
-      return db.collection('assistance')
-            .doc(userDB.hotelName)
-            .update({
-                adminSpeak: false,
-            })      
-    }
+    const newData = {adminSpeak: false}
 
     return (
         <div>
           <img src={Assistance} alt="Support" className="drawer_icons" onClick={()=>{
-            updateAdminSpeakStatus()
+            handleUpdateData1('assistance', userDB.hotelName, newData)
             navigate("/assistance")
             }} />
             {chatRoomQty.map(status => {

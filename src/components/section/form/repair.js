@@ -22,13 +22,15 @@ import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
 import TextareaElement from '../../../helper/common/textareaElement'
 import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
-import { fetchCollectionBySorting2, fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
-    deleteData
-} from '../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    fetchCollectionByMapping2, 
+    handleSubmitData2, 
+    addNotification,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../helper/formCommonFunctions'
 
 const Repair = ({userDB}) =>{
 
@@ -40,7 +42,7 @@ const Repair = ({userDB}) =>{
         details: "", 
         type: "paint"
     })
-    const [typeClone, setTypeClone] = useState(null)
+    const [typeClone, setTypeClone] = useState("")
     const [issueQty, setIssueQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
@@ -66,7 +68,7 @@ const Repair = ({userDB}) =>{
         room: formValue.room,
         markup: Date.now(),
         type: formValue.type,
-        typeClone: typeClone !== null ? typeClone : t("msh_dashboard.maintenance_data.d_paint"),
+        typeClone: typeClone !== "" ? typeClone : t("msh_dashboard.maintenance_data.d_paint"),
         status: false
     }
     
@@ -214,7 +216,7 @@ const Repair = ({userDB}) =>{
                                                 <td>
                                                 <Switch
                                                     checked={flow.status}
-                                                    onChange={() => handleUpdateHotelData(userDB.hotelId, "maintenance", flow.id, dataStatus)}
+                                                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                 />
                                                 </td>
@@ -222,7 +224,7 @@ const Repair = ({userDB}) =>{
                                                     if(flow.img){
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                        return deleteData(userDB.hotelId, "maintenance", flow.id)
+                                                        return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -238,15 +240,9 @@ const Repair = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "hotels",
-                                userDB.hotelId, 
-                                "maintenance", 
-                                newData, 
-                                handleClose)
+                            handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
+                            addNotification(notif, userDB.hotelId)
+                            return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}
                 </Modal>

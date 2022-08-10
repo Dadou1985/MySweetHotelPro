@@ -25,14 +25,16 @@ import BadgeContent from '../../../helper/common/badgeContent'
 import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
 import TextareaElement from '../../../helper/common/textareaElement'
 import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
-import { fetchCollectionBySorting2, fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    handleSubmit,
-    handleUpdateHotelData,
-    handleUpdateUserData,
-    deleteData
-} from '../../../helper/formCommonFunctions'
+import { 
+    fetchCollectionBySorting2, 
+    fetchCollectionByMapping2, 
+    handleSubmitData2, 
+    addNotification,    
+    handleUpdateData1,
+    handleUpdateData2,
+    handleDeleteData2
+} from '../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../helper/formCommonFunctions'
 
 const Maid = ({userDB}) =>{
 
@@ -50,8 +52,8 @@ const Maid = ({userDB}) =>{
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
-    const [reasonBack, setReasonBack] = useState(null)
-    const [stateClone, setStateClone] = useState(null)
+    const [reasonBack, setReasonBack] = useState("")
+    const [stateClone, setStateClone] = useState("")
     const { t } = useTranslation()
 
     const handleShow = () => setList(true)
@@ -80,9 +82,9 @@ const Maid = ({userDB}) =>{
         markup: Date.now(),
         toRoom: formValue.toRoom,
         reason: formValue.reason,
-        reasonClone: reasonBack !== null ? reasonBack : t("msh_room_change.r_reason.r_noise"),
+        reasonClone: reasonBack !== "" ? reasonBack : t("msh_room_change.r_reason.r_noise"),
         state: formValue.state,
-        stateClone: stateClone !== null ? stateClone : t("msh_room_change.r_state.s_dirty"),
+        stateClone: stateClone !== "" ? stateClone : t("msh_room_change.r_state.s_dirty"),
         status: false
     }
 
@@ -285,8 +287,8 @@ const Maid = ({userDB}) =>{
                                                         </Popover.Header>
                                                         <Popover.Body className="text-center">
                                                             <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => {
-                                                                handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, hotelRoomData)
-                                                                handleUpdateUserData(flow.userId, userRoomData)
+                                                                handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, hotelRoomData)
+                                                                handleUpdateData1("guestUsers", flow.userId, userRoomData)
                                                             }}>{t("msh_general.g_button.b_send")}
                                                             </Button>
                                                         </Popover.Body>
@@ -319,7 +321,7 @@ const Maid = ({userDB}) =>{
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
-                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
+                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Body>
                                                             </Popover>
                                                             }
@@ -339,7 +341,7 @@ const Maid = ({userDB}) =>{
                                                 <td>
                                                 <Switch
                                                     checked={flow.status}
-                                                    onChange={() => handleUpdateHotelData(userDB.hotelId, "roomChange", flow.id, dataStatus)}
+                                                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, dataStatus)}
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                 />
                                                 </td>
@@ -347,7 +349,7 @@ const Maid = ({userDB}) =>{
                                                     if(flow.img) {
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                    return deleteData(userDB.hotelId, "roomChange", flow.id)
+                                                    return handleDeleteData2("hotels", userDB.hotelId, "roomChange", flow.id)
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -363,15 +365,9 @@ const Maid = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "hotels",
-                                userDB.hotelId, 
-                                "roomChange", 
-                                newData, 
-                                handleClose)
+                            handleSubmitData2(event, "hotels", userDB.hotelId, "roomChange", newData)
+                            addNotification(notif, userDB.hotelId)
+                            return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}
                 </Modal>

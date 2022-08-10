@@ -1,17 +1,14 @@
 import React from 'react'
 import { Button, Table } from 'react-bootstrap'
 import Switch from '@material-ui/core/Switch';
-import {
-    handleUpdateHotelData,
-    deleteData
-} from '../formCommonFunctions'
+import { handleUpdateData2, handleDeleteData2 } from '../globalCommonFunctions';
 import { useTranslation } from "react-i18next"
 
-const TableTemplate = ({data, scale, userDB, dataStatus, responsiveness = null}) => {
+const TableTemplate = ({data, scale, userDB, dataStatus}) => {
     const { t } = useTranslation()
 
   return (
-    <Table striped bordered hover size="sm" responsiveness className="text-center">
+    <Table striped bordered hover size="sm" className="text-center">
         <thead className="bg-dark text-center text-light">
             <tr>
             {scale && <th>{t("msh_general.g_table.t_client")}</th>}
@@ -38,12 +35,12 @@ const TableTemplate = ({data, scale, userDB, dataStatus, responsiveness = null})
                 <td>
                 <Switch
                     checked={flow.status}
-                    onChange={() => handleUpdateHotelData(userDB.hotelId, "cab", flow.id, dataStatus)}
+                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "cab", flow.id, dataStatus)}
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
                 </td>
                 {scale && <td className="bg-dark">
-                    <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "cab", flow.id)}>
+                    <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "cab", flow.id)}>
                         {t("msh_general.g_button.b_delete")}
                     </Button>
                 </td>}

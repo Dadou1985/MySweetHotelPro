@@ -1,10 +1,9 @@
 import React, {useState, useEffect } from 'react'
 import Maid from '../../../../../svg/maid.svg'
-import { db } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
+import { fetchCollectionBySorting3 } from '../../../../../helper/globalCommonFunctions'
 
 function HousekeepingOverlay({userDB}) {
-    const [list, setList] = useState(false)
     const [towel, setTowel] = useState([])
     const [soap, setSoap] = useState([])
     const [toiletPaper, setToiletPaper] = useState([])
@@ -14,19 +13,8 @@ function HousekeepingOverlay({userDB}) {
     const [iron, setIron] = useState([])
     const [babyBed, setBabyBed] = useState([])
 
-    const itemList = (item) => {
-      return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection('housekeeping')
-        .doc("item")
-        .collection(item)
-        .orderBy("markup", "asc")
-    }
-
-
     useEffect(() => {
-        
-        let unsubscribe = itemList('towel').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'towel', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -40,8 +28,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('soap').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'soap', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -55,8 +42,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('toiletPaper').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'toiletPaper', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -70,8 +56,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('hairDryer').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'hairDryer', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -85,8 +70,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('pillow').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'pillow', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -100,8 +84,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('blanket').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'blanket', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -115,8 +98,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('iron').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'iron', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -130,8 +112,7 @@ function HousekeepingOverlay({userDB}) {
     }, [])
 
     useEffect(() => {
-        
-        let unsubscribe = itemList('babyBed').onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'babyBed', "markup", 'asc').onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({

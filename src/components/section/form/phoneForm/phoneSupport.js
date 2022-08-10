@@ -8,6 +8,13 @@ import { db } from '../../../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../../../svg/profile.png"
 import { useTranslation } from "react-i18next"
+import { 
+    fetchCollectionBySorting2, 
+    handleCreateData1, 
+    handleSubmitData2, 
+    handleUpdateData1 
+} from '../../../../helper/globalCommonFunctions'
+import { handleChange } from '../../../../helper/formCommonFunctions'
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
 export default function PhoneSupport({user, userDB}) {
@@ -16,20 +23,8 @@ export default function PhoneSupport({user, userDB}) {
     const [chatRoom, setChatRoom] = useState(null)
     const { t } = useTranslation()
 
-    const handleChange = event =>{
-        setNote(event.currentTarget.value)
-    }
-
     useEffect(() => {
-        const getMessages = () => {
-            return db.collection('assistance')
-            .doc(userDB.hotelName)
-            .collection("chatRoom")
-            .orderBy("markup", "desc")
-            .limit(50)
-        }
-
-        let unsubscribe = getMessages().onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting2('assistance', userDB.hotelName, "chatRoom", "markup", "desc", 50).onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -56,54 +51,35 @@ export default function PhoneSupport({user, userDB}) {
             })
     }
 
+    const updatedData = {
+        status: true,
+        markup: Date.now(),
+        pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
+    }
+    
+    const createdData = {
+        adminSpeak: false,
+        hotelId: userDB.hotelId,
+        hotelName: userDB.hotelName,
+        markup: Date.now(),
+        status: true,
+        classement: userDB.classement,
+        code_postal: userDB.code_postal,
+        room: userDB.room,
+        city: userDB.city,
+        hotelDept: userDB.hotelDept,
+        hotelRegion: userDB.hotelRegion,
+        country: userDB.country,
+        pricingModel: userDB.pricingModel
+    }
 
-    const createRoomnameSubmit = () => {
-        return db.collection('assistance')
-            .doc(userDB.hotelName)
-            .set({
-                adminSpeak: false,
-                hotelId: userDB.hotelId,
-                hotelName: userDB.hotelName,
-                markup: Date.now(),
-                status: true,
-                classement: userDB.classement,
-                code_postal: userDB.code_postal,
-                room: userDB.room,
-                city: userDB.city,
-                hotelDept: userDB.hotelDept,
-                hotelRegion: userDB.hotelRegion,
-                country: userDB.country,
-                pricingModel: userDB.pricingModel
-            })      
-      }
-
-    const updateRoomnameSubmit = () => {
-        return db.collection('assistance')
-        .doc(userDB.hotelName)
-        .update({
-            status: true,
-            markup: Date.now(),
-            pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
-        })      
-      }
-
-    const sendMessage = () => {
-        setNote("")
-        return db.collection('assistance')
-            .doc(userDB.hotelName)
-            .collection("chatRoom")
-            .add({
-                author: userDB.username,
-                date: new Date(),
-                email: user.email,
-                photo: user.photoURL,
-                text: note,
-                markup: Date.now(),
-            }).then(function(docRef){
-                console.log(docRef.id)
-            }).catch(function(error) {
-                console.error(error)
-            })
+    const newData = {
+        author: userDB.username,
+        date: new Date(),
+        email: user.email,
+        photo: user.photoURL,
+        text: note,
+        markup: Date.now(),
     }
 
 
@@ -184,11 +160,17 @@ export default function PhoneSupport({user, userDB}) {
                     <img src={Send} alt="sendIcon" style={{width: "8%"}} onClick={async() => {
                     await getChatRoom()
                     if(chatRoom !== null) {
-                        return updateRoomnameSubmit()
-                        .then(sendMessage())
+                        return handleUpdateData1('assistance', userDB.hotelName, updatedData)
+                        .then(() => {
+                            setNote("")
+                            handleSubmitData2("assistance", userDB.hotelName, "chatRoom", newData)
+                        })
                     }else{
-                        return createRoomnameSubmit()
-                        .then(sendMessage())
+                        return handleCreateData1('assistance', userDB.hotelName, createdData)
+                        .then(() => {
+                            setNote("")
+                            handleSubmitData2("assistance", userDB.hotelName, "chatRoom", newData)
+                        })
                     }
                     }} />          
                 </Form.Group>

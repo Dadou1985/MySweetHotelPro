@@ -23,11 +23,14 @@ import { StyledBadge } from '../../../helper/formCommonUI'
 import BadgeContent from '../../../helper/common/badgeContent'
 import SafeTableRow from '../../../helper/common/safeTableRow'
 import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../helper/common/safeDetailSheet'
-import { fetchCollectionByMapping2 } from '../../../helper/globalCommonFunctions'
+import { 
+    fetchCollectionByMapping2, 
+    handleSubmitData2, 
+    addNotification,
+    handleDeleteData2
+ } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
-    handleSubmit,
-    deleteData,
     safeTotal,
     safeAmount
 } from '../../../helper/formCommonFunctions'
@@ -53,17 +56,15 @@ const Caisse = () =>{
     }
 
     const notif = t("msh_safe.s_notif")
-    const dataStatus = {status: false} 
     const tooltipTitle = t("msh_coolbar.tooltip_safe")
-    const modalTitle = t("msh_safe.s_title")
     const componentRef = useRef();
 
     const newData = {
         author: userDB.username,
         date: moment(new Date()).format('LL'),
-        amount: document.getElementById("montant") != null && document.getElementById("montant").value,
+        amount: document.getElementById("montant") != null && document.getElementById("montant").innerHTML,
         shift: formValue.shift,
-        shiftClone: formValue.shiftClone !== null ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
+        shiftClone: formValue.shiftClone !== "" ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
         markup: Date.now()
     }
 
@@ -101,6 +102,8 @@ const Caisse = () =>{
     //  const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
     // })
+
+    console.log('==============================================================', document.getElementById("montant") != null && document.getElementById("montant").innerHTML)
 
     return(
         <div style={{
@@ -251,7 +254,7 @@ const Caisse = () =>{
                                             <td>{flow.shiftClone}</td>
                                             <td>{moment(flow.markup).format('L')}</td>
                                             <td className="bg-dark">
-                                                <Button variant="outline-danger" size="sm" onClick={()=> deleteData(userDB.hotelId, "safe", flow.id)}>
+                                                <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "safe", flow.id)}>
                                                     {t("msh_general.g_button.b_delete")}
                                                 </Button>
                                             </td>
@@ -267,15 +270,9 @@ const Caisse = () =>{
                         {footerState && <>
                             <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>{t("msh_general.g_button.b_reset")}</Button>
                             <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "hotels",
-                                userDB.hotelId, 
-                                "safe", 
-                                newData, 
-                                handleClose)
+                                handleSubmitData2(event, "hotels", userDB.hotelId, "safe", newData)
+                                addNotification(notif, userDB.hotelId)
+                                return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
                         {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}

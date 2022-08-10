@@ -7,7 +7,7 @@ import Badge from '@material-ui/core/Badge'
 import StyleBadge from '../../../helper/common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next"
-
+import { fetchCollectionBySorting3 } from '../../../helper/globalCommonFunctions'
 
 const HouseKeeping = ({userDB}) =>{
 
@@ -26,134 +26,117 @@ const HouseKeeping = ({userDB}) =>{
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
 
-    const itemList = (item) => {
-        return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection('housekeeping')
-        .doc("item")
-        .collection(item)
-        .orderBy("markup", "asc")
-    }
-
     useEffect(() => {
-        
-        let unsubscribe = itemList('towel').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setTowel(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('soap').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setSoap(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('toiletPaper').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setToiletPaper(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('hairDryer').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setHairDryer(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('pillow').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setPillow(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('blanket').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setBlanket(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('iron').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setIron(snapInfo)
-        });
-        return unsubscribe
-    }, [])
-
-    useEffect(() => {
-        
-        let unsubscribe = itemList('babyBed').onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setBabyBed(snapInfo)
-        });
-        return unsubscribe
-    }, [])
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'towel', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setTowel(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'soap', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setSoap(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'toiletPaper', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setToiletPaper(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'hairDryer', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setHairDryer(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'pillow', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setPillow(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'blanket', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setBlanket(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'iron', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setIron(snapInfo)
+          });
+          return unsubscribe
+      }, [])
+  
+      useEffect(() => {
+        let unsubscribe = fetchCollectionBySorting3('hotels', userDB.hotelId, 'housekeeping', 'item', 'babyBed', "markup", 'asc').onSnapshot(function(snapshot) {
+              const snapInfo = []
+            snapshot.forEach(function(doc) {          
+              snapInfo.push({
+                  id: doc.id,
+                  ...doc.data()
+                })        
+              });
+              setBabyBed(snapInfo)
+          });
+          return unsubscribe
+      }, [])
 
     let itemQty = [towel.length, soap.length, toiletPaper.length, hairDryer.length, pillow.length, blanket.length, iron.length, babyBed.length]
     const reducer = (accumulator, currentValue) => accumulator + currentValue;
