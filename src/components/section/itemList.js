@@ -1,10 +1,11 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { FirebaseContext, db } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
+import { fetchCollectionBySorting3, handleDeleteData3 } from '../../helper/globalCommonFunctions';
 
 const ItemList = ({item}) => {
 
@@ -13,27 +14,17 @@ const ItemList = ({item}) => {
     const { userDB } = useContext(FirebaseContext)
 
     useEffect(() => {
-        const listOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('housekeeping')
-            .doc("item")
-            .collection(item)
-            .orderBy("markup", "asc")
-        }
-    
-        let unsubscribe = listOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
+        let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, 'housekeeping', 'item', item, 'markup', 'asc').onSnapshot(function(snapshot) {
+            const snapInfo = []
+                snapshot.forEach(function(doc) {          
+                snapInfo.push({
+                    id: doc.id,
+                    ...doc.data()
+                    })        
                 });
-                return unsubscribe
-           
+                setInfo(snapInfo)
+            });
+        return unsubscribe
      },[item])
 
      moment.locale('fr')
@@ -58,18 +49,7 @@ const ItemList = ({item}) => {
                             <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                             <td className="bg-light">
                                 <Button variant="outline-danger" size="sm" onClick={()=>{
-                                return db.collection('hotels')
-                                .doc(userDB.hotelId)
-                                .collection('housekeeping')
-                                .doc("item")
-                                .collection(item)
-                                .doc(flow.id)
-                                .delete()
-                                .then(function() {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function(error) {
-                                    console.log(error);
-                                }); 
+                                return handleDeleteData3("hotels", userDB.hotelId, "housekeeping", 'item', item, flow.id) 
                                 }}>{t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>

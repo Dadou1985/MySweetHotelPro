@@ -1,56 +1,41 @@
 import React, {useState, useEffect } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { db } from '../../Firebase'
+import { 
+    fetchCollectionByMapping2,
+    fetchCollectionBySorting3
+} from '../../helper/globalCommonFunctions'
 
 export default function ChatRoom({user, userDB, title}) {
-
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState([])
 
     useEffect(() => {
-        const chatRoomOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection("chat")
-            .doc(title)
-            .collection("chatRoom")
-            .orderBy("markup", "desc")
-            .limit(50)
-        }
-
-        let unsubscribe = chatRoomOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setMessages(snapInfo)
-                });
-                return unsubscribe
-     },[title])
+        let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, "chat", title, "chatRoom", "markup", "desc", 50).onSnapshot(function(snapshot) {
+        const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setMessages(snapInfo)
+        });
+        return unsubscribe
+    },[title])
 
      useEffect(() => {
-        const getChatRoom = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection("chat")
-            .where("title", "==", title)
-        }
-
-        let unsubscribe = getChatRoom().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setChatRoom(snapInfo)
-                });
-                return unsubscribe
+        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "chat", "title", "==", title).onSnapshot(function(snapshot) {
+        const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setChatRoom(snapInfo)
+        });
+        return unsubscribe
      },[])
 
     return (

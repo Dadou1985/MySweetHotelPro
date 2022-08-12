@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Modal, Table, Tabs, Tab } from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { db, functions } from '../../Firebase'
 import { StaticImage } from 'gatsby-plugin-image'
 import Timeline from '@mui/lab/Timeline';
 import TimelineItem from '@mui/lab/TimelineItem';
@@ -13,6 +12,8 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import moment from 'moment'
 import 'moment/locale/fr';
+import { fetchCollectionBySorting3, fetchCollectionByCombo2 } from '../../helper/globalCommonFunctions'
+import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
 import '../css/section/timeLine.css'
 
 const GuestTimeLine = ({userDB, guestId}) => {
@@ -30,6 +31,8 @@ const GuestTimeLine = ({userDB, guestId}) => {
     })
     const { t } = useTranslation()
 
+    const modalTitle = <h5>Séjour du {journey.date}</h5>
+
     const emptyJourney = {
         cab: [],
         clock: [],
@@ -42,15 +45,7 @@ const GuestTimeLine = ({userDB, guestId}) => {
     const handleCloseTab = () => setTab(false)
     
     useEffect(() => {
-        const guestOnAir = () => {
-          return db.collection('guestUsers')
-          .doc(guestId)
-          .collection("journey")
-          .where("hotelId", "==", userDB.hotelId)
-          .orderBy("markup", "desc")
-          }
-  
-        let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByCombo2("guestUsers", guestId, "journey", "hotelId", "==", userDB.hotelId, "markup", "desc").onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -61,25 +56,21 @@ const GuestTimeLine = ({userDB, guestId}) => {
             setTimelineData(snapInfo)
         });
         return unsubscribe
-       },[guestId])
+    },[guestId])
 
-       useEffect(() => {
+    useEffect(() => {
         if(housekeepingFilter !== null){
             const handleGetHousekeepingData = () => {
-                return db.collection('guestUsers')
-                .doc(guestId)
-                .collection("journey")
-                .doc(housekeepingFilter)
-                .collection("housekeeping")
-                }
-  
+                return fetchCollectionBySorting3("guestUsers", guestId, "journey", housekeepingFilter, "housekeeping", "markup", "desc")
+            }
+
         let unsubscribe = handleGetHousekeepingData().onSnapshot(function(snapshot) {
             const snapInfo = []
-          snapshot.forEach(function(doc) {          
+            snapshot.forEach(function(doc) {          
             snapInfo.push({
                 id: doc.id,
                 ...doc.data()
-              })        
+                })        
             });
             setHousekeeping(snapInfo)
         });
@@ -159,11 +150,7 @@ const GuestTimeLine = ({userDB, guestId}) => {
                     setHousekeepingFilter(null)
                 }}
                 >
-                <Modal.Header closeButton className="bg-light">
-                    <Modal.Title id="contained-modal-title-vcenter">
-                        <h5>Séjour du {journey.date}</h5>
-                    </Modal.Title>
-                </Modal.Header>
+                <ModalHeaderFormTemplate title={modalTitle} />
                 <Modal.Body>
                 
                 <div style={{width: "100%", padding: "2%"}}>

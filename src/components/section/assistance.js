@@ -14,13 +14,17 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
 import { handleChange } from '../../helper/formCommonFunctions'
-import { handleUpdateData1, fetchCollectionBySorting1, handleSubmitData2, addNotification } from '../../helper/globalCommonFunctions'
+import { 
+  handleUpdateData1, 
+  fetchCollectionBySorting1, 
+  handleSubmitData2, 
+  addNotification 
+} from '../../helper/globalCommonFunctions'
 
 export default function Assistance({userDB, user}) {
     
@@ -38,17 +42,6 @@ export default function Assistance({userDB, user}) {
   }
 
   const notif = `Votre message a bien été envoyé à l'hôtel ${expanded}`
-  const dataStatus = {status: false} 
-  const tooltipTitle = t("msh_toolbar.tooltip_technical")
-  const modalTitle = t("msh_maintenance.m_title")
-
-  const changeAdminSpeakStatus = (roomName) => {
-    return db.collection('assistance')
-      .doc(roomName)
-      .update({
-        adminSpeak: true,
-    })      
-  }
 
   const newData = {
     author: userDB.username,

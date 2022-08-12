@@ -57,6 +57,34 @@ export const fetchCollectionByMapping3 = (collection1, document1, collection2, d
     .where(field, operator, data)
 }
 
+
+export const fetchCollectionByCombo1 = (collection, mappedField, operator, data, sortedField, order, limit = 1000) => {
+    return db.collection(collection)
+    .where(mappedField, operator, data)
+    .orderBy(sortedField, order)
+    .limit(limit)
+}
+
+export const fetchCollectionByCombo2 = (collection1, document, collection2, mappedField, operator, data, sortedField, order, limit = 1000) => {
+    return db.collection(collection1)
+    .doc(document)
+    .collection(collection2)
+    .where(mappedField, operator, data)
+    .orderBy(sortedField, order)
+    .limit(limit)
+}
+
+export const fetchCollectionByCombo3 = (collection1, document1, collection2, document2, collection3, mappedField, operator, data, sortedField, order, limit = 1000) => {
+    return db.collection(collection1)
+    .doc(document1)
+    .collection(collection2)
+    .doc(document2)
+    .collection(collection3)
+    .where(mappedField, operator, data)
+    .orderBy(sortedField, order)
+    .limit(limit)
+}
+
 /* UPDATE DATA */
 
 export const handleUpdateData1 = (collection, document, data) => {
@@ -65,21 +93,21 @@ export const handleUpdateData1 = (collection, document, data) => {
     .update(data)
 }
 
-export const handleUpdateData2 = (collection, document, data) => {
-    return db.collection(collection)
-    .doc(document)
-    .collection(collection)
-    .doc(document)
+export const handleUpdateData2 = (collection1, document1, collection2, document2, data) => {
+    return db.collection(collection1)
+    .doc(document1)
+    .collection(collection2)
+    .doc(document2)
     .update(data)
 }
 
-export const handleUpdateData3 = (collection, document, data) => {
-    return db.collection(collection)
-    .doc(document)
-    .collection(collection)
-    .doc(document)
-    .collection(collection)
-    .doc(document)
+export const handleUpdateData3 = (collection1, document1, collection2, document2, collection3, document3, data) => {
+    return db.collection(collection1)
+    .doc(document1)
+    .collection(collection2)
+    .doc(document2)
+    .collection(collection3)
+    .doc(document3)
     .update(data)
 }
 

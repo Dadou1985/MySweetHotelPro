@@ -1,8 +1,16 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
-import { FirebaseContext, db } from '../../Firebase'
+import { FirebaseContext } from '../../Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
+import { handleChange } from '../../helper/formCommonFunctions'
+import { 
+    handleUpdateData3, 
+    fetchCollectionBySorting3, 
+    handleSubmitData3, 
+    handleDeleteData3,
+    addNotification
+} from '../../helper/globalCommonFunctions'
 import '../css/section/checkList.css'
 
 const CheckListTable = ({shift}) => {
@@ -13,52 +21,16 @@ const CheckListTable = ({shift}) => {
 
     const { userDB } = useContext(FirebaseContext)
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-    const handleCheckboxChange = (taskId, currentStatus) => {
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('checkList')
-            .doc("lists")
-            .collection(shift)
-            .doc(taskId)
-            .update({
-            status: !currentStatus,
-        })
-    }
-
-    const handleSubmit = event => {
-        event.preventDefault()
-        setFormValue({task: ""})
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('checkList')
-            .doc("lists")
-            .collection(shift)
-            .add({
-            task: formValue.task,
-            status: false,
-            markup: Date.now()
-            })
+    const checkboxStatusCleaned = {status: false}
+    const notif = "Votre tâche vient d'être ajouter à la liste !"
+    const newData = {
+        task: formValue.task,
+        status: false,
+        markup: Date.now()
     }
 
     useEffect(() => {
-        const listOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection("checkList")
-            .doc("lists")
-            .collection(shift)
-            .orderBy("markup", "asc")
-        }
-    
-    let unsubscribe = listOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, "checkList", "lists", shift, "markup", "asc").onSnapshot(function(snapshot) {
         const snapInfo = []
             snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -68,27 +40,16 @@ const CheckListTable = ({shift}) => {
             });
             setInfo(snapInfo)
         });
-        return unsubscribe
-           
-     },[shift])
+        return unsubscribe   
+    },[shift])
 
     let taskStatus = info.length > 0 && info.filter(status => status.status === true)
 
     const handleCleanCheckboxes = () => {
         taskStatus.length > 0 && taskStatus.map(task => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('checkList')
-            .doc("lists")
-            .collection(shift)
-            .doc(task.id)
-            .update({
-            status: false,
-        })
+            return handleUpdateData3("hotels", userDB.hotelId, "checkList", "lists", shift, task.id, checkboxStatusCleaned)
         })
     }
-
-    console.log(taskStatus)
 
     return (
         <div>
@@ -100,14 +61,19 @@ const CheckListTable = ({shift}) => {
                 aria-describedby="basic-addon2"
                 value={formValue.task}
                 name="task"
-                onChange={handleChange}
+                onChange={(event) => handleChange(event, setFormValue)}
                 onKeyDown={(e) => {
                     if(e.key === "Enter") {
-                        handleSubmit(e)
+                        setFormValue({task: ""})
+                        addNotification(notif, userDB.hotelId)
+                        return handleSubmitData3(e, "hotels", userDB.hotelId, "checkList", "lists", shift, newData)
                     }
                 }}
                 />
-                    <Button variant="outline-success" onClick={handleSubmit}>{t("msh_check_list.c_button.b_validate")}</Button>
+                    <Button variant="outline-success" onClick={(event) => {
+                        setFormValue({task: ""})
+                        return handleSubmitData3(event, "hotels", userDB.hotelId, "checkList", "lists", shift, newData)
+                    }}>{t("msh_check_list.c_button.b_validate")}</Button>
             </InputGroup>
             <PerfectScrollbar style={{height: "55vh"}}>
                 <Table striped bordered hover size="sm" className="text-center">
@@ -116,7 +82,9 @@ const CheckListTable = ({shift}) => {
                             <tr key={flow.id}>
                             <td>
                                 <Form.Group controlId="formBasicCheckbox">
-                                    <Form.Check type="checkbox" checked={flow.status} onChange={() => handleCheckboxChange(flow.id, flow.status)} />
+                                    <Form.Check type="checkbox" checked={flow.status} onChange={() => {
+                                        return handleUpdateData3("hotels", userDB.hotelId, "checkList", "lists", shift, flow.id, {status: !flow.status})
+                                    }} />
                                 </Form.Group> 
                             </td>
                             <td className="checkList_input">
@@ -124,18 +92,7 @@ const CheckListTable = ({shift}) => {
                             </td>
                             <td className="bg-light">
                                 <Button variant="outline-danger" size="sm" onClick={()=>{
-                                return db.collection('hotels')
-                                .doc(userDB.hotelId)
-                                .collection("checkList")
-                                .doc("lists")
-                                .collection(shift)
-                                .doc(flow.id)
-                                .delete()
-                                .then(function() {
-                                    console.log("Document successfully deleted!");
-                                }).catch(function(error) {
-                                    console.log(error);
-                                }); 
+                                    return handleDeleteData3('hotels', userDB.hotelId, "checkList", "lists", shift, flow.id)
                                 }}>{t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>

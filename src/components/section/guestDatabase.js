@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { db, functions, specialFirestoreOptions } from '../../Firebase'
+import { functions, specialFirestoreOptions } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -14,7 +14,15 @@ import { useTranslation } from "react-i18next"
 import TimeLine from './guestTimeLine'
 import defaultImg from "../../images/avatar-client.png"
 import { StaticImage } from 'gatsby-plugin-image'
+import { addNotification, handleCreateData2, fetchCollectionByMapping1, handleUpdateData1 } from '../../helper/globalCommonFunctions'
+import { handleChange } from '../../helper/formCommonFunctions'
+import InputElement from '../../helper/common/InputElement'
+import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate'
 import '../css/common/loader.css'
+
+/* 
+ ! FIX => OVERLAYTRIGGER TOOLTIP POSITION (CHAT)
+*/
 
 const GuestDatabase = ({user, userDB}) =>{
     const { t } = useTranslation()
@@ -22,7 +30,7 @@ const GuestDatabase = ({user, userDB}) =>{
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({title: "", gender: "", phone:"", email: "", category: ""})
-    const [categoryClone, setCategoryClone] = useState(null)
+    const [categoryClone, setCategoryClone] = useState("")
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
@@ -38,17 +46,24 @@ const GuestDatabase = ({user, userDB}) =>{
     const [guestId, setGuestId] = useState(null)
     const [radioValueGender, setRadioValueGender] = useState('male');
 
+    const userDataRemoved = {hotelVisitedArray: specialFirestoreOptions.arrayRemove(userDB.hotelId)}
+    const emailSentNotif = t("msh_crm.c_notif_mails")
+    const userCreationNotif = t("msh_crm.c_notif") 
+    const modalTitle = t("msh_crm.c_button.b_add")
+
+    const userDataCreated = {
+        title: formValue.title,
+        email: formValue.email,
+        gender: radioValueGender,
+        guestLanguage: formValue.origin,
+        guestCategory: formValue.category,
+        guestCategoryClone: categoryClone !== "" ? categoryClone : t("msh_crm.c_category.c_tourisim"),
+        phone: formValue.phone,
+        markup: Date.now()
+    }
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
-
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
 
     const radiosGender = [
         { name: t("msh_crm.c_gender.g_man"), value: 'male' },
@@ -59,43 +74,8 @@ const GuestDatabase = ({user, userDB}) =>{
         return guestMail.push(email)
     }
 
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
-        setFormValue("")
-        const notif = t("msh_crm.c_notif") 
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('chat')
-            .doc(formValue.title)
-            .set({
-                title: formValue.title,
-                email: formValue.email,
-                gender: radioValueGender,
-                guestLanguage: formValue.origin,
-                guestCategory: formValue.category,
-                guestCategoryClone: categoryClone !== null ? categoryClone : t("msh_crm.c_category.c_tourisim"),
-                phone: formValue.phone,
-                markup: Date.now()
-                })
-        .then(handleClose)
-    }
-
     useEffect(() => {
-        const guestOnAir = () => {
-          return db.collection('guestUsers')
-          .where("hotelVisitedArray", "array-contains", userDB.hotelId)
-          }
-  
-        let unsubscribe = guestOnAir().onSnapshot(function(snapshot) {
+        let unsubscribe = fetchCollectionByMapping1("guestUsers", "hotelVisitedArray", "array-contains", userDB.hotelId).onSnapshot(function(snapshot) {
             const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
@@ -109,11 +89,7 @@ const GuestDatabase = ({user, userDB}) =>{
        },[])
 
     const handleDeleteGuest = (guestId) => {
-        return db.collection("guestUsers")
-            .doc(guestId)
-            .update({
-                hotelVisitedArray: specialFirestoreOptions.arrayRemove(userDB.hotelId)
-            })
+        return handleUpdateData1("guestUsers", guestId, userDataRemoved)
     }
 
     const sendCheckinMail = functions.httpsCallable('sendCheckinMail')
@@ -127,7 +103,7 @@ const GuestDatabase = ({user, userDB}) =>{
         setSendingMail(false)
         setIsLoading(false)
         setguestMail([])
-        return addNotification(t("msh_crm.c_notif_mails"))
+        return addNotification(emailSentNotif, userDB.hotelId)
     }
 
     const StyledBadge = withStyles((theme) => ({
@@ -251,122 +227,120 @@ const GuestDatabase = ({user, userDB}) =>{
 
 
                 <Modal show={list}
-                        size="lg"
-                        aria-labelledby="contained-modal-title-vcenter"
-                        centered
-                        onHide={handleClose}
-                        >
-                        <Modal.Header closeButton className="bg-light">
-                            <Modal.Title id="contained-modal-title-vcenter">
-                            {t("msh_crm.c_button.b_add")}
-                            </Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                                <div style={{
-                                        display: "flex",
-                                        flexFlow: "column",
-                                        justifyContent: "space-around",
-                                        alignItems: "center",
-                                        padding: "5%",
-                                        textAlign: "center"
-                                    }}>
-                                        <Form.Group controlId="formGroupName">
-                                            <ButtonGroup className="mb-2">
-                                                {radiosGender.map((radio, idx) => (
-                                                <ToggleButton
-                                                    key={idx}
-                                                    id={`radio-${idx}`}
-                                                    type="radio"
-                                                    variant="secondary"
-                                                    name="radio"
-                                                    value={radio.value}
-                                                    checked={radioValueGender === radio.value}
-                                                    onChange={(e) => setRadioValueGender(e.currentTarget.value)}
-                                                >
-                                                    {radio.name}
-                                                </ToggleButton>
-                                                ))}
-                                            </ButtonGroup>
-                                        </Form.Group>
-                                        <div>
-                                            <Form.Group controlId="description">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_crm.c_client")}
-                                            className="mb-3"
-                                            >
-                                                <Form.Control type="text" placeholder="ex: Jane Doe" style={{width: "20vw"}} value={formValue.title} name="title" onChange={handleChange} />
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                        <div>
-                                            <Form.Group controlId="description">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_crm.c_email")}
-                                            className="mb-3"
-                                            >
-                                                <Form.Control type="text" placeholder="ex: jane.doe@msh.com" style={{width: "20vw"}} value={formValue.email} name="email" onChange={handleChange} />
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                        <div>
-                                            <Form.Group controlId="description">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_crm.c_phone")}
-                                            className="mb-3"
-                                            >
-                                                <Form.Control type="text" placeholder="ex: 0654789321" style={{width: "20vw"}} value={formValue.phone} name="phone" onChange={handleChange} />
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                        <div>
-                                            <Form.Group controlId="exampleForm.SelectCustom">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_crm.c_origin.o_label")}
-                                            className="mb-3"
-                                            >
-                                                <Form.Select class="selectpicker" value={formValue.origin} name="origin" onChange={handleChange} 
-                                                style={{width: "20vw", 
-                                                border: "1px solid lightgrey", 
-                                                borderRadius: "3px",
-                                                backgroundColor: "white"}}>
-                                                    <option value="fr">France</option>
-                                                    <option value="en">Royaume-uni</option>
-                                                    <option value="de">Allemagne</option>
-                                                    <option value="es">Espagne</option>
-                                                    <option value="it">Italie</option>
-                                                    <option value="pt">Portugal</option>
-                                                </Form.Select>
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                        <div>
-                                            <Form.Group controlId="exampleForm.SelectCustom">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
-                                            label={t("msh_crm.c_origin.o_label")}
-                                            className="mb-3"
-                                            >
-                                                <Form.Select class="selectpicker" value={formValue.category} name="category" onChange={handleChange} 
-                                                style={{width: "20vw", 
-                                                height: "60%", 
-                                                border: "1px solid lightgrey", 
-                                                borderRadius: "3px",
-                                                backgroundColor: "white", 
-                                                paddingLeft: "1vw"}}>
-                                                    <option valeur="tourism" onClick={() => setCategoryClone(t("msh_crm.c_category.c_tourisim"))}>{t("msh_crm.c_category.c_tourisim")}</option>
-                                                    <option valeur="business" onClick={() => setCategoryClone(t("msh_crm.c_category.c_business"))}>{t("msh_crm.c_category.c_business")}</option>
-                                                </Form.Select>
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                    </div>
-                        </Modal.Body>
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    onHide={handleClose}
+                >
+                    <ModalHeaderFormTemplate title={modalTitle} />
+                    <Modal.Body>
+                    <div style={{
+                            display: "flex",
+                            flexFlow: "column",
+                            justifyContent: "space-around",
+                            alignItems: "center",
+                            padding: "5%",
+                            textAlign: "center"
+                        }}>
+                            <Form.Group controlId="formGroupName">
+                                <ButtonGroup className="mb-2">
+                                    {radiosGender.map((radio, idx) => (
+                                    <ToggleButton
+                                        key={idx}
+                                        id={`radio-${idx}`}
+                                        type="radio"
+                                        variant="secondary"
+                                        name="radio"
+                                        value={radio.value}
+                                        checked={radioValueGender === radio.value}
+                                        onChange={(e) => setRadioValueGender(e.currentTarget.value)}
+                                    >
+                                        {radio.name}
+                                    </ToggleButton>
+                                    ))}
+                                </ButtonGroup>
+                            </Form.Group>
+                            <InputElement
+                                containerStyle={{marginBottom: "0"}} 
+                                label={t("msh_crm.c_client")}
+                                placeholder="ex: Jane Doe"
+                                size="20vw"
+                                value={formValue.title}
+                                name="title"
+                                handleChange={handleChange}
+                                setFormValue={setFormValue}
+                            />
+                            <InputElement
+                                containerStyle={{marginBottom: "0"}} 
+                                label={t("msh_crm.c_email")}
+                                placeholder="ex: jane.doe@msh.com"
+                                size="20vw"
+                                value={formValue.email}
+                                name="email"
+                                handleChange={handleChange}
+                                setFormValue={setFormValue}
+                            />
+                            <InputElement
+                                containerStyle={{marginBottom: "0"}} 
+                                label={t("msh_crm.c_phone")}
+                                placeholder="ex: 0654789321"
+                                size="20vw"
+                                value={formValue.phone}
+                                name="phone"
+                                handleChange={handleChange}
+                                setFormValue={setFormValue}
+                            />
+                            <div>
+                                <Form.Group controlId="exampleForm.SelectCustom">
+                                <FloatingLabel
+                                controlId="floatingInput"
+                                label={t("msh_crm.c_origin.o_label")}
+                                className="mb-3"
+                                >
+                                    <Form.Select class="selectpicker" value={formValue.origin} name="origin" onChange={(event) => handleChange(event, setFormValue)} 
+                                    style={{width: "20vw", 
+                                    border: "1px solid lightgrey", 
+                                    borderRadius: "3px",
+                                    backgroundColor: "white"}}>
+                                        <option value="fr">France</option>
+                                        <option value="en">Royaume-uni</option>
+                                        <option value="de">Allemagne</option>
+                                        <option value="es">Espagne</option>
+                                        <option value="it">Italie</option>
+                                        <option value="pt">Portugal</option>
+                                    </Form.Select>
+                                </FloatingLabel>
+                                </Form.Group>
+                            </div>
+                            <div>
+                                <Form.Group controlId="exampleForm.SelectCustom">
+                                <FloatingLabel
+                                controlId="floatingInput"
+                                label={t("msh_crm.c_origin.o_label")}
+                                className="mb-3"
+                                >
+                                    <Form.Select class="selectpicker" value={formValue.category} name="category" onChange={(event) => handleChange(event, setFormValue)} 
+                                    style={{width: "20vw", 
+                                    height: "60%", 
+                                    border: "1px solid lightgrey", 
+                                    borderRadius: "3px",
+                                    backgroundColor: "white", 
+                                    paddingLeft: "1vw"}}>
+                                        <option valeur="tourism" onClick={() => setCategoryClone(t("msh_crm.c_category.c_tourisim"))}>{t("msh_crm.c_category.c_tourisim")}</option>
+                                        <option valeur="business" onClick={() => setCategoryClone(t("msh_crm.c_category.c_business"))}>{t("msh_crm.c_category.c_business")}</option>
+                                    </Form.Select>
+                                </FloatingLabel>
+                                </Form.Group>
+                            </div>
+                        </div>
+                    </Modal.Body>
                         {footerState && <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                            <Button variant="dark" onClick={(event) => {
+                                handleCreateData2(event, "hotels", userDB.hotelId, "chat", formValue.title, userDataCreated)
+                                setFormValue("")
+                                addNotification(userCreationNotif, userDB.hotelId)
+                                return handleClose()
+                            }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}
                     </Modal>
                 </div>
@@ -380,12 +354,12 @@ const GuestDatabase = ({user, userDB}) =>{
                             alignItems: "center"
                             }}>
                             <Card.Title style={{
-                                            fontWeight: "bolder", 
-                                            fontSize: "1.5em", 
-                                            borderBottom: "1px solid lightgrey", 
-                                            width: "100%", 
-                                            textAlign: "center", 
-                                            paddingBottom: "1vh"}}>{item.username}</Card.Title>
+                                fontWeight: "bolder", 
+                                fontSize: "1.5em", 
+                                borderBottom: "1px solid lightgrey", 
+                                width: "100%", 
+                                textAlign: "center", 
+                                paddingBottom: "1vh"}}>{item.username}</Card.Title>
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
                                 <StaticImage placeholder="blurred" src='../../images/email.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.email}

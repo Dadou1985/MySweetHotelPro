@@ -12,19 +12,19 @@ import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
 import DefaultProfile from "../../svg/profile.png"
 import { StaticImage } from 'gatsby-plugin-image'
+import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../helper/globalCommonFunctions'
+import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
 import '../css/section/dilema.css'
 
 
 const Dilema = ({user, userDB, setUserDB}) => {
 
-    const [showModal, setShowModal] = useState(false)
     const [confModal, setConfModal] = useState(true)
     const [info, setInfo] = useState([])
     const [listEmail, setListEmail] = useState(false)
     const [listPassword, setListPassword] = useState(false)
     const [listVisuel, setlistVisuel] = useState(false)
     const [listLogo, setListLogo] = useState(false)
-    const [showDialog, setShowDialog] = useState(false)
     const [switchButton, setSwitchButton] = useState(false)
     const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
@@ -39,42 +39,31 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const { data } = useShortenUrl(url);
     const { t } = useTranslation()
 
+    const hotelNameForUrl = userDB.hotelName
+    const emailModalTitle = t("msh_user_panel.u_section.s_email.e_label")
+    const passwordModalTitle = t("msh_user_panel.u_section.s_password.p_label")
+    const visuelModalTitle = t("msh_user_panel.u_section.s_visuals.v_label")
+    const logoModalTitle = t("msh_user_panel.u_section.s_logo.l_label")
+
+    const isBrowser = () => typeof window !== "undefined"
+
+    const handleCloseUpdateEmail = () => setListEmail(false)
+    const handleShowUpdateEmail = () => setListEmail(true)
+
+    const handleCloseUpdatePassword = () => setListPassword(false)
+    const handleShowUpdatePassword = () => setListPassword(true)
+
+    const handleCloseUpdatePhoto = () => setConfModal(false)
+
     const exportPDF = (pdf) => {
         if (pdf.current) {
             pdf.current.save();
         }
-      };
-
-    const hotelNameForUrl = userDB.hotelName
-
-    const handleUpdateAdminAccount = (userId, url) => {
-        return db.collection('businessUsers')
-            .doc(userId)
-            .update({
-                logo: url,
-                base64Url: baseUrl,
-                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
-            })
-    }
-
-    const handleUpdateHotel = (url) => {
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .update({
-                logo: url,
-                base64Url: baseUrl,
-                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
-            })
-    }
-
+    };
+ 
     useEffect(() => {
-        const updateStaffData = () => {
-          return db.collection('businessUsers')
-          .where("hotelId", "==", userDB.hotelId)
-          }
-  
-        let unsubscribe = updateStaffData().onSnapshot(function(snapshot) {
-            const snapInfo = []
+        let unsubscribe = fetchCollectionByMapping1("businessUsers", "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
+        const snapInfo = []
           snapshot.forEach(function(doc) {          
             snapInfo.push({
                 id: doc.id,
@@ -83,16 +72,23 @@ const Dilema = ({user, userDB, setUserDB}) => {
             });
             if(data){
                 snapInfo.map((user) => {
-                    return handleUpdateAdminAccount(user.userId, data.link)
+                    return handleUpdateData1('businessUsers', user.userId, {
+                        logo: data.link,
+                        base64Url: baseUrl,
+                        appLink: `https://mysweethotel.eu/?url=${data.link}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
+                    })
                 })
             }
         });
         return unsubscribe
-       },[data])
+    },[data])
 
     const handleFirestoreNewData = (shortenUrl) => {
-        console.log("SHORTENURL", shortenUrl)
-        handleUpdateHotel(shortenUrl)   
+        handleUpdateData1("hotels", userDB.hotelId, {
+            logo: shortenUrl,
+            base64Url: baseUrl,
+            appLink: `https://mysweethotel.eu/?url=${shortenUrl}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
+        })
         setTimeout(
             () => window.location.reload(),
             1000
@@ -100,8 +96,8 @@ const Dilema = ({user, userDB, setUserDB}) => {
     }
 
     const handleUploadLogo = async() =>{
-            const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
-            await uploadTask
+        const uploadTask = storage.ref(`msh-hotel-logo/${newImg.name}`).put(newImg)
+        await uploadTask
     }
 
 
@@ -221,85 +217,50 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const handleUpdateEmail = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        
-        return db.collection('businessUsers')
-        .doc(user.uid)
-        .update({
-            email: field
-          })
+        return handleUpdateData1("businessUsers", user.uid, {email: field})
         .then(handleLoadUserDB())
     }
 
     const handleUpdatePassword = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        
-        return db.collection('businessUsers')
-        .doc(user.uid)
-        .update({
-            password: field
-          })
+        return handleUpdateData1("businessUsers", user.uid, {password: field})
         .then(handleLoadUserDB())
     }
 
-    const handleCloseUpdateEmail = () => setListEmail(false)
-    const handleShowUpdateEmail = () => setListEmail(true)
-
-    const handleCloseUpdatePassword = () => setListPassword(false)
-    const handleShowUpdatePassword = () => setListPassword(true)
-
-    const handleCloseUpdatePhoto = () => setConfModal(false)
-
     useEffect(() => {
-        const iziUserOnAir2 = () => {
-            return db.collection('businessUsers')
-            .where("userId", "==", user.uid)
-        }
-
-       let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-               
-                return unsubscribe
-                
+        let unsubscribe = fetchCollectionByMapping1("businessUsers", "userId", "==", user.uid).onSnapshot(function(snapshot) {
+            const snapInfo = []
+            snapshot.forEach(function(doc) {          
+            snapInfo.push({
+                id: doc.id,
+                ...doc.data()
+                })        
+            });
+            setInfo(snapInfo)
+        });
+        return unsubscribe      
      },[])
 
-     const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-     const handleChangeEmail = () => {
+    const handleChangeEmail = () => {
         const notif = t("msh_user_panel.u_section.s_email.e_notif") 
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
-            addNotification(notif)
+            addNotification(notif, userDB.hotelId)
         })
-      }
+    }
 
-      const handleChangePassword = () => {
+    const handleChangePassword = () => {
         const notif = t("msh_user_panel.u_section.s_password.p_notif") 
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updatePassword(formValue.password)
-            addNotification(notif)
+            addNotification(notif, userDB.hotelId)
         })
     }
-
-    const isBrowser = () => typeof window !== "undefined"
     
     return (
         info.map((flow, key) => (
@@ -357,11 +318,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             centered
             onHide={handleCloseUpdateEmail}
             >
-            <Modal.Header closeButton className="bg-light">
-                <Modal.Title id="contained-modal-title-vcenter">
-                {t("msh_user_panel.u_section.s_email.e_label")}
-                </Modal.Title>
-            </Modal.Header>
+                <ModalHeaderFormTemplate title={emailModalTitle} />
             <Modal.Body>
             <div className="update_modal_container">
             <div>
@@ -386,11 +343,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             centered
             onHide={handleCloseUpdatePassword}
             >
-            <Modal.Header closeButton className="bg-light">
-                <Modal.Title id="contained-modal-title-vcenter">
-                {t("msh_user_panel.u_section.s_password.p_label")}
-                </Modal.Title>
-            </Modal.Header>
+            <ModalHeaderFormTemplate title={passwordModalTitle} />
             <Modal.Body>
             <div className="update_modal_container">
             <div>
@@ -415,11 +368,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             centered
             onHide={() => setlistVisuel(false)}
             >
-            <Modal.Header closeButton className="bg-light">
-                <Modal.Title id="contained-modal-title-vcenter">
-                {t("msh_user_panel.u_section.s_visuals.v_label")}
-                </Modal.Title>
-            </Modal.Header>
+            <ModalHeaderFormTemplate title={visuelModalTitle} />
             <Modal.Body>
             <div className="visuel_modal_container">
                 <div className="visuel">
@@ -468,11 +417,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             centered
             onHide={() => setListLogo(false)}
             >
-            <Modal.Header closeButton className="bg-light">
-                <Modal.Title id="contained-modal-title-vcenter">
-                {t("msh_user_panel.u_section.s_logo.l_label")}
-                </Modal.Title>
-            </Modal.Header>
+            <ModalHeaderFormTemplate title={logoModalTitle} />
             <Modal.Body style={{display: "flex", flexFlow: "column", alignItems: 'center'}}>
             <div className="dilema_upload_container">
                 <input type="file" className="dilema-camera-icon"

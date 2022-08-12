@@ -1,23 +1,25 @@
-import React, {useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
-import { db } from '../../Firebase'
 import moment from 'moment'
 import Picture from '../../svg/picture.svg'
 import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-
+import { handleChange } from '../../helper/formCommonFunctions'
+import { addNotification, fetchCollectionByCombo2, handleDeleteData2, handleSubmitData2 } from '../../helper/globalCommonFunctions'
+import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate'
+import InputElement from '../../helper/common/InputElement'
+import TextareaElement from '../../helper/common/textareaElement'
 
 const LostNFound = ({userDB}) =>{
-    const { t, i18n } = useTranslation()
-
+    const { t } = useTranslation()
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({type: "tech", place: "hall", details: "", description: ""})
-    const [typeClone, setTypeClone] = useState(null)
-    const [placeClone, setPlaceClone] = useState(null)
+    const [typeClone, setTypeClone] = useState("")
+    const [placeClone, setPlaceClone] = useState("")
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [filter, setFilter] = useState("tech")
@@ -27,70 +29,37 @@ const LostNFound = ({userDB}) =>{
         details: t("msh_lost_found.l_sheet.s_subtitle")
     })
 
+    const notif = t("msh_lost_found.l_notif")
+    const modalTitle = t("msh_lost_found.l_button.b_add")
+    const newData = {
+        author: userDB.username,
+        date: new Date(),
+        description: formValue.description,
+        details: formValue.details,
+        place: formValue.place,
+        placeClone: placeClone !== "" ? placeClone : t("msh_lost_found.l_place.p_hall"),
+        markup: Date.now(),
+        type: formValue.type,
+        typeClone: typeClone !== "" ? typeClone : "High Tech",
+        status: false
+    }
+
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
 
-    const handleChange = (event) =>{
-        event.persist()
-        setFormValue(currentValue =>({
-          ...currentValue,
-          [event.target.name]: event.target.value
-        }))
-      }
-
-      const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
-      const handleSubmit = event => {
-        event.preventDefault()
-        setFormValue("")
-        const notif = t("msh_lost_found.l_notif") 
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('lostAndFound')
-            .add({
-            author: userDB.username,
-            date: new Date(),
-            description: formValue.description,
-            details: formValue.details,
-            place: formValue.place,
-            placeClone: placeClone !== null ? placeClone : t("msh_lost_found.l_place.p_hall"),
-            markup: Date.now(),
-            type: formValue.type,
-            typeClone: typeClone !== null ? typeClone : "High Tech",
-            status: false
-            })
-        .then(handleClose)
-    }
-
     useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('lostAndFound')
-            .where("type", "==", filter)
-            .orderBy("markup")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
+        let unsubscribe = fetchCollectionByCombo2("hotels", userDB.hotelId, "lostAndFound", "type", "==", filter, "markup", "asc").onSnapshot(function(snapshot) {
+            const snapInfo = []
+                snapshot.forEach(function(doc) {          
+                snapInfo.push({
+                    id: doc.id,
+                    ...doc.data()
+                    })        
                 });
-                return unsubscribe
-           
-     },[filter])
+                setInfo(snapInfo)
+            });
+        return unsubscribe
+    },[filter])
 
     return(
         <div style={{width: "95%"}}>
@@ -143,16 +112,7 @@ const LostNFound = ({userDB}) =>{
                                         <td>{flow.placeClone}</td>
                                         <td>{flow.author}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return db.collection('hotels')
-                                            .doc(userDB.hotelId)
-                                            .collection("lostAndFound")
-                                            .doc(flow.id)
-                                            .delete()
-                                            .then(function() {
-                                                console.log("Document successfully deleted!");
-                                            }).catch(function(error) {
-                                                console.log(error);
-                                            });
+                                            return handleDeleteData2("hotels", userDB.hotelId, "lostAndFound", flow.id)
                                         }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                     </tr>
                                 ))}
@@ -170,11 +130,7 @@ const LostNFound = ({userDB}) =>{
                         centered
                         onHide={handleClose}
                         >
-                        <Modal.Header closeButton className="bg-light">
-                            <Modal.Title id="contained-modal-title-vcenter">
-                            {t("msh_lost_found.l_button.b_add")}
-                            </Modal.Title>
-                        </Modal.Header>
+                        <ModalHeaderFormTemplate title={modalTitle} />
                         <Modal.Body>
                                 <div style={{
                                         display: "flex",
@@ -226,30 +182,34 @@ const LostNFound = ({userDB}) =>{
                                             </FloatingLabel>
                                             </Form.Group>
                                         </div>
-                                        <div style={{marginBottom: "2vh"}}>
-                                            <Form.Group controlId="description">
-                                            <FloatingLabel
-                                            controlId="floatingInput"
+                                        <InputElement
+                                            containerStyle={{marginBottom: "0"}} 
                                             label={t("msh_lost_found.l_description.d_label")}
-                                            className="mb-3">                                            
-                                                <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} style={{width: "20vw"}} value={formValue.description} name="description" onChange={handleChange} />
-                                            </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
-                                        <div>
-                                            <Form.Group controlId="details">
-                                                <FloatingLabel
-                                                controlId="floatingInput"
-                                                label={t("msh_lost_found.l_details")}
-                                                className="mb-3">
-                                                    <Form.Control as="textarea" rows="3" style={{width: "20vw", maxHeight: "30vh"}} value={formValue.details} name="details" onChange={handleChange}  />
-                                                </FloatingLabel>
-                                            </Form.Group>
-                                        </div>
+                                            placeholder="ex: Jane Doe"
+                                            size="20vw"
+                                            value={formValue.description}
+                                            name="description"
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                        />
+                                        <TextareaElement
+                                            label={t("msh_lost_found.l_details")}
+                                            row="3"
+                                            value={formValue.details} 
+                                            name="details" 
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                            size={{width: "20vw", maxHeight: "30vh"}}
+                                        /> 
                                     </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                            <Button variant="dark" onClick={(event) => {
+                                handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+                                setFormValue("")
+                                addNotification(notif, userDB.hotelId)
+                                return handleClose()
+                            }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>
                     </Modal>
                 </div>

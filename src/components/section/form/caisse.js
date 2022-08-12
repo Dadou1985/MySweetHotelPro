@@ -103,8 +103,6 @@ const Caisse = () =>{
     //     content: () => componentRef.current,
     // })
 
-    console.log('==============================================================', document.getElementById("montant") != null && document.getElementById("montant").innerHTML)
-
     return(
         <div style={{
             display: "flex",

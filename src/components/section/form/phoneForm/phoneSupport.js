@@ -157,21 +157,21 @@ export default function PhoneSupport({user, userDB}) {
             <div className={typeof window !== `undefined` && window.innerWidth < 768 && "communizi_form_input_div"}>
                 <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder={t("msh_support.s_input_placeholder")} onChange={handleChange} required />
-                    <img src={Send} alt="sendIcon" style={{width: "8%"}} onClick={async() => {
+                    <img src={Send} alt="sendIcon" style={{width: "8%"}} onClick={async(event) => {
                     await getChatRoom()
-                    if(chatRoom !== null) {
-                        return handleUpdateData1('assistance', userDB.hotelName, updatedData)
-                        .then(() => {
-                            setNote("")
-                            handleSubmitData2("assistance", userDB.hotelName, "chatRoom", newData)
-                        })
-                    }else{
-                        return handleCreateData1('assistance', userDB.hotelName, createdData)
-                        .then(() => {
-                            setNote("")
-                            handleSubmitData2("assistance", userDB.hotelName, "chatRoom", newData)
-                        })
-                    }
+                        if(chatRoom !== null) {
+                            return handleUpdateData1(event, 'assistance', userDB.hotelName, updatedData)
+                            .then(() => {
+                                setNote("")
+                                handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
+                            })
+                        }else{
+                            return handleCreateData1(event, 'assistance', userDB.hotelName, createdData)
+                            .then(() => {
+                                setNote("")
+                                handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
+                            })
+                        }
                     }} />          
                 </Form.Group>
             </div>

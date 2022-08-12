@@ -9,7 +9,8 @@ import Notebook from '../../svg/notebook.png'
 import ChatLogo from '../../images/chat.png'
 import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
-import MaintenanceRate from './maintenanceRate';
+import MaintenanceRate from './maintenanceRate'
+import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../helper/globalCommonFunctions';
 import '../css/section/dashboard.css'
 
 const Dashboard = ({userDB}) => {
@@ -51,154 +52,116 @@ const roomChangeData = {
         ],
         backgroundColor: "black",
         label: t('msh_dashboard.d_rate')
-    }]
-};
-
-
-const maintenanceData = {
-  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
-  datasets: [
-    {
-      data: [
-        reasonFilter(maintenance, sixDayAgo, sevenDayAgo),
-        reasonFilter(maintenance, fiveDayAgo, sixDayAgo),
-        reasonFilter(maintenance, fourDayAgo, fiveDayAgo),
-        reasonFilter(maintenance, threeDayAgo, fourDayAgo),
-        reasonFilter(maintenance, twoDayAgo, threeDayAgo),
-        reasonFilter(maintenance, oneDayAgo, twoDayAgo),
-        reasonFilter(maintenance, Date.now(), oneDayAgo)
-      ],
-      backgroundColor: "black",
-      label: t('msh_dashboard.d_rate')
-    }]
-}
-
-
-let basicOptions = {
-  maintainAspectRatio: false,
-  aspectRatio: .8,
-  plugins: {
-      legend: {
-          labels: {
-              color: '#495057'
-          }
       }
-  },
-  scales: {
-      x: {
-          ticks: {
-              color: '#495057'
-          },
-          grid: {
-              color: '#ebedef'
-          }
-      },
-      y: {
-          ticks: {
-              color: '#495057'
-          },
-          grid: {
-              color: '#ebedef'
-          }
-      }
+    ]
+  };
+
+  const maintenanceData = {
+    labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
+    datasets: [
+      {
+        data: [
+          reasonFilter(maintenance, sixDayAgo, sevenDayAgo),
+          reasonFilter(maintenance, fiveDayAgo, sixDayAgo),
+          reasonFilter(maintenance, fourDayAgo, fiveDayAgo),
+          reasonFilter(maintenance, threeDayAgo, fourDayAgo),
+          reasonFilter(maintenance, twoDayAgo, threeDayAgo),
+          reasonFilter(maintenance, oneDayAgo, twoDayAgo),
+          reasonFilter(maintenance, Date.now(), oneDayAgo)
+        ],
+        backgroundColor: "black",
+        label: t('msh_dashboard.d_rate')
+      }]
   }
-};
 
+  let basicOptions = {
+    maintainAspectRatio: false,
+    aspectRatio: .8,
+    plugins: {
+        legend: {
+            labels: {
+                color: '#495057'
+            }
+        }
+    },
+    scales: {
+        x: {
+            ticks: {
+                color: '#495057'
+            },
+            grid: {
+                color: '#ebedef'
+            }
+        },
+        y: {
+            ticks: {
+                color: '#495057'
+            },
+            grid: {
+                color: '#ebedef'
+            }
+        }
+    }
+  };
 
   useEffect(() => {
-    const noteOnAir = () => {
-      return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection('note')
-        .where("date", "==", moment(new Date()).format('LL'))
-        .orderBy('markup', "desc")
-    }
+    let unsubscribe = fetchCollectionByCombo2("hotels", userDB.hotelId, 'note', "date", "==", moment(new Date()).format('LL'), 'markup', 'desc').onSnapshot(function(snapshot) {
+      const snapInfo = []
+      snapshot.forEach(function(doc) {          
+          snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
 
-      let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
-        const snapInfo = []
-        snapshot.forEach(function(doc) {          
-            snapInfo.push({
-              id: doc.id,
-              ...doc.data()
-            })        
-          });
+        setConsigne(snapInfo)
+    });
+    return unsubscribe 
+  },[])
 
-          setConsigne(snapInfo)
-      });
-      return unsubscribe
-         
-   },[])
-
-   useEffect(() => {
-    const chatOnAir = () => {
-      return db.collection('hotels')
-        .doc(userDB.hotelId)
-        .collection("chat")
-        .where("checkoutDate", "!=", "")
-      }
-
-    let unsubscribe = chatOnAir().onSnapshot(function(snapshot) {
-        const snapInfo = []
+  useEffect(() => {
+    let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "chat", "checkoutDate", "!=", "").onSnapshot(function(snapshot) {
+      const snapInfo = []
       snapshot.forEach(function(doc) {          
         snapInfo.push({
             id: doc.id,
             ...doc.data()
           })        
         });
-        
-        const chatStatus = snapInfo && snapInfo.filter(chat => chat.status === true)
+      const chatStatus = snapInfo && snapInfo.filter(chat => chat.status === true)
+      setChat(chatStatus)
+    });
+  return unsubscribe
+  },[])
 
-        setChat(chatStatus)
+  useEffect(() => {
+    let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "roomChange", "markup", ">=", sevenDayAgo).onSnapshot(function(snapshot) {
+      const snapInfo = []
+      snapshot.forEach(function(doc) {          
+        snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
+      setRoomChange(snapInfo)
     });
     return unsubscribe
-   },[])
+  },[])
 
 
-useEffect(() => {
-  const toolOnAir = () => {
-      return db.collection('hotels')
-      .doc(userDB.hotelId)
-      .collection("roomChange")
-      .where("markup", ">=", sevenDayAgo)
-  }
-
-  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-              const snapInfo = []
-            snapshot.forEach(function(doc) {          
-              snapInfo.push({
-                  id: doc.id,
-                  ...doc.data()
-                })        
-              });
-
-              setRoomChange(snapInfo)
-          });
-          return unsubscribe
-},[])
-
-
-useEffect(() => {
-  const toolOnAir = () => {
-      return db.collection('hotels')
-      .doc(userDB.hotelId)
-      .collection("maintenance")
-      .where("markup", ">=", sevenDayAgo)
-  }
-
-  let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-              const snapInfo = []
-            snapshot.forEach(function(doc) {          
-              snapInfo.push({
-                  id: doc.id,
-                  ...doc.data()
-                })        
-              });
-
-              setMaintenance(snapInfo)
-          });
-          return unsubscribe
-},[])
-
+  useEffect(() => {
+    let unsubscribe = fetchCollectionByMapping2('hotels', userDB.hotelId, "maintenance", "markup", ">=", sevenDayAgo).onSnapshot(function(snapshot) {
+      const snapInfo = []
+      snapshot.forEach(function(doc) {          
+        snapInfo.push({
+            id: doc.id,
+            ...doc.data()
+          })        
+        });
+      setMaintenance(snapInfo)
+    });
+    return unsubscribe
+  },[])
 
   return <div style={{
       display: "flex",
