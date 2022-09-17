@@ -2,33 +2,30 @@ import React, { useState } from 'react';
 import { useTranslation } from "react-i18next"
 import { Modal, ModalBody } from 'react-bootstrap'
 import DoughnutChart from "./roomChangeDoughtnut"
+import { oneWeekAgo, fourWeekAgo } from '../../helper/common/timeRange/month'
+import { sixMonthAgo, twelveMonthAgo } from '../../helper/common/timeRange/year'
 
 const RoomChangeRate = ({userDB, showModal, closeModal}) => {
     const [filter, setFilter] = useState(Date.now() - 604800000);
-    const { t } = useTranslation()
-
-    const roomChangeWeekAgo = Date.now() - 604800000
-    const roomChangeMonthAgo = Date.now() - 2678400000
-    const roomChangeSixMonthsAgo = Date.now() - 15901200000
-    const roomChangeYearAgo = Date.now() - 31536000000 
+    const { t } = useTranslation() 
     const [activeTab, setActiveTab] = useState("week");
 
-  return <div>
-      <Modal show={showModal}
-      size="xl"
-      aria-labelledby="contained-modal-title-vcenter"
-      centered
-      onHide={closeModal}
-      enforceFocus={false}>
-      <Modal.Header closeButton className="bg-light">
-      <Modal.Title id="contained-modal-title-vcenter">
-      {t('msh_dashboard.d_doughnut_chart.d_title')}
-        </Modal.Title>
-      </Modal.Header>
-      <ModalBody style={{
-          display: "flex",
-          flexFlow: "row wrap",
-      }}>
+    return <div>
+        <Modal show={showModal}
+        size="xl"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+        onHide={closeModal}
+        enforceFocus={false}>
+        <Modal.Header closeButton className="bg-light">
+        <Modal.Title id="contained-modal-title-vcenter">
+        {t('msh_dashboard.d_doughnut_chart.d_title')}
+            </Modal.Title>
+        </Modal.Header>
+        <ModalBody style={{
+            display: "flex",
+            flexFlow: "row wrap",
+        }}>
         <div style={{
             display: typeof window && window.innerWidth > 768 ? "flex" : "none",
             flexFlow: "column",
@@ -55,7 +52,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
             }}
             className="softSkin dashboard-icon"
             onClick={() => {
-                setFilter(roomChangeWeekAgo)
+                setFilter(oneWeekAgo)
                 setActiveTab("week")
                 }}>{t('msh_dashboard.d_data_modal.d_period.p_week')}</div>
             <div style={{
@@ -77,7 +74,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
             className="softSkin dashboard-icon"
             onClick={() => {
                 setActiveTab("month")
-                setFilter(roomChangeMonthAgo)
+                setFilter(fourWeekAgo)
                 }}>{t('msh_dashboard.d_data_modal.d_period.p_month')}</div>
             <div style={{
                 display: "flex",
@@ -98,7 +95,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
             className="softSkin dashboard-icon"
             onClick={() => {
                 setActiveTab("semester")
-                setFilter(roomChangeSixMonthsAgo)
+                setFilter(sixMonthAgo)
                 }}>{t('msh_dashboard.d_data_modal.d_period.p_semester')}</div>
             <div style={{
                 display: "flex",
@@ -119,7 +116,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
             className="softSkin dashboard-icon"
             onClick={() => {
                 setActiveTab("year")
-                setFilter(roomChangeYearAgo)
+                setFilter(twelveMonthAgo)
                 }}>{t('msh_dashboard.d_data_modal.d_period.p_year')}</div>
         </div>
         

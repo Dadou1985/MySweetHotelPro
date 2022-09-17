@@ -1,6 +1,5 @@
 import React, {useState } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { db } from '../../Firebase'
 import { useTranslation } from "react-i18next"
 import '../css/section/createSticker.css'
 import PostIt from '../../images/postItPlus.png'

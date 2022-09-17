@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next"
-import {db} from '../../Firebase'
 import moment from 'moment'
-import 'moment/locale/fr';
+import 'moment/locale/fr'
 import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
 import Notebook from '../../svg/notebook.png'
@@ -11,6 +10,8 @@ import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate'
 import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../helper/globalCommonFunctions';
+import { stackedDataForWeek } from '../../helper/common/timeRange/stackedData'
+import { sevenDayAgo } from '../../helper/common/timeRange/week'
 import '../css/section/dashboard.css'
 
 const Dashboard = ({userDB}) => {
@@ -22,34 +23,13 @@ const Dashboard = ({userDB}) => {
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
-  const reasonFilter = (array, start, end) => {
-    const arrayFiltered = array.filter(reason => {return reason.markup < start && reason.markup > end})
-    return arrayFiltered.length
-}
-
-const oneDayAgo = Date.now() - 86400000
-const twoDayAgo = Date.now() - 172800000
-const threeDayAgo = Date.now() - 259200000
-const fourDayAgo = Date.now() - 345600000
-const fiveDayAgo = Date.now() - 432000000
-const sixDayAgo = Date.now() - 518400000
-const sevenDayAgo = Date.now() - 604800000
-
 const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
 
 const roomChangeData = {
   labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
   datasets: [
     {
-        data: [
-          reasonFilter(roomChange, sixDayAgo, sevenDayAgo),
-          reasonFilter(roomChange, fiveDayAgo, sixDayAgo),
-          reasonFilter(roomChange, fourDayAgo, fiveDayAgo),
-          reasonFilter(roomChange, threeDayAgo, fourDayAgo),
-          reasonFilter(roomChange, twoDayAgo, threeDayAgo),
-          reasonFilter(roomChange, oneDayAgo, twoDayAgo),
-          reasonFilter(roomChange, Date.now(), oneDayAgo)
-        ],
+        data: stackedDataForWeek(roomChange),
         backgroundColor: "black",
         label: t('msh_dashboard.d_rate')
       }
@@ -60,15 +40,7 @@ const roomChangeData = {
     labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
     datasets: [
       {
-        data: [
-          reasonFilter(maintenance, sixDayAgo, sevenDayAgo),
-          reasonFilter(maintenance, fiveDayAgo, sixDayAgo),
-          reasonFilter(maintenance, fourDayAgo, fiveDayAgo),
-          reasonFilter(maintenance, threeDayAgo, fourDayAgo),
-          reasonFilter(maintenance, twoDayAgo, threeDayAgo),
-          reasonFilter(maintenance, oneDayAgo, twoDayAgo),
-          reasonFilter(maintenance, Date.now(), oneDayAgo)
-        ],
+        data: stackedDataForWeek(maintenance),
         backgroundColor: "black",
         label: t('msh_dashboard.d_rate')
       }]
