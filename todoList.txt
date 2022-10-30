@@ -1,3 +1,7 @@
-1. Banner/Flyer => Fix les logos sur les bannières et flyers
+1. Banner/Flyer => Fix les logos sur les bannières et flyers 
 2. Chat => Fix envoi message + "enter" key reloading
-3. Messenger => Fix accordion button
+3. Messenger => Fix accordion button + Post It => affichage titre hovered
+4. Lost and Found => Fix record item modal select fields 
+5. Toolbar => add cursor pointer on icons
+6. Safe => Fix posting amount data to DB
+7. Dashboard => Fix data visualisation on dashboard
