@@ -62,7 +62,7 @@ const Caisse = () =>{
     const newData = {
         author: userDB.username,
         date: moment(new Date()).format('LL'),
-        amount: document.getElementById("montant") != null && document.getElementById("montant").innerHTML,
+        amount: document.getElementById("montant") !== null && document.getElementById("montant").innerHTML,
         shift: formValue.shift,
         shiftClone: formValue.shiftClone !== "" ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
         markup: Date.now()
@@ -102,6 +102,9 @@ const Caisse = () =>{
     //  const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
     // })
+
+
+    console.log("33333333333333", document.getElementById("montant") !== null && document.getElementById("montant").value)
 
     return(
         <div style={{
@@ -220,7 +223,7 @@ const Caisse = () =>{
                                 <tfoot>
                                     <tr>
                                         <td></td>
-                                        <td ><b>{t("msh_general.g_table.t_total_qty")}</b></td>
+                                        <td><b>{t("msh_general.g_table.t_total_qty")}</b></td>
                                         <td><b>{t("msh_general.g_table.t_total")}</b></td>
                                     </tr>
                                     <tr>

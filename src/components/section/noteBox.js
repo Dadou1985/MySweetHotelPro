@@ -76,8 +76,8 @@ const NoteBox = ({filterDate, category, title}) => {
       <>
       <h6 style={{color: category, borderBottom: `1px solid ${category}`}}>
         <b>{t(title)}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <div onClick={() => setData(!data)}>
-          <StaticImage placeholder='blurred' src='../../svg/arrowDown.svg' style={{
-            width: "1vw", 
+          <img src={Arrow} style={{
+            width: "2vw", 
             color: "red", 
             float: "right", 
             transform: data ? "rotate(180deg)" : "rotate(0deg)", 

@@ -26,7 +26,7 @@ const CheckList = () =>{
                 {t("msh_check_list.c_title")}
               </Tooltip>
             }>
-                <img src={TodoList} className="icon" alt="todolist" onClick={handleShow} style={{width: "2vw"}} />
+                <img src={TodoList} className="icon" alt="todolist" onClick={handleShow} style={{width: "2vw", cursor: "pointer"}} />
         </OverlayTrigger>
 
             <Modal

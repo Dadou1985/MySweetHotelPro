@@ -19,7 +19,7 @@ const LostNFound = ({userDB}) =>{
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({type: "tech", place: "hall", details: "", description: ""})
     const [typeClone, setTypeClone] = useState("")
-    const [placeClone, setPlaceClone] = useState("")
+    const [placeClone, setPlaceClone] = useState("test")
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [filter, setFilter] = useState("tech")
@@ -60,6 +60,8 @@ const LostNFound = ({userDB}) =>{
             });
         return unsubscribe
     },[filter])
+
+    console.log("88888888888888888", placeClone)
 
     return(
         <div style={{width: "95%"}}>
@@ -146,16 +148,16 @@ const LostNFound = ({userDB}) =>{
                                             controlId="floatingInput"
                                             label={t("msh_lost_found.l_type.t_label")}
                                             className="mb-3">
-                                                <Form.Select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
+                                                <Form.Select className="selectpicker" value={formValue.type} name="type" onChange={(event) => handleChange(event, setFormValue)} 
                                                 style={{width: "20vw", 
-                                                height: "4vh", 
+                                                height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option value="tech" onClick={() => setTypeClone("High Tech")}>High Tech</option>
-                                                    <option value="ids" onClick={() => setTypeClone(t("msh_lost_found.l_second_tab_title"))} >{t("msh_lost_found.l_second_tab_title")}</option>
-                                                    <option value="clothes" onClick={() => setTypeClone(t("msh_lost_found.l_third_tab_title"))} >{t("msh_lost_found.l_third_tab_title")}</option>
-                                                    <option value="others" onClick={() => setTypeClone(t("msh_lost_found.l_fourth_tab_title"))} >{t("msh_lost_found.l_fourth_tab_title")}</option>
+                                                    <option value="tech">High Tech</option>
+                                                    <option value="ids">{t("msh_lost_found.l_second_tab_title")}</option>
+                                                    <option value="clothes">{t("msh_lost_found.l_third_tab_title")}</option>
+                                                    <option value="others">{t("msh_lost_found.l_fourth_tab_title")}</option>
                                                 </Form.Select>
                                             </FloatingLabel>
                                             </Form.Group>
@@ -166,18 +168,25 @@ const LostNFound = ({userDB}) =>{
                                             controlId="floatingInput"
                                             label={t("msh_lost_found.l_place.p_label")}
                                             className="mb-3">
-                                                <Form.Select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
+                                                <Form.Select className="selectpicker" value={formValue.place} name="place" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
+                                                    if (event.target.value === "hall") {setPlaceClone(t("msh_lost_found.l_place.p_hall"))}
+                                                    if(event.target.value === "restaurant") {setPlaceClone(t("msh_lost_found.l_place.p_restaurant"))}
+                                                    if(event.target.value === "parking") {setPlaceClone(t("msh_lost_found.l_place.p_parking"))}
+                                                    if(event.target.value === "toilet") {setPlaceClone(t("msh_lost_found.l_place.p_toilet"))}
+                                                    if(event.target.value === "floors") {setPlaceClone(t("msh_lost_found.l_place.p_floors"))}
+                                                    if(event.target.value === "others") {setPlaceClone(t("msh_lost_found.l_place.p_other"))}
+                                                }}
                                                 style={{width: "20vw", 
-                                                height: "4vh", 
+                                                height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white"}}>
-                                                    <option value="hall" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_hall"))}>{t("msh_lost_found.l_place.p_hall")}</option>
-                                                    <option value="restaurant" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_restaurant"))}>{t("msh_lost_found.l_place.p_restaurant")}</option>
-                                                    <option value="parking" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_parking"))}>{t("msh_lost_found.l_place.p_parking")}</option>
-                                                    <option value="toilet" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_toilet"))}>{t("msh_lost_found.l_place.p_toilet")}</option>
-                                                    <option value="floors" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_floors"))}>{t("msh_lost_found.l_place.p_floors")}</option>
-                                                    <option value="others" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_other"))}>{t("msh_lost_found.l_place.p_other")}</option>
+                                                    <option value="hall">{t("msh_lost_found.l_place.p_hall")}</option>
+                                                    <option value="restaurant">{t("msh_lost_found.l_place.p_restaurant")}</option>
+                                                    <option value="parking">{t("msh_lost_found.l_place.p_parking")}</option>
+                                                    <option value="toilet">{t("msh_lost_found.l_place.p_toilet")}</option>
+                                                    <option value="floors">{t("msh_lost_found.l_place.p_floors")}</option>
+                                                    <option value="others">{t("msh_lost_found.l_place.p_other")}</option>
                                                 </Form.Select>
                                             </FloatingLabel>
                                             </Form.Group>

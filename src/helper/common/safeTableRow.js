@@ -10,7 +10,14 @@ const SafeTableRow = ({rowId, cellLabelValue, cellInputId, cellOutputId, safeTot
   return (
     <tr key={rowId.toString()}>
         <td>{cellLabelValue}</td>
-        <td><input id={cellInputId} type="text" onInput={()=> change(cellInputId, labelValue, cellOutputId)} onInputCapture={()=>safeTotal()} onChange={()=>safeAmount()}></input></td>
+        <td>
+          <input id={cellInputId} 
+            type="text" 
+            onInput={()=> change(cellInputId, labelValue, cellOutputId)} 
+            onInputCapture={()=>safeTotal()} 
+            onChange={()=>safeAmount()}>
+          </input>
+        </td>
         <td><output id={cellOutputId}>0.00</output></td>
     </tr>
   )

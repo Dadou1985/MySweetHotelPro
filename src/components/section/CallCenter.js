@@ -138,7 +138,7 @@ export default function CallCenter({user, userDB}) {
               <img src={Assistance} className="icon" alt="contact" onClick={() => {
                 handleShow()
                 handleUpdateData1("assistance", userDB.hotelName, adminStatusData )
-                }} style={{width: "2vw"}} />
+                }} style={{width: "2vw", cursor: "pointer"}} />
 
               </OverlayTrigger>
               {adminSpeakStatus.map(status => {

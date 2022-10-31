@@ -203,7 +203,7 @@ export default function CommunIzi({userDB, user}) {
               if(showAlert) {setShowAlert(false)}
             }}
             onKeyPress={(e) => {
-              if(expanded !== "") {
+              if(guest !== "") {
                 if(e.key === "Enter" && note) {
                   handleSubmit(e)
                   handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
@@ -226,7 +226,7 @@ export default function CommunIzi({userDB, user}) {
                 <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
               </OverlayTrigger>*/}
               <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
-                if(expanded) {
+                if(guest) {
                   if(note) {
                     handleSubmit(event)
                     handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)

@@ -13,7 +13,7 @@ export default function MshAppScreenBand({logo}) {
             backgroundSize: "100%",
             backgroundPosition: "center"
         }}>
-            <StaticImage placeholder='blurred' src='../../images/msh-front-app.png' style={{width: "32%", height: "28%", marginBottom: "34%", marginTop: "10%"}} />
+            <img placeholder='blurred' src={logo} style={{width: "32%", height: "28%", marginBottom: "34%", marginTop: "10%"}} />
         </div>
     )
 }

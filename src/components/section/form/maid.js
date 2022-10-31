@@ -199,18 +199,24 @@ const Maid = ({userDB}) =>{
                                                 label={t("msh_room_change.r_reason.r_label")}
                                                 className="mb-3"
                                             >
-                                            <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} 
+                                            <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
+                                                    if (event.target.value === "noise") {setReasonBack(t("msh_room_change.r_reason.r_noise"))}
+                                                    if(event.target.value === "temperature") {setReasonBack(t("msh_room_change.r_reason.r_temperature"))}
+                                                    if(event.target.value === "maintenance") {setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}
+                                                    if(event.target.value === "cleaning") {setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}
+                                                    if(event.target.value === "others") {setReasonBack(t("msh_lost_found.l_place.p_other"))}
+                                                }}
                                                 style={{width: "12vw", 
                                                 height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
                                                 backgroundColor: "white", 
                                                 paddingLeft: "1vw"}}>
-                                                    <option value="noise" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_noise"))}>{t("msh_room_change.r_reason.r_noise")}</option>
-                                                    <option value="temperature" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_temperature"))}>{t("msh_room_change.r_reason.r_temperature")}</option>
-                                                    <option value="maintenance" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}>{t("msh_room_change.r_reason.r_maintenance")}</option>
-                                                    <option value="cleaning" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}>{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                                    <option value="others" onClick={() => setReasonBack(t("msh_room_change.r_reason.r_others"))}>{t("msh_room_change.r_reason.r_others")}</option>
+                                                    <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
+                                                    <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
+                                                    <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                                    <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                    <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
                                             </Form.Select>
                                             </FloatingLabel>
                                         </Form.Group>
@@ -221,15 +227,18 @@ const Maid = ({userDB}) =>{
                                                 label={t("msh_room_change.r_state.s_label")}
                                                 className="mb-3"
                                             >
-                                                <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} 
+                                                <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
+                                                    if (event.target.value === "dirty") {setStateClone(t("msh_room_change.r_state.s_dirty"))}
+                                                    if(event.target.value === "clean") {setStateClone(t("msh_room_change.r_state.s_clean"))}
+                                                }}
                                                     style={{width: "12vw", 
                                                     height: "60%", 
                                                     border: "1px solid lightgrey", 
                                                     borderRadius: "3px",
                                                     backgroundColor: "white", 
                                                     paddingLeft: "1vw"}}>
-                                                        <option value="dirty" onClick={() => setStateClone(t("msh_room_change.r_state.s_dirty"))}>{t("msh_room_change.r_state.s_dirty")}</option>
-                                                        <option value="clean" onClick={() => setStateClone(t("msh_room_change.r_state.s_clean"))}>{t("msh_room_change.r_state.s_clean")}</option>
+                                                        <option value="dirty">{t("msh_room_change.r_state.s_dirty")}</option>
+                                                        <option value="clean">{t("msh_room_change.r_state.s_clean")}</option>
                                                 </Form.Select>
                                             </FloatingLabel>
                                         </Form.Group>
