@@ -24,7 +24,7 @@ const ShiftLoader = ({hide}) => {
                 timeout={10000}
               />}
         </div>
-        <StaticImage placeholder="blurred" src='../../svg/receptionist.svg' className="Loader-img" />
+        <StaticImage placeholder="blurred" src='../../svg/receptionist.svg' className="Loader-img" alt="Receptionnist Logo" />
     </div>
   )
 }

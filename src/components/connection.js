@@ -27,8 +27,8 @@ const Connection = () => {
     
   return (
     <div className="connection_container">
-        <div id="jumbo" fluid className="bg-light">
-        <StaticImage src="../svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" />
+        <div id="jumbo" className="bg-light">
+        <StaticImage src="../svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" alt="Logo" />
         </div>
         <form 
           method="post"
@@ -36,6 +36,7 @@ const Connection = () => {
           onSubmit={(event) => handleSubmit(event)}>  
 
         <input 
+            testID="email"
             style={{zIndex: "1000"}}
             value={formValue.email}
             type="email" 
@@ -46,6 +47,7 @@ const Connection = () => {
             required />
 
         <input 
+            testID="password"
             value={formValue.password}
             type="password" 
             name="password" 
@@ -54,9 +56,9 @@ const Connection = () => {
             onChange={(event) => handleChange(event, setFormValue)}
             required />
 
-        <div id="warning"></div>
+        <div testID="warning" id="warning"></div>
 
-        <button className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
+        <button testID="connexion" className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
         </form>
     </div>
   )
