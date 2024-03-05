@@ -22,7 +22,7 @@ export default function Sticker({url, logo}) {
                 <img src={RepairLogo} className="sticker_logo" />
             </div>
             <QRCode 
-            value={url.replace(/ /g,'%20')} 
+            value={url && url.replace(/ /g,'%20')} 
             logoImage={logo}
             size={192}
             logoWidth="50"

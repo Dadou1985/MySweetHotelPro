@@ -6,14 +6,14 @@ import "firebase/compat/functions";
 import "firebase/compat/storage";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCDGf-DWOM8z-I4nC2jg0PxsfLKQ_GE7o0",
-  authDomain: "notel-765b1.firebaseapp.com",
-  databaseURL: "https://notel-765b1.firebaseio.com",
-  projectId: "notel-765b1",
-  storageBucket: "notel-765b1.appspot.com",
-  messagingSenderId: "746435372425",
-  appId: "1:746435372425:web:25e5561ab78f54eb04ed58",
-  measurementId: "G-WTWN8J9PQE"
+  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
+  authDomain: process.env.GATSBY_FIREBASE_AUTH_DOMAIN,
+  databaseURL: process.env.GATSBY_FIREBASE_DATABASE_URL,
+  projectId: process.env.GATSBY_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.GATSBY_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.GATSBY_FIREBASE_APP_ID,
+  measurementId: process.env.GATSBY_FIREBASE_MEASUREMENT_ID
   };
 
 firebase.initializeApp(firebaseConfig);
@@ -25,4 +25,4 @@ const functions = firebase.functions();
 const specialFirestoreOptions = firebase.firestore.FieldValue
 const perf = getPerformance(firebase.initializeApp(firebaseConfig));
 
-export { db, auth, functions, storage, specialFirestoreOptions }
+export { firebase, db, auth, functions, storage, specialFirestoreOptions }

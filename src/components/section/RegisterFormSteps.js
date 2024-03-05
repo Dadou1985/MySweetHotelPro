@@ -94,7 +94,7 @@ export default function RegisterFormSteps() {
     
 
     let newHotelId = "mshPro" + Date.now() + sha256(formValue.hotelName)
-    let hotelNameForUrl = formValue.hotelName.replace(/ /g,'%20')
+    let hotelNameForUrl = formValue.hotelName && formValue.hotelName.replace(/ /g,'%20')
 
     const getPartner = (url) => {
             return db.collection("hotels")

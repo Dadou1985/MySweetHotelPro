@@ -1,4 +1,4 @@
 import FirebaseContext from "./context";
-import {db, auth, storage, functions, specialFirestoreOptions} from './config'
+import { firebase, db, auth, storage, functions, specialFirestoreOptions } from './config'
 
-export { FirebaseContext, db, auth, storage, functions, specialFirestoreOptions };
+export { FirebaseContext, firebase, db, auth, storage, functions, specialFirestoreOptions };

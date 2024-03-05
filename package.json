@@ -30,6 +30,7 @@
     "chart.js": "^3.7.1",
     "d3-ease": "^3.0.1",
     "date-fns": "^2.28.0",
+    "dotenv": "^16.4.5",
     "firebase": "^9.6.6",
     "firebase-tools": "^10.2.0",
     "gatsby": "^5.13.3",

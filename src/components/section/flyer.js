@@ -32,7 +32,7 @@ export default function Flyer({url, logo}) {
             {logo ? <MshScreen logo={logo} /> : <MshScreen logo={MshLogo} />}
             <div style={{filter: "drop-shadow(1px 1px 1px)"}}>
                 <QRCode 
-                value={url.replace(/ /g,'%20')} 
+                value={url && url.replace(/ /g,'%20')} 
                 size={192}
                 />
                 <h6 style={{marginTop: 0}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_message.part_five")}</h6>

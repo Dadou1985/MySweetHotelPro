@@ -36,7 +36,7 @@ const Connection = () => {
           onSubmit={(event) => handleSubmit(event)}>  
 
         <input 
-            testID="email"
+            data-testid="email"
             style={{zIndex: "1000"}}
             value={formValue.email}
             type="email" 
@@ -47,7 +47,7 @@ const Connection = () => {
             required />
 
         <input 
-            testID="password"
+            data-testid="password"
             value={formValue.password}
             type="password" 
             name="password" 
@@ -56,9 +56,9 @@ const Connection = () => {
             onChange={(event) => handleChange(event, setFormValue)}
             required />
 
-        <div testID="warning" id="warning"></div>
+        <div data-testid="warning" id="warning"></div>
 
-        <button testID="connexion" className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
+        <button data-testid="connexion" className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
         </form>
     </div>
   )

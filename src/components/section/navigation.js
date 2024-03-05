@@ -175,7 +175,7 @@ const Navigation = ({user, userDB}) =>{
                 <Drawer className="drawer" user={user} userDB={userDB} style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
-                        <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" /></Navbar.Brand>
+                        <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
                     {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <div onClick={() => handleShowDrawer()}>
                             <StaticImage placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
                         </div>}
