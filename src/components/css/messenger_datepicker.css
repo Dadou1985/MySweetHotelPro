@@ -1,3 +1,7 @@
+.react-datepicker {
+  left: 0 !important;
+}
+
 .react-datepicker-popper[data-placement^="bottom"] .react-datepicker__triangle, .react-datepicker-popper[data-placement^="top"] .react-datepicker__triangle, .react-datepicker__year-read-view--down-arrow,
 .react-datepicker__month-read-view--down-arrow,
 .react-datepicker__month-year-read-view--down-arrow {
@@ -260,8 +264,10 @@
   border-bottom-color: #b3b3b3;
 }
 
-.react-datepicker__month-container {
-  float: left;
+@media screen and (min-width: 768px) {
+  .react-datepicker__month-container {
+    float: left;
+  }
 }
 
 .react-datepicker__year {

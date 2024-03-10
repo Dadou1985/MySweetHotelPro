@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import { auth, db, storage } from '../../../../Firebase'
 import { useTranslation } from "react-i18next"
+import '../../../css/section/form/phoneForm/phoneUserProfile.css'
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
@@ -183,15 +184,15 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     }}>
                 <h1>
                     <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center", fontSize: "0.7em"}}>{flow.username}</div>
-                    <div style={{fontSize: "15px", textAlign: "center"}}>{flow.email}</div>
+                    <div style={{fontSize: "0.7rem", textAlign: "center"}}>{flow.email}</div>
                     {/*<div className="header-profile">
                         <img src={Tips} alt="tips" className="tips" /> 
                         {flow.tips} tips 
                     </div>*/}
                 </h1>
                 <div className="userProfile-header-toggle-container">
-                    <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
-                    <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
+                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
+                    <Button variant="secondary" className="userProfile-update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
                 </div>
                 </div>
                 <Avatar alt="user-profile-photo" 
@@ -208,10 +209,10 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     }} />
                 <Drawer anchor="bottom" open={listEmail} onClose={handleCloseUpdateEmail}>
                     <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>{t("msh_user_panel.u_section.s_email.e_label")}</b></h5>
-                    <div className="drawer-container">
+                    <div style={{marginBottom: "5vh"}} className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="email" value={formValue.email} placeholder={t("msh_user_panel.u_section.s_email.e_input_placeholder")} className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
+                    <Button style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} variant="success" onClick={(event) => {
                         handleUpdateEmail(event, formValue.email)
                         handleChangeEmail(formValue.email)
                         handleCloseUpdateEmail()
@@ -219,10 +220,10 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                 </Drawer>
                 <Drawer anchor="bottom" open={listPassword} onClose={handleCloseUpdatePassword}>
                     <h5 style={{textAlign: "center", marginTop: "2vh"}}><b>{t("msh_user_panel.u_section.s_password.p_label")}</b></h5>
-                    <div className="drawer-container">
+                    <div style={{marginBottom: "5vh"}} className="drawer-container">
                         <div><input style={{textAlign: "center"}} type="text" name="password" value={formValue.password} placeholder={t("msh_user_panel.u_section.s_password.p_input_placeholder")} className="user-dialog-hotel" onChange={handleChange} required /></div>
                     </div>
-                    <Button variant="success" onClick={(event) => {
+                    <Button style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} variant="success" onClick={(event) => {
                         handleUpdatePassword(event, formValue.password)
                         handleChangePassword()
                         handleCloseUpdatePassword()

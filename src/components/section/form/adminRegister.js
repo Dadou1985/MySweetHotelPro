@@ -15,6 +15,8 @@ const AdminRegister = ({hide, userDB}) => {
     const createUser = functions.httpsCallable('createUser')
     const sendNewCoworkerAccountMail = functions.httpsCallable('sendNewCoworkerAccountMail')
 
+    let newUid = userDB.hotelId + Date.now()
+
     const createdData = {  
         username: formValue.username, 
         adminStatus: false, 
@@ -38,8 +40,6 @@ const AdminRegister = ({hide, userDB}) => {
         website: userDB.website ? userDB.website : null,
         pricingModel: userDB.pricingModel
     }
-
-    let newUid = userDB.hotelId + Date.now()
 
     const sendWelcomeMail = () => {
         return sendNewCoworkerAccountMail({

@@ -268,9 +268,12 @@
     margin-top: 2vh;
 }
 
+
 @media screen and (max-width: 768px) {
     .space-container {
         position: absolute;
+        top: 0;
+        left: 0;
         display: flex;
         flex-flow: column;
         width: 100%;
@@ -358,5 +361,19 @@
     .dilema-add-photo-icon {display: none;}
     
     .dilema-add-photo-input-mask {display: none;}
+
+    @media screen and (orientation: landscape) {
+        .landscape-display {
+            position: absolute;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../../../svg/new-logo-msh-pro2.png');
+            background-repeat: no-repeat;
+            background-size: 50vw;
+            background-position: 30vw;
+            background-color: white;
+        }
+    }
 
 }

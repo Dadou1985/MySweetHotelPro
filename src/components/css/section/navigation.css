@@ -111,6 +111,7 @@
 
     .drawer {
         visibility: visible;
+        margin-left: 2vw;
     }
 
     .super-admin-icon {

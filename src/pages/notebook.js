@@ -44,6 +44,7 @@ moment.locale("fr")
 
   return(
     <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
+        <div className="landscape-display"></div>
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
           <Loader hide={hide} />
         </div>     
@@ -70,7 +71,8 @@ moment.locale("fr")
                 alignItems: "end",
                 height: "80vh",
                 width: isBrowser() && window.innerWidth > 768 ? "55%" : "100%",
-                marginTop: "3vh"
+                marginTop: "3vh", 
+                padding: "3%"
               }}>
                 <div style={{paddingRight: isBrowser() && window.innerWidth > 768 ? "0vw" : "2vw"}}>
                   <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >

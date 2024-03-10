@@ -88,7 +88,9 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
+                <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+            </div>
         </OverlayTrigger>
           case 'red':
             return <OverlayTrigger
@@ -98,7 +100,9 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <StaticImage placeholder='blurred' src='../../svg/red-circle.svg' alt="urgent" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
+                <StaticImage placeholder='blurred' src='../../svg/red-circle.svg' alt="important" className="modal-note-circle"  />
+            </div>
         </OverlayTrigger>
           case 'lightskyblue':
             return <OverlayTrigger
@@ -108,7 +112,9 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-             <StaticImage placeholder='blurred' src='../../svg/blue-circle.svg' alt="info" className="modal-note-circle" onClick={() => setChecked(true)} />
+             <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
+                <StaticImage placeholder='blurred' src='../../svg/blue-circle.svg' alt="important" className="modal-note-circle"  />
+            </div>
         </OverlayTrigger>
         default:
             return <OverlayTrigger
@@ -118,7 +124,9 @@ const Messenger = ({filterDate}) =>{
                 {t("msh_messenger.m_note_circle_tooltip")}
               </Tooltip>
             }>
-            <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle" onClick={() => setChecked(true)} />
+            <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
+                <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+            </div>
         </OverlayTrigger>
         }
       }
@@ -212,7 +220,7 @@ const Messenger = ({filterDate}) =>{
     }
 
     const changeDrawerHeight = () => {
-        setShowCalendar(true)
+        setShowCalendar(!showCalendar)
     }
 
     const hideCalendar = () => {
@@ -287,8 +295,8 @@ const Messenger = ({filterDate}) =>{
                     justifyContent: "flex-end",
                     padding: "5%", 
                     maxHeight: "90vh"}}>
-                        <div style={{width: "100%",}}>
-                            <StaticImage placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} onClick={handleHideDrawer} />
+                        <div style={{width: "100%"}}  onClick={handleHideDrawer}>
+                            <StaticImage placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} />
                         </div>
                     <h4 style={{textAlign: "center", marginBottom: "3vh"}}>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
@@ -313,61 +321,68 @@ const Messenger = ({filterDate}) =>{
                           onChange={handleImgChange} />
                       <StaticImage placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                         {renderSwitch(status)}
-                        <StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" onClick={changeDrawerHeight} />
+                        <div style={{width: "9%"}} onClick={changeDrawerHeight}><StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" /></div>
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                     </div>
                     <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
                             display: checked ? "flex" : "none",
                             flexFlow: "row",
                             alignItems: "center",
-                            marginTop: "2vh"
+                            marginTop: "2vh",
+                            justifyContent: "center",
                         }}>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        {t("msh_messenger.m_reception_team")}
-                                    </Tooltip>
-                                    }>
-                                    <StaticImage placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" onClick={() => {
-                                        setStatus('darkgoldenrod')
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
-                                </ListItemIcon>
+                        <ListItemIcon button>
+                            <ListItemIcon>
+                            <OverlayTrigger
+                                placement="right"
+                                overlay={
+                                <Tooltip id="title">
+                                    {t("msh_messenger.m_reception_team")}
+                                </Tooltip>
+                                }>
+                                <div style={{width: "30%"}} onClick={() => {
+                                    setStatus('darkgoldenrod')
+                                    setChecked(false)}}>
+                                    <StaticImage placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
+                                </div>
+                            </OverlayTrigger>
                             </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        {t("msh_messenger.m_housekeeping_team")}
-                                    </Tooltip>
-                                    }>
-                                    <StaticImage placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" onClick={() => {
-                                        setStatus("lightskyblue")
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
-                                </ListItemIcon>
+                        </ListItemIcon>
+                        <ListItemIcon button>
+                            <ListItemIcon>
+                            <OverlayTrigger
+                                placement="right"
+                                overlay={
+                                <Tooltip id="title">
+                                    {t("msh_messenger.m_housekeeping_team")}
+                                </Tooltip>
+                                }>
+                                <div style={{width: "30%"}} onClick={() => {
+                                    setStatus('lightskyblue')
+                                    setChecked(false)}}>
+                                    <StaticImage placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
+                                </div>
+                            </OverlayTrigger>
                             </ListItemIcon>
-                            <ListItemIcon button>
-                                <ListItemIcon>
-                                <OverlayTrigger
-                                    placement="right"
-                                    overlay={
-                                    <Tooltip id="title">
-                                        {t("msh_messenger.m_technical_team")}
-                                    </Tooltip>
-                                    }>
-                                    <StaticImage placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" onClick={() => {
-                                        setStatus('red')
-                                        setChecked(false)}} />
-                                </OverlayTrigger>
-                                </ListItemIcon>
+                        </ListItemIcon>
+                        <ListItemIcon button>
+                            <ListItemIcon>
+                            <OverlayTrigger
+                                placement="right"
+                                overlay={
+                                <Tooltip id="title">
+                                    {t("msh_messenger.m_technical_team")}
+                                </Tooltip>
+                                }>
+                                <div style={{width: "30%"}} onClick={() => {
+                                    setStatus('red')
+                                    setChecked(false)}}>
+                                    <StaticImage placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
+                                </div>    
+                            </OverlayTrigger>
                             </ListItemIcon>
-                        </List>
+                        </ListItemIcon>
+                    </List>
                 </div>
             </Drawer>
             </>}    

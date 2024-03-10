@@ -24,6 +24,7 @@ const Feedback = () => {
 
     return (
         <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
+        <div className="landscape-display"></div>
         <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
                 <Loader hide={hide} />
             </div>  

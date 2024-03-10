@@ -36,5 +36,6 @@
     .userProfile-update-profile-button {
         float: right;
         margin-bottom: 2vh;
+        width: 100% !important;
     }
 }

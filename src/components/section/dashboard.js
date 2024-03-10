@@ -159,6 +159,7 @@ const roomChangeData = {
                   borderRadius: "100%",
                   padding: "2vw",
                   width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  height: typeof window && window.innerWidth > 768 && "4vh",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
@@ -166,8 +167,8 @@ const roomChangeData = {
                   <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "7vw"}} />
                 </div>
                 <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
-                  <h3>{consigne.length > 0 ? consigne.length : 0} </h3>
                   <h6 className='dashboard-note-title'>{t("msh_messenger.m_note_big_title")}</h6>
+                  <h3>{consigne.length > 0 ? consigne.length : 0} </h3>
                 </div>
             </div>
             <div className='dashboard-icon dashboard-note-card' style={{
@@ -185,6 +186,7 @@ const roomChangeData = {
                   borderRadius: "100%",
                   padding: "2vw",
                   width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  height: typeof window && window.innerWidth > 768 && "4vh",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
@@ -192,8 +194,8 @@ const roomChangeData = {
                   <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "9vw"}} />
                 </div>
                 <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
-                  <h3>{chat.length > 0 ? chat.length : 0}</h3>
                   <h6 className='dashboard-note-title'>{t("msh_dashboard.d_chat_room")}</h6>
+                  <h3>{chat.length > 0 ? chat.length : 0}</h3>
                 </div>
               </div>
           </div>

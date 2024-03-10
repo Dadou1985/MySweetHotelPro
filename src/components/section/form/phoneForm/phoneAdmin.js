@@ -159,7 +159,7 @@ function PhoneAdmin({userDB}) {
             }}>
             <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_admin_board.a_first_tab_title")}</h4>
             <Form.Group controlId="formGroupName">
-                <Form.Control style={{width: "80vw"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
+                <Form.Control style={{width: "80vw", marginBottom: "1vh"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
             </Form.Group>
             {/*<Form.Group controlId="formGroupEmail">
                 <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
@@ -172,10 +172,10 @@ function PhoneAdmin({userDB}) {
                 <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
             </Form.Group>*/}
             <Form.Group controlId="formGroupRefHotel">
-                <Form.Control style={{width: "80vw"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
+                <Form.Control style={{width: "80vw", marginBottom: "10vh"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
             </Form.Group>
 
-            <Button variant="success" onClick={handleSubmit}>{t("msh_admin_board.a_phone_button.b_validation")}</Button>
+            <Button style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} variant="success" onClick={handleSubmit}>{t("msh_admin_board.a_phone_button.b_validation")}</Button>
         </div>
         </Drawer>
     </div>

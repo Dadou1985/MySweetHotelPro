@@ -84,7 +84,10 @@ export default function PhoneSupport({user, userDB}) {
 
 
     return (
-        <div className="communizi-container">
+        <div style={{
+            display: 'flex',
+            flexDirection: 'column',
+        }}>
             <h4 style={{padding: "2vh", textAlign: "center"}}>{t("msh_support.s_title")}</h4>
 
             <PerfectScrollbar style={{paddingTop: "3vh"}}>
@@ -155,9 +158,16 @@ export default function PhoneSupport({user, userDB}) {
                 </div>
                 </PerfectScrollbar>
             <div className={typeof window !== `undefined` && window.innerWidth < 768 && "communizi_form_input_div"}>
-                <Form.Group style={{display: "flex", flexFlow: 'row', justifyContent: "space-around", width: "100%", marginTop: "1vh"}}>
+                <Form.Group style={{
+                    display: "flex", 
+                    flexFlow: 'row', 
+                    justifyContent: "space-around", 
+                    width: "100%", 
+                    marginTop: "1vh",
+                    alignItems: "center",
+                    }}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder={t("msh_support.s_input_placeholder")} onChange={handleChange} required />
-                    <img src={Send} alt="sendIcon" style={{width: "8%"}} onClick={async(event) => {
+                    <img src={Send} alt="sendIcon" style={{width: "6%", height: "6%"}} onClick={async(event) => {
                     await getChatRoom()
                         if(chatRoom !== null) {
                             return handleUpdateData1(event, 'assistance', userDB.hotelName, updatedData)
