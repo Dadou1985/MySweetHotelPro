@@ -1,0 +1,49 @@
+.page-layout-container {
+    display: flex;
+    background-image: url("../../../images/newDeskDigital.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position-x: 5vw;
+    background-position-y: -5vh
+}
+
+.dasboard-container {
+    width: 50%;
+}
+
+.dasboard-container-title {
+    padding-top: 3vh; 
+    padding-left: 3vw; 
+    text-align: left;
+}
+
+.dasboard-box {
+    display: flex;
+    flex-flow: row;
+    font-size: 1em; 
+    margin-left: 3vw; 
+    margin-bottom: 0;
+    color: gray;
+    justify-content: left;
+}
+
+@media screen and (min-width: 768px) {
+    .page-layout-container {
+        background-image: none;
+    }
+
+    .dasboard-container {
+        width: 100%;
+    }
+
+    .dasboard-container-title {
+        padding-left: 0; 
+        text-align: center;
+    }
+
+    .dasboard-box {
+        margin-left: 0; 
+        margin-bottom: 5vh;
+        justify-content: center;
+    }
+}

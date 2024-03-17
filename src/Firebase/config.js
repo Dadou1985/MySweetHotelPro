@@ -1,5 +1,5 @@
 import firebase from 'firebase/compat/app';
-import { getPerformance } from "firebase/performance";
+// import { getPerformance } from "firebase/performance";
 import "firebase/compat/auth";
 import "firebase/compat/firestore";
 import "firebase/compat/functions";
@@ -23,6 +23,6 @@ const auth = firebase.auth();
 const storage = firebase.storage();
 const functions = firebase.functions();
 const specialFirestoreOptions = firebase.firestore.FieldValue
-const perf = getPerformance(firebase.initializeApp(firebaseConfig));
+// const perf = getPerformance(firebase.initializeApp(firebaseConfig));
 
 export { firebase, db, auth, functions, storage, specialFirestoreOptions }

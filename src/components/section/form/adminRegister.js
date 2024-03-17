@@ -17,6 +17,8 @@ const AdminRegister = ({hide, userDB}) => {
 
     let newUid = userDB.hotelId + Date.now()
 
+    console.log("userDB: " + userDB.hotelId)
+
     const createdData = {  
         username: formValue.username, 
         adminStatus: false, 
@@ -42,6 +44,7 @@ const AdminRegister = ({hide, userDB}) => {
     }
 
     const sendWelcomeMail = () => {
+        console.log("Email sent successfully !!!")
         return sendNewCoworkerAccountMail({
             adminName: userDB.username, 
             coworkerName: formValue.username, 
@@ -56,10 +59,10 @@ const AdminRegister = ({hide, userDB}) => {
         //setFormValue("")
         const notif = t("msh_admin_board.a_notif") 
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return handleCreateData1("bussinessUsers", newUid, createdData) 
+        return handleCreateData1(event, "businessUsers", newUid, createdData) 
         .then(() => {
             hide()
-            addNotification(notif)
+            addNotification(notif, userDB.hotelId)
             sendWelcomeMail()
         })
       }

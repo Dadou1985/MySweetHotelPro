@@ -9,20 +9,22 @@ const ShiftLoader = ({hide}) => {
   return (
     <div className="Loader-container" style={{display: hide}}>
         <div className="Loader-box">
-        {typeof window !== `undefined` && window.innerWidth > 768 ?
-          <Puff
+          <div className="isShowDesktop">
+            <Puff
                 color="rgb(25,23,25)"
                 height={1000}
                 width={1000}
                 timeout={10000}
             />
-        :
-          <Puff
+          </div>
+          <div className="isShowMobile"> 
+            <Puff
                 color="rgb(25,23,25)"
                 height={700}
                 width={400}
                 timeout={10000}
-              />}
+              />
+          </div>
         </div>
         <StaticImage placeholder="blurred" src='../../svg/receptionist.svg' className="Loader-img" alt="Receptionnist Logo" />
     </div>

@@ -1,0 +1,12 @@
+.roomChangeRate-result-container {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    padding: 1vw;
+}
+
+@media screen and (max-width: 768px) {
+    .roomChangeRate-result-container {
+        width: 100%;
+    }    
+}

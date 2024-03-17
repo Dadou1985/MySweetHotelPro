@@ -1,0 +1,23 @@
+.notebook-container {
+    display: flex;
+    flex-flow: column;
+    align-items: end;
+    height: 80vh;
+    width: 55%;
+    margin-top: 3vh; 
+    padding: 3%
+}
+
+.calendar-container {
+    padding-right: 0vw;
+}
+
+@media screen and (min-width: 768px) {
+    .notebook-container {
+        width: 100%;
+    }
+
+    .calendar-container {
+        padding-right: 2vw;
+    }
+}

@@ -1,0 +1,33 @@
+.maintenance-global-container {
+    display: flex;
+    flex-flow: row;
+    width: 100%;  
+    padding: 3%;
+    border: transparent;
+    justify-content: center;
+}
+
+.maintenance-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid lightgray;
+    border-right: 5px solid lightgray;
+    border: 1px solid lightgrey;
+    border-radius: 100%;
+    padding: 2vw;
+    filter: drop-shadow(2px 4px 6px); 
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    background-color: whitesmoke;
+    width: 20vw;
+    height: 40vh;
+}
+
+@media screen and (max-width: 768px) {
+    .maintenance-container {
+        width: 20vw;
+        height: 12vh;
+    } 
+}

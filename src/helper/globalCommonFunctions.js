@@ -139,7 +139,7 @@ export const handleSubmitData3 = (event, collection1, document1, collection2, do
 
 
 export const handleCreateData1 = (event, collection, document, data) => {
-    event.preventDefault()
+    // event.preventDefault()
         return db.collection(collection)
         .doc(document)
         .set(data)

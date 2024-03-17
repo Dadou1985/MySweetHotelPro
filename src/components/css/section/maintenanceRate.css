@@ -1,0 +1,24 @@
+.maintenance-rate-category-container {
+    display: flex;
+    flex-flow: column;
+    padding: 1vw;
+    width: 20%;
+    border-right: 1px solid lightgrey;
+}
+
+.maintenance-rate-result-container {
+    display: flex;
+    flex-flow: column;
+    width: 80%;
+    padding: 1vw;
+}
+
+@media screen and (max-width: 768px) {
+    .maintenance-rate-container {
+        display: none;
+    }
+
+    .maintenance-rate-result-container {
+        width: 100%;
+    }
+}

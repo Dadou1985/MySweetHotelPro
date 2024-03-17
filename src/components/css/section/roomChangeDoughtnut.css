@@ -1,0 +1,40 @@
+.roomChangeDoughtnut-global-container {
+    display: flex;
+    flex-flow: row;
+    width: 100%;  
+    padding: 3%;
+    border: transparent;
+    justify-content: center; 
+}
+
+.roomChangeDoughtnut-container {
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 5px solid lightgray;
+    border-right: 5px solid lightgray;
+    border: '1px solid lightgrey';
+    border-radius: 100%;
+    padding: 2vw;
+    width:  6vw;
+    height: 12vh;
+    background-color: whitesmoke;
+    filter: drop-shadow(2px 4px 6px); 
+    margin-top: 2vh;
+    margin-bottom: 2vh
+}
+
+.roomChangeDoughtnut-img {
+    width: 3vw;
+}
+
+@media screen and (max-width:768px) {
+    .roomChangeDoughtnut-container {
+        width: 20vw;
+    }
+    
+    .roomChangeDoughtnut-img {
+        width: 6vw;
+    } 
+}

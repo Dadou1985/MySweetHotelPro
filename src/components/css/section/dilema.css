@@ -31,9 +31,52 @@
 }
 
 .header-toggle-container{
+    display: none;
     flex-flow: row;
     justify-content: space-around;
     width: 100%;
+}
+
+.header-divider {
+    display: flex;
+    width: 75%;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.space-container {
+    flex-flow: row wrap;
+    width: 40%;
+    margin: 2vw;
+    display: flex;
+}
+
+.avatar-style {
+    display: none;
+    position: absolute;
+    top: 35vh;
+    left: 28vw;
+    width: 45%;
+    height: 25%;
+    filter: grayscale(90%) drop-shadow(1px 1px 1px);
+    z-index: 10;
+}
+
+@media screen and (min-width: 768px){
+    .header-toggle-container{
+        display: flex;
+    }
+
+    .header-divider {
+        display: none; 
+    }
+
+    .space-container {
+        display: none;
+    }
+
+    .avatar-style {
+        display: flex;
+    }
 }
 
 .tips {width: 2vw}
@@ -45,12 +88,6 @@
 .update-profile-button {
     float: right;
     margin-bottom: 1vh;
-}
-
-.space-container {
-    flex-flow: row wrap;
-    width: 40%;
-    margin: 2vw;
 }
 
 .space-box {
