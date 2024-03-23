@@ -33,7 +33,7 @@ function CallCenterOverlay({userDB}) {
             }} />
             {chatRoomQty.map(status => {
                   if(status.adminSpeak) {
-                    return <StaticImage src="../../../../../svg/bubble.svg" style={{
+                    return <StaticImage objectFit='contain' src="../../../../../svg/bubble.svg" style={{
                       borderRadius: "50%", 
                       backgroundColor: "red", 
                       position: "absolute", 

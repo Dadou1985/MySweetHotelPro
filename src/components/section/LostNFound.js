@@ -108,7 +108,7 @@ const LostNFound = ({userDB}) =>{
                                         setImg(flow.img)
                                         setImgFrame(true)
                                         }}><img src={flow.img} style={{width: "5vw", borderRadius: "5%"}} /></td> : 
-                                        <td><StaticImage src='../../svg/picture.svg' style={{width: "1vw"}} /></td>}
+                                        <td><StaticImage objectFit='contain' src='../../svg/picture.svg' style={{width: "1vw"}} /></td>}
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td>{flow.placeClone}</td>

@@ -28,7 +28,7 @@ const Connection = () => {
   return (
     <div className="connection_container">
         <div id="jumbo" className="bg-light">
-        <StaticImage src="../svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" alt="Logo" />
+        <StaticImage objectFit='contain' src="../svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" alt="Logo" />
         </div>
         <form 
           method="post"

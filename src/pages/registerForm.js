@@ -6,7 +6,7 @@ import { withTrans } from '../../i18n/withTrans'
 const RegisterForm = () => {
     
     return (
-        <ShortenUrlProvider config={{ accessToken: '4414aed1636f8815449ff0a59d1b67a513dfc0d1' }}>
+        <ShortenUrlProvider config={{ accessToken: process.env.GATSBY_BITLY_ACCESS_TOKEN }}>
         <div className="landscape-display"></div>
             <RegisterFormSteps />
         </ShortenUrlProvider>

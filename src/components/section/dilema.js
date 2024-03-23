@@ -283,14 +283,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         <div className="softSkin space-card"
                             onClick={handleShowUpdateEmail}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_email.e_label")}</h2>
-                        <StaticImage src="../../images/email.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../images/email.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdatePassword}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_password.p_label")}</h2>
-                        <StaticImage src="../../images/password.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../images/password.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                 </div>
@@ -299,14 +299,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_label")}</h2>
-                        <StaticImage src="../../images/visuel.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../images/visuel.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setListLogo(true)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_logo.l_label")}</h2>
-                        <StaticImage src='../../images/hotelLogo.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../images/hotelLogo.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                 </div>}
@@ -380,7 +380,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <div className="softSkin space-card"
                             onClick={() => exportPDF(stickerPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_sticker.s_title")}</h2>
-                        <StaticImage src='../../images/qr_code.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../images/qr_code.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
                 <div className="visuel">
@@ -392,7 +392,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(flyerPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_title")}</h2>
-                        <StaticImage src='../../images/flyer.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../images/flyer.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
                 <div className="visuel">
@@ -404,7 +404,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(bandPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_band.b_title")}</h2>
-                        <StaticImage src='../../images/band.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../images/band.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
             </div>
@@ -422,7 +422,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
             <div className="dilema_upload_container">
                 <input type="file" className="dilema-camera-icon"
                     onChange={handleIconChange} />
-                <StaticImage src='../../images/hotelLogo.png' placeholder="blurred" className="dilema_upload_logo" />
+                <StaticImage objectFit='contain' src='../../images/hotelLogo.png' placeholder="blurred" className="dilema_upload_logo" />
             </div>
             <div>{newImg && newImg.name}</div>
             {alert.success && <Alert variant="success" className="stepThree_alert">
@@ -469,7 +469,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
         }}
         onClick={() => navigate("/userPage")} />
        
-        <StaticImage src='../../svg/camera.svg' placeholder="blurred" alt="add photoURL" 
+        <StaticImage objectFit='contain' src='../../svg/camera.svg' placeholder="blurred" alt="add photoURL" 
         className="dilema-add-photo-icon" />
         
         <OverlayTrigger

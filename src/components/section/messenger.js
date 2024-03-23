@@ -89,7 +89,7 @@ const Messenger = ({filterDate}) =>{
               </Tooltip>
             }>
             <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         </OverlayTrigger>
           case 'red':
@@ -101,7 +101,7 @@ const Messenger = ({filterDate}) =>{
               </Tooltip>
             }>
             <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage placeholder='blurred' src='../../svg/red-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/red-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         </OverlayTrigger>
           case 'lightskyblue':
@@ -113,7 +113,7 @@ const Messenger = ({filterDate}) =>{
               </Tooltip>
             }>
              <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage placeholder='blurred' src='../../svg/blue-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/blue-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         </OverlayTrigger>
         default:
@@ -125,7 +125,7 @@ const Messenger = ({filterDate}) =>{
               </Tooltip>
             }>
             <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         </OverlayTrigger>
         }
@@ -240,7 +240,7 @@ const Messenger = ({filterDate}) =>{
                     <div className="icon-add-note-container" onClick={() => {
                         setStatus(data.category)
                         handleShow()}}>
-                        <StaticImage placeholder='blurred' src='../../svg/plus3.svg' alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus3.svg' alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                     </div>
                 </div>
                 )}
@@ -262,7 +262,7 @@ const Messenger = ({filterDate}) =>{
                         <Modal.Footer style={{borderTop: "none"}}>
                             <div className="modal-note-button-container">
                                 <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
-                            <StaticImage placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                                 <DatePicker
                                     id="calendar"
                                     className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
@@ -273,7 +273,7 @@ const Messenger = ({filterDate}) =>{
                                     locale="fr-FR"
                                     dateFormat="d MMMM yyyy"
                                 />
-                                <StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
                                 <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                             </div>
                         </Modal.Footer>
@@ -296,7 +296,7 @@ const Messenger = ({filterDate}) =>{
                     padding: "5%", 
                     maxHeight: "90vh"}}>
                         <div style={{width: "100%"}}  onClick={handleHideDrawer}>
-                            <StaticImage placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} />
                         </div>
                     <h4 style={{textAlign: "center", marginBottom: "3vh"}}>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
@@ -319,9 +319,9 @@ const Messenger = ({filterDate}) =>{
                         <span className="white-band"></span>
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
-                      <StaticImage placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                      <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                         {renderSwitch(status)}
-                        <div style={{width: "9%"}} onClick={changeDrawerHeight}><StaticImage placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" /></div>
+                        <div style={{width: "9%"}} onClick={changeDrawerHeight}><StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" /></div>
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                     </div>
                     <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
@@ -343,7 +343,7 @@ const Messenger = ({filterDate}) =>{
                                 <div style={{width: "30%"}} onClick={() => {
                                     setStatus('darkgoldenrod')
                                     setChecked(false)}}>
-                                    <StaticImage placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
                                 </div>
                             </OverlayTrigger>
                             </ListItemIcon>
@@ -360,7 +360,7 @@ const Messenger = ({filterDate}) =>{
                                 <div style={{width: "30%"}} onClick={() => {
                                     setStatus('lightskyblue')
                                     setChecked(false)}}>
-                                    <StaticImage placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
                                 </div>
                             </OverlayTrigger>
                             </ListItemIcon>
@@ -377,7 +377,7 @@ const Messenger = ({filterDate}) =>{
                                 <div style={{width: "30%"}} onClick={() => {
                                     setStatus('red')
                                     setChecked(false)}}>
-                                    <StaticImage placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
                                 </div>    
                             </OverlayTrigger>
                             </ListItemIcon>

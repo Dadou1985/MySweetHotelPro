@@ -428,7 +428,7 @@ export default function RegisterFormSteps() {
                     <div className="stepThree_upload_container">
                         <input type="file" className="steps-camera-icon"
                             onChange={handleImgChange} />
-                        <StaticImage placeholder="blurred" src='../../svg/hotel.svg' className="stepThree_upload_logo" />
+                        <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/hotel.svg' className="stepThree_upload_logo" />
                     </div>
                     <div>{newImg && newImg.name}</div>
                     <Button variant="outline-dark" style={{marginTop: "1vh"}} onClick={() => {
@@ -533,7 +533,7 @@ export default function RegisterFormSteps() {
                         <p><b>{t("msh_register_form.r_step.s_final.f_message.first_paragraph")}</b></p>
                         <p>{t("msh_register_form.r_step.s_final.f_message.second_paragraph")}</p>
                         <p>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
-                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <StaticImage 
+                        {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <StaticImage objectFit='contain' 
                             placeholder='blurred' 
                             src='../../svg/fom.svg' 
                             alt="Fom" 
@@ -552,7 +552,7 @@ export default function RegisterFormSteps() {
                         cursor: "pointer", 
                         color: "black"
                     }}>
-                        <StaticImage placeholder='blurred' src='../../svg/home.svg' style={{width: "10%", marginTop: "5vh", marginBottom: "1vh"}} />
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/home.svg' style={{width: "10%", marginTop: "5vh", marginBottom: "1vh"}} />
                         <b>{t("msh_register_form.r_step.s_final.f_message.hidden_paragraph")}</b>
                     </a >
                </div> }

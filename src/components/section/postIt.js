@@ -45,7 +45,7 @@ const PostIt = ({author, title, text, markup, userDB}) => {
       </Tooltip>
     }>
       <div onClick={showSticker}>
-        <StaticImage placeholder='blurred' src='../../images/postIt.png' alt="stick" className="stick" style={{
+        <StaticImage objectFit='contain' placeholder='blurred' src='../../images/postIt.png' alt="stick" className="stick" style={{
             width: "100%",
             height: "100%",
             cursor: "pointer"

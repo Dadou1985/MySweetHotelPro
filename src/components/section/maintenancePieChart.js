@@ -249,7 +249,7 @@ const MaintenancePieChart = ({userDB, filter, period}) => {
                 marginTop: "2vh",
                 marginBottom: "2vh"
             }}>
-                <StaticImage src='../../images/barChart.png' style={{width: "50%"}} />
+                <StaticImage objectFit='contain' src='../../images/barChart.png' style={{width: "50%"}} />
             </div>
             <h6>{t("msh_dashboard.d_no_data")}</h6>
         </div>}

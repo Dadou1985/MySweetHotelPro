@@ -121,17 +121,17 @@ const GuestTimeLine = ({userDB, guestId}) => {
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around"}}>
-                                        <StaticImage placeholder='blurred' src='../../svg/timer.svg' style={{width: "15%", filter: data.clock.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        <StaticImage placeholder='blurred' src="../../svg/taxi.svg" style={{width: "15%", filter: data.cab.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        {/*<StaticImage placeholder='blurred' src='../../svg/maid.svg' style={{width: "15%", filter: data.housekeeping.length > 0 ? "invert(0%)" : "invert(90%)"}} />*/}
+                                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/timer.svg' style={{width: "15%", filter: data.clock.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage objectFit='contain' placeholder='blurred' src="../../svg/taxi.svg" style={{width: "15%", filter: data.cab.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        {/*<StaticImage objectFit='contain' placeholder='blurred' src='../../svg/maid.svg' style={{width: "15%", filter: data.housekeeping.length > 0 ? "invert(0%)" : "invert(90%)"}} />*/}
                                     </div>
                                     <h6 style={{fontSize: "0.6rem", color: "black", borderTop: "1px solid lightgrey", paddingTop: "1vh", marginTop: "1vh"}}>{t("msh_crm.c_guest_line.g_event")}</h6>
                                     <div style={{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around"}}>
-                                        <StaticImage placeholder='blurred' src="../../svg/logout.svg" style={{width: "15%", filter: data.roomChange.length > 0 ? "invert(0%)" : "invert(90%)"}} />
-                                        <StaticImage placeholder='blurred' src='../../svg/repair.svg' style={{width: "15%", filter: data.maintenance.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage objectFit='contain' placeholder='blurred' src="../../svg/logout.svg" style={{width: "15%", filter: data.roomChange.length > 0 ? "invert(0%)" : "invert(90%)"}} />
+                                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/repair.svg' style={{width: "15%", filter: data.maintenance.length > 0 ? "invert(0%)" : "invert(90%)"}} />
                                     </div>
                                 </div>
                             </TimelineContent>

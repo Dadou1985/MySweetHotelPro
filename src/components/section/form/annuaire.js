@@ -64,7 +64,7 @@ const Annuaire = () =>{
                 {t("msh_coolbar.tooltip_phone_book")}
               </Tooltip>
             }>
-                <StaticImage src='../../../svg/contacts.svg' placeholder="blurred" className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
+                <StaticImage objectFit='contain' src='../../../svg/contacts.svg' placeholder="blurred" className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
             </OverlayTrigger>
 
 

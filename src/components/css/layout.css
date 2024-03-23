@@ -13,6 +13,10 @@
     width: 100% !important;
 }
 
+tbody, td, tfoot, th, thead, tr {
+    vertical-align: baseline;
+}
+
 @media screen and (min-width:768px){
     .isShowDesktop {
         display: flex;

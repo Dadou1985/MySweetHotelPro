@@ -291,7 +291,7 @@ export default function CommunIzi({userDB, user}) {
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <StaticImage src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                  <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                 </div>
                 <h6 style={{
                   width: "10vw",
@@ -347,7 +347,7 @@ export default function CommunIzi({userDB, user}) {
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginBottom: "1vh"
               }}>
-                <StaticImage src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
               </div>
               <h6 style={{
                 width: "10vw",

@@ -44,7 +44,7 @@ export default function Band({url, logo}) {
                 alignItems: "center",
                 width: "30%"
             }}>
-                <StaticImage src='../../svg/new-logo-msh.png' placeholder="blurred" style={{width: "70%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
+                <StaticImage objectFit='contain' src='../../svg/new-logo-msh.png' placeholder="blurred" style={{width: "70%", marginTop: "20%", marginBottom: "20%", filter: "drop-shadow(1px 1px 1px)"}} />
                 <MshScreen logo={MshLogo} />
             </div>}
             <div style={{

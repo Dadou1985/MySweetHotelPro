@@ -1,6 +1,6 @@
 .sticker_img {
     width: 4vw;
-    height: 8vh;
+    /* height: 8vh; */
     filter: drop-shadow(1px 1px 1px); 
     margin-right: 15%;
     cursor: pointer;

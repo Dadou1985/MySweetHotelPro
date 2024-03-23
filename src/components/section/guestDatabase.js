@@ -118,25 +118,25 @@ const GuestDatabase = ({user, userDB}) =>{
       const renderSwitchFlag = (country) => {
         switch(country) {
             case 'fr':
-                return <StaticImage placeholder="blurred" src='../../images/france.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/france.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'en':
-                return <StaticImage placeholder="blurred" src='../../images/royaume-uni.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/royaume-uni.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'es':
-                return <StaticImage placeholder="blurred" src='../../images/espagne.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/espagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'de':
-                return <StaticImage placeholder="blurred" src='../../images/allemagne.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/allemagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'it':
-                return <StaticImage placeholder="blurred" src='../../images/italie.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/italie.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'pt':
-                return <StaticImage placeholder="blurred" src='../../images/le-portugal.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/le-portugal.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             default:
-                return <StaticImage placeholder="blurred" src={'../../images/france.png'} 
+                return <StaticImage objectFit='contain' placeholder="blurred" src={'../../images/france.png'} 
                 style={{width: "50%", paddingTop: "1vh"}} />
         }
     }
@@ -361,23 +361,23 @@ const GuestDatabase = ({user, userDB}) =>{
                                 textAlign: "center", 
                                 paddingBottom: "1vh"}}>{item.username}</Card.Title>
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage placeholder="blurred" src='../../images/email.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/email.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.email}
                             </Card.Text>}
                             {item.room && item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage placeholder="blurred" src='../../images/room2.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/room2.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.room}
                             </Card.Text>}
                             {item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage placeholder="blurred" src='../../images/checkout.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/checkout.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.checkoutDate}
                             </Card.Text>}
                             {item.phone && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage placeholder="blurred" src='../../images/phone.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/phone.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.phone}
                             </Card.Text>}
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage placeholder="blurred" src='../../images/calendar.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/calendar.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "95%", marginTop: "1vh"}}>
@@ -390,7 +390,7 @@ const GuestDatabase = ({user, userDB}) =>{
                                 </Tooltip>
                                 }>
                                     <div onClick={() => setShowChat(true)}>
-                                        <StaticImage src='../../images/dialog.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} />
+                                        <StaticImage objectFit='contain' src='../../images/dialog.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer", borderBottom: "1px solid lightgrey"}} />
                                     </div>
                                 </OverlayTrigger>
                                 </div>}

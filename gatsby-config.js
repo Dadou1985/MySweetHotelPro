@@ -27,8 +27,8 @@ module.exports = {
         name: `My Sweet Hotel`,
         short_name: `My Sweet Hotel Pro`,
         start_url: `/`,
-        background_color: `#663399`,
-        theme_color: `#663399`,
+        background_color: `#630c13`,
+        theme_color: `#630c13`,
         display: `standalone`,
         icon: `src/svg/mshPro-newLogo-transparent.png`, // This path is relative to the root of the site.
       },

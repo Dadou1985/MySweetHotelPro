@@ -177,7 +177,7 @@ const Navigation = ({user, userDB}) =>{
                     onClick={handleMove}>
                         <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
                     {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <div onClick={() => handleShowDrawer()}>
-                            <StaticImage placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
                         </div>}
                     {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
@@ -333,9 +333,9 @@ const Navigation = ({user, userDB}) =>{
                 <h4 className="drawer_title">Super Menu</h4>
                     <List className="drawer_listIcons3">
                     <Support />
-                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><StaticImage placeholder='blurred' src='../../svg/magician.svg' alt="Magic box" className="drawer_icons" /></a>
+                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><StaticImage objectFit='contain' placeholder='blurred' src='../../svg/magician.svg' alt="Magic box" className="drawer_icons" /></a>
                     <div onClick={()=>{navigate("/ghostHost")}}>
-                        <StaticImage placeholder="blurred" src='../../svg/ghost.svg' alt="Ghost Host" className="drawer_icons" />
+                        <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/ghost.svg' alt="Ghost Host" className="drawer_icons" />
                     </div>
                     </List>
                </div>

@@ -60,7 +60,7 @@ moment.locale("fr")
             justifyContent: "flex-start",
             height: "100%",
             width: "100%",
-            backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Book})` : "none",
+            // backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Book})` : "none",
             backgroundRepeat: "no-repeat",
             backgroundPositionY: "5vh",
           }}>
@@ -68,7 +68,7 @@ moment.locale("fr")
               <div style={{
                 display: "flex",
                 flexFlow: "column",
-                alignItems: "end",
+                // alignItems: "end",
                 height: "80vh",
                 width: isBrowser() && window.innerWidth > 768 ? "55%" : "100%",
                 marginTop: "3vh", 
