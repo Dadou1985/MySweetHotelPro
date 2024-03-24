@@ -58,7 +58,8 @@ const Connection = () => {
 
         <div data-testid="warning" id="warning"></div>
 
-        <button data-testid="connexion" className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
+        <button data-testid="connexion" style={{borderRadius: "100px",
+    padding: "10px 30px"}} className="btn btn-success btn-block my-4" type="submit">{t("msh_connexion.c_connexion")}</button>
         </form>
     </div>
   )
