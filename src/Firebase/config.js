@@ -14,15 +14,21 @@ const firebaseConfig = {
   messagingSenderId: process.env.GATSBY_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.GATSBY_FIREBASE_APP_ID,
   measurementId: process.env.GATSBY_FIREBASE_MEASUREMENT_ID
-  };
+};
 
-firebase.initializeApp(firebaseConfig);
- 
-const db = firebase.firestore();
-const auth = firebase.auth();
-const storage = firebase.storage();
-const functions = firebase.functions();
-const specialFirestoreOptions = firebase.firestore.FieldValue
+// Only initialize Firebase in the browser and when env vars are present
+const isBrowser = typeof window !== 'undefined';
+const hasCredentials = Boolean(firebaseConfig.apiKey);
+
+if (isBrowser && hasCredentials && !firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
+
+const db = isBrowser && hasCredentials && firebase.apps.length ? firebase.firestore() : null;
+const auth = isBrowser && hasCredentials && firebase.apps.length ? firebase.auth() : null;
+const storage = isBrowser && hasCredentials && firebase.apps.length ? firebase.storage() : null;
+const functions = isBrowser && hasCredentials && firebase.apps.length ? firebase.functions() : null;
+const specialFirestoreOptions = isBrowser && hasCredentials && firebase.apps.length ? firebase.firestore.FieldValue : null;
 // const perf = getPerformance(firebase.initializeApp(firebaseConfig));
 
 export { firebase, db, auth, functions, storage, specialFirestoreOptions }
