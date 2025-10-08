@@ -2,6 +2,11 @@ require("dotenv").config({
   path: `.env.${process.env.NODE_ENV}`,
 })
 
+const fs = require('fs')
+
+// Conditionally include gatsby-firesource only if firebase.json exists
+const hasFirebaseConfig = fs.existsSync(`${__dirname}/firebase.json`)
+
 module.exports = {
   siteMetadata: {
     title: `My Sweet Hotel Pro`,
@@ -15,7 +20,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/components/image.js`,
+        path: `${__dirname}/src/images/`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -33,32 +38,34 @@ module.exports = {
         icon: `src/svg/mshPro-newLogo-transparent.png`, // This path is relative to the root of the site.
       },
     },
-    {
-      resolve: 'gatsby-firesource',
-      options: {
-        credential: require("./firebase.json"),
-        types: [
-          {
-            type: 'Book',
-            collection: 'books',
-            map: doc => ({
-              title: doc.title,
-              isbn: doc.isbn,
-              author___NODE: doc.author.id,
-            }),
+    ...(hasFirebaseConfig
+      ? [{
+          resolve: 'gatsby-firesource',
+          options: {
+            credential: require("./firebase.json"),
+            types: [
+              {
+                type: 'Book',
+                collection: 'books',
+                map: doc => ({
+                  title: doc.title,
+                  isbn: doc.isbn,
+                  author___NODE: doc.author.id,
+                }),
+              },
+              {
+                type: 'Author',
+                collection: 'authors',
+                map: doc => ({
+                  name: doc.name,
+                  country: doc.country,
+                  books___NODE: doc.books.map(book => book.id),
+                }),
+              },
+            ],
           },
-          {
-            type: 'Author',
-            collection: 'authors',
-            map: doc => ({
-              name: doc.name,
-              country: doc.country,
-              books___NODE: doc.books.map(book => book.id),
-            }),
-          },
-        ],
-      },
-    },
+        }]
+      : []),
     {
       resolve: `gatsby-plugin-google-fonts`,
       options: {
@@ -89,12 +96,18 @@ module.exports = {
         display: 'swap'
       }
     },
-    {
-      resolve: "@sentry/gatsby",
-      options: {
-        dsn: "https://1a9f3c36b4664949b6e9ef27b2182905@o1024943.ingest.sentry.io/5992588",
-        sampleRate: 0.7,
-      },
-    },
+    // Enable Sentry only when SENTRY_DSN is provided
+    ...(
+      process.env.SENTRY_DSN
+        ? [{
+            resolve: "@sentry/gatsby",
+            options: {
+              dsn: process.env.GATSBY_SENTRY_DSN,
+              release: process.env.GATSBY_SENTRY_RELEASE,
+              sampleRate: 0.7,
+            },
+          }]
+        : []
+    ),
   ],
 }

@@ -1,0 +1,25 @@
+services:
+  server:
+    # platform: linux/amd64
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - "8000:8000"
+      - "9229:9229"
+    volumes:
+      - .:/usr/src/app:cached
+      - /usr/src/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - GATSBY_TELEMETRY_DISABLED=1
+      - GATSBY_EXPERIMENTAL_LMDB_STORE=0
+      - SHARP_CONCURRENCY=1
+      - UV_THREADPOOL_SIZE=4
+      - GATSBY_CPU_COUNT=2
+      - DISABLE_SHARP=1
+      - GATSBY_DISABLE_SHARP=1
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+      - GATSBY_WEBPACK_PUBLICPATH=auto
+    command: ["npm", "run", "develop", "--", "-H", "0.0.0.0", "-p", "8000"]

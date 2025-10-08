@@ -1,0 +1,36 @@
+# syntax=docker/dockerfile:1
+ARG NODE_VERSION=18
+FROM node:${NODE_VERSION}-bullseye-slim AS base
+
+# Dossier de travail
+WORKDIR /usr/src/app
+
+# Installer les outils nécessaires
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       python3 make g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Ensure native modules build when prebuilt binaries are unavailable
+ENV npm_config_build_from_source=true
+ENV GATSBY_EXPERIMENTAL_LMDB_STORE=0
+# Copier les fichiers de config npm
+COPY package.json package-lock.json ./
+
+# Installer TOUTES les dépendances (dev + prod)
+RUN npm config set legacy-peer-deps true \
+    && npm ci
+
+# Copier le reste du code
+COPY . .
+
+# Exposer le port du serveur Gatsby (par défaut 8000)
+EXPOSE 8000
+
+# Variables utiles pour le dev
+ENV NODE_ENV=development
+ENV GATSBY_TELEMETRY_DISABLED=1
+ENV PORT=8000
+
+# Lancer Gatsby en mode dev
+CMD ["npm", "run", "develop", "--", "-H", "0.0.0.0", "-p", "8000"]
