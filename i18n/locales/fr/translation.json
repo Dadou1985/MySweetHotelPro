@@ -96,7 +96,8 @@
         "c_email": "e-mail",
         "c_password": "Mot de passe",
         "c_connexion" : "Se connecter",
-        "c_warning": "Vos identifiants sont erronés !"
+        "c_warning": "Vos identifiants sont erronés !",
+        "c_create_account": "Créer un compte"
     },
     "msh_chat" : {
         "c_chat_title": "Chat Client",

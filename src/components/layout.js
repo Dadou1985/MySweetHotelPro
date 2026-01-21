@@ -12,27 +12,35 @@ const Layout = ({ children }) => {
 
   useEffect(() => {
         
-    let unsubscribe = auth.onAuthStateChanged(async(user) => {
-        if (user) {
-          setUser(user)
-           await db.collection('businessUsers')
-            .doc(user.uid)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                console.log("ocument!!!!!!", doc.data())
-                setUserDB(doc.data())
-                let userState = JSON.stringify(doc.data())
-                let userAuth = JSON.stringify(user)
-                sessionStorage.setItem("userStorage", userState)
-                sessionStorage.setItem("userAuth", userAuth)
-              } else {
-                console.log("No such document!")
-              }
-            })
-          return setHide("none")
-        }
-      })
+    let unsubscribe = auth.onAuthStateChanged(async (user) => {
+      // Always stop showing the loader once Firebase has resolved auth state.
+      // If the user is signed out, we still want to render children.
+      if (!user) {
+        setUser(null)
+        setUserDB(null)
+        setHide("none")
+        return
+      }
+
+      await setUser(user)
+      await db
+        .collection("businessUsers")
+        .doc(user.uid)
+        .get()
+        .then((doc) => {
+          if (doc.exists) {
+            setUserDB(doc.data())
+            let userState = JSON.stringify(doc.data())
+            let userAuth = JSON.stringify(user)
+            sessionStorage.setItem("userStorage", userState)
+            sessionStorage.setItem("userAuth", userAuth)
+          } else {
+            console.log("No such document!")
+          }
+        })
+
+      setHide("none")
+    })
     return unsubscribe
   }, [])
  
