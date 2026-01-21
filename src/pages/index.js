@@ -7,7 +7,6 @@ import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
 import Connection from '../components/connection'
-import SEO from '../components/seo'
 
 const IndexPage = () => {
 
