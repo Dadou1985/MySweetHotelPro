@@ -1,9 +1,8 @@
-import React, { useEffect, useState } from "react"
+import React, { useContext } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import Loader from '../helper/common/mshLoader'
 import ToolBar from "../components/section/toolbar"
 import Navigation from '../components/section/navigation'
-import {FirebaseContext, db, auth} from '../Firebase'
+import {FirebaseContext} from '../Firebase'
 import Dashboard from '../components/section/dashboard'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
@@ -12,45 +11,15 @@ import moment from 'moment'
 import 'moment/locale/fr';
 
 const SinglePage = () => {
-
-  const [hide, setHide] = useState("flex")
-  const [userDB, setUserDB] = useState(null)
-  const [user, setUser] = useState(null)
+  const firebaseCtx = useContext(FirebaseContext) || { user: null, userDB: null }
+  const { userDB, user } = firebaseCtx
   const { t } = useTranslation()
-
-  useEffect(() => {
-        
-    let unsubscribe = auth.onAuthStateChanged(async(user) => {
-        if (user) {
-          await setUser(user)
-           await db.collection('businessUsers')
-            .doc(user.uid)
-            .get()
-            .then((doc) => {
-              if (doc.exists) {
-                setUserDB(doc.data())
-                let userState = JSON.stringify(doc.data())
-                let userAuth = JSON.stringify(user)
-                sessionStorage.setItem("userStorage", userState)
-                sessionStorage.setItem("userAuth", userAuth)
-              } else {
-                console.log("No such document!")
-              }
-            })
-          return setHide("none")
-        }
-      })
-    return unsubscribe
-  }, [])
 
   const isBrowser = () => typeof window !== "undefined"
 
   return (
-    <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}>
+    <>
       <div className="landscape-display"></div>
-      <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-        <Loader hide={hide} />
-      </div>
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}
         <div style={{
@@ -88,7 +57,7 @@ const SinglePage = () => {
             </div>
           </div>
       </div>
-    </FirebaseContext.Provider>
+    </>
   )
 }
 

@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react"
-import Loader from '../helper/common/mshLoader'
-import {FirebaseContext, db, auth} from '../Firebase'
+import React, { useState, useContext } from "react"
+import {FirebaseContext} from '../Firebase'
 import Notebook from '../components/section/messenger'
 import Navigation from '../components/section/navigation'
 import MomentUtils from "@date-io/moment";
 import Memo from '../components/section/memo'
-import Book from '../images/book2.png'
 import {
   MuiPickersUtilsProvider,
   DatePicker
@@ -17,37 +15,20 @@ import moment from 'moment'
 import 'moment/locale/fr';
 
 const NotebookPage = () => {
-  const [hide, setHide] = useState("flex")
-  const [userDB, setUserDB] = useState(null)
-  const [user, setUser] = useState(null)
+  const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
   const [filterDate, setFilterDate] = useState(new Date())
   const { t } = useTranslation()
 
-  useEffect(() => {     
-    if(!user && !userDB){
-      const userStorage = JSON.parse(sessionStorage.getItem('userStorage'))
-    const userAuth = JSON.parse(sessionStorage.getItem('userAuth'))
-    
-    setUser(userAuth)
-    setUserDB(userStorage)
-    return setHide("none")
-    }
-        
-}, [user, userDB])
+  const handleDateChange = (date) => {
+    setFilterDate(date);
+  };
 
-const handleDateChange = (date) => {
-  setFilterDate(date);
-};
-
-const isBrowser = () => typeof window !== "undefined"
-moment.locale("fr")
+  const isBrowser = () => typeof window !== "undefined"
+  moment.locale("fr")
 
   return(
-    <FirebaseContext.Provider value={{ userDB, setUserDB, user, setUser }}> 
+    <> 
         <div className="landscape-display"></div>
-        <div style={{position: "absolute", zIndex: "9", width: "100%"}}> 
-          <Loader hide={hide} />
-        </div>     
         {!!user && !!userDB &&
         <Navigation user={user} userDB={userDB} />}  
         <div style={{
@@ -60,7 +41,6 @@ moment.locale("fr")
             justifyContent: "flex-start",
             height: "100%",
             width: "100%",
-            // backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Book})` : "none",
             backgroundRepeat: "no-repeat",
             backgroundPositionY: "5vh",
           }}>
@@ -103,7 +83,7 @@ moment.locale("fr")
                   </div>
           </div>
         </div>
-    </FirebaseContext.Provider>
+    </>
   )
 }
 
