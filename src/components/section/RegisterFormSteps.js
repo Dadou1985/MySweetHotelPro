@@ -139,11 +139,35 @@ export default function RegisterFormSteps() {
 
     const sendwelcomeMail = (url) => {
         if (!mailNewSubscriber || !mailWelcome) return null
-        mailNewSubscriber({subscriber: `${formValue.firstName} ${formValue.lastName}`, hotel: formValue.hotelName, standing: formValue.standing, country: "FRANCE", city: formValue.city, capacity: formValue.room})
+        mailNewSubscriber({
+            subscriber: `${formValue.firstName} ${formValue.lastName}`, 
+            hotel: formValue.hotelName, 
+            standing: formValue.standing, 
+            country: "FRANCE", 
+            city: formValue.city, 
+            capacity: formValue.room
+        })
+        
         if(url){
-            return mailWelcome({firstName: formValue.firstName, email: formValue.email, fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png"})
+            return mailWelcome({
+                firstName: formValue.firstName, 
+                email: formValue.email, 
+                password: `msh-admin-${formValue.firstName}`, 
+                appLink: `https://mysweethotel.eu/?url=${url}&hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, 
+                mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
+                mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png",
+                isTester: false
+            })
         }else{
-            return mailWelcome({firstName: formValue.firstName, email: formValue.email,fakeMail: `${formValue.firstName}.${formValue.lastName}${formValue.code_postal}@msh.com`, password: `msh-admin-${formValue.firstName}`, appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png"})
+            return mailWelcome({
+                firstName: formValue.firstName, 
+                email: formValue.email, 
+                password: `msh-admin-${formValue.firstName}`, 
+                appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, 
+                mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
+                mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png",
+                isTester: false
+            })
         }
     }
     

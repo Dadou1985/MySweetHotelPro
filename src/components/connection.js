@@ -88,12 +88,12 @@ const Connection = () => {
             <button data-testid="connexion" style={{borderRadius: "100px",
             padding: "10px 30px"}} className="btn btn-success btn-block mt-3" type="submit">{t("msh_connexion.c_connexion")}</button>
             <button data-testid="connexion" style={{borderRadius: "100px",
-            padding: "10px 30px"}} className="btn btn-light btn-block my-4" onClick={handleShow}>{t("msh_connexion.c_create_account")}</button>
+            padding: "10px 30px"}} className="btn btn-outline-success btn-block my-4" onClick={handleShow}>{t("msh_connexion.c_create_account")}</button>
           </div>
         </form>
 
       <Modal show={list}
-        size="lg"
+        size="md"
         aria-labelledby="contained-modal-title-vcenter"
         centered
         onHide={handleClose}
@@ -104,7 +104,7 @@ const Connection = () => {
             </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <RegisterForm />
+          <RegisterForm handleClose />
         </Modal.Body>
       </Modal>
     </div>

@@ -97,7 +97,9 @@
         "c_password": "Mot de passe",
         "c_connexion" : "Se connecter",
         "c_warning": "Vos identifiants sont erronés !",
-        "c_create_account": "Créer un compte"
+        "c_create_account": "Créer un compte test",
+        "c_first_Name": "Prénom",
+        "c_flast_Name": "Nom"
     },
     "msh_chat" : {
         "c_chat_title": "Chat Client",
