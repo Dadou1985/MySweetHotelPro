@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import { auth, db, functions } from '../../../Firebase'
-import { navigate } from 'gatsby'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../../../i18n/withTrans'
 import { handleChange } from '../../../helper/formCommonFunctions'
