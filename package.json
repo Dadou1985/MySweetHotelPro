@@ -115,16 +115,16 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "gatsby build",
-    "clean:gatsby": "gatsby clean",
-    "develop": "gatsby develop",
-    "develop:clean": "npm run clean:gatsby && gatsby develop",
-    "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
-    "start": "npm run develop",
-    "serve": "gatsby serve",
-    "clean": "gatsby clean",
-    "test": "jest"
-  },
+  "build": "npx gatsby build",
+  "clean:gatsby": "npx gatsby clean",
+  "develop": "npx gatsby develop",
+  "develop:clean": "npm run clean:gatsby && npx gatsby develop",
+  "format": "prettier --write \"**/*.{js,jsx,json,md}\"",
+  "start": "npm run develop",
+  "serve": "npx gatsby serve",
+  "clean": "npx gatsby clean",
+  "test": "jest"
+},
   "repository": {
     "type": "git",
     "url": "https://github.com/gatsbyjs/gatsby-starter-default"

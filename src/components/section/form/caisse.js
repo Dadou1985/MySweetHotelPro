@@ -31,8 +31,6 @@ import {
  } from '../../../helper/globalCommonFunctions'
 import {
     handleChange,
-    safeTotal,
-    safeAmount
 } from '../../../helper/formCommonFunctions'
 
 /* 
@@ -48,6 +46,32 @@ const Caisse = () =>{
     const [filterDate, setFilterDate] = useState(new Date())
     const { t } = useTranslation()
 
+    const details = [...safeTableDetailsCoins, ...safeTableDetailsRolls]
+
+    const buildInitialQuantities = () =>
+      details.reduce((acc, d) => {
+        acc[d.cellInputId] = 0
+        return acc
+      }, {})
+
+    const [quantities, setQuantities] = useState(buildInitialQuantities)
+
+    const totals = details.reduce(
+      (acc, d) => {
+        const qty = Number(quantities[d.cellInputId] ?? 0) || 0
+        acc.totalQty += qty
+        acc.totalAmount += qty * Number(d.value)
+        return acc
+      },
+      { totalQty: 0, totalAmount: 0 }
+    )
+
+    const onQtyChange = (inputId, value) => {
+      // Keep only non-negative numbers, default to 0
+      const n = Math.max(0, Number(value) || 0)
+      setQuantities((prev) => ({ ...prev, [inputId]: n }))
+    }
+
     const handleShow = () => setList(true)
     const handleClose = () => {
         setList(false)
@@ -62,23 +86,16 @@ const Caisse = () =>{
     const newData = {
         author: userDB.username,
         date: moment(new Date()).format('LL'),
-        amount: document.getElementById("montant") !== null && document.getElementById("montant").innerHTML,
+        amount: totals.totalAmount.toFixed(2),
         shift: formValue.shift,
         shiftClone: formValue.shiftClone !== "" ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
         markup: Date.now()
     }
 
-    const handleReset = async() =>{
-        let montant = document.getElementById("montant")
-        let total = document.getElementById('total')
-        let table = document.getElementById("moneyBoxes")
-
-        montant.innerHTML = 0
-        total.innerHTML = 0
-        await table.reset()
-        return setFormValue({shift: "matin"})
+    const handleReset = async () => {
+      setQuantities(buildInitialQuantities())
+      return setFormValue({ shift: "matin" })
     }
-
 
     const handleDateChange = (date) => {
         setFilterDate(date);
@@ -103,8 +120,6 @@ const Caisse = () =>{
     //     content: () => componentRef.current,
     // })
 
-
-    console.log("33333333333333", document.getElementById("montant") !== null && document.getElementById("montant").value)
 
     return(
         <div style={{
@@ -193,13 +208,13 @@ const Caisse = () =>{
                                     {safeTableDetailsCoins.map((details) => {
                                         return (
                                             <SafeTableRow
-                                                rowId={details.id}
-                                                labelValue={details.labelValue}
-                                                cellLabelValue={details.labelCellValue}
-                                                cellInputId={details.cellInputId}
-                                                cellOutputId={details.cellOutputId}
-                                                safeTotal={safeTotal}
-                                                safeAmount={safeAmount}
+                                              rowId={details.id}
+                                              label={details.label}
+                                              value={details.value}
+                                              inputId={details.cellInputId}
+                                              outputId={details.cellOutputId}
+                                              qty={quantities[details.cellInputId]}
+                                              onQtyChange={onQtyChange}
                                             />)
                                     })}
                                     <tr>
@@ -210,13 +225,13 @@ const Caisse = () =>{
                                     {safeTableDetailsRolls.map((details) => {
                                         return (
                                             <SafeTableRow
-                                                rowId={details.id}
-                                                labelValue={details.labelValue}
-                                                cellLabelValue={details.labelCellValue}
-                                                cellInputId={details.cellInputId}
-                                                cellOutputId={details.cellOutputId}
-                                                safeTotal={safeTotal}
-                                                safeAmount={safeAmount}
+                                              rowId={details.id}
+                                              label={details.label}
+                                              value={details.value}
+                                              inputId={details.cellInputId}
+                                              outputId={details.cellOutputId}
+                                              qty={quantities[details.cellInputId]}
+                                              onQtyChange={onQtyChange}
                                             />)
                                     })}
                                 </tbody>
@@ -228,8 +243,8 @@ const Caisse = () =>{
                                     </tr>
                                     <tr>
                                         <td></td>
-                                        <td><output id="total">0.00</output></td>
-                                        <td><output id="montant">0.00</output></td>
+                                        <td><output id="total">{totals.totalQty.toFixed(2)}</output></td>
+                                        <td><output id="montant">{totals.totalAmount.toFixed(2)}</output></td>
                                     </tr>
                                 </tfoot>
                                 </Table>
