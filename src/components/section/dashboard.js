@@ -158,7 +158,7 @@ const roomChangeData = {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  width: typeof window && window.innerWidth > 768 && "4vw",
                   height: typeof window && window.innerWidth > 768 && "4vh",
                   minWidth: "67px",
                   maxWidth: "107px",
@@ -174,9 +174,7 @@ const roomChangeData = {
                 </div>
             </div>
             <div className='dashboard-icon dashboard-note-card' style={{
-              border: "1px solid lightgrey", 
-              borderBottom: "2px solid lightgrey",
-              borderRight: "2px solid lightgrey"}} onClick={() => navigate('/chat')}>
+              borderBottom: "2px solid lightgrey"}} onClick={() => navigate('/chat')}>
                 <div style={{
                   display: "flex",
                   flexFlow: "column",
@@ -186,8 +184,9 @@ const roomChangeData = {
                   borderRight: "5px solid lightgray",
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
-                  padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  padding: "3vw",
+                  width: typeof window && window.innerWidth > 768 && "4vw",
+                  height: typeof window && window.innerWidth > 768 && "4vh",
                   minWidth: "67px",
                   maxWidth: "107px",
                   height: typeof window && window.innerWidth > 768 && "4vh",
@@ -195,7 +194,7 @@ const roomChangeData = {
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "9vw"}} />
+                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "8vw"}} />
                 </div>
                 <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
                   <h6 className='dashboard-note-title'>{t("msh_dashboard.d_chat_room")}</h6>
@@ -213,7 +212,7 @@ const roomChangeData = {
           <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowRoomChangeModal(true)}>
               <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_doughnut_chart.d_title')}</h5>
               <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_doughnut_chart.d_subtitle')}</p>
-              {roomChange.length > 0 ? <Chart type="bar" data={roomChangeData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+              {roomChange.length > 0 ? <Chart type="bar" data={roomChangeData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid #B8860B", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -243,7 +242,7 @@ const roomChangeData = {
           <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowMaintenanceModal(true)}>
               <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_pie_chart.p_title')}</h5>
               <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_pie_chart.p_subtitle')}</p>
-              {maintenance.length > 0 ? <Chart type="bar" data={maintenanceData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+              {maintenance.length > 0 ? <Chart type="bar" data={maintenanceData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid #B8860B", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center",

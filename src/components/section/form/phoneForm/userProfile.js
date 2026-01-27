@@ -184,7 +184,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                     padding: "5%",
                     }}>
                 <h1>
-                    <div style={{color: "#5bc0de", fontWeight: "bold", textAlign: "center", fontSize: "0.7em"}}>{flow.username}</div>
+                    <div style={{color: "#B8860B", fontWeight: "bold", textAlign: "center", fontSize: "0.7em"}}>{flow.username}</div>
                     <div style={{fontSize: "0.7rem", textAlign: "center"}}>{flow.email}</div>
                     {/*<div className="header-profile">
                         <img src={Tips} alt="tips" className="tips" /> 

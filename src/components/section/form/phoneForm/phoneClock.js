@@ -48,6 +48,7 @@ const PhoneClock = ({userDB}) =>{
 
     const notif = t("msh_alarm.a_notif")
     const dataStatus = {status: false} 
+    const breakPoint = window.innerWidth > 510
 
     const newData = {
         author: userDB.username,
@@ -130,14 +131,13 @@ const PhoneClock = ({userDB}) =>{
         <Button  className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_alarm.a_first_tab_title")}</Button>
     
         <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
-                <div  className="phone_container_drawer">
+                <div className="phone_container_drawer" style={{justifyContent: breakPoint && "space-around"}}>
                 <h4 className='phone_tab'>{t("msh_alarm.a_first_tab_title")}</h4>
                 {!step && <div style={{
                     display: "flex",
                     flexFlow: "row",
                     alignItems: "center",
                     justifyContent: "space-around",
-                    width: "70%"
                 }}>
                     <Form.Group className='phone_calendar_container'>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>

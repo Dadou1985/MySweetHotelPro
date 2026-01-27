@@ -204,7 +204,7 @@
     
     .dashboard-note-card {
         width: 90%;
-        height: 15vh; 
+        height:unset;
         margin-bottom: 1vh;
         margin-left: 5vw;
     }
@@ -236,6 +236,7 @@
         width: 90%;
         margin-left: 7vw;
         margin-bottom: 2vh;
+        height: unset;
     }
 
     .dashboard-metrics-container {

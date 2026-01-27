@@ -51,6 +51,7 @@ const PhoneCab = ({userDB}) =>{
 
     const notif = t("msh_cab.c_notif")
     const dataStatus = {status: false} 
+    const breakPoint = window.innerWidth > 510
 
     const newData = {
         author: userDB.username,
@@ -135,7 +136,7 @@ const PhoneCab = ({userDB}) =>{
             <Button className='btn-msh phone_submitButton' size="md" onClick={handleShow}>{t("msh_cab.c_phone_button.b_show_modal")}</Button>
 
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
-                <div className="phone_container_drawer">
+                <div className="phone_container_drawer" style={{justifyContent: breakPoint && "space-around"}}>
                 <h4 className='phone_tab'>{t("msh_cab.c_phone_button.b_show_modal")}</h4>
                 {!step && <div style={{
                     display: "flex",

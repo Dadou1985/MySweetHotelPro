@@ -13,7 +13,7 @@ import '../css/section/chatTemplate.css'
       return (
         <span key={key} className="darkTextUser">
           <span className="user_avatar_chat_label">{author}</span>
-          <div className="darkTextBodyUser" style={{backgroundColor: author === userDB.username ? "lightblue" : "rgb(30, 52, 107)"}}>
+          <div className="darkTextBodyUser" style={{backgroundColor: author === userDB.username ? "#B8860B" : "rgb(30, 52, 107)"}}>
           <span style={{marginBottom: "2%", color: author === userDB.username ? "black" : "white"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
