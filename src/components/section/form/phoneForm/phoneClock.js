@@ -127,11 +127,11 @@ const PhoneClock = ({userDB}) =>{
                             </tbody>
                         </Table>
             </div>
-        <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_alarm.a_first_tab_title")}</Button>
+        <Button  className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_alarm.a_first_tab_title")}</Button>
     
         <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_alarm.a_first_tab_title")}</h4>
+                <h4 className='phone_tab'>{t("msh_alarm.a_first_tab_title")}</h4>
                 {!step && <div style={{
                     display: "flex",
                     flexFlow: "row",
@@ -139,7 +139,7 @@ const PhoneClock = ({userDB}) =>{
                     justifyContent: "space-around",
                     width: "70%"
                 }}>
-                    <Form.Group>
+                    <Form.Group className='phone_calendar_container'>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
                     <KeyboardDateTimePicker
                         variant="dialog"
@@ -177,14 +177,14 @@ const PhoneClock = ({userDB}) =>{
                     />  
                 </>}
                 {step && <>
-                    <Button variant="outline-info" className="phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
-                    <Button variant="success" className="phone_submitButton" onClick={(event) => {
+                    <Button variant='link' className="btn-msh-outline phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
+                    <Button  className="btn-msh phone_submitButton" onClick={(event) => {
                         handleSubmitData2(event, "hotels", userDB.hotelId, "clock", newData)
                         addNotification(notif, userDB.hotelId)
                         return handleHide()
                     }}>{t("msh_alarm.a_phone_button.b_validation")}</Button>                
                 </>}
-                {!step && <Button variant="outline-info" className="phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
+                {!step && <Button className="btn-msh phone_submitButton" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                 </div>
             </Drawer>
     </div>

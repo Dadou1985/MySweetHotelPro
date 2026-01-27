@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
-import {FirebaseContext, db, auth} from '../Firebase'
+import {FirebaseContext} from '../Firebase'
 import PhoneMaid from '../components/section/form/phoneForm/phoneMaid'
-import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 
 const RoomChange = () => {
@@ -9,9 +8,7 @@ const RoomChange = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-            {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}     
+        <div className="landscape-display"></div>    
         {!!user && !!userDB &&
         <PhoneMaid user={user} userDB={userDB} />}
     </>

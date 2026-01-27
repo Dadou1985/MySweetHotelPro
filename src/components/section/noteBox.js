@@ -64,9 +64,9 @@ const NoteBox = ({filterDate, category, title}) => {
 
     const GreenCheckbox = withStyles({
       root: {
-        color: green[400],
+        color: "#B8860B",
         '&$checked': {
-          color: green[600],
+          color: "#B8860B",
         },
       },
       checked: {},

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import {FirebaseContext, db, auth} from '../Firebase'
 import Loader from '../helper/common/mshLoader'
+import Navigation from '../components/section/navigation'
 
 import PropTypes from "prop-types"
 import "./css/layout.css"
@@ -9,6 +10,8 @@ const Layout = ({ children }) => {
   const [hide, setHide] = useState("flex")
   const [userDB, setUserDB] = useState(null)
   const [user, setUser] = useState(null)
+
+  const homePagePath = children?.key
 
   useEffect(() => {
         
@@ -22,7 +25,7 @@ const Layout = ({ children }) => {
         return
       }
 
-      await setUser(user)
+      setUser(user)
       await db
         .collection("businessUsers")
         .doc(user.uid)
@@ -50,6 +53,7 @@ const Layout = ({ children }) => {
         <Loader hide={hide} />
       </div>
       <div>
+        {homePagePath !== "/" &&<Navigation />}
         <div
           style={{
             overflow: "hidden",

@@ -156,6 +156,38 @@
     margin-left: 2vw;
 }
 
+/* MSH Buttons */
+
+.btn-msh {
+    background-color: #B8860B; /* ton gold */
+    border-color: #B8860B;
+    color: black;
+}
+  
+.btn-msh:hover,
+.btn-msh:focus,
+.btn-msh:active {
+background-color: #a17308;
+border-color: #a17308;
+color: white;
+}
+
+
+
+.btn-msh-outline {
+    border: 1px solid #B8860B; /* ton gold */
+    color: #B8860B;
+    text-decoration: none;
+}
+
+.btn-msh-outline:hover,
+.btn-msh-outline:focus,
+.btn-msh-outline:active {
+background-color: #a17308;
+border-color: #a17308;
+color: white;
+}
+
 @media screen and (max-width: 768px) {
     .messenger_container {
         width: 100%;

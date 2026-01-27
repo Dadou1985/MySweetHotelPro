@@ -76,6 +76,10 @@
 
 .cental-menu {
     border-bottom: none;
+    color: black; 
+    text-decoration: none;
+    flex-flow: column; 
+    justify-content: center;
 }
 
 .cental-menu:hover {

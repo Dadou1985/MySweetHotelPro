@@ -14,7 +14,7 @@ const PhoneCheckList = ({user, userDB}) =>{
             <Tab.Container defaultActiveKey="matin">
             <Row>
                 <Col sm={2}>
-                <Nav variant="pills" className="flex-row">
+                <Nav variant="pills" className="flex-row" style={{marginBottom: "1vh"}}>
                 <Nav.Item>
                     <Nav.Link eventKey="matin">{t("msh_check_list.c_button.b_morning_shift")}</Nav.Link>
                     </Nav.Item>

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react"
 import {FirebaseContext} from '../Firebase'
 import Notebook from '../components/section/messenger'
-import Navigation from '../components/section/navigation'
 import MomentUtils from "@date-io/moment";
 import Memo from '../components/section/memo'
 import {
@@ -28,9 +27,7 @@ const NotebookPage = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}  
+        <div className="landscape-display"></div> 
         <div style={{
             display: "flex",
           }}>

@@ -160,6 +160,8 @@ const roomChangeData = {
                   padding: "2vw",
                   width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
                   height: typeof window && window.innerWidth > 768 && "4vh",
+                  minWidth: "67px",
+                  maxWidth: "107px",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
@@ -186,6 +188,8 @@ const roomChangeData = {
                   borderRadius: "100%",
                   padding: "2vw",
                   width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
+                  minWidth: "67px",
+                  maxWidth: "107px",
                   height: typeof window && window.innerWidth > 768 && "4vh",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 

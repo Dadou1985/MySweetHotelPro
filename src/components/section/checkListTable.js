@@ -28,6 +28,7 @@ const CheckListTable = ({shift}) => {
         status: false,
         markup: Date.now()
     }
+    const isMobile = window.innerWidth < 768
 
     useEffect(() => {
         let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, "checkList", "lists", shift, "markup", "asc").onSnapshot(function(snapshot) {
@@ -53,7 +54,7 @@ const CheckListTable = ({shift}) => {
 
     return (
         <div>
-            <Button variant="outline-info" className="checkList_allSelected_button" block onClick={handleCleanCheckboxes}>{t("msh_check_list.c_button.b_uncheck_all")}</Button>
+            <Button variant='link' className="btn-msh-outline checkList_allSelected_button" block onClick={handleCleanCheckboxes}>{t("msh_check_list.c_button.b_uncheck_all")}</Button>
             <InputGroup className="mb-3">
                 <FormControl
                 placeholder={t("msh_check_list.c_input_placeholder")}
@@ -70,7 +71,7 @@ const CheckListTable = ({shift}) => {
                     }
                 }}
                 />
-                    <Button variant="outline-success" onClick={(event) => {
+                    <Button className='btn-msh' onClick={(event) => {
                         setFormValue({task: ""})
                         return handleSubmitData3(event, "hotels", userDB.hotelId, "checkList", "lists", shift, newData)
                     }}>{t("msh_check_list.c_button.b_validate")}</Button>
@@ -91,9 +92,9 @@ const CheckListTable = ({shift}) => {
                                 {flow.task}
                             </td>
                             <td className="bg-light">
-                                <Button variant="outline-danger" size="sm" onClick={()=>{
+                                <Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={()=>{
                                     return handleDeleteData3('hotels', userDB.hotelId, "checkList", "lists", shift, flow.id)
-                                }}>{t("msh_general.g_button.b_delete")}</Button>
+                                }}>{isMobile ? "x": t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>
                         ))}

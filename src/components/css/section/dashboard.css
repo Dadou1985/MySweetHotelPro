@@ -26,6 +26,10 @@
 
 .dashboard-icon {
     filter: drop-shadow(2px 4px 6px gray);
+
+    > div > canvas {
+        max-height: 275px;
+    }
  }
 
 .dashboard-icon-box {
@@ -207,7 +211,7 @@
     
     .dashboard-note-title {
         text-align: center; 
-        margin-top: 3vh;
+        margin-top: 1vh;
     }
 
     .dashboard-chat-title {

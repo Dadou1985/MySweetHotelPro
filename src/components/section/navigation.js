@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
 import Drawer from '../../helper/common/drawer'
@@ -22,16 +22,22 @@ import AdminRegister from './form/adminRegister'
 import UserList from './form/userList'
 import Logo from '../../svg/msh-newLogo-transparent.png'
 import '../css/section/navigation.css'
+import {FirebaseContext} from '../../Firebase'
+import { withTrans } from '../../../i18n/withTrans'
 
-const Navigation = ({user, userDB}) =>{
-
+const Navigation = () =>{
+    // const firebaseCtx = useContext(FirebaseContext) || { user: null, userDB: null }
+    const { userDB, user } = useContext(FirebaseContext)   
     const [list, setList] = useState(false)
     const [activate, setActivate] = useState(false)
     const [oldNote, setOldNote] = useState([])
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
     const [showAdminModal, setShowAdminModal] = useState(false)
     const [showFeedbackModal, setShowFeedbackModal] = useState(false)
-    const { t } = useTranslation()
+    const { t } = useTranslation() 
+
+    const isDesktop = window && window.innerWidth > 768 ? "flex" : "none"
+    const isMobile = window && window.innerWidth < 768 ? "flex" : "none"
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -50,7 +56,7 @@ const Navigation = ({user, userDB}) =>{
     useEffect(() => {
         const handleDeleteImgNote = () => {
             return db.collection('hotels')
-            .doc(userDB.hotelId)
+            .doc(userDB?.hotelId)
             .collection("note")
             .where("markup", "<", previousDays)
         }
@@ -76,27 +82,27 @@ const Navigation = ({user, userDB}) =>{
         }))
       }
 
-      const handleSubmitFeedback = async(event) => {
-        event.preventDefault()
-        setFormValue({categorie: "improvement", feedback: ""})
-        const notif = t("msh_feedback_box.f_notif")
-        await db.collection('feedbacks')
-            .doc('category')
-            .collection(formValue.categorie)
+    const handleSubmitFeedback = async(event) => {
+    event.preventDefault()
+    setFormValue({categorie: "improvement", feedback: ""})
+    const notif = t("msh_feedback_box.f_notif")
+    await db.collection('feedbacks')
+        .doc('category')
+        .collection(formValue.categorie)
+        .add({
+            author: userDB.username,
+            hotelName: userDB.hotelName,
+            hotelRegion: userDB.hotelRegion,
+            hotelDept: userDB.hotelDept,
+            text: formValue.feedback,
+            markup: Date.now()
+        })
+        return db.collection('notifications')
             .add({
-                author: userDB.username,
-                hotelName: userDB.hotelName,
-                hotelRegion: userDB.hotelRegion,
-                hotelDept: userDB.hotelDept,
-                text: formValue.feedback,
-                markup: Date.now()
-            })
-            return db.collection('notifications')
-                .add({
-                content: notif,
-                hotelId: userDB.hotelId,
-                markup: Date.now()})
-                .then(handleClose)
+            content: notif,
+            hotelId: userDB.hotelId,
+            markup: Date.now()})
+            .then(handleClose)
     }
 
 
@@ -132,36 +138,36 @@ const Navigation = ({user, userDB}) =>{
         })
     }
 
-        const items = [
-            {
-                label: 'Utilisateur',
-                icon: 'pi pi-fw pi-user',
-                items: [
-                    {
-                        label: t("msh_navigation.tooltip_user_profile"),
-                        icon: 'pi pi-fw pi-id-card',
-                        command: ()=> navigate('/doorsStage'),
-                    },
-                    {
-                        label: t("msh_admin_board.a_title"),
-                        icon: 'pi pi-fw pi-cog',
-                        command: () => setShowAdminModal(true)
-                    },
-                    {
-                        label: t("msh_feedback_box.f_title"),
-                        icon: 'pi pi-fw pi-star',
-                        command: () => setShowFeedbackModal(true)
-                    },
-                    {
-                        label: t("msh_navigation.tooltip_deconnexion"),
-                        icon: 'pi pi-fw pi-sign-out',
-                        command: () => handleShow()
-                    }
-                ]
-            }
-        ];
+    const items = [
+        {
+            label: 'Utilisateur',
+            icon: 'pi pi-fw pi-user',
+            items: [
+                {
+                    label: t("msh_navigation.tooltip_user_profile"),
+                    icon: 'pi pi-fw pi-id-card',
+                    command: ()=> navigate('/doorsStage'),
+                },
+                {
+                    label: t("msh_admin_board.a_title"),
+                    icon: 'pi pi-fw pi-cog',
+                    command: () => setShowAdminModal(true)
+                },
+                {
+                    label: t("msh_feedback_box.f_title"),
+                    icon: 'pi pi-fw pi-star',
+                    command: () => setShowFeedbackModal(true)
+                },
+                {
+                    label: t("msh_navigation.tooltip_deconnexion"),
+                    icon: 'pi pi-fw pi-sign-out',
+                    command: () => handleShow()
+                }
+            ]
+        }
+    ];
 
-    moment.locale(userDB.language)
+    moment.locale(userDB?.language)
 
     return(
         <div className="shadow-lg bg-white">
@@ -172,12 +178,12 @@ const Navigation = ({user, userDB}) =>{
                     height: "7vh"
                 }}>
                 {!!user && userDB &&
-                <Drawer className="drawer" user={user} userDB={userDB} style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />}
+                <Drawer className="drawer" user={user} userDB={userDB} style={{display: isMobile}} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
-                        <img src={userDB.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
-                    {user.uid === "06nOvemBre198524SEptEMbrE201211noVEMbre20171633323179047" && <div onClick={() => handleShowDrawer()}>
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: typeof window && window.innerWidth < 768 ? "flex" : "none"}} />
+                        <img src={userDB?.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
+                    {user?.uid === process.env.GATSBY_GHOST_HOST_UID && <div onClick={() => handleShowDrawer()}>
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: isMobile}} alt="Logo" />
                         </div>}
                     {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
@@ -188,11 +194,11 @@ const Navigation = ({user, userDB}) =>{
                         height: "7vh",
                         marginLeft: "10vw"
                     }}>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/crm">C.R.M</Link>
-                        <Link className='cental-menu' style={{color: "black", textDecoration: "none", display: typeof window && window.innerWidth > 768 ? "flex" : "none", flexFlow: "column", justifyContent: "center"}} to="/Lost">{t("msh_lost_found.l_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/crm">C.R.M</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/Lost">{t("msh_lost_found.l_title")}</Link>
                     </div>
                     <div className="nav_container">
                     <Menubar model={items} style={{backgroundColor: "white", border: "none"}} />
@@ -344,4 +350,4 @@ const Navigation = ({user, userDB}) =>{
     )
 }
 
-export default Navigation
+export default withTrans(Navigation)

@@ -5,6 +5,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import InputElement from '../../../../helper/common/InputElement'
 
 function PhoneAdmin({userDB}) {
     const [formValue, setFormValue] = useState({username: "", email: ""})
@@ -14,6 +15,8 @@ function PhoneAdmin({userDB}) {
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
     const { t } = useTranslation()
 
+    const isMobile = window.innerWidth < 768
+
     const handleChange = (event) =>{
         event.persist()
         setFormValue(currentValue =>({
@@ -22,8 +25,8 @@ function PhoneAdmin({userDB}) {
         }))
       }
 
-     const handleShow = () => setActivate(true)
-     const handleHide = () => setActivate(false)
+    const handleShow = () => setActivate(true)
+    const handleHide = () => setActivate(false)
 
     const addNotification = (notification) => {
         return db.collection('notifications')
@@ -129,7 +132,7 @@ function PhoneAdmin({userDB}) {
                         />
                     </td>
                     {expand && <td>{flow.email}</td>}
-                    <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
+                    <td className="bg-light"><Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={async()=>{
                         await db.collection('businessUsers')
                         .doc(flow.id)
                         .delete()
@@ -140,13 +143,13 @@ function PhoneAdmin({userDB}) {
                         })
 
                         return deleteUser({uid: flow.userId})
-                    }}>{t("msh_general.g_button.b_delete")}</Button></td>
+                    }}>{isMobile ? "x": t("msh_general.g_button.b_delete")}</Button></td>
                 </tr>
                 ))}
                 </tbody>
             </Table>
         </div>
-        <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_admin_board.a_phone_button.b_show_modal")}</Button>
+        <Button className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_admin_board.a_phone_button.b_show_modal")}</Button>
 
         <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
             <div style={{
@@ -157,10 +160,17 @@ function PhoneAdmin({userDB}) {
                 padding: "5%",
                 textAlign: "center"
             }}>
-            <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_admin_board.a_first_tab_title")}</h4>
-            <Form.Group controlId="formGroupName">
-                <Form.Control style={{width: "80vw", marginBottom: "1vh"}} value={formValue.username} name="username" type="text" placeholder={t("msh_admin_board.a_cowoker")} onChange={handleChange} required />
-            </Form.Group>
+            <h4 className='phone_tab'>{t("msh_admin_board.a_first_tab_title")}</h4>
+                <InputElement 
+                containerStyle={{marginBottom: "1vh"}} 
+                size="90vw"
+                value={formValue.username} 
+                name="username" type="text" 
+                label={t("msh_admin_board.a_cowoker")} 
+                placeholder={t("msh_admin_board.a_cowoker")} 
+                handleChange={handleChange} 
+                setFormValue={setFormValue}
+                required />
             {/*<Form.Group controlId="formGroupEmail">
                 <Form.Control style={{width: "20vw"}} value={formValue.email} name="email" type="email" placeholder="Entrer un email" onChange={handleChange} required />
             </Form.Group>
@@ -171,11 +181,18 @@ function PhoneAdmin({userDB}) {
             <Form.Group controlId="formGroupConfPassword">
                 <Form.Control style={{width: "20vw"}} value={formValue.confPassword} name="confPassword" type="password" placeholder="Confirmer le mot de passe" onChange={handleChange} required />
             </Form.Group>*/}
-            <Form.Group controlId="formGroupRefHotel">
-                <Form.Control style={{width: "80vw", marginBottom: "10vh"}} value={formValue.email} name="email" type="text" placeholder={t("msh_admin_board.a_email")} onChange={handleChange} required />
-            </Form.Group>
+                <InputElement 
+                containerStyle={{marginBottom: "10vh"}} 
+                size="90vw"
+                value={formValue.email} name="email" 
+                type="text" 
+                label={t("msh_admin_board.a_email")} 
+                placeholder={t("msh_admin_board.a_email")} 
+                handleChange={handleChange} 
+                setFormValue={setFormValue} 
+                required />
 
-            <Button style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} variant="success" onClick={handleSubmit}>{t("msh_admin_board.a_phone_button.b_validation")}</Button>
+            <Button className="btn-msh phone_submitButton" onClick={handleSubmit}>{t("msh_admin_board.a_phone_button.b_validation")}</Button>
         </div>
         </Drawer>
     </div>

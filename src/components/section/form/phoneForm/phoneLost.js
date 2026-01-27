@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { Form, Button, Table } from 'react-bootstrap'
+import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import { db, storage } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -9,7 +9,8 @@ import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-
+import InputElement from '../../../../helper/common/InputElement'
+import TextareaElement from '../../../../helper/common/textareaElement'
 
 const PhoneLost = ({userDB}) =>{
 
@@ -187,56 +188,79 @@ const PhoneLost = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-              <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_lost_found.l_button.b_show_modal")}</Button>
+              <Button className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_lost_found.l_button.b_show_modal")}</Button>
           
-              <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
-                <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_lost_found.l_button.b_show_modal")}</h4>
-                <div>
-                  <Form.Group controlId="exampleForm.SelectCustom">
-                  <Form.Label>{t("msh_lost_found.l_type.t_label")}</Form.Label><br/>
-                      <select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
-                      className="phonePage_select">
-                        <option value="tech" onClick={() => setTypeClone("High Tech")}>High Tech</option>
-                        <option value="ids" onClick={() => setTypeClone(t("msh_lost_found.l_second_tab_title"))} >{t("msh_lost_found.l_second_tab_title")}</option>
-                        <option value="clothes" onClick={() => setTypeClone(t("msh_lost_found.l_third_tab_title"))} >{t("msh_lost_found.l_third_tab_title")}</option>
-                        <option value="others" onClick={() => setTypeClone(t("msh_lost_found.l_fourth_tab_title"))} >{t("msh_lost_found.l_fourth_tab_title")}</option>
-                      </select>
-                  </Form.Group>
-              </div>
-              <div>
-                  <Form.Group controlId="exampleForm.SelectCustom">
-                  <Form.Label>{t("msh_lost_found.l_place.p_label")}</Form.Label><br/>
-                      <select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
-                      className="phonePage_select">
-                        <option value="hall" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_hall"))}>{t("msh_lost_found.l_place.p_hall")}</option>
-                        <option value="restaurant" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_restaurant"))}>{t("msh_lost_found.l_place.p_restaurant")}</option>
-                        <option value="parking" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_parking"))}>{t("msh_lost_found.l_place.p_parking")}</option>
-                        <option value="toilet" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_toilet"))}>{t("msh_lost_found.l_place.p_toilet")}</option>
-                        <option value="floors" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_floors"))}>{t("msh_lost_found.l_place.p_floors")}</option>
-                        <option value="others" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_other"))}>{t("msh_lost_found.l_place.p_other")}</option>
-                      </select>
-                  </Form.Group>
-              </div>
-              <div>
-                  <Form.Group controlId="description" className="phone_input">
-                  <Form.Label>{t("msh_lost_found.l_description.d_label")}</Form.Label>
-                  <Form.Control type="text" placeholder={t("msh_lost_found.l_description.d_placeholder")} value={formValue.description} name="description" onChange={handleChange} />
-                  </Form.Group>
-              </div>
-              <div>
-                  <Form.Group controlId="details" className="phone_textarea">
-                      <Form.Label>{t("msh_lost_found.l_details")}</Form.Label>
-                      <Form.Control as="textarea" rows="2" name="details" value={formValue.details} onChange={handleChange}  />
-                  </Form.Group>
-              </div>
-              <div style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
-                <input type="file" className="phone-camera-icon"
-                    onChange={handleImgChange} />
-                <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
+              <Drawer anchor="bottom" open={activate} onClose={handleHide}>
+                <div className="phone_container_drawer" style={{gap: "2vh"}}>
+                    <h4 className='phone_tab'>{t("msh_lost_found.l_button.b_show_modal")}</h4>
+                    <div>
+                    <Form.Group controlId="exampleForm.SelectCustom">
+                        <FloatingLabel
+                            controlId="floatingInput"
+                            label={t("msh_lost_found.l_type.t_label")}
+                            className="mb-3"
+                        >  
+                        <Form.Select class="selectpicker" value={formValue.type} name="type" onChange={handleChange} 
+                        className="phonePage_select">
+                            <option></option>
+                            <option value="tech" onClick={() => setTypeClone("High Tech")}>High Tech</option>
+                            <option value="ids" onClick={() => setTypeClone(t("msh_lost_found.l_second_tab_title"))} >{t("msh_lost_found.l_second_tab_title")}</option>
+                            <option value="clothes" onClick={() => setTypeClone(t("msh_lost_found.l_third_tab_title"))} >{t("msh_lost_found.l_third_tab_title")}</option>
+                            <option value="others" onClick={() => setTypeClone(t("msh_lost_found.l_fourth_tab_title"))} >{t("msh_lost_found.l_fourth_tab_title")}</option>
+                        </Form.Select>
+                        </FloatingLabel>
+                    </Form.Group>
                 </div>
-                <Button variant="success" className="phone_submitButton" onClick={(event) => {
+                <div>
+                    <Form.Group controlId="exampleForm.SelectCustom">
+                    <FloatingLabel
+                            controlId="floatingInput"
+                            label={t("msh_lost_found.l_place.p_label")}
+                            className="mb-3"
+                        >  
+                        <Form.Select class="selectpicker" value={formValue.place} name="place" onChange={handleChange} 
+                        className="phonePage_select">
+                            <option></option>
+                            <option value="hall" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_hall"))}>{t("msh_lost_found.l_place.p_hall")}</option>
+                            <option value="restaurant" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_restaurant"))}>{t("msh_lost_found.l_place.p_restaurant")}</option>
+                            <option value="parking" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_parking"))}>{t("msh_lost_found.l_place.p_parking")}</option>
+                            <option value="toilet" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_toilet"))}>{t("msh_lost_found.l_place.p_toilet")}</option>
+                            <option value="floors" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_floors"))}>{t("msh_lost_found.l_place.p_floors")}</option>
+                            <option value="others" onClick={() => setPlaceClone(t("msh_lost_found.l_place.p_other"))}>{t("msh_lost_found.l_place.p_other")}</option>
+                        </Form.Select>
+                        </FloatingLabel>
+                    </Form.Group>
+                </div>
+                <div>
+                    <InputElement 
+                    containerStyle={{height: "58px", marginBottom: "2vh"}} 
+                    type="text" 
+                    size="90vw"
+                    label={t("msh_lost_found.l_description.d_placeholder")}
+                    value={formValue.description} 
+                    name="description" 
+                    handleChange={handleChange}
+                    setFormValue={setFormValue}
+                    />
+                </div>
+                <div>
+                    <TextareaElement 
+                    label={t("msh_lost_found.l_details")}
+                    row="2"
+                    name="details" v
+                    value={formValue.details} 
+                    handleChange={handleChange}  
+                    setFormValue={setFormValue}
+                    size={{width: "90vw", height: "10vh", maxHeight: "15vh"}}
+                    />
+                </div>
+                <div style={{marginBottom: "8vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+                    <input type="file" className="phone-camera-icon"
+                        onChange={handleImgChange} />
+                    <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
+                    <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
+                </div>
+                <Button className="btn-msh phone_submitButton" onClick={(event) => {
                     handleSubmit(event)
                     setActivate(false)
                     }}>{t("msh_lost_found.l_button.b_validation")}</Button>

@@ -12,20 +12,33 @@
     flex-flow: row wrap;
     align-items: center;
     padding: 5%;
+    margin-bottom: 6vh;
 }
 
 .phone_title {
     margin-bottom: 3vh;
     text-align: center;
+    border-bottom: 1px solid #B8860B;
+}
+
+.phone_tab {
+    border-bottom: 1px solid #B8860B;
+    margin-bottom: 3vh;
+}
+
+.phone_calendar_container .MuiFormControl-root {
+    height: 53px;
+    margin-bottom: 3vh;
+    justify-content: end;
 }
 
 .phonePage_select {
     width: 90vw;
-    height: 6vh;
+    height: 58px;
     border: 1px solid lightgrey; 
     border-radius: 3px;
     background-color: white;
-    margin-bottom: 2vh;
+    padding-inline: 1vw;
 }
 
 .phone_input {
@@ -38,23 +51,11 @@
 
 .phone_textarea {
     width: 90vw;
-    height: 15vh;
+    margin-bottom: 3vh;
+    height: 10vh;
+    max-height: 15vh;
 }
 
-.phone_submitButton_container {
-    position: fixed;
-    bottom: 0px;
-    left: 0px;
-}
-
-.phone_return {
-    width: 90vw;
-    margin-bottom: 2vh;
-}
-
-.phone_submitButton {
-    width: 90vw;
-}
 
 .phone-table {
     width: 50px !important;
@@ -88,3 +89,57 @@
     height: 75vh !important;
     padding-top: 3vh;
 }
+
+/*MSH Buttons */
+
+.btn-msh {
+    background-color: #B8860B; /* ton gold */
+    border-color: #B8860B;
+    color: black;
+}
+  
+.btn-msh:hover,
+.btn-msh:focus,
+.btn-msh:active {
+background-color: #a17308;
+border-color: #a17308;
+color: white;
+}
+
+
+
+.btn-msh-outline {
+    border: 1px solid #B8860B; /* ton gold */
+    color: #B8860B;
+    text-decoration: none;
+}
+
+.btn-msh-outline:hover,
+.btn-msh-outline:focus,
+.btn-msh-outline:active {
+background-color: #a17308;
+border-color: #a17308;
+color: white;
+}
+
+.phone_submitButton_container {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+}
+
+.phone_return {
+    width: 90vw;
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+}
+
+.phone_submitButton {
+    width: 100vw;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 2vh;
+    border-radius: 0;
+}
+

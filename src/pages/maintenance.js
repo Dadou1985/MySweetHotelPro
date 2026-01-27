@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../Firebase'
 import PhoneRepair from '../components/section/form/phoneForm/phoneRepair'
-import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 
 const Maintenance = () => {
@@ -9,9 +8,7 @@ const Maintenance = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-            {!!user && !!userDB &&
-            <Navigation user={user} userDB={userDB} />}    
+        <div className="landscape-display"></div>   
         {!!user && !!userDB &&
         <PhoneRepair user={user} userDB={userDB} />}
     </>

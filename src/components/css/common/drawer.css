@@ -28,6 +28,7 @@
     
     .drawer_fullList{
         width: 25vw;
+        max-width: 100px;
     }
     
     .drawer_title {

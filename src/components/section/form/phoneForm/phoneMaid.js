@@ -128,13 +128,13 @@ const PhoneMaid = ({userDB}) =>{
                             {expand && <td>{flow.client}</td>}
                             <td>{flow.fromRoom}</td>
                             {flow.toRoom === "" ? 
-                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
+                                <td><Button variant="outline-warning" size="sm" style={{width: "100%"}} onClick={() => {
                                     setCurrentRoom(flow.id)
                                     setGuestId(flow.userId)
                                     setNewRoom(true)}}>{t("msh_room_change.r_action.a_attribute")}</Button></td> : 
                                 <td>{flow.toRoom}</td>}
                             {flow.state === "" ? 
-                                <td><Button variant="warning" size="sm" style={{width: "100%"}} onClick={() => {
+                                <td><Button variant="outline-warning" size="sm" style={{width: "100%"}} onClick={() => {
                                     setRoomState(true)
                                     setCurrentRoom(flow.id)
                                 }}>{t("msh_room_change.r_action.a_check")}</Button></td>
@@ -177,13 +177,13 @@ const PhoneMaid = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>  
-                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%"}} onClick={handleShow}>{t("msh_room_change.r_phone_button.b_show_modal")}</Button>
+                <Button className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_room_change.r_phone_button.b_show_modal")}</Button>
            
                 <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                     <div  className="phone_container_drawer">
-                    <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_room_change.r_phone_button.b_show_modal")}</h4>
+                    <h4  className='phone_tab'>{t("msh_room_change.r_phone_button.b_show_modal")}</h4>
                     <InputElement
-                        containerStyle={{marginBottom: "2vh"}} 
+                        containerStyle={{marginBottom: "0vh"}} 
                         label={t("msh_room_change.r_client")}
                         placeholder="ex: Jane Doe"
                         size="90vw"
@@ -258,7 +258,7 @@ const PhoneMaid = ({userDB}) =>{
                     size={{width: "90vw", maxHeight: "15vh"}}
                 />
                 </div>
-                    <Button variant="success" className="phone_submitButton" onClick={(event) => {
+                    <Button className="btn-msh phone_submitButton" onClick={(event) => {
                             handleSubmitData2(event, "hotels", userDB.hotelId, "roomChange", newData)
                             addNotification(notif, userDB.hotelId)
                             return handleHide()
@@ -268,16 +268,19 @@ const PhoneMaid = ({userDB}) =>{
 
                 <Drawer anchor="bottom" open={newRoom} onClose={() => setNewRoom(false)}  className="phone_container_drawer">
                     <div className="phone_container_drawer">
-                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>{t("msh_room_change.r_action.a_attribute_room")}</h6>
-                        <Input
-                        style={{margin: "2%"}} 
+                        <h4  className='phone_tab' style={{textAlign: "center"}}>{t("msh_room_change.r_action.a_attribute_room")}</h4>
+                        <InputElement
+                            containerStyle={{}} 
+                            size="90vw"
+                            label={t("msh_room_change.r_action.a_input")}
                             placeholder={t("msh_room_change.r_action.a_input")}
                             value={formValue.toRoom}
                             name="toRoom"
-                            onChange={(e) => setFormValue({toRoom: e.target.value})}
+                            handleChange={handleChange}
+                            setFormValue={setFormValue}
                         />
                     </div>
-                    <Button variant="success" size="md" onClick={() => {
+                    <Button className="btn-msh phone_submitButton" size="md" onClick={() => {
                         handleUpdateData2("hotels", userDB.hotelId, "roomChange", currentRoom, hotelRoomData)
                         handleUpdateData1("guestUsers", guestId, userRoomData)
                         setNewRoom(false)}}>{t("msh_register_form.r_button.b_phone_validation")}
@@ -286,22 +289,20 @@ const PhoneMaid = ({userDB}) =>{
 
                 <Drawer anchor="bottom" open={roomState} onClose={() => setRoomState(false)}  className="phone_container_drawer">
                     <div className="phone_container_drawer">
-                        <h6 style={{textAlign: "center", width: "100%", fontWeight: "bold"}}>{t("msh_room_change.r_state.s_label")}</h6>
-                        <select class="selectpicker" value={formValue.state} name="state" onChange={handleChange} 
-                            style={{width: "100%", 
-                            height: "100%", 
-                            border: "1px solid lightgrey", 
-                            borderRadius: "3px",
-                            backgroundColor: "white", 
-                            padding: "1vw",
-                            marginBottom: "2vh", 
-                            marginTop: "2vh"}}>
+                        <h4  className='phone_tab' style={{textAlign: "center"}}>{t("msh_room_change.r_state.s_label")}</h4>
+                        <FloatingLabel
+                        controlId="floatingInput"
+                        label={t("msh_maintenance.m_type.t_label")}
+                        className="mb-3"
+                    >    
+                        <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} className="phonePage_select">
                                 <option></option>
                                 <option>{t("msh_room_change.r_state.s_dirty")}</option>
                                 <option>{t("msh_room_change.r_state.s_clean")}</option>
-                        </select>
+                        </Form.Select>
+                        </FloatingLabel>
                         </div>
-                    <Button variant="success" onClick={() => {
+                    <Button className="btn-msh phone_submitButton" onClick={() => {
                         handleUpdateData2("hotels", userDB.hotelId, "roomChange", currentRoom, roomStateUpdated)
                         setRoomState(false)
                     }}>{t("msh_register_form.r_button.b_phone_validation")}</Button>

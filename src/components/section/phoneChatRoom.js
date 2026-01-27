@@ -53,93 +53,92 @@ export default function ChatRoom({user, userDB, title}) {
                 return unsubscribe
      },[])
 
+    //  const renderSwitch = (flow, key) => {
+    //     switch(userDB.language) {
+    //         case 'en':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.en}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         case 'de':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.de}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         case 'pt':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.pt}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         case 'it':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.it}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         case 'es':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.es}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         case 'fr':
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.fr}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //         default:
+    //             return <Message 
+    //             key={key}
+    //             author={flow.author}
+    //             translation={flow.translated.fr}
+    //             date={flow.markup}
+    //            user={user}
+    //            userDB={userDB}
+    //            photo={flow.photo}
+    //            title={flow.title}
+    //             />
+    //     }
+    // }
+
     return (
         <div>
             <PerfectScrollbar style={{paddingTop: "3vh"}}>
                 {user&& userDB&& messages.map((flow, key) => {
-                    let language = userDB.language
-                    const renderSwitch = () => {
-                        switch(language) {
-                            case 'en':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.en}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'de':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.de}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'pt':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.pt}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'it':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.it}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'es':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.es}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            case 'fr':
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.fr}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                            default:
-                                return <Message 
-                                key={key}
-                                author={flow.author}
-                                translation={flow.translated.fr}
-                                date={flow.markup}
-                               user={user}
-                               userDB={userDB}
-                               photo={flow.photo}
-                               title={flow.title}
-                                />
-                        }
-                    }
-
                     if(userDB.language === chatRoom.guestLanguage) {
                         return <Message                                 
                                 key={key}
@@ -152,7 +151,16 @@ export default function ChatRoom({user, userDB, title}) {
                             />
                     }else{
                         if(flow.translated){
-                            return renderSwitch()
+                            return <Message 
+                            key={key}
+                            author={flow.author}
+                            translation={flow.translated.en}
+                            date={flow.markup}
+                           user={user}
+                           userDB={userDB}
+                           photo={flow.photo}
+                           title={flow.title}
+                            />
                          }
                     }
 

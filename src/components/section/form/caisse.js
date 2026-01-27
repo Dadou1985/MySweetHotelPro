@@ -208,6 +208,7 @@ const Caisse = () =>{
                                     {safeTableDetailsCoins.map((details) => {
                                         return (
                                             <SafeTableRow
+                                                key={details.id}
                                               rowId={details.id}
                                               label={details.label}
                                               value={details.value}
@@ -225,6 +226,7 @@ const Caisse = () =>{
                                     {safeTableDetailsRolls.map((details) => {
                                         return (
                                             <SafeTableRow
+                                            key={details.id}
                                               rowId={details.id}
                                               label={details.label}
                                               value={details.value}

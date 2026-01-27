@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ToolBar from "../components/section/toolbar"
-import Navigation from '../components/section/navigation'
 import {FirebaseContext} from '../Firebase'
 import Dashboard from '../components/section/dashboard'
 import { withTrans } from '../../i18n/withTrans'
@@ -20,8 +19,6 @@ const SinglePage = () => {
   return (
     <>
       <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
           backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",

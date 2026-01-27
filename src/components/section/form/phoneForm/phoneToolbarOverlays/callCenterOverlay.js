@@ -35,7 +35,7 @@ function CallCenterOverlay({userDB}) {
                   if(status.adminSpeak) {
                     return <StaticImage objectFit='contain' src="../../../../../svg/bubble.svg" style={{
                       borderRadius: "50%", 
-                      backgroundColor: "red", 
+                      backgroundColor: "magenta", 
                       position: "absolute", 
                       width: "17%", 
                       height: "6%", 

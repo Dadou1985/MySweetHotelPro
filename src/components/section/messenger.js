@@ -131,35 +131,37 @@ const Messenger = ({filterDate}) =>{
         }
       }
 
-    const addNote = (marker, url) => {
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('note')
-            .add({
-            title: title,
-            author: userDB.username,
-            text: note,
-            status: status,
-            isChecked: false,
-            date: moment(startDate).format('LL'),
-            hour: moment(startDate).format('LT'),
-            img: url === undefined ? "" : url,
-            markup: marker,
-            userId: user.uid
-            }).then(function(docRef){
+    const addNote = async (marker, url) => {
+        try {
+            const docRef = await db.collection('hotels')
+                .doc(userDB.hotelId)
+                .collection('note')
+                .add({
+                    title: title,
+                    author: userDB.username,
+                    text: note,
+                    status: status,
+                    isChecked: false,
+                    date: moment(startDate).format('LL'),
+                    hour: moment(startDate).format('LT'),
+                    img: url === undefined ? "" : url,
+                    markup: marker,
+                    userId: user.uid
+                })
             console.log(docRef.id)
-            }).catch(function(error) {
+        } catch (error) {
             console.error(error)
-            })
+        }
     }
 
-    const addNotification = (notification) => {
-        return db.collection('notifications')
+    const addNotification = async (notification) => {
+        const doc = await db.collection('notifications')
             .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-            .then(doc => console.log('nouvelle notitfication'))
+                content: notification,
+                hotelId: userDB.hotelId,
+                markup: Date.now()
+            })
+        return console.log('nouvelle notitfication')
     }
 
     const handleSubmit = (event) =>{
@@ -280,7 +282,7 @@ const Messenger = ({filterDate}) =>{
                     </Modal>
             </PerfectScrollbar> :
             <>
-                <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0, zIndex: "10"}} onClick={handleShow}>{t("msh_messenger.m_add_note")}</Button>
+                <Button className="btn-msh phone_submitButton" style={{zIndex: 100}} size="md" onClick={handleShow}>{t("msh_messenger.m_add_note")}</Button>
                 <PerfectScrollbar className="perfect-scrollbar">
                     <div className="messenger_notebox">
                         {!!userDB && !!setUserDB && !!filterDate &&
@@ -296,9 +298,9 @@ const Messenger = ({filterDate}) =>{
                     padding: "5%", 
                     maxHeight: "90vh"}}>
                         <div style={{width: "100%"}}  onClick={handleHideDrawer}>
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' style={{width: "5%", float: "right"}} />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' alt="Close Button" style={{width: "5%", float: "right"}} />
                         </div>
-                    <h4 style={{textAlign: "center", marginBottom: "3vh"}}>{t("msh_messenger.m_drawer_title")}</h4>
+                    <h4 className='phone_tab'>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
                     <div><Input type="text" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>
                     <DatePicker
@@ -331,7 +333,7 @@ const Messenger = ({filterDate}) =>{
                             marginTop: "2vh",
                             justifyContent: "center",
                         }}>
-                        <ListItemIcon button>
+                        <ListItemIcon button={true}>
                             <ListItemIcon>
                             <OverlayTrigger
                                 placement="right"
@@ -348,7 +350,7 @@ const Messenger = ({filterDate}) =>{
                             </OverlayTrigger>
                             </ListItemIcon>
                         </ListItemIcon>
-                        <ListItemIcon button>
+                        <ListItemIcon button={true}>
                             <ListItemIcon>
                             <OverlayTrigger
                                 placement="right"
@@ -365,7 +367,7 @@ const Messenger = ({filterDate}) =>{
                             </OverlayTrigger>
                             </ListItemIcon>
                         </ListItemIcon>
-                        <ListItemIcon button>
+                        <ListItemIcon button={true}>
                             <ListItemIcon>
                             <OverlayTrigger
                                 placement="right"
