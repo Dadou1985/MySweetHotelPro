@@ -20,6 +20,7 @@ import {
     handleSubmitData3, 
 } from '../../helper/globalCommonFunctions'
 import '../css/section/chat.css'
+import { Drawer } from '@material-ui/core'
 
 /* 
   ! FIX => SUBMIT ONKEYDOWN
@@ -45,6 +46,7 @@ export default function CommunIzi({userDB, user}) {
   const [showAlert, setShowAlert] = useState(false)
   const [img, setImg] = useState(null)
   const { t } = useTranslation()
+  const handleHide = () => setActivate(false)
 
   const handleHideDrawer = () => {
     setActivate(false)
@@ -165,25 +167,26 @@ export default function CommunIzi({userDB, user}) {
 
   return (
     <div className="communizi-container">  
-      <div style={{width: "65%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
+      <div style={{width: window?.innerWidth > 1023 ? "65%" : "100%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
         <div style={{
-          height: "72vh", 
+          height: window?.innerWidth > 1023 ? "88%" : "95%", 
           padding: "2vw", 
           borderBottom: "1px solid lightgrey",
           backgroundImage: `url(${Bubbles})`,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center"
         }}>
           {!guest && <>
             <h3 style={{
               position:"absolute",
-              left: "24vw",
+              left: "18vw",
               top: "36vh",
               filter: "drop-shadow(1px 1px 1px)"
             }}>Sélectionnez</h3>
             <h3 style={{
               position:"absolute",
-              left: "37vw",
+              left: "35vw",
               top: "55vh",
               filter: "drop-shadow(1px 1px 1px)"
             }}>une conversation</h3>
@@ -243,7 +246,7 @@ export default function CommunIzi({userDB, user}) {
           </Form>
         </div>
     </div>
-    <div style={{width: "35%", borderTop: "1px solid lightgrey"}}>
+    <div style={{display: window?.innerWidth < 1024 && "none", width: "35%", borderTop: "1px solid lightgrey"}}>
       <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
         <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
           <PerfectScrollbar>
@@ -285,8 +288,8 @@ export default function CommunIzi({userDB, user}) {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "1vw",
-                  width: "12vw",
-                  height: "20vh",
+                  width: "10rem",
+                  height: "10rem",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
@@ -294,7 +297,7 @@ export default function CommunIzi({userDB, user}) {
                   <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                 </div>
                 <h6 style={{
-                  width: "10vw",
+                  width: "40%",
                   textAlign: "center",
                   color: "gray",
                   filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
@@ -341,8 +344,8 @@ export default function CommunIzi({userDB, user}) {
                 border: '1px solid lightgrey',
                 borderRadius: "100%",
                 padding: "1vw",
-                width: "12vw",
-                height: "20vh",
+                width: "10rem",
+                height: "10rem",
                 backgroundColor: "whitesmoke",
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginBottom: "1vh"
@@ -350,7 +353,7 @@ export default function CommunIzi({userDB, user}) {
                 <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
               </div>
               <h6 style={{
-                width: "10vw",
+                width: "40%",
                 textAlign: "center",
                 color: "gray",
                 filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
@@ -359,6 +362,125 @@ export default function CommunIzi({userDB, user}) {
         </Tab>
       </Tabs>
       </div>
+
+      <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
+      <div style={{width: "35%", borderTop: "1px solid lightgrey"}}>
+      <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
+        <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
+          <PerfectScrollbar>
+            {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
+              <tbody>
+                {present.map((flow) => (
+                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                    <td><Avatar 
+                      round={true}
+                      name={flow.id}
+                      size="40"
+                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      style={{margin: "10%"}} /></td>
+                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> - {t('msh_general.g_table.t_room')} {flow.room}</td>
+                      <td style={{paddingTop: "2vh"}}><Switch
+                        checked={flow.status}
+                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                      />
+                      <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table> : <div style={{
+              display: "flex",
+              flexFlow: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "75vh",
+              }}>
+                <div style={{
+                  display: "flex",
+                  flexFlow: "column",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  borderBottom: "5px solid lightgray",
+                  borderRight: "5px solid lightgray",
+                  border: '1px solid lightgrey',
+                  borderRadius: "100%",
+                  padding: "1vw",
+                  width: "10rem",
+                  height: "10rem",
+                  backgroundColor: "whitesmoke",
+                  filter: "drop-shadow(2px 4px 6px)", 
+                  marginBottom: "1vh"
+                }}>
+                  <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                </div>
+                <h6 style={{
+                  width: "40%",
+                  textAlign: "center",
+                  color: "gray",
+                  filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
+            </div>}
+            </PerfectScrollbar>
+            </Tab>
+            <Tab eventKey="En arrivée" title={t('msh_chat.c_guest_arrival')}>
+            <PerfectScrollbar>
+            {arrival.length > 0 ? <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
+              <tbody>
+                {arrival.map((flow) => (
+                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                    <td><Avatar 
+                      round={true}
+                      name={flow.id}
+                      size="40"
+                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      style={{margin: "10%"}} /></td>
+                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
+                      <td style={{paddingTop: "2vh"}}><Switch
+                        checked={flow.status}
+                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                      />
+                      <i style={{color: "gray", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </Table> : <div style={{
+              display: "flex",
+              flexFlow: "column",
+              justifyContent: "center",
+              alignItems: "center",
+              height: "75vh",
+            }}>
+              <div style={{
+                display: "flex",
+                flexFlow: "column",
+                justifyContent: "center",
+                alignItems: "center",
+                borderBottom: "5px solid lightgray",
+                borderRight: "5px solid lightgray",
+                border: '1px solid lightgrey',
+                borderRadius: "100%",
+                padding: "1vw",
+                width: "10rem",
+                height: "10rem",
+                backgroundColor: "whitesmoke",
+                filter: "drop-shadow(2px 4px 6px)", 
+                marginBottom: "1vh"
+              }}>
+                <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+              </div>
+              <h6 style={{
+                width: "40%",
+                textAlign: "center",
+                color: "gray",
+                filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
+          </div>}
+        </PerfectScrollbar>
+        </Tab>
+      </Tabs>
+      </div>
+      </Drawer>
     </div>
   )
 }

@@ -24,8 +24,8 @@ const SinglePage = () => {
           backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          backgroundPositionX: "5vw",
-          backgroundPositionY: "-5vh"
+          // backgroundPositionX: "5vw",
+          // backgroundPositionY: "-5vh"
         }}>
           <ToolBar />
           <div style={{
@@ -36,7 +36,7 @@ const SinglePage = () => {
             height: "100%",
             width: "95%"
           }}>
-            <div style={{width: isBrowser() && window.innerWidth > 768 ? "50%" : "100%"}}>
+            <div style={{width: isBrowser() && window.innerWidth > 1439 ? "50%" : "100%"}}>
               <h3 style={{
                 paddingTop: "3vh", 
                 paddingLeft: isBrowser() && window.innerWidth > 768 ? "3vw" : "0", 

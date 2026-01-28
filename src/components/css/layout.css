@@ -1,6 +1,23 @@
 /* ---------- LET'S CODE NOW !!! ------- */
 
-/*{border: 1px solid black;}*/
+/* *{border: 1px solid black;} */
+
+#gatsby-focus-wrapper {
+    overflow: hidden;
+}
+
+.p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    left: -2vw;
+    width: fit-content;
+}
+
+.MuiFormLabel-root {
+    width: max-content;
+}
+
+.MuiInputBase-root {
+    margin-top: 4vh;
+}
 
 *{outline: none;}
 
@@ -8,6 +25,12 @@
 
 .msh-bg {
     background-color: #B8860B;
+}
+
+.msh-bg-dark {
+    background-color: black;
+    color: #B8860B;
+
 }
 
 .msh-color {
@@ -28,8 +51,6 @@ border-color: #a17308;
 color: white;
 }
 
-
-
 .btn-msh-outline {
     border: 1px solid #B8860B; /* ton gold */
     color: #B8860B;
@@ -44,6 +65,34 @@ border-color: #a17308;
 color: white;
 }
 
+.btn-msh-dark {
+    background-color: black; 
+    border-color: black; 
+    color: #B8860B;
+}
+  
+.btn-msh-dark:hover,
+.btn-msh-dark:focus,
+.btn-msh-dark:active {
+background-color: #a17308;
+border-color: #a17308;
+color: black;
+}
+
+.btn-msh-dark-outline {
+    background-color: white; 
+    border-color: black; 
+    color: black;
+}
+  
+.btn-msh-dark-outline:hover,
+.btn-msh-dark-outline:focus,
+.btn-msh-dark-outline:active {
+background-color: black;
+border-color: black;
+color: #a17308;
+}
+
 /*Perfectscrollbar*/
 
 .chat-perfectscrollbar {
@@ -52,6 +101,8 @@ color: white;
 
 tbody, td, tfoot, th, thead, tr {
     vertical-align: baseline;
+    white-space: normal;
+    min-width: 120px;
 }
 
 @media screen and (min-width:768px){

@@ -17,6 +17,10 @@
     color: black;
 }
 
+.nav-link:hover {
+    color: #B8860B;
+}
+
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     background-color: black !important;
     color: #B8860B;

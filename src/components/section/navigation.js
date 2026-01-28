@@ -153,11 +153,11 @@ const Navigation = () =>{
                     icon: 'pi pi-fw pi-cog',
                     command: () => setShowAdminModal(true)
                 },
-                {
-                    label: t("msh_feedback_box.f_title"),
-                    icon: 'pi pi-fw pi-star',
-                    command: () => setShowFeedbackModal(true)
-                },
+                // {
+                //     label: t("msh_feedback_box.f_title"),
+                //     icon: 'pi pi-fw pi-star',
+                //     command: () => setShowFeedbackModal(true)
+                // },
                 {
                     label: t("msh_navigation.tooltip_deconnexion"),
                     icon: 'pi pi-fw pi-sign-out',
@@ -175,7 +175,8 @@ const Navigation = () =>{
                     display: "flex",
                     flexFlow: "row",
                     justifyContent: "space-between",
-                    height: "7vh"
+                    height: "7vh",
+                    paddingInline: "2vw"
                 }}>
                 {!!user && userDB &&
                 <Drawer className="drawer" user={user} userDB={userDB} style={{display: isMobile}} />}
@@ -190,9 +191,10 @@ const Navigation = () =>{
                         display: "flex",
                         flexFlow: "row",
                         justifyContent: "space-around",
-                        width: "35%",
+                        width: "70%",
+                        maxWidth: "720px",
                         height: "7vh",
-                        marginLeft: "10vw"
+                        // marginLeft: "10vw"
                     }}>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>

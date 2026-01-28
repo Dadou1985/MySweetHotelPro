@@ -75,7 +75,8 @@
     display: flex;
     flex-flow: row;
     width: 45%;
-    height: 15vh; 
+    /* height: 15vh;  */
+    min-height: 125px;
     padding: 3%;
     border-radius: 10px;
     border: 1px solid lightgrey; 
@@ -86,6 +87,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    justify-content: space-between;
     width: 45%;
     background-color: whitesmoke;
     border-radius: 10px;
@@ -97,7 +99,7 @@
 }
 
 .dashboard-note-title {
-    text-align: center; 
+    /* text-align: center;  */
     margin-top: 1vh;
     color: gray;
 }
@@ -205,6 +207,7 @@
     .dashboard-note-card {
         width: 90%;
         height:unset;
+        min-height: unset;
         margin-bottom: 1vh;
         margin-left: 5vw;
     }

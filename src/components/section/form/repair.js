@@ -123,33 +123,33 @@ const Repair = ({userDB}) =>{
                         <Tab eventKey="Signaler un problème technique" title={t("msh_maintenance.m_first_tab_title")}>
                             <div style={{
                                     display: "flex",
-                                    flexFlow: "column",
+                                    flexFlow: "row wrap",
                                     justifyContent: "space-around",
                                     alignItems: "center",
                                     padding: "5%",
                                     textAlign: "center"
                                 }}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "2vh"}} 
+                                        containerStyle={{marginBottom: "2vh", width: "80%"}} 
                                         label={t("msh_maintenance.m_client")}
                                         placeholder="ex: Jane Doe"
-                                        size="20vw"
+                                        size="100%"
                                         value={formValue.client}
                                         name="client"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     />
                                     <InputElement
-                                        containerStyle={{marginBottom: "2vh"}} 
+                                        containerStyle={{marginBottom: "2vh", width: "80%"}} 
                                         label={t("msh_maintenance.m_room")}
                                         placeholder="ex: 409"
-                                        size="20vw"
+                                        size="100%"
                                         value={formValue.room}
                                         name="room"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     />
-                                    <div style={{marginBottom: "2vh"}}>
+                                    <div style={{marginBottom: "2vh", width: "80%"}}>
                                         <Form.Group controlId="exampleForm.SelectCustom">
                                         <FloatingLabel
                                             controlId="floatingInput"
@@ -163,7 +163,7 @@ const Repair = ({userDB}) =>{
                                                     if(event.target.value === "cleaning") {setTypeClone(t("msh_dashboard.maintenance_data.d_cleaning"))}
                                                     if(event.target.value === "others") {setTypeClone(t("msh_dashboard.maintenance_data.d_others"))}
                                                 }}
-                                            style={{width: "20vw", 
+                                            style={{width: "100%", 
                                             border: "1px solid lightgrey", 
                                             borderRadius: "3px",
                                             backgroundColor: "white", 
@@ -177,15 +177,17 @@ const Repair = ({userDB}) =>{
                                         </FloatingLabel>
                                     </Form.Group>
                                     </div>
-                                    <TextareaElement
-                                        label={t("msh_maintenance.m_details")}
-                                        row="3"
-                                        value={formValue.details} 
-                                        name="details" 
-                                        handleChange={handleChange}
-                                        setFormValue={setFormValue}
-                                        size={{width: "20vw", maxHeight: "15vh"}}
-                                    />
+                                    <div style={{width: "80%"}}>
+                                        <TextareaElement
+                                            label={t("msh_maintenance.m_details")}
+                                            row="3"
+                                            value={formValue.details} 
+                                            name="details" 
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                            size={{width: "100%", maxHeight: "15vh"}}
+                                        />
+                                    </div>
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des problèmes techniques" title={t("msh_maintenance.m_second_tab_title")}>
@@ -245,7 +247,7 @@ const Repair = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="dark" onClick={(event) => {
+                        <Button className='btn-msh-dark' onClick={(event) => {
                             handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
                             addNotification(notif, userDB.hotelId)
                             return handleClose()

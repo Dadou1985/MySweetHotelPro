@@ -263,19 +263,23 @@ const Messenger = ({filterDate}) =>{
                         </Modal.Body>
                         <Modal.Footer style={{borderTop: "none"}}>
                             <div className="modal-note-button-container">
-                                <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
-                                <DatePicker
-                                    id="calendar"
-                                    className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
-                                    selected={startDate}
-                                    value={startDate}
-                                    onChange={changedDate => setStartDate(changedDate)}
-                                    placeholderText={t("msh_messenger.m_calendar_title")}
-                                    locale="fr-FR"
-                                    dateFormat="d MMMM yyyy"
-                                />
-                                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                                <div style={{width: "5%", position: "relative", marginRight: "2vw", cursor: "pointer"}}>
+                                    <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
+                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                                </div>
+                                <div style={{width: "5%", position: "relative", marginRight: "2vw"}}>
+                                    <DatePicker
+                                        id="calendar"
+                                        className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
+                                        selected={startDate}
+                                        value={startDate}
+                                        onChange={changedDate => setStartDate(changedDate)}
+                                        placeholderText={t("msh_messenger.m_calendar_title")}
+                                        locale="fr-FR"
+                                        dateFormat="d MMMM yyyy"
+                                    />
+                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                                </div>
                                 <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                             </div>
                         </Modal.Footer>

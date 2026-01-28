@@ -47,7 +47,7 @@ const NotebookPage = () => {
                 flexFlow: "column",
                 // alignItems: "end",
                 height: "80vh",
-                width: isBrowser() && window.innerWidth > 768 ? "55%" : "100%",
+                width: isBrowser() && window.innerWidth > 1023 ? "55%" : "100%",
                 marginTop: "3vh", 
                 padding: "3%"
               }}>
@@ -70,7 +70,7 @@ const NotebookPage = () => {
                 <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
               </div>
               <div style={{
-                      display: "flex",
+                      display: isBrowser() && window.innerWidth > 1023 ? "flex" : "none",
                       flexFlow: "column",
                       alignItems: "center",
                       width: "45%"
