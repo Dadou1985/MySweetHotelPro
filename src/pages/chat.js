@@ -18,7 +18,7 @@ const isBrowser = () => typeof window !== "undefined"
           <div style={{
             display: "flex"
           }}>
-            {isBrowser() && window.innerWidth > 768 ?
+            {isBrowser() && window.innerWidth > 1023 ?
             <>
               <ToolBar />
               <div id="iziChat" className="dark_messenger_communizi_container">
@@ -27,11 +27,14 @@ const isBrowser = () => typeof window !== "undefined"
                 <Chat userDB={userDB} user={user} />}
               </div>
             </> : 
-            <div id="iziChat" className="dark_messenger_communizi_container">
-              <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
-              {!!userDB && !!user&&
-              <PhoneChat userDB={userDB} user={user} />}
-            </div>}
+            <>
+            {isBrowser() && window.innerWidth > 768 && <ToolBar />}
+              <div id="iziChat" className="dark_messenger_communizi_container">
+                <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
+                {!!userDB && !!user&&
+                <PhoneChat userDB={userDB} user={user} />}
+              </div>
+            </>}
           </div>
     </>
   )

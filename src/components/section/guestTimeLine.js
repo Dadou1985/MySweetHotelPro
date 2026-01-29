@@ -80,10 +80,14 @@ const GuestTimeLine = ({userDB, guestId}) => {
 
     return (
         <div className="timeline-demo" style={{
-            padding: "2vw",
-            width: "25%"
+            padding: window?.innerWidth > 1439 && "2vw"
         }}>
-            <h5 style={{textAlign: "center", marginBottom: "2vh"}}>{t("msh_crm.c_guest_line.g_title")}</h5>
+            <h5 style={{
+                textAlign: "center", 
+                marginBottom: "2vh",
+                backgroundColor: window?.innerWidth < 1440 && "#B8860B",
+                padding: window?.innerWidth < 1440 && "2%",
+                borderTopLeftRadius: "5px", borderTopRightRadius: "5px"}}>{t("msh_crm.c_guest_line.g_title")}</h5>
                 <Timeline position="alternate">
                     <PerfectScrollbar style={{height: "65vh"}}>
                     {timelineData.map(data => (
@@ -107,8 +111,8 @@ const GuestTimeLine = ({userDB, guestId}) => {
                                     borderBottom: "2px solid lightgrey",
                                     borderRight: "2px solid lightgrey",
                                     filter: "drop-shadow(2px 4px 6px)",
-                                    height: "15vh",
-                                    padding: "1vw",
+                                    height: window?.innerWidth > 1439 && "15vh",
+                                    padding: window?.innerWidth > 1439 ? "1vw" : "10%",
                                     backgroundColor: "white",
                                     borderRadius: "5px"}}
                                     onClick={() => {

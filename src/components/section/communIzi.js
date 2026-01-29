@@ -30,7 +30,6 @@ export default function CommunIzi({userDB, user}) {
   const [present, setPresent] = useState([]);
   const [arrival, setArrival] = useState([]);
   const [note, setNote] = useState('')
-  const [expanded, setExpanded] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [activate, setActivate] = useState(false)
   const [guestList, setGuestList] = useState([])
@@ -45,6 +44,7 @@ export default function CommunIzi({userDB, user}) {
   })
   const [showAlert, setShowAlert] = useState(false)
   const [img, setImg] = useState(null)
+  const [accordionSelected, setAccordionSelected] = useState("")
   const { t } = useTranslation()
   const handleHide = () => setActivate(false)
 
@@ -167,7 +167,7 @@ export default function CommunIzi({userDB, user}) {
 
   return (
     <div className="communizi-container">  
-      <div style={{width: window?.innerWidth > 1023 ? "65%" : "100%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
+      <div style={{width: window?.innerWidth > 1023 ? "65%" : "100%", border: "1px solid lightgrey", borderBottom: "transparent"}}>
         <div style={{
           height: window?.innerWidth > 1023 ? "88%" : "95%", 
           padding: "2vw", 
@@ -210,7 +210,7 @@ export default function CommunIzi({userDB, user}) {
                 if(e.key === "Enter" && note) {
                   handleSubmit(e)
                   handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                  sendPushNotification({payload: payload})
+                  // sendPushNotification({payload: payload})
                 }
               }else{
                 return setShowAlert(true)
@@ -233,7 +233,7 @@ export default function CommunIzi({userDB, user}) {
                   if(note) {
                     handleSubmit(event)
                     handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                    sendPushNotification({payload: payload})
+                    // sendPushNotification({payload: payload})
                     if(showAlert) {
                       showAlert(false)
                     }
@@ -253,20 +253,24 @@ export default function CommunIzi({userDB, user}) {
             {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
                 {present.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                  <tr style={{cursor: "pointer"}} onClick={() => {
+                    setGuest(flow.id)
+                    return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
+                    }}>
                     <td><Avatar 
                       round={true}
                       name={flow.id}
                       size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      fgColor={accordionSelected === flow.markup ? "black" : "white"}
+                      color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
                       style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> - {t('msh_general.g_table.t_room')} {flow.room}</td>
+                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1rem"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
                       <td style={{paddingTop: "2vh"}}><Switch
                         checked={flow.status}
                         onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                       />
-                      <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
+                      {window?.innerWidth > 1440 && <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>}
                     </td>
                   </tr>
                 ))}
@@ -314,7 +318,7 @@ export default function CommunIzi({userDB, user}) {
                       round={true}
                       name={flow.id}
                       size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      color="#9A0A0A"
                       style={{margin: "10%"}} /></td>
                       <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
                       <td style={{paddingTop: "2vh"}}><Switch
@@ -362,125 +366,6 @@ export default function CommunIzi({userDB, user}) {
         </Tab>
       </Tabs>
       </div>
-
-      <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
-      <div style={{width: "35%", borderTop: "1px solid lightgrey"}}>
-      <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
-        <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
-          <PerfectScrollbar>
-            {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
-              <tbody>
-                {present.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
-                    <td><Avatar 
-                      round={true}
-                      name={flow.id}
-                      size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
-                      style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> - {t('msh_general.g_table.t_room')} {flow.room}</td>
-                      <td style={{paddingTop: "2vh"}}><Switch
-                        checked={flow.status}
-                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                      />
-                      <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table> : <div style={{
-              display: "flex",
-              flexFlow: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "75vh",
-              }}>
-                <div style={{
-                  display: "flex",
-                  flexFlow: "column",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  borderBottom: "5px solid lightgray",
-                  borderRight: "5px solid lightgray",
-                  border: '1px solid lightgrey',
-                  borderRadius: "100%",
-                  padding: "1vw",
-                  width: "10rem",
-                  height: "10rem",
-                  backgroundColor: "whitesmoke",
-                  filter: "drop-shadow(2px 4px 6px)", 
-                  marginBottom: "1vh"
-                }}>
-                  <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
-                </div>
-                <h6 style={{
-                  width: "40%",
-                  textAlign: "center",
-                  color: "gray",
-                  filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
-            </div>}
-            </PerfectScrollbar>
-            </Tab>
-            <Tab eventKey="En arrivée" title={t('msh_chat.c_guest_arrival')}>
-            <PerfectScrollbar>
-            {arrival.length > 0 ? <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
-              <tbody>
-                {arrival.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
-                    <td><Avatar 
-                      round={true}
-                      name={flow.id}
-                      size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
-                      style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
-                      <td style={{paddingTop: "2vh"}}><Switch
-                        checked={flow.status}
-                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                      />
-                      <i style={{color: "gray", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table> : <div style={{
-              display: "flex",
-              flexFlow: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "75vh",
-            }}>
-              <div style={{
-                display: "flex",
-                flexFlow: "column",
-                justifyContent: "center",
-                alignItems: "center",
-                borderBottom: "5px solid lightgray",
-                borderRight: "5px solid lightgray",
-                border: '1px solid lightgrey',
-                borderRadius: "100%",
-                padding: "1vw",
-                width: "10rem",
-                height: "10rem",
-                backgroundColor: "whitesmoke",
-                filter: "drop-shadow(2px 4px 6px)", 
-                marginBottom: "1vh"
-              }}>
-                <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
-              </div>
-              <h6 style={{
-                width: "40%",
-                textAlign: "center",
-                color: "gray",
-                filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
-          </div>}
-        </PerfectScrollbar>
-        </Tab>
-      </Tabs>
-      </div>
-      </Drawer>
     </div>
   )
 }

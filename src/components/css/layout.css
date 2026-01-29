@@ -6,6 +6,10 @@
     overflow: hidden;
 }
 
+.gatsby-image-wrapper-constrained {
+    vertical-align: middle;
+}
+
 .p-menubar.p-menubar-mobile-active .p-menubar-root-list {
     left: -2vw;
     width: fit-content;
