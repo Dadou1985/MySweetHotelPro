@@ -33,7 +33,7 @@ const AdminBoard = ({user, userDB}) =>{
                         centered
                         onHide={handleCloseTab}
                         >
-                        <Modal.Header closeButton className="bg-light">
+                        <Modal.Header closeButton className="msh-bg">
                             <Modal.Title id="contained-modal-title-vcenter">
                             {t("msh_admin_board.a_title")}
                             </Modal.Title>

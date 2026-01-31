@@ -158,15 +158,16 @@ const roomChangeData = {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 && "3rem",
-                  height: typeof window && window.innerWidth > 768 && "3rem",
+                  width: "3rem",
+                  height: "3rem",
                   // minWidth: "67px",
                   // maxWidth: "107px",
+                  height: window && window.innerWidth > 768 ? "4vh" : "4em",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "7vw"}} />
+                  <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "2em"}} />
                 </div>
                 <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw", display: "flex", flexFlow: "column", justifyContent: "space-between"}}>
                   <h6 className='dashboard-note-title'>{t("msh_messenger.m_note_big_title")}</h6>
@@ -185,16 +186,16 @@ const roomChangeData = {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 && "3rem",
-                  height: typeof window && window.innerWidth > 768 && "3rem",
+                  width: "3rem",
+                  height: "3rem",
                   // minWidth: "67px",
                   // maxWidth: "107px",
-                  height: typeof window && window.innerWidth > 768 && "4vh",
+                  height: window && window.innerWidth > 768 ? "4vh" : "4em",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "8vw"}} />
+                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "2.5em"}} />
                 </div>
                 <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw", display: "flex", flexFlow: "column", justifyContent: "space-between"}}>
                   <h6 className='dashboard-note-title'>{t("msh_dashboard.d_chat_room")}</h6>

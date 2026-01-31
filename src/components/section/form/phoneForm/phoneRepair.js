@@ -242,11 +242,11 @@ const PhoneRepair = ({userDB}) =>{
                     size={{width: "90vw", height: "10vh", maxHeight: "15vh"}}
                 />
                 </div>
-                <div style={{marginTop: "2vh", marginBottom: "8vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+                <div style={{margin: "0 auto 8vh", display: "flex", flexFlow: 'row wrap', justifyContent: "center", alignItems: "center", width: "fit-content", position: "relative"}}>
                     <input type="file" className="phone-camera-icon"
                         onChange={handleImgChange} />
-                    <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                    <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
+                    <img src={AddPhotoURL} style={{width: "3em"}} alt="uploadIcon" />
+                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_general.g_button.b_add_photo")}</div>
                 </div>
             <Button className="btn-msh phone_submitButton" onClick={(event) => {
                 submitForm(event)

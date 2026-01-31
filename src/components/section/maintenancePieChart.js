@@ -242,14 +242,14 @@ const MaintenancePieChart = ({userDB, filter, period}) => {
                 border: '1px solid lightgrey',
                 borderRadius: "100%",
                 padding: "2vw",
-                width: typeof window && window.innerWidth > 768 ? "20vw" : "20vw",
-                height:  typeof window && window.innerWidth > 768 ? "40vh" : "12vh",
+                width: typeof window && window.innerWidth > 768 ? "10rem" : "5rem",
+                height:  typeof window && window.innerWidth > 768 ? "10rem" : "5rem",
                 backgroundColor: "whitesmoke",
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginTop: "2vh",
                 marginBottom: "2vh"
             }}>
-                <StaticImage objectFit='contain' src='../../images/barChart.png' style={{width: "50%"}} />
+                <StaticImage objectFit='contain' src='../../images/barChart.png' style={{width: "3vw"}} />
             </div>
             <h6>{t("msh_dashboard.d_no_data")}</h6>
         </div>}

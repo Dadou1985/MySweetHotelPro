@@ -11,14 +11,14 @@
 .profile-container {
     display: flex;
     flex-flow: column;
-    width: 40%;
+    width: fit-content;
     margin-top: 5vh;
     margin-bottom: 5vh;
     filter: drop-shadow(1px 1px 1px);
 }
 
 .profile-container h1 {
-    font-size: 5em;
+    font-size: 4em;
     margin-bottom: 3vh; 
 }
 
@@ -45,8 +45,8 @@
 
 .space-container {
     flex-flow: row wrap;
-    width: 40%;
-    margin: 2vw;
+    width: fit-content;
+    margin: 2vw 0;
     display: flex;
 }
 
@@ -105,6 +105,7 @@
     align-items: center;
     width: 15vw;
     height: 20vh;
+    padding: 5%;
     border: 1px solid lightgrey;
     border-bottom-left-radius: 2%;
     border-top-left-radius: 2%;
@@ -112,6 +113,10 @@
     border-top-right-radius: 2%;
     color: gray;
     cursor: pointer;
+}
+
+.space-card:hover {
+    color: #B8860B;
 }
 
 .space-card-shadow {
@@ -305,6 +310,20 @@
     margin-top: 2vh;
 }
 
+@media (min-width: 769px) and (max-width: 1023px) {
+    .global-container {
+        height: 100;
+        background-size: cover;
+        justify-content: end;
+        background-color: black;
+    }
+
+    .space-card {
+        width: 30vw;
+        height: 10vh;
+        padding: 7%;
+    }
+}
 
 @media screen and (max-width: 768px) {
     .space-container {
@@ -399,18 +418,5 @@
     
     .dilema-add-photo-input-mask {display: none;}
 
-    @media screen and (orientation: landscape) {
-        .landscape-display {
-            position: absolute;
-            z-index: 100;
-            width: 100vw;
-            height: 100vh;
-            background-image: url('../../../svg/new-logo-msh-pro2.png');
-            background-repeat: no-repeat;
-            background-size: 50vw;
-            background-position: 30vw;
-            background-color: white;
-        }
-    }
-
 }
+

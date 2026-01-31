@@ -38,6 +38,8 @@ const Navigation = () =>{
 
     const isDesktop = window && window.innerWidth > 768 ? "flex" : "none"
     const isMobile = window && window.innerWidth < 768 ? "flex" : "none"
+    const isTablet = window && window.innerWidth > 1023 ? "flex" : "none"
+
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -199,7 +201,7 @@ const Navigation = () =>{
                         <Link className='cental-menu' style={{display: isDesktop}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
-                        <Link className='cental-menu' style={{display: isDesktop}} to="/crm">C.R.M</Link>
+                        <Link className='cental-menu' style={{display: isTablet}} to="/crm">C.R.M</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/Lost">{t("msh_lost_found.l_title")}</Link>
                     </div>
                     <div className="nav_container">
@@ -208,13 +210,13 @@ const Navigation = () =>{
             </Navbar>
 
             <Modal show={list} centered onHide={handleClose}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton className='msh-bg'>
                 <Modal.Title id="example-modal-sizes-title-sm">
                     {t("msh_navigation.deconnexion_modal_title")}
                 </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Button variant="danger" style={{width: "100%"}} onClick={handleLogout}>{t("msh_navigation.deconnexion_modal_button")}</Button>
+                    <Button className='btn-msh-dark' style={{width: "100%"}} onClick={handleLogout}>{t("msh_navigation.deconnexion_modal_button")}</Button>
                 </Modal.Body>
             </Modal>
 
@@ -224,7 +226,7 @@ const Navigation = () =>{
                 centered
                 onHide={() => setShowAdminModal(false)}
                 >
-                <Modal.Header closeButton className="bg-light">
+                <Modal.Header closeButton className="msh-bg">
                     <Modal.Title id="contained-modal-title-vcenter">
                     {t("msh_admin_board.a_title")}
                     </Modal.Title>
@@ -233,7 +235,7 @@ const Navigation = () =>{
                 
                 <Tab.Container defaultActiveKey="Créer" id="uncontrolled-tab-example">
                     <Row>
-                        <Col sm={3} style={{borderRight: "1px solid lightgrey"}}>
+                        <Col sm={3} style={{borderRight: "1px solid #B8860B"}}>
                         <Nav variant="pills" className="flex-column">
                             <Nav.Item style={{cursor: "pointer"}}>
                             <Nav.Link  eventKey="Créer">{t("msh_admin_board.a_first_tab_title")}</Nav.Link>

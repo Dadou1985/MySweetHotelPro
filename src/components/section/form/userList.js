@@ -9,6 +9,7 @@ import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from 
 const UserList = ({userDB}) => {
     const [info, setInfo] = useState([])
     const { t } = useTranslation()
+    const isTablet = window && window.innerWidth > 1023 && "none"
 
     useEffect(() => {
         let unsubscribe = fetchCollectionByMapping1('businessUsers', "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
@@ -30,12 +31,12 @@ const UserList = ({userDB}) => {
     return (
         <div>
             <h5 style={{marginBottom: "2vh", textAlign: "center"}}>{t("msh_admin_board.a_second_tab_title")}</h5>
-            <PerfectScrollbar style={{height: "55vh"}}>
+            <PerfectScrollbar style={{height: "fit-content"}}>
                 <Table striped bordered hover className=" text-center">
                     <thead className="bg-dark text-light">
                         <tr>
                         <th>{t("msh_general.g_table.t_username")}</th>
-                        <th>{t("msh_connexion.c_email_maj")}</th>
+                        <th style={{display: isTablet}}>{t("msh_connexion.c_email_maj")}</th>
                         <th>{t("msh_general.g_table.t_administrator")}</th>
                         <th></th>
                         </tr>
@@ -44,7 +45,7 @@ const UserList = ({userDB}) => {
                     {info.map((flow, key) =>(
                         <tr key={key}>
                         <td>{flow.username}</td>
-                        <td>{flow.email}</td>
+                        <td style={{display: isTablet}}>{flow.email}</td>
                         <td>
                             <Switch
                                 checked={flow.adminStatus}
@@ -57,7 +58,7 @@ const UserList = ({userDB}) => {
                         <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
                             await handleDeleteData1('businessUsers', flow.id)
                             return deleteUser({uid: flow.userId})
-                        }}>{t("msh_general.g_button.b_delete")}</Button></td>
+                        }}>{window?.innerWidth > 1439 ? t("msh_general.g_button.b_delete") : "X"}</Button></td>
                     </tr>
                     ))}
                     </tbody>

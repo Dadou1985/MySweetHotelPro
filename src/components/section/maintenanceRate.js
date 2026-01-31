@@ -17,7 +17,7 @@ const MaintenanceRate = ({userDB, showModal, closeModal}) => {
         centered
         onHide={closeModal}
         enforceFocus={false}>
-        <Modal.Header closeButton className="bg-light">
+        <Modal.Header closeButton className="msh-bg">
         <Modal.Title id="contained-modal-title-vcenter">
         {t('msh_dashboard.d_pie_chart.p_title')}
             </Modal.Title>

@@ -34,15 +34,15 @@ const PhoneLost = ({userDB}) =>{
         }))
       }
 
-      const handleImgChange = (event) => {
+    const handleImgChange = (event) => {
         if (event.target.files[0]){
             setNewImg(event.target.files[0])
         }
     }
 
-      const handleChangeExpand = () => setExpand(!expand)
+    const handleChangeExpand = () => setExpand(!expand)
 
-      const addNotification = (notification) => {
+    const addNotification = (notification) => {
         return db.collection('notifications')
             .add({
             content: notification,
@@ -134,7 +134,7 @@ const PhoneLost = ({userDB}) =>{
                 {expand ? <img src={Left} style={{width: "3vw", marginRight: "1vw"}} /> : <img src={Right} style={{width: "3vw", marginLeft: "1vw"}} />}
                 </span>
             </div>*/}
-            {!imgFrame ? <Table striped bordered hover size="sm" className="text-center">
+            {!imgFrame ? <Table striped bordered hover className="text-center">
                 <thead className="bg-dark text-center text-light">
                     <tr>
                     {expand && <th>Type</th>}
@@ -254,11 +254,11 @@ const PhoneLost = ({userDB}) =>{
                     size={{width: "90vw", height: "10vh", maxHeight: "15vh"}}
                     />
                 </div>
-                <div style={{marginBottom: "8vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+                <div style={{margin: "0 auto 8vh", display: "flex", flexFlow: 'row wrap', justifyContent: "center", alignItems: "center", width: "fit-content", position: "relative"}}>
                     <input type="file" className="phone-camera-icon"
                         onChange={handleImgChange} />
-                    <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                    <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
+                    <img src={AddPhotoURL} style={{width: "3em"}} alt="uploadIcon" />
+                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_general.g_button.b_add_photo")}</div>
                 </div>
                 <Button className="btn-msh phone_submitButton" onClick={(event) => {
                     handleSubmit(event)

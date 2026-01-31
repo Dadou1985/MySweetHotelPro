@@ -269,14 +269,14 @@ const Dilema = ({user, userDB, setUserDB}) => {
         style={{ backgroundImage: user.photoURL ? `url(${user.photoURL})` : `url(${DefaultProfile})` }}>
                 <div className="profile-container">
                     <h1>
-                        <div style={{color: "black", fontWeight: "bold", fontSize: "1em"}}>{flow.username}</div>
+                        <div style={{color: "#B8860B", fontWeight: "bold", fontSize: "1em"}}>{flow.username}</div>
                         <div style={{fontSize: "15px"}}>{flow.email}</div>
                     </h1>
                        <div style={{display: isBrowser() && window.innerWidth > 768 ? "none" : "flex"}} className="header-toggle-container">
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdateEmail}>{t("msh_user_panel.u_section.s_email.e_label")}</Button>
                             <Button variant="secondary" className="update-profile-button" onClick={handleShowUpdatePassword}>{t("msh_user_panel.u_section.s_password.p_label")}</Button>
                         </div>
-                        <Divider style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)"}} />
+                        <Divider style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex", width: "75%", filter: "drop-shadow(1px 1px 1px)", border: "1px solid #B8860B"}} />
                 </div>
                 <div style={{display: isBrowser() && window.innerWidth < 768 ? "none" : "flex"}} className="space-container">
                     <div className="space-box">

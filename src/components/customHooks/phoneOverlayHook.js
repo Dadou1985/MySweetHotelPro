@@ -40,7 +40,7 @@ function PhoneOverlayHook({userDB, category, index}) {
               borderRadius: "100%", 
               backgroundColor: "red", 
               position: "absolute", 
-              width: "17%",
+              width: "1rem",
               marginLeft: "1vw", 
               color: "white", 
               textAlign: "center", 
