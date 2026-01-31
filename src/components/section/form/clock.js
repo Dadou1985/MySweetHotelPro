@@ -154,28 +154,28 @@ const Clock = ({userDB}) =>{
                                         </MuiPickersUtilsProvider>
                                         </Form.Group>
                                     </div>}
-                                {step && <>
+                                {step && <div style={{display: "flex", width: "100%", justifyContent: "space-between"}}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "45%"}} 
                                         label={t("msh_alarm.a_client")}
                                         placeholder="ex: Jane Doe"
-                                        size="20vw"
+                                        size="100%"
                                         value={formValue.client}
                                         name="client"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     />  
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "45%"}} 
                                         label={t("msh_alarm.a_room")}
                                         placeholder="ex: 409"
-                                        size="20vw"
+                                        size="100%"
                                         value={formValue.room}
                                         name="room"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     />  
-                                </>}
+                                </div>}
                             </div>
                         </Tab>
                         <Tab eventKey="Liste des réveils" title={t("msh_alarm.a_second_tab_title")}>
@@ -224,14 +224,14 @@ const Clock = ({userDB}) =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         {step && <>
-                            <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
-                            <Button variant="dark" onClick={(event) => {
+                            <Button className='btn-msh-dark-outline' onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
+                            <Button className='btn-msh-dark' onClick={(event) => {
                                 handleSubmitData2(event, "hotels", userDB.hotelId, "clock", newData)
                                 addNotification(notif, userDB.hotelId)
                                 return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                         </>}
-                        {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
+                        {!step && <Button className='btn-msh-dark-outline' onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                     </Modal.Footer>}
                 </Modal>
         </div>

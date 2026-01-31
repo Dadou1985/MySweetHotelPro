@@ -11,3 +11,17 @@
     margin-bottom: 2vh;
     width: 100%;
 }
+
+.nav-link {
+    margin-inline: 2px;
+    color: black;
+}
+
+.nav-link:hover {
+    color: #B8860B;
+}
+
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    background-color: black !important;
+    color: #B8860B;
+}

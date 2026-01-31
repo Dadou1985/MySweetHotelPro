@@ -44,7 +44,7 @@ export default function TemporaryDrawer({userDB, user}) {
     >
         <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
-        <img src={Dasboard} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
+        <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
         {!!user && !!userDB &&
         <PhoneOverlay category="chat" userDB={userDB} index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
@@ -68,8 +68,8 @@ export default function TemporaryDrawer({userDB, user}) {
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
         {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
         <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
-        {!!user && !!userDB &&
-        <Support user={user} userDB={userDB} />}
+        {/* {!!user && !!userDB &&
+        <Support user={user} userDB={userDB} />} */}
       </List>
       <Divider />
       <List className="drawer_listIcons4">

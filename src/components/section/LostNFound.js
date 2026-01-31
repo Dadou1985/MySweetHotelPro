@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
+import { storage } from '../../Firebase'
 import moment from 'moment'
 import Picture from '../../svg/picture.svg'
 import { StaticImage } from 'gatsby-plugin-image'
@@ -11,15 +12,18 @@ import { addNotification, fetchCollectionByCombo2, handleDeleteData2, handleSubm
 import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate'
 import InputElement from '../../helper/common/InputElement'
 import TextareaElement from '../../helper/common/textareaElement'
+import AddPhotoURL from '../../svg/camera.svg'
 
 const LostNFound = ({userDB}) =>{
     const { t } = useTranslation()
 
     const [list, setList] = useState(false)
+    const [showObject, setShowObject] = useState(false)
     const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({type: "tech", place: "hall", details: "", description: ""})
     const [typeClone, setTypeClone] = useState("")
     const [placeClone, setPlaceClone] = useState("test")
+    const [newImg, setNewImg] = useState(null)
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [filter, setFilter] = useState("tech")
@@ -28,6 +32,7 @@ const LostNFound = ({userDB}) =>{
         description: t("msh_lost_found.l_sheet.s_title"),
         details: t("msh_lost_found.l_sheet.s_subtitle")
     })
+    const [url, setUrl] = useState("")
 
     const notif = t("msh_lost_found.l_notif")
     const modalTitle = t("msh_lost_found.l_button.b_add")
@@ -41,11 +46,18 @@ const LostNFound = ({userDB}) =>{
         markup: Date.now(),
         type: formValue.type,
         typeClone: typeClone !== "" ? typeClone : "High Tech",
-        status: false
+        status: false,
+        img: url
     }
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
+    const handleShowObject = () => setShowObject(true)
+    const handleImgChange = (event) => {
+        if (event.target.files[0]){
+            setNewImg(event.target.files[0])
+        }
+    }
 
     useEffect(() => {
         let unsubscribe = fetchCollectionByCombo2("hotels", userDB.hotelId, "lostAndFound", "type", "==", filter, "markup", "asc").onSnapshot(function(snapshot) {
@@ -61,6 +73,31 @@ const LostNFound = ({userDB}) =>{
         return unsubscribe
     },[filter])
 
+    const handleSubmit = (event) =>{
+        event.preventDefault()
+        if(newImg !== null) {
+            const uploadTask = storage.ref(`msh-photo-lost/${newImg.name}`).put(newImg)
+        uploadTask.on(
+          "state_changed",
+          snapshot => {},
+          error => {console.log(error)},
+          async() => {
+            const url = await storage
+              .ref("msh-photo-lost")
+              .child(newImg.name)
+              .getDownloadURL()
+              const uploadTask = () => {
+                handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+                }
+                  return setUrl(url, uploadTask())
+          }
+        )
+        }else{
+            handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+        }
+        
+    }
+
     console.log("88888888888888888", placeClone)
 
     return(
@@ -75,7 +112,7 @@ const LostNFound = ({userDB}) =>{
                 display: "flex"
             }}>
                 <div style={{
-                    width: "75%",
+                    width: window?.innerWidth > 1023 ? "75%" : "99%",
                     padding: "1%",
                 }}>
                 <Tabs defaultActiveKey="High Tech" id="uncontrolled-tab-example" onSelect={(eventKey) => {
@@ -89,8 +126,8 @@ const LostNFound = ({userDB}) =>{
                     <Tab eventKey="Vêtements" title={t("msh_lost_found.l_third_tab_title")}></Tab>
                     <Tab eventKey="Autres" title={t("msh_lost_found.l_fourth_tab_title")}></Tab>
                 </Tabs>
-                    <PerfectScrollbar style={{maxHeight: "70vh"}}>
-                        <Table striped bordered hover size="sm" className="text-center" style={{maxHeight: "70vh"}}>
+                    <PerfectScrollbar style={{height: "auto", maxHeight: "100%"}}>
+                        <Table striped bordered hover className="text-center" style={{maxHeight: "100%"}}>
                             <thead className="bg-dark text-center text-light">
                                 <tr>
                                     <th>{t("msh_general.g_table.t_photo")}</th>
@@ -103,11 +140,14 @@ const LostNFound = ({userDB}) =>{
                             </thead>
                             <tbody>
                                 {info.map(flow =>(
-                                    <tr key={flow.id} style={{cursor: "pointer"}} onClick={() => setItem(flow)}>
+                                    <tr key={flow.id} style={{cursor: "pointer"}} onClick={() => {
+                                        setItem(flow)
+                                        window?.innerWidth < 1439 && handleShowObject(true)
+                                        }}>
                                         {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
                                         setImg(flow.img)
                                         setImgFrame(true)
-                                        }}><img src={flow.img} style={{width: "5vw", borderRadius: "5%"}} /></td> : 
+                                        }}><img src={flow.img} style={{height: "49px", borderRadius: "5%"}} /></td> : 
                                         <td><StaticImage objectFit='contain' src='../../svg/picture.svg' style={{width: "1vw"}} /></td>}
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
@@ -122,7 +162,7 @@ const LostNFound = ({userDB}) =>{
                         </Table>
                     </PerfectScrollbar>
                     <div style={{display: "flex", justifyContent: "flex-end"}}>
-                        <Button variant="dark" style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_lost_found.l_button.b_add")}</Button>
+                        <Button className='btn-msh' style={{marginLeft: "1vw"}} onClick={handleShow}>{t("msh_lost_found.l_button.b_add")}</Button>
                     </div>
 
 
@@ -133,23 +173,24 @@ const LostNFound = ({userDB}) =>{
                         onHide={handleClose}
                         >
                         <ModalHeaderFormTemplate title={modalTitle} />
-                        <Modal.Body>
+                        <Modal.Body style={{width: "100%"}}>
                                 <div style={{
                                         display: "flex",
                                         flexFlow: "column",
                                         justifyContent: "space-around",
                                         alignItems: "center",
                                         padding: "5%",
-                                        textAlign: "center"
+                                        textAlign: "center",
+                                        width: "100%"
                                     }}>
-                                        <div style={{marginBottom: "2vh"}}>
+                                        <div style={{marginBottom: "2vh", width: "90%"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <FloatingLabel
                                             controlId="floatingInput"
                                             label={t("msh_lost_found.l_type.t_label")}
                                             className="mb-3">
                                                 <Form.Select className="selectpicker" value={formValue.type} name="type" onChange={(event) => handleChange(event, setFormValue)} 
-                                                style={{width: "20vw", 
+                                                style={{width: "100%", 
                                                 height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
@@ -162,7 +203,7 @@ const LostNFound = ({userDB}) =>{
                                             </FloatingLabel>
                                             </Form.Group>
                                         </div>
-                                        <div style={{marginBottom: "2vh"}}>
+                                        <div style={{marginBottom: "2vh", width: "90%"}}>
                                             <Form.Group controlId="exampleForm.SelectCustom">
                                             <FloatingLabel
                                             controlId="floatingInput"
@@ -176,7 +217,7 @@ const LostNFound = ({userDB}) =>{
                                                     if(event.target.value === "floors") {setPlaceClone(t("msh_lost_found.l_place.p_floors"))}
                                                     if(event.target.value === "others") {setPlaceClone(t("msh_lost_found.l_place.p_other"))}
                                                 }}
-                                                style={{width: "20vw", 
+                                                style={{width: "100%", 
                                                 height: "60%", 
                                                 border: "1px solid lightgrey", 
                                                 borderRadius: "3px",
@@ -192,29 +233,36 @@ const LostNFound = ({userDB}) =>{
                                             </Form.Group>
                                         </div>
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "2vh", width: "90%"}} 
                                             label={t("msh_lost_found.l_description.d_label")}
                                             placeholder="ex: Jane Doe"
-                                            size="20vw"
+                                            size="100%"
                                             value={formValue.description}
                                             name="description"
                                             handleChange={handleChange}
                                             setFormValue={setFormValue}
                                         />
-                                        <TextareaElement
-                                            label={t("msh_lost_found.l_details")}
-                                            row="3"
-                                            value={formValue.details} 
-                                            name="details" 
-                                            handleChange={handleChange}
-                                            setFormValue={setFormValue}
-                                            size={{width: "20vw", maxHeight: "30vh"}}
-                                        /> 
+                                        <div style={{width: "90%"}}>
+                                            <TextareaElement
+                                                label={t("msh_lost_found.l_details")}
+                                                row="3"
+                                                value={formValue.details} 
+                                                name="details" 
+                                                handleChange={handleChange}
+                                                setFormValue={setFormValue}
+                                                size={{width: "100%", maxHeight: "30vh"}}
+                                            /> 
+                                        </div>
+                                        <div style={{marginTop: "2vh", marginBottom: "2vh", display: "flex", flexFlow: 'row wrap', justifyContent: "center", alignItems: "center", width: "fit-content", position: "relative"}}>
+                                            <input type="file" className="phone-camera-icon"
+                                                onChange={handleImgChange} />
+                                            <img src={AddPhotoURL} style={{width: "5em"}} alt="uploadIcon" />
+                                            <div style={{width: "100%"}}>{t("msh_general.g_button.b_add_photo")}</div>
+                                        </div>
                                     </div>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="dark" onClick={(event) => {
-                                handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+                            <Button className='btn-msh' onClick={(event) => {
                                 setFormValue("")
                                 addNotification(notif, userDB.hotelId)
                                 return handleClose()
@@ -222,18 +270,37 @@ const LostNFound = ({userDB}) =>{
                         </Modal.Footer>
                     </Modal>
                 </div>
-                <div style={{width: "25%", padding: "3%"}}>
+                {window?.innerWidth > 1023 ? <div style={{width: "25%", padding: "3%"}}>
                 <Card style={{ width: '100%', borderRadius: "5px", textAlign: "center" }}>
                     <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%", filter: item.img !== LostOnes ? "none" : "grayscale() drop-shadow(1px 1px 1px)"}} />
                     <Card.Body>
-                        <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid lightgrey", paddingBottom: "1vh"}}>{item.description}</Card.Title>
+                        <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid #B8860B", paddingBottom: "1vh"}}>{item.description}</Card.Title>
                         <Card.Text>
                         {item.details}
                         </Card.Text>
                         {/*<Button variant="outline-dark">{t("msh_lost_found.l_button.b_send")}</Button>*/}
                     </Card.Body>
                 </Card>
-                </div>
+                </div> : <Modal show={showObject}
+                    size="lg"
+                    aria-labelledby="contained-modal-title-vcenter"
+                    centered
+                    onHide={() => setShowObject(false)}
+                    >
+                    <ModalHeaderFormTemplate title={modalTitle} />
+                    <Modal.Body>
+                        <Card style={{ width: '100%', borderRadius: "5px", textAlign: "center" }}>
+                            <Card.Img variant="top" src={item.img ? item.img : Picture} style={{width: "100%", filter: item.img !== LostOnes ? "none" : "grayscale() drop-shadow(1px 1px 1px)"}} />
+                            <Card.Body>
+                                <Card.Title style={{fontWeight: "bolder", borderBottom: "1px solid #B8860B", paddingBottom: "1vh"}}>{item.description}</Card.Title>
+                                <Card.Text>
+                                {item.details}
+                                </Card.Text>
+                                {/*<Button variant="outline-dark">{t("msh_lost_found.l_button.b_send")}</Button>*/}
+                            </Card.Body>
+                        </Card>
+                    </Modal.Body>
+                </Modal>}
             </div>
         </div>
     )

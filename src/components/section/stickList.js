@@ -57,7 +57,7 @@ const StickList = () => {
                 justifyContent: "center",
                 height: "3vh",
                 width: "1vw",
-                marginTop: "5vh",
+                marginTop: "3vh",
             }}>
             {userDB && <CreateSticker userDB={userDB} />}
             </div>}

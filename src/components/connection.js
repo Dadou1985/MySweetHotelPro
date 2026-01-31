@@ -85,10 +85,8 @@ const Connection = () => {
           <div data-testid="warning" id="warning"></div>
 
           <div style={{display: "flex", flexDirection: "column"}}>
-            <button data-testid="connexion" style={{borderRadius: "100px",
-            padding: "10px 30px"}} className="btn btn-success btn-block mt-3" type="submit">{t("msh_connexion.c_connexion")}</button>
-            <button data-testid="connexion" style={{borderRadius: "100px",
-            padding: "10px 30px"}} className="btn btn-outline-success btn-block my-4" onClick={handleShow}>{t("msh_connexion.c_create_account")}</button>
+            <button data-testid="connexion" style={{borderRadius: "100px", marginBottom: "1vh"}} className="btn btn-msh" type="submit">{t("msh_connexion.c_connexion")}</button>
+            <button data-testid="connexion" style={{borderRadius: "100px"}} className="btn btn-msh-outline" onClick={handleShow}>{t("msh_connexion.c_create_account")}</button>
           </div>
         </form>
 
@@ -98,7 +96,7 @@ const Connection = () => {
         centered
         onHide={handleClose}
         >
-        <Modal.Header closeButton className="bg-light">
+        <Modal.Header closeButton className="msh-bg">
             <Modal.Title id="contained-modal-title-vcenter">
             {t("msh_connexion.c_create_account")}
             </Modal.Title>

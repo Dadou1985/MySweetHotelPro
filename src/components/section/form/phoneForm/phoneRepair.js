@@ -187,11 +187,11 @@ const PhoneRepair = ({userDB}) =>{
                         <img src={img} style={{width: "90%"}} />
                     </div>}
             </div>
-            <Button variant="success" size="md" style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} onClick={handleShow}>{t("msh_maintenance.m_phone_button.b_show_modal")}</Button>
+            <Button className="btn-msh phone_submitButton" size="md" onClick={handleShow}>{t("msh_maintenance.m_phone_button.b_show_modal")}</Button>
             
             <Drawer anchor="bottom" open={activate} onClose={handleHide}  className="phone_container_drawer">
                 <div  className="phone_container_drawer">
-                <h4 style={{marginBottom: "5vh", borderBottom: "1px solid lightgrey"}}>{t("msh_maintenance.m_phone_button.b_show_modal")}</h4>
+                <h4 className='phone_tab'>{t("msh_maintenance.m_phone_button.b_show_modal")}</h4>
                 <InputElement
                     containerStyle={{marginBottom: "2vh"}} 
                     label={t("msh_maintenance.m_client")}
@@ -219,7 +219,7 @@ const PhoneRepair = ({userDB}) =>{
                         label={t("msh_maintenance.m_type.t_label")}
                         className="mb-3"
                     >                    
-                    <select class="selectpicker" value={formValue.type} name="type" onChange={(event) => handleChange(event, setFormValue)} 
+                    <Form.Select class="Form.Selectpicker" value={formValue.type} name="type" onChange={(event) => handleChange(event, setFormValue)} 
                     className="phonePage_select">
                         <option></option>
                         <option value="paint" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_paint"))}>{t("msh_dashboard.maintenance_data.d_paint")}</option>
@@ -227,7 +227,7 @@ const PhoneRepair = ({userDB}) =>{
                         <option value="plumbery" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_plumbery"))}>{t("msh_dashboard.maintenance_data.d_plumbery")}</option>
                         <option value="cleaning" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_cleaning"))}>{t("msh_dashboard.maintenance_data.d_cleaning")}</option>
                         <option value="others" onClick={() => setTypeClone(t("msh_dashboard.maintenance_data.d_others"))}>{t("msh_dashboard.maintenance_data.d_others")}</option>
-                    </select>
+                    </Form.Select>
                     </FloatingLabel>
                 </Form.Group>
                 </div>
@@ -239,16 +239,16 @@ const PhoneRepair = ({userDB}) =>{
                     name="details" 
                     handleChange={handleChange}
                     setFormValue={setFormValue}
-                    size={{width: "90vw", maxHeight: "15vh"}}
+                    size={{width: "90vw", height: "10vh", maxHeight: "15vh"}}
                 />
                 </div>
-                <div style={{marginBottom: "3vh", display: "flex", flexFlow: 'row', justifyContent: "center", alignItems: "center", width: "100%"}}>
+                <div style={{margin: "0 auto 8vh", display: "flex", flexFlow: 'row wrap', justifyContent: "center", alignItems: "center", width: "fit-content", position: "relative"}}>
                     <input type="file" className="phone-camera-icon"
                         onChange={handleImgChange} />
-                    <img src={AddPhotoURL} className="modal-note-file-icon" alt="uploadIcon" />
-                    <span style={{marginLeft: "2vw"}}>{t("msh_general.g_button.b_add_photo")}</span>
+                    <img src={AddPhotoURL} style={{width: "3em"}} alt="uploadIcon" />
+                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_general.g_button.b_add_photo")}</div>
                 </div>
-            <Button variant="success" className="phone_submitButton" onClick={(event) => {
+            <Button className="btn-msh phone_submitButton" onClick={(event) => {
                 submitForm(event)
                 }}>{t("msh_maintenance.m_phone_button.b_validation")}</Button>
             </div>

@@ -141,7 +141,7 @@ const roomChangeData = {
       width: "100%",
       padding: "1%",
       marginTop: "2vh",
-      alignItems: typeof window && window.innerWidth > 768 ? "flex-start" : "center"
+      alignItems: window?.innerWidth > 768 ? "flex-start" : "center"
   }}>
         <div style={{width: "100%", marginBottom: typeof window && window.innerWidth > 768 ? "2vh" : "1vh"}}>
           <div className='dashboard-note-container'>
@@ -158,23 +158,24 @@ const roomChangeData = {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
-                  height: typeof window && window.innerWidth > 768 && "4vh",
+                  width: "3rem",
+                  height: "3rem",
+                  // minWidth: "67px",
+                  // maxWidth: "107px",
+                  height: window && window.innerWidth > 768 ? "4vh" : "4em",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "7vw"}} />
+                  <img src={Notebook} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "2em"}} />
                 </div>
-                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
+                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw", display: "flex", flexFlow: "column", justifyContent: "space-between"}}>
                   <h6 className='dashboard-note-title'>{t("msh_messenger.m_note_big_title")}</h6>
                   <h3>{consigne.length > 0 ? consigne.length : 0} </h3>
                 </div>
             </div>
             <div className='dashboard-icon dashboard-note-card' style={{
-              border: "1px solid lightgrey", 
-              borderBottom: "2px solid lightgrey",
-              borderRight: "2px solid lightgrey"}} onClick={() => navigate('/chat')}>
+              borderBottom: "2px solid lightgrey"}} onClick={() => navigate('/chat')}>
                 <div style={{
                   display: "flex",
                   flexFlow: "column",
@@ -185,15 +186,18 @@ const roomChangeData = {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "2vw",
-                  width: typeof window && window.innerWidth > 768 ? "4vw" : "18vw",
-                  height: typeof window && window.innerWidth > 768 && "4vh",
+                  width: "3rem",
+                  height: "3rem",
+                  // minWidth: "67px",
+                  // maxWidth: "107px",
+                  height: window && window.innerWidth > 768 ? "4vh" : "4em",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "9vw"}} />
+                  <img src={ChatLogo} style={{width: typeof window && window.innerWidth > 768 ? "2vw" : "2.5em"}} />
                 </div>
-                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw"}}>
+                <div style={{paddingLeft: typeof window && window.innerWidth > 768 ? "2vw" : "6vw", display: "flex", flexFlow: "column", justifyContent: "space-between"}}>
                   <h6 className='dashboard-note-title'>{t("msh_dashboard.d_chat_room")}</h6>
                   <h3>{chat.length > 0 ? chat.length : 0}</h3>
                 </div>
@@ -207,9 +211,11 @@ const roomChangeData = {
           justifyContent: "space-around"
         }}>
           <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowRoomChangeModal(true)}>
-              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_doughnut_chart.d_title')}</h5>
-              <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_doughnut_chart.d_subtitle')}</p>
-              {roomChange.length > 0 ? <Chart type="bar" data={roomChangeData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+              <div>
+                <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_doughnut_chart.d_title')}</h5>
+                <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_doughnut_chart.d_subtitle')}</p>
+              </div>
+              {roomChange.length > 0 ? <Chart type="bar" data={roomChangeData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid #B8860B", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center"
@@ -224,22 +230,24 @@ const roomChangeData = {
                     border: '1px solid lightgrey',
                     borderRadius: "100%",
                     padding: "2vw",
-                    width: typeof window && window.innerWidth > 768 ? "6vw" : "100px",
-                    height: typeof window && window.innerWidth > 768 ? "6vw" : "100px",
+                    width: typeof window && window.innerWidth > 768 ? "12rem" : "100px",
+                    height: typeof window && window.innerWidth > 768 ? "12rem" : "100px",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginTop: "2vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />
+                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "6rem" : "6vw"}} />
                   </div>
                   <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}
           </div>
           <div className="card dashboard-icon dasbhboard-rate-card" onClick={() => setShowMaintenanceModal(true)}>
-              <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_pie_chart.p_title')}</h5>
-              <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_pie_chart.p_subtitle')}</p>
-              {maintenance.length > 0 ? <Chart type="bar" data={maintenanceData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid lightgrey", paddingTop: "1vh" }} /> : <div style={{
+              <div>
+                <h5 style={{textAlign: "center", marginBottom: "0vh"}}>{t('msh_dashboard.d_pie_chart.p_title')}</h5>
+                <p style={{textAlign: "center", color: "gray"}}>{t('msh_dashboard.d_pie_chart.p_subtitle')}</p>
+              </div>
+              {maintenance.length > 0 ? <Chart type="bar" data={maintenanceData} options={basicOptions} style={{ position: 'relative', width: '100%', height: "90%", borderTop: "1px solid #B8860B", paddingTop: "1vh" }} /> : <div style={{
                 display: "flex",
                 flexFlow: "column",
                 alignItems: "center",
@@ -255,14 +263,14 @@ const roomChangeData = {
                     border: '1px solid lightgrey',
                     borderRadius: "100%",
                     padding: "2vw",
-                    width: typeof window && window.innerWidth > 768 ? "6vw" : "100px",
-                    height: typeof window && window.innerWidth > 768 ? "6vw" : "100px",
+                    width: typeof window && window.innerWidth > 768 ? "12rem" : "100px",
+                    height: typeof window && window.innerWidth > 768 ? "12rem" : "100px",
                     backgroundColor: "whitesmoke",
                     filter: "drop-shadow(2px 4px 6px)", 
                     marginTop: "2vh",
                     marginBottom: "2vh"
                   }}>
-                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />
+                    <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "6rem" : "6vw"}} />
                   </div>
                   <h6>{t("msh_dashboard.d_no_data")}</h6>
                 </div>}

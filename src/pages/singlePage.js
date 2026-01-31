@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ToolBar from "../components/section/toolbar"
-import Navigation from '../components/section/navigation'
 import {FirebaseContext} from '../Firebase'
 import Dashboard from '../components/section/dashboard'
 import { withTrans } from '../../i18n/withTrans'
@@ -20,15 +19,13 @@ const SinglePage = () => {
   return (
     <>
       <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}
         <div style={{
           display: "flex",
           backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          backgroundPositionX: "5vw",
-          backgroundPositionY: "-5vh"
+          // backgroundPositionX: "5vw",
+          // backgroundPositionY: "-5vh"
         }}>
           <ToolBar />
           <div style={{
@@ -39,7 +36,7 @@ const SinglePage = () => {
             height: "100%",
             width: "95%"
           }}>
-            <div style={{width: isBrowser() && window.innerWidth > 768 ? "50%" : "100%"}}>
+            <div style={{width: isBrowser() && window.innerWidth > 1439 ? "50%" : "100%"}}>
               <h3 style={{
                 paddingTop: "3vh", 
                 paddingLeft: isBrowser() && window.innerWidth > 768 ? "3vw" : "0", 

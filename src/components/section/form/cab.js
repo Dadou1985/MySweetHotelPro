@@ -170,24 +170,24 @@ const Cab = ({userDB}) =>{
                                     flexFlow: "row",
                                     alignItems: "center",
                                     justifyContent: "space-around",
-                                    width: "50%",
+                                    width: "100%",
                                     marginBottom: "2vh"
                                 }}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "45%"}} 
                                         label={t("msh_cab.c_client")}
                                         placeholder="ex: Jane Doe"
-                                        size="12vw"
+                                        size="100%"
                                         value={formValue.client}
                                         name="client"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     />  
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "45%"}} 
                                         label={t("msh_cab.c_room")}
                                         placeholder="ex: 409"
-                                        size="12vw"
+                                        size="100%"
                                         value={formValue.room}
                                         name="room"
                                         handleChange={handleChange}
@@ -199,46 +199,48 @@ const Cab = ({userDB}) =>{
                                     flexFlow: "row",
                                     alignItems: "center",
                                     justifyContent: "space-around",
-                                    width: "50%",
+                                    width: "100%",
                                     marginBottom: "2vh"
                                 }}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "45%"}} 
                                         label={t("msh_cab.c_pax")}
                                         placeholder={t("msh_cab.c_pax")}
-                                        size="12vw"
+                                        size="100%"
                                         value={formValue.passenger}
                                         name="passenger"
                                         handleChange={handleChange}
                                         setFormValue={setFormValue}
                                     /> 
-                                    <Form.Group controlId="description6">
-                                    <FloatingLabel
-                                        controlId="floatingInput"
-                                        label={t("msh_cab.c_vehicule.v_label")}
-                                        className="mb-3"
-                                    >
-                                        <Form.Select className="selectpicker" defaultValue={formValue.model} name="model" onChange={(event) => handleChange(event, setFormValue)} 
-                                            style={{
-                                            width: "12vw", 
-                                            border: "1px solid lightgrey", 
-                                            borderRadius: "3px",
-                                            backgroundColor: "white", 
-                                            paddingLeft: "1vw"}}
-                                            required>
-                                            <option></option>
-                                            <option value="limousin" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_limousin"))}>{t("msh_cab.c_vehicule.v_limousin")}</option>
-                                            <option value="Van" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_van"))}>{t("msh_cab.c_vehicule.v_van")}</option>
-                                        </Form.Select>
-                                    </FloatingLabel>
-                                    </Form.Group>
+                                    <div style={{width: "45%"}}>
+                                        <Form.Group controlId="description6">
+                                        <FloatingLabel
+                                            controlId="floatingInput"
+                                            label={t("msh_cab.c_vehicule.v_label")}
+                                            className="mb-3"
+                                        >
+                                            <Form.Select className="selectpicker" defaultValue={formValue.model} name="model" onChange={(event) => handleChange(event, setFormValue)} 
+                                                style={{
+                                                width: "100%", 
+                                                border: "1px solid lightgrey", 
+                                                borderRadius: "3px",
+                                                backgroundColor: "white", 
+                                                paddingLeft: "1vw"}}
+                                                required>
+                                                <option></option>
+                                                <option value="limousin" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_limousin"))}>{t("msh_cab.c_vehicule.v_limousin")}</option>
+                                                <option value="Van" onClick={() => setModelClone(t("msh_cab.c_vehicule.v_van"))}>{t("msh_cab.c_vehicule.v_van")}</option>
+                                            </Form.Select>
+                                        </FloatingLabel>
+                                        </Form.Group>
+                                    </div>
                                 </div>
-                                <div>
+                                <div style={{width: "95%"}}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "0"}} 
+                                        containerStyle={{marginBottom: "0", width: "100%"}} 
                                         label={t("msh_cab.c_destination.d_label")}
                                         placeholder={t("msh_cab.c_destination.d_placeholder")}
-                                        size="25vw"
+                                        size="100%"
                                         value={formValue.destination}
                                         name="destination"
                                         handleChange={handleChange}
@@ -257,14 +259,14 @@ const Cab = ({userDB}) =>{
                 </Modal.Body>
                 {footerState && <Modal.Footer>
                     {step && <>
-                        <Button variant="outline-dark" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
-                        <Button variant="dark" onClick={(event) => {
+                        <Button className='btn-msh-dark-outline' onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
+                        <Button className='btn-msh-dark' onClick={(event) => {
                             handleSubmitData2(event, "hotels", userDB.hotelId, "cab", newData)
                             addNotification(notif, userDB.hotelId,)
                             return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </>}
-                    {!step && <Button variant="outline-dark" onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
+                    {!step && <Button className='btn-msh-dark-outline' onClick={() => setStep(true)}>{t("msh_general.g_button.b_next_step")}</Button>}
                 </Modal.Footer>}
             </Modal>
         </div>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useMemo } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -35,6 +35,7 @@ export default function CommunIzi({userDB, user}) {
     const [payload, setPayload] = useState({token:{}, logo:"", language:"", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting:""})
     const [showAlert, setShowAlert] = useState(false)
     const [img, setImg] = useState(null)
+    const [accordionSelected, setAccordionSelected] = useState("")
     const { t } = useTranslation()
 
     const handleChange = event =>{
@@ -212,8 +213,6 @@ export default function CommunIzi({userDB, user}) {
 
   console.log('testUser', payload)
 
-  let avatarColorRandomSelection = ["blue", "red", "yellow", "green"]
-
     return (
         <div className="communizi-container">  
           <PerfectScrollbar className='chat-perfectscrollbar'>
@@ -223,25 +222,27 @@ export default function CommunIzi({userDB, user}) {
                   flow.status &&
                   <AccordionItem key={flow.id} onClick={() => {
                     handleChangeExpanded(flow.id)
+                    accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
                     if(showAlert) {
                       return setShowAlert(false)
                     }
                     }}>
                     <AccordionItemHeading className={flow.room ? "none" : 'softSkin'} style={{
-                      backgroundColor: flow.room ? "rgb(33, 35, 39)" : "transparent", 
+                      backgroundColor: accordionSelected === flow.markup ? "#B8860B" : "rgb(33, 35, 39)", 
                       filter: flow.room ? "none" : "drop-shadow(1px 1px 1px)",
                       padding: "2%",
                       borderTopLeftRadius: "5px",
                       borderTopRightRadius: "5px",
                       marginTop: "1vh"
                       }}>
-                        <AccordionItemButton style={{outline: "none", color: "gray", display: "flex", justifyContent: "space-between"}}>
+                        <AccordionItemButton style={{outline: "none", color: accordionSelected === flow.markup ? "black" : "gray", display: "flex", justifyContent: "space-between"}}>
                           <div style={{display: "flex", alignItems: "center"}}>
                             <Avatar 
                               round={true}
                               name={flow.id}
                               size="30"
-                              color={avatarColorRandomSelection[Math.floor(Math.random() * 5)]}
+                              fgColor={accordionSelected === flow.markup ? "#B8860B" : "white"}
+                              color={accordionSelected === flow.markup ? "black" : "#9A0A0A"}
                               style={{marginRight: "1vw"}} />
                               {typeof window && window.innerWidth > 768 ? flow.id : null}
                           </div>
@@ -252,7 +253,7 @@ export default function CommunIzi({userDB, user}) {
                                 onChange={() => changeRoomStatus(flow.id)}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                               />
-                              <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                              <i style={{color: accordionSelected === flow.markup ?"lightgrey" : "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
                             </div>
                         </AccordionItemButton>
                     </AccordionItemHeading>
@@ -276,7 +277,7 @@ export default function CommunIzi({userDB, user}) {
                         if(e.key === "Enter" && note) {
                           handleSubmit(e)
                           updateAdminSpeakStatus()
-                          sendPushNotification({payload: payload})
+                          // sendPushNotification({payload: payload})
                           setShowAlert(false)
                         }
                       }else{
@@ -303,7 +304,7 @@ export default function CommunIzi({userDB, user}) {
                             if(note) {
                               handleSubmit(event)
                               updateAdminSpeakStatus()
-                              sendPushNotification({payload: payload})
+                              // sendPushNotification({payload: payload})
                               if(showAlert) {
                                 showAlert(false)
                               }

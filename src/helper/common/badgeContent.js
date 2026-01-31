@@ -8,7 +8,7 @@ const BadgeContent = ({tooltipTitle, icon, handleShow}) => {
             overlay={<Tooltip id="title">
                 {tooltipTitle}
             </Tooltip>}>
-            <img src={icon} className="icon" alt="contact" onClick={handleShow} style={{ width: "2vw", cursor: "pointer" }} />
+            <img src={icon} className="icon" alt="contact" onClick={handleShow} style={{ width: "2vw", minWidth: "24px", cursor: "pointer" }} />
         </OverlayTrigger>
         );
 };

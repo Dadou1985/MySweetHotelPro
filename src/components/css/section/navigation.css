@@ -2,6 +2,7 @@
     position: absolute;
     cursor: pointer;
     width: 5vw;
+    min-width: 70px;
     text-align: center;
     left: 0;
 }
@@ -54,7 +55,7 @@
 }
 
 .drawer_fullList{
-    width: 25vw;
+    width: 20vw;
 }
 
 .drawer_title {
@@ -76,6 +77,10 @@
 
 .cental-menu {
     border-bottom: none;
+    color: black; 
+    text-decoration: none;
+    flex-flow: column; 
+    justify-content: center;
 }
 
 .cental-menu:hover {

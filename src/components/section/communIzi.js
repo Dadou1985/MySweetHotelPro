@@ -20,6 +20,7 @@ import {
     handleSubmitData3, 
 } from '../../helper/globalCommonFunctions'
 import '../css/section/chat.css'
+import { Drawer } from '@material-ui/core'
 
 /* 
   ! FIX => SUBMIT ONKEYDOWN
@@ -29,7 +30,6 @@ export default function CommunIzi({userDB, user}) {
   const [present, setPresent] = useState([]);
   const [arrival, setArrival] = useState([]);
   const [note, setNote] = useState('')
-  const [expanded, setExpanded] = useState('')
   const [showModal, setShowModal] = useState(false)
   const [activate, setActivate] = useState(false)
   const [guestList, setGuestList] = useState([])
@@ -44,7 +44,9 @@ export default function CommunIzi({userDB, user}) {
   })
   const [showAlert, setShowAlert] = useState(false)
   const [img, setImg] = useState(null)
+  const [accordionSelected, setAccordionSelected] = useState("")
   const { t } = useTranslation()
+  const handleHide = () => setActivate(false)
 
   const handleHideDrawer = () => {
     setActivate(false)
@@ -165,25 +167,26 @@ export default function CommunIzi({userDB, user}) {
 
   return (
     <div className="communizi-container">  
-      <div style={{width: "65%", height: "83vh", border: "1px solid lightgrey", borderBottom: "transparent"}}>
+      <div style={{width: window?.innerWidth > 1023 ? "65%" : "100%", border: "1px solid lightgrey", borderBottom: "transparent"}}>
         <div style={{
-          height: "72vh", 
+          height: window?.innerWidth > 1023 ? "88%" : "95%", 
           padding: "2vw", 
           borderBottom: "1px solid lightgrey",
           backgroundImage: `url(${Bubbles})`,
           backgroundSize: "cover",
-          backgroundRepeat: "no-repeat"
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center"
         }}>
           {!guest && <>
             <h3 style={{
               position:"absolute",
-              left: "24vw",
+              left: "18vw",
               top: "36vh",
               filter: "drop-shadow(1px 1px 1px)"
             }}>Sélectionnez</h3>
             <h3 style={{
               position:"absolute",
-              left: "37vw",
+              left: "35vw",
               top: "55vh",
               filter: "drop-shadow(1px 1px 1px)"
             }}>une conversation</h3>
@@ -207,7 +210,7 @@ export default function CommunIzi({userDB, user}) {
                 if(e.key === "Enter" && note) {
                   handleSubmit(e)
                   handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                  sendPushNotification({payload: payload})
+                  // sendPushNotification({payload: payload})
                 }
               }else{
                 return setShowAlert(true)
@@ -230,7 +233,7 @@ export default function CommunIzi({userDB, user}) {
                   if(note) {
                     handleSubmit(event)
                     handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                    sendPushNotification({payload: payload})
+                    // sendPushNotification({payload: payload})
                     if(showAlert) {
                       showAlert(false)
                     }
@@ -243,27 +246,31 @@ export default function CommunIzi({userDB, user}) {
           </Form>
         </div>
     </div>
-    <div style={{width: "35%", borderTop: "1px solid lightgrey"}}>
+    <div style={{display: window?.innerWidth < 1024 && "none", width: "35%", borderTop: "1px solid lightgrey"}}>
       <Tabs defaultActiveKey="En séjour" id="uncontrolled-tab-example">
         <Tab eventKey="En séjour" title={t('msh_chat.c_guest_present')}>
           <PerfectScrollbar>
             {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
                 {present.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
+                  <tr style={{cursor: "pointer"}} onClick={() => {
+                    setGuest(flow.id)
+                    return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
+                    }}>
                     <td><Avatar 
                       round={true}
                       name={flow.id}
                       size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      fgColor={accordionSelected === flow.markup ? "black" : "white"}
+                      color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
                       style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> - {t('msh_general.g_table.t_room')} {flow.room}</td>
+                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1rem"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
                       <td style={{paddingTop: "2vh"}}><Switch
                         checked={flow.status}
                         onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
                         inputProps={{ 'aria-label': 'secondary checkbox' }}
                       />
-                      <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
+                      {window?.innerWidth > 1440 && <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>}
                     </td>
                   </tr>
                 ))}
@@ -285,8 +292,8 @@ export default function CommunIzi({userDB, user}) {
                   border: '1px solid lightgrey',
                   borderRadius: "100%",
                   padding: "1vw",
-                  width: "12vw",
-                  height: "20vh",
+                  width: "10rem",
+                  height: "10rem",
                   backgroundColor: "whitesmoke",
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
@@ -294,7 +301,7 @@ export default function CommunIzi({userDB, user}) {
                   <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                 </div>
                 <h6 style={{
-                  width: "10vw",
+                  width: "40%",
                   textAlign: "center",
                   color: "gray",
                   filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>
@@ -311,7 +318,7 @@ export default function CommunIzi({userDB, user}) {
                       round={true}
                       name={flow.id}
                       size="40"
-                      color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                      color="#9A0A0A"
                       style={{margin: "10%"}} /></td>
                       <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
                       <td style={{paddingTop: "2vh"}}><Switch
@@ -341,8 +348,8 @@ export default function CommunIzi({userDB, user}) {
                 border: '1px solid lightgrey',
                 borderRadius: "100%",
                 padding: "1vw",
-                width: "12vw",
-                height: "20vh",
+                width: "10rem",
+                height: "10rem",
                 backgroundColor: "whitesmoke",
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginBottom: "1vh"
@@ -350,7 +357,7 @@ export default function CommunIzi({userDB, user}) {
                 <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
               </div>
               <h6 style={{
-                width: "10vw",
+                width: "40%",
                 textAlign: "center",
                 color: "gray",
                 filter: "drop-shadow(1px 1px 1px)"}}>Aucune conversation pour le moment</h6>

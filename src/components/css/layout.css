@@ -1,10 +1,106 @@
 /* ---------- LET'S CODE NOW !!! ------- */
 
-/*{border: 1px solid black;}*/
+/* *{border: 1px solid black;} */
+
+#gatsby-focus-wrapper {
+    overflow: hidden;
+}
+
+.gatsby-image-wrapper-constrained {
+    vertical-align: middle;
+}
+
+.p-menubar.p-menubar-mobile-active .p-menubar-root-list {
+    right: 0;
+    width: fit-content;
+    left: unset;
+}
+
+.MuiFormLabel-root {
+    width: max-content;
+}
+
+.MuiInputBase-root {
+    margin-top: 4vh;
+}
 
 *{outline: none;}
 
 .modal-90w {width: 90vw}
+
+.msh-bg {
+    background-color: #B8860B;
+}
+
+.msh-bg-dark {
+    background-color: black;
+    color: #B8860B;
+
+}
+
+.msh-color {
+    color: #B8860B;
+}
+
+.btn-msh {
+    background-color: #B8860B; /* ton gold */
+    border-color: #B8860B;
+    color: black;
+    filter: drop-shadow(1px 1px 1px);
+}
+  
+.btn-msh:hover,
+.btn-msh:focus,
+.btn-msh:active {
+background-color: #a17308;
+border-color: #a17308;
+color: white;
+}
+
+.btn-msh-outline {
+    border: 1px solid #B8860B; /* ton gold */
+    color: #B8860B;
+    text-decoration: none;
+}
+
+.btn-msh-outline:hover,
+.btn-msh-outline:focus,
+.btn-msh-outline:active {
+    background-color: #a17308;
+    border-color: #a17308;
+    color: white;
+    filter: drop-shadow(1px 1px 1px);
+}
+
+.btn-msh-dark {
+    background-color: black; 
+    border-color: black; 
+    color: #B8860B;
+    filter: drop-shadow(1px 1px 1px);
+}
+  
+.btn-msh-dark:hover,
+.btn-msh-dark:focus,
+.btn-msh-dark:active {
+    background-color: #a17308;
+    border-color: #a17308;
+    color: black;
+}
+
+.btn-msh-dark-outline {
+    background-color: white; 
+    border-color: black; 
+    color: black;    
+}
+  
+.btn-msh-dark-outline:hover,
+.btn-msh-dark-outline:focus,
+.btn-msh-dark-outline:active {
+    background-color: black;
+    border-color: black;
+    color: #a17308;
+    filter: drop-shadow(1px 1px 1px);
+}
 
 /*Perfectscrollbar*/
 
@@ -13,7 +109,15 @@
 }
 
 tbody, td, tfoot, th, thead, tr {
-    vertical-align: baseline;
+    vertical-align: middle;
+    white-space: normal;
+    min-width: 5vw;
+}
+
+.form-check-input {
+    width: 1.5em;
+    height: 1.5em;
+    margin-bottom: 0.5em;
 }
 
 @media screen and (min-width:768px){
@@ -25,5 +129,25 @@ tbody, td, tfoot, th, thead, tr {
 @media screen and (max-width:768px){
     .isShowMobile {
         display: flex;
+    }
+
+    .table-striped>tbody>tr {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width:1023px) {
+    @media screen and (orientation: landscape) {
+        .landscape-display {
+            position: absolute;
+            z-index: 100;
+            width: 100vw;
+            height: 100vh;
+            background-image: url('../../svg/new-logo-msh.png');
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+            background-color: white;
+        }
     }
 }

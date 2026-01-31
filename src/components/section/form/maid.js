@@ -147,12 +147,13 @@ const Maid = ({userDB}) =>{
                                     alignItems: "center",
                                     padding: "5%",
                                     textAlign: "center",
+                                    width: "100%"
                                 }}>
                                     <InputElement
-                                        containerStyle={{marginBottom: "2vh"}} 
+                                        containerStyle={{marginBottom: "2vh", width: "95%"}} 
                                         label={t("msh_room_change.r_client")}
                                         placeholder="ex: Jane Doe"
-                                        size="25vw"
+                                        size="100%"
                                         value={formValue.client}
                                         name="client"
                                         handleChange={handleChange}
@@ -162,24 +163,24 @@ const Maid = ({userDB}) =>{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around",
-                                        width: "50%",
+                                        width: "100%",
                                         marginBottom: "2vh"
                                     }}>
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "0", width: "45%"}} 
                                             label={t("msh_room_change.r_from")}
                                             placeholder="ex: 310"
-                                            size="12vw"
+                                            size="100%"
                                             value={formValue.fromRoom}
                                             name="fromRoom"
                                             handleChange={handleChange}
                                             setFormValue={setFormValue}
                                         />
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "0", width: "45%"}} 
                                             label={t("msh_room_change.r_to")}
                                             placeholder="ex: 409"
-                                            size="12vw"
+                                            size="100%"
                                             value={formValue.toRoom}
                                             name="toRoom"
                                             handleChange={handleChange}
@@ -190,88 +191,93 @@ const Maid = ({userDB}) =>{
                                         display: "flex",
                                         flexFlow: "row",
                                         justifyContent: "space-around",
-                                        width: "50%",
+                                        width: "100%",
                                         marginBottom: "2vh"
                                     }}>
-                                        <Form.Group controlId="exampleForm.SelectCustom">
-                                            <FloatingLabel
-                                                controlId="floatingInput"
-                                                label={t("msh_room_change.r_reason.r_label")}
-                                                className="mb-3"
-                                            >
-                                            <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
-                                                    if (event.target.value === "noise") {setReasonBack(t("msh_room_change.r_reason.r_noise"))}
-                                                    if(event.target.value === "temperature") {setReasonBack(t("msh_room_change.r_reason.r_temperature"))}
-                                                    if(event.target.value === "maintenance") {setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}
-                                                    if(event.target.value === "cleaning") {setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}
-                                                    if(event.target.value === "others") {setReasonBack(t("msh_lost_found.l_place.p_other"))}
-                                                }}
-                                                style={{width: "12vw", 
-                                                height: "60%", 
-                                                border: "1px solid lightgrey", 
-                                                borderRadius: "3px",
-                                                backgroundColor: "white", 
-                                                paddingLeft: "1vw"}}>
-                                                    <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
-                                                    <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
-                                                    <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
-                                                    <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
-                                                    <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
-                                            </Form.Select>
-                                            </FloatingLabel>
-                                        </Form.Group>
-                                    
-                                        <Form.Group controlId="exampleForm.SelectCustom">
-                                            <FloatingLabel
-                                                controlId="floatingInput"
-                                                label={t("msh_room_change.r_state.s_label")}
-                                                className="mb-3"
-                                            >
-                                                <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
-                                                    if (event.target.value === "dirty") {setStateClone(t("msh_room_change.r_state.s_dirty"))}
-                                                    if(event.target.value === "clean") {setStateClone(t("msh_room_change.r_state.s_clean"))}
-                                                }}
-                                                    style={{width: "12vw", 
+                                        <div style={{width: "45%"}}>
+                                            <Form.Group controlId="exampleForm.SelectCustom">
+                                                <FloatingLabel
+                                                    controlId="floatingInput"
+                                                    label={t("msh_room_change.r_reason.r_label")}
+                                                    className="mb-3"
+                                                >
+                                                <Form.Select className="selectpicker" value={formValue.reason} name="reason" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
+                                                        if (event.target.value === "noise") {setReasonBack(t("msh_room_change.r_reason.r_noise"))}
+                                                        if(event.target.value === "temperature") {setReasonBack(t("msh_room_change.r_reason.r_temperature"))}
+                                                        if(event.target.value === "maintenance") {setReasonBack(t("msh_room_change.r_reason.r_maintenance"))}
+                                                        if(event.target.value === "cleaning") {setReasonBack(t("msh_room_change.r_reason.r_cleaning"))}
+                                                        if(event.target.value === "others") {setReasonBack(t("msh_lost_found.l_place.p_other"))}
+                                                    }}
+                                                    style={{width: "100%", 
                                                     height: "60%", 
                                                     border: "1px solid lightgrey", 
                                                     borderRadius: "3px",
                                                     backgroundColor: "white", 
                                                     paddingLeft: "1vw"}}>
-                                                        <option value="dirty">{t("msh_room_change.r_state.s_dirty")}</option>
-                                                        <option value="clean">{t("msh_room_change.r_state.s_clean")}</option>
+                                                        <option value="noise">{t("msh_room_change.r_reason.r_noise")}</option>
+                                                        <option value="temperature">{t("msh_room_change.r_reason.r_temperature")}</option>
+                                                        <option value="maintenance">{t("msh_room_change.r_reason.r_maintenance")}</option>
+                                                        <option value="cleaning">{t("msh_room_change.r_reason.r_cleaning")}</option>
+                                                        <option value="others">{t("msh_room_change.r_reason.r_others")}</option>
                                                 </Form.Select>
-                                            </FloatingLabel>
-                                        </Form.Group>
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                        </div>
+                                        
+                                        <div style={{width: "45%"}}>
+                                            <Form.Group controlId="exampleForm.SelectCustom">
+                                                <FloatingLabel
+                                                    controlId="floatingInput"
+                                                    label={t("msh_room_change.r_state.s_label")}
+                                                    className="mb-3"
+                                                >
+                                                    <Form.Select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} onClick={(event) => {
+                                                        if (event.target.value === "dirty") {setStateClone(t("msh_room_change.r_state.s_dirty"))}
+                                                        if(event.target.value === "clean") {setStateClone(t("msh_room_change.r_state.s_clean"))}
+                                                    }}
+                                                        style={{width: "100%", 
+                                                        height: "60%", 
+                                                        border: "1px solid lightgrey", 
+                                                        borderRadius: "3px",
+                                                        backgroundColor: "white", 
+                                                        paddingLeft: "1vw"}}>
+                                                            <option value="dirty">{t("msh_room_change.r_state.s_dirty")}</option>
+                                                            <option value="clean">{t("msh_room_change.r_state.s_clean")}</option>
+                                                    </Form.Select>
+                                                </FloatingLabel>
+                                            </Form.Group>
+                                        </div>
                                     </div>
-                                    <TextareaElement
-                                        label={t("msh_room_change.r_details")}
-                                        row="3"
-                                        value={formValue.details} 
-                                        name="details" 
-                                        handleChange={handleChange}
-                                        setFormValue={setFormValue}
-                                        size={{width: "25vw", maxHeight: "15vh"}}
-                                    />
+                                    <div style={{width: "95%"}}>
+                                        <TextareaElement
+                                            label={t("msh_room_change.r_details")}
+                                            row="3"
+                                            value={formValue.details} 
+                                            name="details" 
+                                            handleChange={handleChange}
+                                            setFormValue={setFormValue}
+                                            size={{width: "100%", maxHeight: "15vh"}}
+                                        />
+                                    </div>
                                 </div>
                             </Tab>
                             <Tab eventKey="Liste des délogements" title={t("msh_room_change.r_table_title")}>
                             {!imgFrame ? 
                                 <PerfectScrollbar style={{height: "55vh"}}>
-                                    <Table striped bordered hover size="sm" className="text-center"  style={{overflowX: "auto",
-                                            maxWidth: "90vw"}}>
+                                    <Table striped bordered hover size="sm" className="text-center"  style={{overflow:"scroll"}}>
                                         <thead className="bg-dark text-center text-light">
                                             <tr>
-                                            <th>{t("msh_general.g_table.t_client")}</th>
-                                            <th>{t("msh_general.g_table.t_from")}</th>
-                                            <th>{t("msh_general.g_table.t_to")}</th>
-                                            <th>{t("msh_general.g_table.t_reason")}</th>
-                                            <th>{t("msh_general.g_table.t_state")}</th>
-                                            <th>{t("msh_general.g_table.t_details")}</th>
-                                            <td>{t("msh_general.g_table.t_date")}</td>
-                                            <th>{t("msh_general.g_table.t_photo")}</th>
-                                            <th>{t("msh_general.g_table.t_coworker")}</th>
-                                            <th>{t("msh_general.g_table.t_statut")}</th>
-                                            <th className="bg-dark"></th>
+                                                <th>{t("msh_general.g_table.t_client")}</th>
+                                                <th>{t("msh_general.g_table.t_from")}</th>
+                                                <th>{t("msh_general.g_table.t_to")}</th>
+                                                <th>{t("msh_general.g_table.t_reason")}</th>
+                                                <th>{t("msh_general.g_table.t_state")}</th>
+                                                <th>{t("msh_general.g_table.t_details")}</th>
+                                                <td>{t("msh_general.g_table.t_date")}</td>
+                                                <th>{t("msh_general.g_table.t_photo")}</th>
+                                                <th>{t("msh_general.g_table.t_coworker")}</th>
+                                                <th>{t("msh_general.g_table.t_statut")}</th>
+                                                <th className="bg-dark"></th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -295,7 +301,7 @@ const Maid = ({userDB}) =>{
                                                                 />
                                                         </Popover.Header>
                                                         <Popover.Body className="text-center">
-                                                            <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => {
+                                                            <Button variant="success" size="sm" onClick={() => {
                                                                 handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, hotelRoomData)
                                                                 handleUpdateData1("guestUsers", flow.userId, userRoomData)
                                                             }}>{t("msh_general.g_button.b_send")}
@@ -304,7 +310,7 @@ const Maid = ({userDB}) =>{
                                                     </Popover>
                                                     }
                                                 >
-                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_attribute")}</Button>
+                                                    <Button variant="outline-danger" size="sm">{t("msh_room_change.r_action.a_attribute")}</Button>
                                                 </OverlayTrigger>
                                                         </td> : <td>{flow.toRoom}</td>}
                                                 <td>{flow.reasonClone}</td>
@@ -330,12 +336,12 @@ const Maid = ({userDB}) =>{
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
-                                                                    <Button variant="success" size="sm" style={{width: "5vw"}} onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
+                                                                    <Button variant="success" size="sm" onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Body>
                                                             </Popover>
                                                             }
                                                         >
-                                                    <Button variant="outline-danger" size="sm" style={{width: "5vw"}}>{t("msh_room_change.r_action.a_check")}</Button>
+                                                    <Button variant="outline-danger" size="sm">{t("msh_room_change.r_action.a_check")}</Button>
                                                 </OverlayTrigger>
                                                     </td> : 
                                                     <td>{flow.stateClone}</td>}
@@ -373,7 +379,7 @@ const Maid = ({userDB}) =>{
                         </Tabs>
                     </Modal.Body>
                     {footerState && <Modal.Footer>
-                        <Button variant="dark" onClick={(event) => {
+                        <Button className='btn-msh-dark' onClick={(event) => {
                             handleSubmitData2(event, "hotels", userDB.hotelId, "roomChange", newData)
                             addNotification(notif, userDB.hotelId)
                             return handleClose()

@@ -4,6 +4,7 @@
     align-items: flex-end;
     height: auto;
     padding: 2%;
+    position: relative;
 }
 
 .darkTextBodyUser{
@@ -26,6 +27,7 @@
     flex-flow: column;
     height: auto;
     padding: 2%;
+    position: relative;
 }
 
 .darkTextBodyOther{
@@ -93,46 +95,46 @@
 .user_avatar_chat_label {
     font-weight: bolder; 
     color: black;
-    margin-right: 3vw;
+    margin-right: 6%;
 }
 
 .old_user_avatar_chat_label {
     font-weight: bolder; 
     color: gray;
-    margin-right: 3vw;
+    margin-right: 6%;
 }
 
 .customer_avatar_chat_label {
     font-weight: bolder; 
     color: black;
-    margin-left: 3vw;
+    margin-left: 6%;
 }
 
 .customer_old_user_avatar_chat_label {
     font-weight: bolder; 
     color: gray;
-    margin-left: 3vw;
+    margin-left: 6%;
 }
 
 
 .avatar_chat {
     display: flex;
-    width: 4%;
-    height: 4%;
-    position: absolute;
-    filter: drop-shadow(1px 1px 1px);
-    bottom: 9vh;
+    width: 1.5em !important;
+    height: 1.5em !important;
+    position: absolute !important;
+    filter: drop-shadow(1px 1px 1px) !important;
+    top: 0;
 
 }
 
 .old_avatar_chat {
     display: flex;
-    width: 4%;
-    height: 4%;
-    position: absolute;
-    filter: drop-shadow(1px 1px 1px);
-    filter: grayscale(90%) drop-shadow(1px 1px 1px);
-    bottom: 9vh;
+    width: 1.5em !important;
+    height: 1.5em !important;
+    position: absolute !important;
+    filter: drop-shadow(1px 1px 1px) !important;
+    filter: grayscale(90%) drop-shadow(1px 1px 1px) !important;
+    top: 0;
 }
 
 .support-scrollbar {
@@ -140,29 +142,33 @@
     width: 100% !important;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1023px) {
     .user_avatar_chat_label {
-        margin-right: 12vw;
+        margin-right: 3em;
+        margin-bottom: 1vh;
     }
     
     .old_user_avatar_chat_label {
-        margin-right: 12vw;
+        margin-right: 3em;
+        margin-bottom: 1vh;
     }
     
     .customer_avatar_chat_label {
-        margin-left: 12vw;
+        margin-left: 3em;
+        margin-bottom: 1vh;
     }
     
     .customer_old_user_avatar_chat_label {
-        margin-left: 12vw;
+        margin-left: 3em;
+        margin-bottom: 1vh;
     }
     
     
     .avatar_chat {
-        bottom: 14vh;
+        top: 2%;
     }
     
     .old_avatar_chat {
-        bottom: 14vh;
+        top: 2%;
     }
 }

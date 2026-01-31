@@ -6,61 +6,61 @@ import DefaultImg from "../../images/avatar-client.png"
 import 'moment/locale/fr';
 import '../css/section/chatTemplate.css'
 
-  const MessageCommunizi = ({author, text, date, userDB, translation, photo, title, key}) =>{
+  const MessageCommunizi = ({author, text, date, userDB, translation, photo, title, key, lastMessage}) =>{
 
   if(moment(date).format('L') === moment(new Date()).format('L')){
     if(title === "host"){
       return (
         <span key={key} className="darkTextUser">
-          <span className="user_avatar_chat_label">{author}</span>
-          <div className="darkTextBodyUser" style={{backgroundColor: author === userDB.username ? "lightblue" : "rgb(30, 52, 107)"}}>
+          {lastMessage && <span className="user_avatar_chat_label">{author}</span>}
+          <div className="darkTextBodyUser" style={{backgroundColor: author === userDB.username ? "#B8860B" : "rgb(30, 52, 107)"}}>
           <span style={{marginBottom: "2%", color: author === userDB.username ? "black" : "white"}}>{translation || text}</span>
-            <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
+            <span style={{color: "lightgrey", fontSize: "85%", textAlign: "right"}}><i>{moment().format('LT')}</i></span>
           </div>
-          <Avatar alt="user-profile-photo" 
+          {lastMessage && <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            className="avatar_chat" />
+            className="avatar_chat" />}
         </span>
       )
     }else{
       return (
         <span key={key} className="darkTextOther">
-          <span className="customer_avatar_chat_label">{author}</span>
+          {lastMessage && <span className="customer_avatar_chat_label">{author}</span>}
           <div className="darkTextBodyOther">
           <span style={{marginBottom: "2%", color: "white"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
-          <Avatar alt="user-profile-photo" 
+          {lastMessage && <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultImg}
-            className="avatar_chat" />
+            className="avatar_chat" />}
         </span>
       )
     }
   }else{
     if(title === "host"){
       return (
-        <span key={key} className="oldDarkTextUser" style={{fontWeight: "bolder"}}>
-          <span className="old_user_avatar_chat_label">{author}</span>
+        <span key={key} className="oldDarkTextUser" style={{fontWeight: "bolder", position: "relative"}}>
+          {lastMessage && <span className="old_user_avatar_chat_label">{author}</span>}
           <div className="oldDarkTextBodyUser">
           <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
-          <Avatar alt="user-profile-photo" 
+          {lastMessage && <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultProfile}
-            className="old_avatar_chat" />
+            className="old_avatar_chat" />}
         </span>
       )
     }else{
       return (
-        <span key={key} className="oldDarkTextOther" style={{fontWeight: "bolder"}}>
-          <span className="customer_old_user_avatar_chat_label">{author}</span>
+        <span key={key} className="oldDarkTextOther" style={{fontWeight: "bolder", position: "relative"}}>
+          {lastMessage && <span className="customer_old_user_avatar_chat_label">{author}</span>}
           <div className="oldDarkTextBodyOther">
           <span style={{marginBottom: "2%", color: "lightskyblue"}}>{translation || text}</span>
             <span style={{color: "gray", fontSize: "85%", textAlign: "right"}}><i>{moment(date).startOf('hour').fromNow()}</i></span>
           </div>
-          <Avatar alt="user-profile-photo" 
+          {lastMessage && <Avatar alt="user-profile-photo" 
             src={photo ? photo : DefaultImg}
-            className="old_avatar_chat" />
+            className="old_avatar_chat" />}
         </span>
       )
     }

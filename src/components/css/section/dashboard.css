@@ -26,6 +26,10 @@
 
 .dashboard-icon {
     filter: drop-shadow(2px 4px 6px gray);
+
+    > div > canvas {
+        max-height: 275px;
+    }
  }
 
 .dashboard-icon-box {
@@ -71,7 +75,8 @@
     display: flex;
     flex-flow: row;
     width: 45%;
-    height: 15vh; 
+    /* height: 15vh;  */
+    min-height: 125px;
     padding: 3%;
     border-radius: 10px;
     border: 1px solid lightgrey; 
@@ -82,6 +87,7 @@
     display: flex;
     flex-flow: column;
     align-items: center;
+    justify-content: space-between;
     width: 45%;
     background-color: whitesmoke;
     border-radius: 10px;
@@ -93,7 +99,7 @@
 }
 
 .dashboard-note-title {
-    text-align: center; 
+    /* text-align: center;  */
     margin-top: 1vh;
     color: gray;
 }
@@ -200,14 +206,15 @@
     
     .dashboard-note-card {
         width: 90%;
-        height: 15vh; 
+        height:unset;
+        min-height: unset;
         margin-bottom: 1vh;
         margin-left: 5vw;
     }
     
     .dashboard-note-title {
         text-align: center; 
-        margin-top: 3vh;
+        margin-top: 1vh;
     }
 
     .dashboard-chat-title {
@@ -232,6 +239,7 @@
         width: 90%;
         margin-left: 7vw;
         margin-bottom: 2vh;
+        height: unset;
     }
 
     .dashboard-metrics-container {

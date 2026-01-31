@@ -37,11 +37,11 @@ function PhoneOverlayHook({userDB, category, index}) {
         <div>
             <img src={imgSrc[index]} alt={category} className="drawer_icons" onClick={()=>{navigate(`/${category}`)}} />
             {quantity.length > 0 && <span style={{
-              borderRadius: "50%", 
+              borderRadius: "100%", 
               backgroundColor: "red", 
               position: "absolute", 
-              width: "17%", 
-              height: "6%", 
+              width: "1rem",
+              marginLeft: "1vw", 
               color: "white", 
               textAlign: "center", 
               fontSize: "12px"}}>{quantity.length}</span>}

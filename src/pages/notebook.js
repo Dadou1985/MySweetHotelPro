@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react"
 import {FirebaseContext} from '../Firebase'
 import Notebook from '../components/section/messenger'
-import Navigation from '../components/section/navigation'
 import MomentUtils from "@date-io/moment";
 import Memo from '../components/section/memo'
 import {
@@ -28,9 +27,7 @@ const NotebookPage = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}  
+        <div className="landscape-display"></div> 
         <div style={{
             display: "flex",
           }}>
@@ -50,7 +47,7 @@ const NotebookPage = () => {
                 flexFlow: "column",
                 // alignItems: "end",
                 height: "80vh",
-                width: isBrowser() && window.innerWidth > 768 ? "55%" : "100%",
+                width: isBrowser() && window.innerWidth > 1023 ? "55%" : "100%",
                 marginTop: "3vh", 
                 padding: "3%"
               }}>
@@ -73,7 +70,7 @@ const NotebookPage = () => {
                 <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
               </div>
               <div style={{
-                      display: "flex",
+                      display: isBrowser() && window.innerWidth > 1023 ? "flex" : "none",
                       flexFlow: "column",
                       alignItems: "center",
                       width: "45%"

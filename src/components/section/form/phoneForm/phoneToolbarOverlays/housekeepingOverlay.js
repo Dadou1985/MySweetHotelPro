@@ -135,8 +135,7 @@ function HousekeepingOverlay({userDB}) {
               borderRadius: "50%", 
               backgroundColor: "red", 
               position: "absolute", 
-              width: "17%", 
-              height: "6%", 
+              width: "1rem", 
               color: "white", 
               textAlign: "center", 
               fontSize: "12px"}}>{itemBadgeQty}</span>}

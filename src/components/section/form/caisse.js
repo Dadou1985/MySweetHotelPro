@@ -137,7 +137,7 @@ const Caisse = () =>{
                 centered
                 onHide={handleClose}
                 >
-                <Modal.Header closeButton className="bg-light">
+                <Modal.Header closeButton className="msh-bg">
                     <Modal.Title id="contained-modal-title-vcenter" style={{
                         display: "flex",
                         flexFlow: "row",
@@ -155,7 +155,7 @@ const Caisse = () =>{
                         <div style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</div>
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Select className="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={(event) => handleChange(event, setFormValue)} 
-                            style={{width: "10vw", 
+                            style={{ 
                             height: "4vh", 
                             border: "1px solid lightgrey", 
                             borderRadius: "3px",
@@ -194,7 +194,7 @@ const Caisse = () =>{
                                     return setFooterState(true)
                                 }
                             }}>
-                            <Tab eventKey="Caisse du shift" title={t("msh_safe.s_second_tab_title")}>
+                            <Tab eventKey="Caisse du shift" title={t("msh_safe.s_first_tab_title")}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover variant="dark" size="sm" className="text-center">
                                 <thead>
@@ -208,6 +208,7 @@ const Caisse = () =>{
                                     {safeTableDetailsCoins.map((details) => {
                                         return (
                                             <SafeTableRow
+                                                key={details.id}
                                               rowId={details.id}
                                               label={details.label}
                                               value={details.value}
@@ -225,6 +226,7 @@ const Caisse = () =>{
                                     {safeTableDetailsRolls.map((details) => {
                                         return (
                                             <SafeTableRow
+                                            key={details.id}
                                               rowId={details.id}
                                               label={details.label}
                                               value={details.value}
@@ -250,7 +252,7 @@ const Caisse = () =>{
                                 </Table>
                                 </PerfectScrollbar>
                             </Tab>
-                            <Tab eventKey="Journal des caisses" title="Journal des caisses">
+                            <Tab eventKey="Journal des caisses" title={t("msh_safe.s_second_tab_title")}>
                             <PerfectScrollbar style={{height: "55vh"}}>
                             <Table striped bordered hover size="sm" className="text-center" ref={componentRef}>
                                 <thead className="bg-dark text-center text-light">
@@ -284,8 +286,8 @@ const Caisse = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <>
-                            <Button variant="outline-dark" onClick={handleReset} style={{width: "7vw"}}>{t("msh_general.g_button.b_reset")}</Button>
-                            <Button variant="dark" onClick={(event) => {
+                            <Button className='btn-msh-dark-outline' onClick={handleReset}>{t("msh_general.g_button.b_reset")}</Button>
+                            <Button className='btn-msh-dark' onClick={(event) => {
                                 handleSubmitData2(event, "hotels", userDB.hotelId, "safe", newData)
                                 addNotification(notif, userDB.hotelId)
                                 return handleClose()

@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../Firebase'
 import GuestDatabase from '../components/section/guestDatabase'
-import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 import ToolBar from "../components/section/toolbar"
 
@@ -10,9 +9,7 @@ const UserDatabase = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}    
+        <div className="landscape-display"></div>   
         <div style={{
             display: "flex"
           }}>

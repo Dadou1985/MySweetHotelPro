@@ -79,20 +79,20 @@ const AdminRegister = ({hide, userDB}) => {
                 }}>
                 <h5 style={{marginBottom: "2vh"}}>{t("msh_admin_board.a_first_tab_title")}</h5>
                 <InputElement
-                    containerStyle={{marginBottom: "2vh"}} 
+                    containerStyle={{width: "100%"}} 
                     label={t("msh_admin_board.a_cowoker")}
                     placeholder={t("msh_admin_board.a_cowoker")}
-                    size="20vw"
+                    size="100%"
                     value={formValue.username}
                     name="username"
                     handleChange={handleChange}
                     setFormValue={setFormValue}
                 />
                 <InputElement
-                    containerStyle={{marginBottom: "2vh"}} 
+                    containerStyle={{marginBottom: "2vh", width: "100%"}} 
                     label={t("msh_admin_board.a_email")}
                     placeholder={t("msh_admin_board.a_email")}
-                    size="20vw"
+                    size="100%"
                     value={formValue.email}
                     name="email"
                     handleChange={handleChange}
@@ -104,10 +104,9 @@ const AdminRegister = ({hide, userDB}) => {
                 flexFlow: "row",
                 justifyContent: "end",
                 width: "100%", 
-                borderTop: "1px solid lightgrey", 
                 padding: "1vw", 
                 float: "right"}}>
-                <Button variant="dark" onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
+                <Button className='btn-msh' onClick={handleSubmit}>{t("msh_general.g_button.b_send")}</Button>
             </div>
          </div>
     )

@@ -167,7 +167,7 @@ const HouseKeeping = ({userDB}) =>{
                     {t("msh_housekeeping.h_title")}                
                 </Tooltip>
                 }>
-                <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "2vw", cursor: "pointer"}} /> 
+                <img src={Maid} alt="todolist" className="icon" onClick={handleShow} style={{width: "3vw", minWidth: "32px", cursor: "pointer"}} /> 
             </OverlayTrigger>
         </StyledBadge>
 
@@ -177,7 +177,7 @@ const HouseKeeping = ({userDB}) =>{
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 onHide={handleClose}>
-            <Modal.Header closeButton className="bg-light">
+            <Modal.Header closeButton className="msh-bg">
                 <Modal.Title id="contained-modal-title-vcenter">
                 {t("msh_housekeeping.h_title")}
                 </Modal.Title>

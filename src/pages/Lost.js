@@ -1,7 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../Firebase'
 import LostNFound from '../components/section/LostNFound'
-import Navigation from '../components/section/navigation'
 import { withTrans } from '../../i18n/withTrans'
 import ToolBar from "../components/section/toolbar"
 
@@ -10,9 +9,7 @@ const Lost = () => {
 
   return(
     <> 
-        <div className="landscape-display"></div>
-        {!!user && !!userDB &&
-        <Navigation user={user} userDB={userDB} />}    
+        <div className="landscape-display"></div>   
          <div style={{
             display: "flex"
           }}>

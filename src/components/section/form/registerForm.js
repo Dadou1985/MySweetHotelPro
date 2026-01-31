@@ -234,7 +234,7 @@ const RegisterForm = (handleClose) => {
             <div data-testid="warning" id="warning"></div>
 
             <div style={{display: "flex", flexDirection: "column"}}>
-                <Button variant="success" type="submit">{t("msh_general.g_button.b_send")}</Button>
+                <Button className='btn btn-msh' type="submit">{t("msh_general.g_button.b_send")}</Button>
             </div>
         </form>
     </div>

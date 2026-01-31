@@ -37,18 +37,16 @@ export default function PhoneSupport({user, userDB}) {
         return unsubscribe
     }, [])
 
-    const getChatRoom = () => {
-        return db.collection('assistance')
+    const getChatRoom = async () => {
+        const doc = await db.collection('assistance')
             .doc(userDB.hotelName)
             .get()
-            .then((doc) => {
-                if (doc.exists) {
-                setChatRoom(doc.data())
-                } else {
-                    // doc.data() will be undefined in this case
-                    console.log("No such document!");
-                }
-            })
+        if (doc.exists) {
+            setChatRoom(doc.data())
+        } else {
+            // doc.data() will be undefined in this case
+            console.log("No such document!")
+        }
     }
 
     const updatedData = {

@@ -17,7 +17,7 @@ const RoomChangeRate = ({userDB, showModal, closeModal}) => {
         centered
         onHide={closeModal}
         enforceFocus={false}>
-        <Modal.Header closeButton className="bg-light">
+        <Modal.Header closeButton className="msh-bg">
         <Modal.Title id="contained-modal-title-vcenter">
         {t('msh_dashboard.d_doughnut_chart.d_title')}
             </Modal.Title>

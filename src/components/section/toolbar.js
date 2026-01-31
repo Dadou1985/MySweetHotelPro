@@ -29,8 +29,8 @@ const ToolBar = () =>{
                 <CheckList userDB={userDB} user={user} />}
             {userDB && user &&
                 <Caisse userDB={userDB} user={user} />} 
-            {userDB && user &&
-                <CallCenter user={user} userDB={userDB} />} 
+            {/* {userDB && user &&
+                <CallCenter user={user} userDB={userDB} />}  */}
 
         </div>
     )
