@@ -20,7 +20,6 @@ import {
     handleSubmitData3, 
 } from '../../helper/globalCommonFunctions'
 import '../css/section/chat.css'
-import { Drawer } from '@material-ui/core'
 
 /* 
   ! FIX => SUBMIT ONKEYDOWN
@@ -52,11 +51,16 @@ export default function CommunIzi({userDB, user}) {
     setActivate(false)
   }
 
-  const newAdminStatus = {hotelResponding: true}
-  const newRoomStatus = {
-    status: false,
-    markup: Date.now()
+  const changeRoomStatus = (roomName) => {
+    const newStatus = {
+      status: false,
+      markup: Date.now()
+    }
+    return handleUpdateData2('hotels', userDB.hotelId, "chat", roomName, newStatus)
   }
+
+  const newAdminStatus = {hotelResponding: true}
+  
   const newData = {
     author: userDB.username,
     text: note,
@@ -115,9 +119,14 @@ export default function CommunIzi({userDB, user}) {
           ...doc.data()
         })        
       });
+
+
         
       const presentGuest = snapInfo && snapInfo.filter(guest => guest.room !== "" && guest.room !== "Pre-checkin")
       const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room == "Pre-checkin")
+
+      console.log("mMMMMMMMM/////////", arrivalGuest)
+
 
       setPresent(presentGuest)
       setArrival(arrivalGuest)
@@ -141,7 +150,7 @@ export default function CommunIzi({userDB, user}) {
 
   useEffect(() => {
     if(guest !== null) {
-      let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "chat", "title", "==", guest).onSnapshot(function(snapshot) {
+      let unsubscribe = fetchCollectionByMapping2("hotels", userDB?.hotelId, "chat", "title", "==", guest).onSnapshot(function(snapshot) {
       const snapInfo = []
       snapshot.forEach(function(doc) {          
         snapInfo.push({
@@ -164,6 +173,7 @@ export default function CommunIzi({userDB, user}) {
 }, [guest])
 
   const sendPushNotification = functions.httpsCallable('sendPushNotification')
+
 
   return (
     <div className="communizi-container">  
@@ -205,7 +215,7 @@ export default function CommunIzi({userDB, user}) {
               setNote(event.target.value)
               if(showAlert) {setShowAlert(false)}
             }}
-            onKeyPress={(e) => {
+            onKeyDown={(e) => {
               if(guest !== "") {
                 if(e.key === "Enter" && note) {
                   handleSubmit(e)
@@ -252,28 +262,30 @@ export default function CommunIzi({userDB, user}) {
           <PerfectScrollbar>
             {present.length > 0 ? <Table hover striped size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
-                {present.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => {
-                    setGuest(flow.id)
-                    return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
-                    }}>
-                    <td><Avatar 
-                      round={true}
-                      name={flow.id}
-                      size="40"
-                      fgColor={accordionSelected === flow.markup ? "black" : "white"}
-                      color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
-                      style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1rem"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
-                      <td style={{paddingTop: "2vh"}}><Switch
-                        checked={flow.status}
-                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                      />
-                      {window?.innerWidth > 1440 && <i style={{color: "lightgrey", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>}
-                    </td>
-                  </tr>
-                ))}
+                {present.map((flow) => {
+                  if (flow?.status) {
+                    return <tr style={{cursor: "pointer"}} onClick={() => {
+                      setGuest(flow.id)
+                      return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
+                      }}>
+                      <td style={{textAlign: "center"}}><Avatar 
+                        round={true}
+                        name={flow.id}
+                        size="40"
+                        fgColor={accordionSelected === flow.markup ? "black" : "white"}
+                        color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
+                        style={{margin: "10%"}} /></td>
+                        <td style={{width: "50%", paddingLeft: "1vw"}}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1rem"}}>{window?.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
+                        <td><Switch
+                          checked={flow.status}
+                          onChange={() => changeRoomStatus(flow.id)}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        {window?.innerWidth > 1440 && <i style={{color: "lightgrey", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>}
+                      </td>
+                    </tr>
+                  }
+                })}
               </tbody>
             </Table> : <div style={{
               display: "flex",
@@ -312,24 +324,30 @@ export default function CommunIzi({userDB, user}) {
             <PerfectScrollbar>
             {arrival.length > 0 ? <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
-                {arrival.map((flow) => (
-                  <tr style={{cursor: "pointer"}} onClick={() => setGuest(flow.id)}>
-                    <td><Avatar 
-                      round={true}
-                      name={flow.id}
-                      size="40"
-                      color="#9A0A0A"
-                      style={{margin: "10%"}} /></td>
-                      <td style={{width: "50%", paddingLeft: "1vw", paddingTop: "3vh"}}>{typeof window && window.innerWidth > 768 ? flow.id : null}</td>
-                      <td style={{paddingTop: "2vh"}}><Switch
-                        checked={flow.status}
-                        onChange={() => handleUpdateData2("hotels", userDB.hotelId, "chat", flow.id, newRoomStatus)}
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                      />
-                      <i style={{color: "gray", float: "right", fontSize: "13px", paddingTop: "4%"}}>{moment(flow.markup).format('ll')}</i>
-                    </td>
-                  </tr>
-                ))}
+                {arrival.map((flow) => {
+                  if (flow?.status) {
+                    return <tr style={{cursor: "pointer"}} onClick={() => {
+                      setGuest(flow.id)
+                      return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
+                    }}>
+                      <td style={{textAlign: "center"}}><Avatar 
+                        round={true}
+                        name={flow.id}
+                        size="40"
+                        fgColor={accordionSelected === flow.markup ? "black" : "white"}
+                        color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
+                        style={{margin: "10%"}} /></td>
+                        <td style={{width: "50%", paddingLeft: "1vw"}}>{window?.innerWidth > 768 ? flow.id : null}</td>
+                        <td><Switch
+                          checked={flow.status}
+                          onChange={() => changeRoomStatus(flow.id)}
+                          inputProps={{ 'aria-label': 'secondary checkbox' }}
+                        />
+                        <i style={{color: "gray", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                      </td>
+                    </tr>
+                  }
+                })}
               </tbody>
             </Table> : <div style={{
               display: "flex",

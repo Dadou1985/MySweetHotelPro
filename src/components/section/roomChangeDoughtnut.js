@@ -243,14 +243,14 @@ const RoomChangeDoughtnut = ({userDB, filter, period}) => {
                 border: '1px solid lightgrey',
                 borderRadius: "100%",
                 padding: "2vw",
-                width:  typeof window && window.innerWidth > 768 ? "10rem" : "5rem",
-                height: "5rem",
+                width: window?.innerWidth > 768 ? "10rem" : "5rem",
+                height:  window?.innerWidth > 768 ? "10rem" : "5rem",
                 backgroundColor: "whitesmoke",
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginTop: "2vh",
                 marginBottom: "2vh"
             }}>
-                <img src={BarChart} style={{width: typeof window && window.innerWidth > 768 ? "3vw" : "6vw"}} />
+                <img src={BarChart} style={{width: window?.innerWidth > 768 ? "3vw" : "6vw"}} />
             </div>
             <h6>{t("msh_dashboard.d_no_data")}</h6>
         </div>}

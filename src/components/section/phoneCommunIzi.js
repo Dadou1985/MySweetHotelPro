@@ -3,7 +3,7 @@ import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
 import Send from '../../images/paper-plane.png'
-import ChatRoom from './phoneChatRoom'
+import ChatRoom from './chatRoom'
 import { Modal, Button, DropdownButton, Alert } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import {
@@ -272,7 +272,7 @@ export default function CommunIzi({userDB, user}) {
                     <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
                     value={note}
                     onChange={handleChange}
-                    onKeyPress={(e) => {
+                    onKeyDown={(e) => {
                       if(expanded) {
                         if(e.key === "Enter" && note) {
                           handleSubmit(e)

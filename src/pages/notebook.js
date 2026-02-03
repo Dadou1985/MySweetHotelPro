@@ -12,6 +12,7 @@ import { useTranslation } from "react-i18next"
 import ToolBar from "../components/section/toolbar"
 import moment from 'moment'
 import 'moment/locale/fr';
+import DateFnsUtils from '@date-io/date-fns';
 
 const NotebookPage = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -24,6 +25,8 @@ const NotebookPage = () => {
 
   const isBrowser = () => typeof window !== "undefined"
   moment.locale("fr")
+
+  console.log("DATE+++++++++++++", filterDate)
 
   return(
     <> 
@@ -47,12 +50,12 @@ const NotebookPage = () => {
                 flexFlow: "column",
                 // alignItems: "end",
                 height: "80vh",
-                width: isBrowser() && window.innerWidth > 1023 ? "55%" : "100%",
+                width: window.innerWidth > 1023 ? "55%" : "100%",
                 marginTop: "3vh", 
                 padding: "3%"
               }}>
-                <div style={{paddingRight: isBrowser() && window.innerWidth > 768 ? "0vw" : "2vw"}}>
-                  <MuiPickersUtilsProvider libInstance={moment} utils={MomentUtils} locale={userDB && userDB.language} >
+                <div style={{paddingRight: window.innerWidth > 768 ? "0vw" : "2vw"}}>
+                  <MuiPickersUtilsProvider utils={DateFnsUtils} >
                     <DatePicker
                         variant="inline"
                         ampm={false}
@@ -69,15 +72,15 @@ const NotebookPage = () => {
                 {!!userDB && !!user && !!filterDate &&
                 <Notebook userDB={userDB} user={user} filterDate={filterDate} />}
               </div>
-              <div style={{
-                      display: isBrowser() && window.innerWidth > 1023 ? "flex" : "none",
-                      flexFlow: "column",
-                      alignItems: "center",
-                      width: "45%"
-                    }}>
-                      {!!user && !! userDB &&
-                      <Memo user={user} userDB={userDB} />}
-                  </div>
+              {/* <div style={{
+                  display: window.innerWidth > 1023 ? "flex" : "none",
+                  flexFlow: "column",
+                  alignItems: "center",
+                  width: "45%"
+                }}>
+                  {!!user && !! userDB &&
+                  <Memo user={user} userDB={userDB} />}
+              </div> */}
           </div>
         </div>
     </>

@@ -108,10 +108,18 @@ color: white;
     width: 100% !important;
 }
 
+table{
+    overflow: visible;
+}
+
 tbody, td, tfoot, th, thead, tr {
     vertical-align: middle;
-    white-space: normal;
-    min-width: 5vw;
+    white-space: nowrap;
+    min-width: 100px;
+    width: 5vw; 
+    overflow: hidden; 
+    text-overflow: ellipsis; 
+    line-clamp: 2;
 }
 
 .form-check-input {
@@ -123,6 +131,11 @@ tbody, td, tfoot, th, thead, tr {
 @media screen and (min-width:768px){
     .isShowDesktop {
         display: flex;
+    }
+
+    th, td:last-of-type {
+        position: sticky;
+        right: 0;
     }
 }
 

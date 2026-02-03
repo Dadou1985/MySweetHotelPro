@@ -36,10 +36,23 @@ const Navigation = () =>{
     const [showFeedbackModal, setShowFeedbackModal] = useState(false)
     const { t } = useTranslation() 
 
-    const isDesktop = window && window.innerWidth > 768 ? "flex" : "none"
-    const isMobile = window && window.innerWidth < 768 ? "flex" : "none"
-    const isTablet = window && window.innerWidth > 1023 ? "flex" : "none"
+    const [isDesktop, setIsDesktop] = useState("none")
+    const [isMobile, setIsMobile] = useState("none")
+    const [isTablet, setIsTablet] = useState("none")
 
+    useEffect(() => {
+        const updateDisplayModes = () => {
+            if (typeof window !== 'undefined') {
+                setIsDesktop(window.innerWidth > 768 ? "flex" : "none")
+                setIsMobile(window.innerWidth < 768 ? "flex" : "none")
+                setIsTablet(window.innerWidth > 1023 ? "flex" : "none")
+            }
+        }
+        
+        updateDisplayModes()
+        window.addEventListener('resize', updateDisplayModes)
+        return () => window.removeEventListener('resize', updateDisplayModes)
+    }, [])
 
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
@@ -221,7 +234,7 @@ const Navigation = () =>{
             </Modal>
 
             <Modal show={showAdminModal}
-                size="xl"
+                size="lg"
                 aria-labelledby="contained-modal-title-vcenter"
                 centered
                 onHide={() => setShowAdminModal(false)}
