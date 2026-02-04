@@ -9,6 +9,7 @@ import { auth, db, storage } from '../../../../Firebase'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phoneUserProfile.css'
 import InputElement from '../../../../helper/common/InputElement'
+import { sha256 } from 'js-sha256'
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
@@ -70,7 +71,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
         return db.collection('businessUsers')
             .doc(user.uid)
             .update({
-                password: field
+                password: sha256(field)
             })
             .then(handleLoadUserDB())
     }
@@ -244,9 +245,9 @@ const UserProfile = ({user, userDB, setUserDB}) => {
                             setFormValue={setFormValue}
                             required />
                         <Button className="btn-msh phone_submitButton" onClick={(event) => {
-                            handleUpdateEmail(event, formValue.email)
-                            handleChangeEmail(formValue.email)
-                            handleCloseUpdateEmail()
+                            handleUpdatePassword(event, formValue.password)
+                            handleChangePassword(formValue.password)
+                            handleCloseUpdatePassword()
                         }}>{t("msh_general.g_button.b_update")}</Button>
                     </div>
                 </Drawer>

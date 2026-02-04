@@ -5,7 +5,7 @@ import PhoneNoteBox from './phoneNoteBox'
 import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Send from '../../svg/paper-plane.svg'
+import Send from '../../images/paper-plane.png'
 import { StaticImage } from 'gatsby-plugin-image'
 import { Modal, Button, Tooltip, OverlayTrigger, } from 'react-bootstrap'
 import List from '@material-ui/core/List';
@@ -21,7 +21,7 @@ const Messenger = ({filterDate}) =>{
 
     const [note, setNote] = useState('')
     const [title, setTitle] = useState("")
-    const [status, setStatus] = useState("")
+    const [status, setStatus] = useState("darkgoldenrod")
     const [checked, setChecked] = useState(false)
     const [img, setImg] = useState(null)
     const [url, setUrl] = useState("")
@@ -301,33 +301,32 @@ const Messenger = ({filterDate}) =>{
                     justifyContent: "flex-end",
                     padding: "5%", 
                     maxHeight: "90vh"}}>
-                        <div style={{width: "100%"}}  onClick={handleHideDrawer}>
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' alt="Close Button" style={{width: "5%", float: "right"}} />
-                        </div>
+                    <div style={{width: "100%"}} onClick={handleHideDrawer} >
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' alt="Close Button" style={{width: "5%", float: "right", zIndex: 100}}/>
+                    </div>
                     <h4 className='phone_tab'>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
                     <div><Input type="text" placeholder={t("msh_messenger.m_note_body_placeholder")} value={note} className="modal-note-input" onChange={handleChangeNote} required /></div>
-                    <DatePicker
-                        id="calendar"
-                        className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
-                        inline={showCalendar}
-                        selected={startDate}
-                        value={startDate}
-                        onChange={changedDate => {
-                            setStartDate(changedDate)
-                            hideCalendar()
-                        }}
-                        placeholderText={t("msh_messenger.m_calendar_title")}
-                        locale="fr-FR"
-                        dateFormat="d MMMM yyyy"
-                    />
                     <div className="modal-note-button-container">
                         <span className="white-band"></span>
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
-                      <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                         {renderSwitch(status)}
-                        <div style={{width: "9%"}} onClick={changeDrawerHeight}><StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" /></div>
+                        <div style={{width: "9%", position: "relative"}}>
+                            <DatePicker
+                                id="calendar"
+                                className="react-datepicker__input-time-container .react-datepicker-time__input-container .react-datepicker-time__input input"
+                                selected={startDate}
+                                value={startDate}
+                                onChange={changedDate => setStartDate(changedDate)}
+                                placeholderText={t("msh_messenger.m_calendar_title")}
+                                locale="fr-FR"
+                                dateFormat="d MMMM yyyy"
+                                withPortal
+                            />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                        </div>
                         <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={handleSubmit} />
                     </div>
                     <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{
@@ -335,7 +334,7 @@ const Messenger = ({filterDate}) =>{
                             flexFlow: "row",
                             alignItems: "center",
                             marginTop: "2vh",
-                            justifyContent: "center",
+                            justifyContent: "space-between",
                         }}>
                         <ListItemIcon button={true}>
                             <ListItemIcon>
@@ -346,10 +345,11 @@ const Messenger = ({filterDate}) =>{
                                     {t("msh_messenger.m_reception_team")}
                                 </Tooltip>
                                 }>
-                                <div style={{width: "30%"}} onClick={() => {
+                                <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('darkgoldenrod')
                                     setChecked(false)}}>
                                     <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
+                                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_reception_team")}</div>
                                 </div>
                             </OverlayTrigger>
                             </ListItemIcon>
@@ -363,10 +363,11 @@ const Messenger = ({filterDate}) =>{
                                     {t("msh_messenger.m_housekeeping_team")}
                                 </Tooltip>
                                 }>
-                                <div style={{width: "30%"}} onClick={() => {
+                                <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('lightskyblue')
                                     setChecked(false)}}>
                                     <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
+                                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_housekeeping_team")}</div>
                                 </div>
                             </OverlayTrigger>
                             </ListItemIcon>
@@ -380,10 +381,11 @@ const Messenger = ({filterDate}) =>{
                                     {t("msh_messenger.m_technical_team")}
                                 </Tooltip>
                                 }>
-                                <div style={{width: "30%"}} onClick={() => {
+                                <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('red')
                                     setChecked(false)}}>
                                     <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
+                                    <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_technical_team")}</div>
                                 </div>    
                             </OverlayTrigger>
                             </ListItemIcon>

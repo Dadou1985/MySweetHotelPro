@@ -13,6 +13,7 @@ import ToolBar from "../components/section/toolbar"
 import moment from 'moment'
 import 'moment/locale/fr';
 import DateFnsUtils from '@date-io/date-fns';
+import Background from "../images/desk-note.png"
 
 const NotebookPage = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -33,6 +34,9 @@ const NotebookPage = () => {
         <div className="landscape-display"></div> 
         <div style={{
             display: "flex",
+            backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
+          backgroundSize: "cover",
+          backgroundRepeat: "no-repeat",
           }}>
           <ToolBar />
           <div id="iziChat"  style={{

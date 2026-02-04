@@ -15,6 +15,7 @@ import { StaticImage } from 'gatsby-plugin-image'
 import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../helper/globalCommonFunctions'
 import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
 import '../css/section/dilema.css'
+import { sha256 } from 'js-sha256'
 
 
 const Dilema = ({user, userDB, setUserDB}) => {
@@ -224,7 +225,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const handleUpdatePassword = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        return handleUpdateData1("businessUsers", user.uid, {password: field})
+        return handleUpdateData1("businessUsers", user.uid, {password: sha256(field)})
         .then(handleLoadUserDB())
     }
 

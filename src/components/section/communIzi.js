@@ -29,8 +29,8 @@ export default function CommunIzi({userDB, user}) {
   const [present, setPresent] = useState([]);
   const [arrival, setArrival] = useState([]);
   const [note, setNote] = useState('')
+  const [img, setImg] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [activate, setActivate] = useState(false)
   const [guestList, setGuestList] = useState([])
   const [guest, setGuest] = useState(null);
   const [payload, setPayload] = useState({
@@ -42,25 +42,12 @@ export default function CommunIzi({userDB, user}) {
     isChatting:""
   })
   const [showAlert, setShowAlert] = useState(false)
-  const [img, setImg] = useState(null)
   const [accordionSelected, setAccordionSelected] = useState("")
   const { t } = useTranslation()
-  const handleHide = () => setActivate(false)
-
-  const handleHideDrawer = () => {
-    setActivate(false)
-  }
-
-  const changeRoomStatus = (roomName) => {
-    const newStatus = {
-      status: false,
-      markup: Date.now()
-    }
-    return handleUpdateData2('hotels', userDB.hotelId, "chat", roomName, newStatus)
-  }
 
   const newAdminStatus = {hotelResponding: true}
-  
+  const sendPushNotification = functions.httpsCallable('sendPushNotification')
+
   const newData = {
     author: userDB.username,
     text: note,
@@ -68,6 +55,21 @@ export default function CommunIzi({userDB, user}) {
     userId: user.uid,
     markup: Date.now(),
     title: "host"
+  }
+
+  const changeRoomStatus = (roomName) => {
+    const newStatus = {
+      status: false,
+      markup: Date.now()
+    }
+    setGuest(null)
+    setAccordionSelected("")
+    return handleUpdateData2('hotels', userDB.hotelId, "chat", roomName, newStatus)
+  }
+
+  const handleRowSelection = (flow) => {
+    flow.status === true && guest !== flow.id ? setGuest(flow.id) : setGuest(null)
+    return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
   }
 
   const handleSubmit = (event) =>{
@@ -85,16 +87,7 @@ export default function CommunIzi({userDB, user}) {
             .getDownloadURL()
             .then(url => {
               const uploadTask = () => { 
-                handleSubmitData3(event, "hotels", userDB.hotelId, "chat", guest, 'chatRoom', {
-                  author: userDB.username,
-                  text: note,
-                  date: new Date(),
-                  userId: user.uid,
-                  markup: Date.now(),
-                  title: "host",
-                  img: url
-                })
-                handleHideDrawer()
+                handleSubmitData3(event, "hotels", userDB.hotelId, "chat", guest, 'chatRoom', {...newData, img: url})
                 setNote('')
               return setShowModal(false)
             }
@@ -104,7 +97,6 @@ export default function CommunIzi({userDB, user}) {
       )
     }else{
       handleSubmitData3(event, "hotels", userDB.hotelId, "chat", guest, 'chatRoom', newData)
-      handleHideDrawer()
       setNote('')
       return setShowModal(false)
     }  
@@ -118,15 +110,10 @@ export default function CommunIzi({userDB, user}) {
           id: doc.id,
           ...doc.data()
         })        
-      });
-
-
+      })
         
       const presentGuest = snapInfo && snapInfo.filter(guest => guest.room !== "" && guest.room !== "Pre-checkin")
       const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room == "Pre-checkin")
-
-      console.log("mMMMMMMMM/////////", arrivalGuest)
-
 
       setPresent(presentGuest)
       setArrival(arrivalGuest)
@@ -168,12 +155,9 @@ export default function CommunIzi({userDB, user}) {
         isChatting: doc.isChatting
       }))
     });
-  return unsubscribe
-  }
-}, [guest])
-
-  const sendPushNotification = functions.httpsCallable('sendPushNotification')
-
+    return unsubscribe
+    }
+  }, [guest])
 
   return (
     <div className="communizi-container">  
@@ -220,7 +204,7 @@ export default function CommunIzi({userDB, user}) {
                 if(e.key === "Enter" && note) {
                   handleSubmit(e)
                   handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                  // sendPushNotification({payload: payload})
+                  sendPushNotification({payload: payload})
                 }
               }else{
                 return setShowAlert(true)
@@ -229,21 +213,12 @@ export default function CommunIzi({userDB, user}) {
             id="dark_message_note" />
           </FormGroup>
             <div className="communizi-button-container">
-            {/*<OverlayTrigger
-                placement="top"
-                overlay={
-                  <Tooltip id="title">
-                    Ajouter une photo
-                  </Tooltip>
-                }>
-                <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-              </OverlayTrigger>*/}
               <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                 if(guest) {
                   if(note) {
                     handleSubmit(event)
                     handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                    // sendPushNotification({payload: payload})
+                    sendPushNotification({payload: payload})
                     if(showAlert) {
                       showAlert(false)
                     }
@@ -264,18 +239,15 @@ export default function CommunIzi({userDB, user}) {
               <tbody>
                 {present.map((flow) => {
                   if (flow?.status) {
-                    return <tr style={{cursor: "pointer"}} onClick={() => {
-                      setGuest(flow.id)
-                      return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
-                      }}>
-                      <td style={{textAlign: "center"}}><Avatar 
+                    return <tr style={{cursor: "pointer"}}>
+                      <td style={{textAlign: "center"}} onClick={() => handleRowSelection(flow)}><Avatar 
                         round={true}
                         name={flow.id}
                         size="40"
                         fgColor={accordionSelected === flow.markup ? "black" : "white"}
                         color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
                         style={{margin: "10%"}} /></td>
-                        <td style={{width: "50%", paddingLeft: "1vw"}}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1rem"}}>{window?.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
+                        <td style={{width: "50%", paddingLeft: "1vw"}} onClick={() => handleRowSelection(flow)}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1em"}}>{window?.innerWidth > 768 ? flow.id : null}</b> <br/> <i style={{color: "lightgrey"}}>{t('msh_general.g_table.t_room')} {flow.room}</i></td>
                         <td><Switch
                           checked={flow.status}
                           onChange={() => changeRoomStatus(flow.id)}
@@ -322,28 +294,25 @@ export default function CommunIzi({userDB, user}) {
             </Tab>
             <Tab eventKey="En arrivée" title={t('msh_chat.c_guest_arrival')}>
             <PerfectScrollbar>
-            {arrival.length > 0 ? <Table striped hover size="lg" border style={{maxHeight: "80vh", border: "none"}}>
+            {arrival.length > 0 ? <Table striped hover size="lg" border variant="dark" style={{maxHeight: "80vh", border: "none"}}>
               <tbody>
                 {arrival.map((flow) => {
                   if (flow?.status) {
-                    return <tr style={{cursor: "pointer"}} onClick={() => {
-                      setGuest(flow.id)
-                      return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
-                    }}>
-                      <td style={{textAlign: "center"}}><Avatar 
+                    return <tr style={{cursor: "pointer"}}>
+                      <td style={{textAlign: "center"}} onClick={() => handleRowSelection(flow)}><Avatar 
                         round={true}
                         name={flow.id}
                         size="40"
                         fgColor={accordionSelected === flow.markup ? "black" : "white"}
-                        color={accordionSelected === flow.markup ? "#B8860B" : "#9A0A0A"}
+                        color={accordionSelected === flow.markup ? "#B8860B" : "rgb(30, 52, 107)"}
                         style={{margin: "10%"}} /></td>
-                        <td style={{width: "50%", paddingLeft: "1vw"}}>{window?.innerWidth > 768 ? flow.id : null}</td>
+                        <td style={{width: "50%", paddingLeft: "1vw"}} onClick={() => handleRowSelection(flow)}><b style={{color: accordionSelected === flow.markup ? "#B8860B" : "white", fontSize: "1em"}}>{window?.innerWidth > 768 ? flow.id : null}</b></td>
                         <td><Switch
                           checked={flow.status}
                           onChange={() => changeRoomStatus(flow.id)}
                           inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
-                        <i style={{color: "gray", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                        <i style={{color: "gray", fontSize: "0.8em"}}>{moment(flow.markup).format('ll')}</i>
                       </td>
                     </tr>
                   }

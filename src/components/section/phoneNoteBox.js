@@ -71,7 +71,7 @@ const NoteBox = ({filterDate}) => {
                   return <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
                     <AccordionItemHeading style={{
                       padding: "2%",
-                      backgroundColor: flow.status,
+                      backgroundColor: "rgb(33, 35, 39)",
                       borderTopLeftRadius: "5px",
                       borderTopRightRadius: "5px"
                       }}>
@@ -81,14 +81,23 @@ const NoteBox = ({filterDate}) => {
                             justifyContent: "space-between",
                             alignItems: "center",
                             outline: "none"}}>
-                         <div>
-                         <Avatar 
-                            round={true}
-                            name={flow.author}
-                            size="30"
-                            color={'#'+(Math.random()*0xFFFFFF<<0).toString(16)}
-                            style={{marginRight: "2vw"}} />
-                            <b>{flow.title}</b>
+                         <div style={{
+                            display: "flex",
+                            flexFlow: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center"}}>
+                          <Avatar 
+                              round={true}
+                              name={flow.author}
+                              size="30"
+                              color="#B8860B"
+                              style={{marginRight: "5vw"}} />
+                            <span style={{
+                              color: "white", 
+                              maxWidth: "40vw", 
+                              textOverflow: "ellipsis", 
+                              whiteSpace: "nowrap", 
+                              overflow: "hidden"}}>{flow.title}</span>
                          </div>
                           <div style={{
                             display:"flex",
@@ -99,7 +108,7 @@ const NoteBox = ({filterDate}) => {
                               checked={flow.isChecked} 
                               onChange={(event) => handleChangeCheckboxStatus(flow.id, event.target.checked)}
                             />
-                            <i style={{color: "black", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                            <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
                           </div>
                         </AccordionItemButton>
                     </AccordionItemHeading>

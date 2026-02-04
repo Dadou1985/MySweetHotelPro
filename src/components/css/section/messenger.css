@@ -69,7 +69,7 @@
 }
 
 .perfect-scrollbar {
-    height: 100% !important;
+    height: 90% !important;
 }
 
 .modal-note-title {
@@ -128,7 +128,7 @@
 .modal-note-send-icon {
     width: 5%;
     cursor: pointer;
-    border-radius: 50%;
+    /* border-radius: 50%; */
     filter: drop-shadow(2px 2px 2px);
 }
 
@@ -289,7 +289,13 @@ color: white;
     
     .modal-note-calendar-icon {
         width: 100%; 
-        z-index: 5;
+        z-index: -1;
+        position: absolute;
+        top: 0;
+    }
+
+    #calendar {
+        opacity: 0;
     }
     
     .modal-note-send-icon {
@@ -309,8 +315,9 @@ color: white;
     }
     
     .modal-note-list-circle {
-        width: 100%;
+        width: 1.5rem;
         margin-right: 1vw;
+        filter: drop-shadow(1px 1px 1px)
     }
 
     .react-datepicker {

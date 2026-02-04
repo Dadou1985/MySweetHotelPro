@@ -64,13 +64,13 @@ const NoteBox = ({filterDate, category, title}) => {
 
     const GreenCheckbox = withStyles({
       root: {
-        color: "#B8860B",
+        color: "black",
         '&$checked': {
-          color: "#B8860B",
+          color: "black",
         },
       },
       checked: {},
-    })((props) => <Checkbox color="default" {...props} />);
+    })((props) => <Checkbox color={props.color} {...props} />);
 
     return (
       <>
@@ -109,7 +109,7 @@ const NoteBox = ({filterDate, category, title}) => {
                             round={true}
                             name={flow.author}
                             size="30"
-                            color={Avatar.getRandomColor('sitebase', ['red', 'green', 'blue'])}
+                            color={flow.status}
                             style={{marginRight: "2vw"}} />
                             <b>{flow.title}</b>
                          </div>
@@ -121,6 +121,7 @@ const NoteBox = ({filterDate, category, title}) => {
                             <GreenCheckbox 
                               checked={flow.isChecked} 
                               onChange={(event) => handleChangeCheckboxStatus(flow.id, event.target.checked)}
+                              color={flow.status}
                             />
                             <i style={{color: "black", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
                           </div>
