@@ -91,7 +91,7 @@ const CheckListTable = ({shift}) => {
                             <td className="checkList_input">
                                 {flow.task}
                             </td>
-                            <td className="bg-light">
+                            <td className="bg-dark">
                                 <Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={()=>{
                                     return handleDeleteData3('hotels', userDB.hotelId, "checkList", "lists", shift, flow.id)
                                 }}>{isMobile ? "x": t("msh_general.g_button.b_delete")}</Button>

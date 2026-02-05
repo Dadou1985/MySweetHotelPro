@@ -103,7 +103,7 @@ const RegisterForm = (handleClose) => {
       adminStatus: true, 
       adresse: formValue.adresse,
       email: formValue.email,
-      password: `msh-pass-${formValue.firstName}`,
+      password: sha256(`msh-pass-${formValue.firstName}`),
       website: formValue.website,
       hotelId: newHotelId,
       hotelName: formValue.hotelName,
@@ -137,7 +137,7 @@ const RegisterForm = (handleClose) => {
       .set({
         username: `${formValue.firstName} ${formValue.lastName}`,
         email: formValue.email.trim(),
-        password: `msh-pass-${formValue.firstName}`,
+        password: sha256(`msh-pass-${formValue.firstName}`),
         language: "fr",
         lastTimeConnected: Date.now(),
         userId: userId,

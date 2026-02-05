@@ -194,7 +194,7 @@ const Repair = ({userDB}) =>{
                             {!imgFrame ? 
                                 <PerfectScrollbar style={{height: "55vh"}}>
                                     <Table striped bordered hover size="sm" className="text-center">
-                                        <thead className="bg-dark text-center text-light">
+                                        <thead className="bg-dark text-center text-light specialTable">
                                             <tr>
                                                 <th>{t("msh_general.g_table.t_client")}</th>
                                                 <th>{t("msh_general.g_table.t_room")}</th>
@@ -210,30 +210,30 @@ const Repair = ({userDB}) =>{
                                         <tbody>
                                             {info.map(flow =>(
                                                 <tr key={flow.id}>
-                                                <td>{flow.client}</td>
-                                                <td>{flow.room}</td>
-                                                <td>{flow.typeClone}</td>
-                                                <td>{flow.details}</td>
-                                                <td>{moment(flow.markup).format('L')}</td>
-                                                {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
-                                                    setImg(flow.img)
-                                                    setImgFrame(true)
-                                                }}><img src={Picture} style={{width: "1vw"}} /></td> : 
-                                                <td>{t("msh_maintenance.m_photo_state")}</td>}
-                                                <td>{flow.author}</td>
-                                                <td>
-                                                <Switch
-                                                    checked={flow.status}
-                                                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
-                                                    inputProps={{ 'aria-label': 'secondary checkbox' }}
-                                                />
-                                                </td>
-                                                <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                                    if(flow.img){
-                                                        handleDeleteImg(flow.img)
-                                                    }
-                                                        return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
-                                                }}>{t("msh_general.g_button.b_delete")}</Button></td>
+                                                    <td>{flow.client}</td>
+                                                    <td>{flow.room}</td>
+                                                    <td>{flow.typeClone}</td>
+                                                    <td>{flow.details}</td>
+                                                    <td>{moment(flow.markup).format('L')}</td>
+                                                    {flow.img ? <td style={{cursor: "pointer"}} onClick={() => {
+                                                        setImg(flow.img)
+                                                        setImgFrame(true)
+                                                    }}><img src={Picture} style={{width: "1vw"}} /></td> : 
+                                                    <td>{t("msh_maintenance.m_photo_state")}</td>}
+                                                    <td>{flow.author}</td>
+                                                    <td>
+                                                        <Switch
+                                                            checked={flow.status}
+                                                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
+                                                            inputProps={{ 'aria-label': 'secondary checkbox' }}
+                                                        />
+                                                    </td>
+                                                    <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
+                                                        if(flow.img){
+                                                            handleDeleteImg(flow.img)
+                                                        }
+                                                            return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
+                                                    }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

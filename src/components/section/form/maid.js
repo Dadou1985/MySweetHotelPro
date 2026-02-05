@@ -292,7 +292,7 @@ const Maid = ({userDB}) =>{
                                                     overlay={
                                                     <Popover 
                                                         id="popover-positioned-top">
-                                                        <Popover.Header as="h3">
+                                                        <Popover.Header as="h3" className="msh-bg">
                                                             <Input 
                                                                 placeholder={t("msh_room_change.r_action.a_attribute_room")}
                                                                 value={formValue.toRoom}
@@ -301,7 +301,7 @@ const Maid = ({userDB}) =>{
                                                                 />
                                                         </Popover.Header>
                                                         <Popover.Body className="text-center">
-                                                            <Button variant="success" size="sm" onClick={() => {
+                                                            <Button className="btn-msh-dark" size="sm" onClick={() => {
                                                                 handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, hotelRoomData)
                                                                 handleUpdateData1("guestUsers", flow.userId, userRoomData)
                                                             }}>{t("msh_general.g_button.b_send")}
@@ -322,7 +322,7 @@ const Maid = ({userDB}) =>{
                                                             overlay={
                                                             <Popover 
                                                                 id="popover-positioned-top">
-                                                                <Popover.Header as="h3" className="text-center">
+                                                                <Popover.Header as="h3" className="text-center msh-bg">
                                                                 <h6>{t("msh_room_change.r_state.s_label")}</h6>
                                                                 <select class="selectpicker" value={formValue.state} name="state" onChange={(event) => handleChange(event, setFormValue)} 
                                                                     style={{width: "5vw", 
@@ -336,7 +336,7 @@ const Maid = ({userDB}) =>{
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
-                                                                    <Button variant="success" size="sm" onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
+                                                                    <Button className="btn-msh-dark" size="sm" onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Body>
                                                             </Popover>
                                                             }

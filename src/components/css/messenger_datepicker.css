@@ -271,6 +271,17 @@
   }
 }
 
+@media screen and (max-width: 768px) {
+  .react-datepicker__month-container {
+    float: left;
+    width: 100%;
+  }
+
+  .react-datepicker__aria-live {
+    display: none;
+  }
+}
+
 .react-datepicker__year {
   margin: 0.4rem;
   text-align: center;

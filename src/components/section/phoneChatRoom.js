@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo } from 'react'
+import React, {useState, useEffect } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db } from '../../Firebase'
@@ -53,33 +53,12 @@ export default function ChatRoom({user, userDB, title}) {
                 return unsubscribe
      },[])
 
-     const renderSwitch = (flow) => {
-        switch(userDB?.language) {
-            case 'en':
-                return flow?.translated?.en
-            case 'pt':
-                return flow?.translated?.pt
-            case 'de':
-                return flow?.translated?.de
-            case 'it':
-                return flow?.translated?.it
-            case 'es':
-                return flow?.translated?.es
-            case 'fr':
-                return flow?.translated?.fr
-            default:
-                return userDB?.language
-        }
-    }
-
-    const lastMessage = useMemo(() => messages?.length > 0 && messages.filter((msg,idx) => msg.title !== messages[idx - 1]?.title), [messages])
-    console.log("*****************", lastMessage && lastMessage)
-
     return (
         <div>
             <PerfectScrollbar style={{paddingTop: "3vh"}}>
-                {user && userDB && messages.map((flow, key) => {
-                    const checkLastMessage = lastMessage.includes(flow)
+                {user&& userDB&& messages.map((flow, key) => {
+                    let language = userDB.language
+
                     if(userDB.language === chatRoom.guestLanguage) {
                         return <Message                                 
                                 key={key}
@@ -89,20 +68,10 @@ export default function ChatRoom({user, userDB, title}) {
                                 markup={flow.markup}
                                 user={user}
                                 title={flow.title}
-                                lastMessage={checkLastMessage && true}
                             />
                     }else{
                         if(flow.translated){
-                            return <Message 
-                            key={key}
-                            author={flow.author}
-                            translation={renderSwitch(flow)}
-                            date={flow.markup}
-                           user={user}
-                           userDB={userDB}
-                           photo={flow.photo}
-                           title={flow.title}
-                           lastMessage={checkLastMessage && true} />
+                            return renderSwitch()
                          }
                     }
 

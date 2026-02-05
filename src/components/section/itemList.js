@@ -47,7 +47,7 @@ const ItemList = ({item}) => {
                             <td>{flow.client}</td>
                             <td>{flow.room}</td>
                             <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
-                            <td className="bg-light">
+                            <td className="bg-dark">
                                 <Button variant="outline-danger" size="sm" onClick={()=>{
                                 return handleDeleteData3("hotels", userDB.hotelId, "housekeeping", 'item', item, flow.id) 
                                 }}>{t("msh_general.g_button.b_delete")}</Button>
