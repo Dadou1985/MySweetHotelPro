@@ -81,6 +81,7 @@
     border-radius: 10px;
     border: 1px solid lightgrey; 
     background-color: whitesmoke;
+    cursor: pointer;
 }
 
 .dasbhboard-rate-card {
