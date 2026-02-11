@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Modal, Table, Tabs, Tab } from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
@@ -13,10 +13,12 @@ import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import moment from 'moment'
 import 'moment/locale/fr';
 import { fetchCollectionBySorting3, fetchCollectionByCombo2 } from '../../helper/globalCommonFunctions'
+import { FirebaseContext } from '../../Firebase'
 import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
 import '../css/section/timeLine.css'
 
-const GuestTimeLine = ({userDB, guestId}) => {
+const GuestTimeLine = ({guestId}) => {
+    const { userDB } = useContext(FirebaseContext)
     const [tab, setTab] = useState(false)
     const [timelineData, setTimelineData] = useState([])
     const [housekeepingFilter, setHousekeepingFilter] = useState(null)

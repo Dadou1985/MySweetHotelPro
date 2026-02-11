@@ -1,8 +1,8 @@
-import React, {useState, useEffect, useRef } from 'react'
+import React, {useState, useEffect, useRef, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Form, Button, Modal, OverlayTrigger, Tooltip, Spinner, Alert } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar';
-import { db, auth, storage } from '../../Firebase'
+import { db, auth, storage, FirebaseContext } from '../../Firebase'
 import Divider from '@material-ui/core/Divider';
 import Sticker from './sticker'
 import Flyer from './flyer'
@@ -18,7 +18,8 @@ import '../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
 
 
-const Dilema = ({user, userDB, setUserDB}) => {
+const Dilema = () => {
+    const { user, userDB, setUserDB } = useContext(FirebaseContext)
 
     const [confModal, setConfModal] = useState(true)
     const [info, setInfo] = useState([])
@@ -40,7 +41,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
     const { data } = useShortenUrl(url);
     const { t } = useTranslation()
 
-    const hotelNameForUrl = userDB.hotelName
+    const hotelNameForUrl = userDB?.hotelName
     const emailModalTitle = t("msh_user_panel.u_section.s_email.e_label")
     const passwordModalTitle = t("msh_user_panel.u_section.s_password.p_label")
     const visuelModalTitle = t("msh_user_panel.u_section.s_visuals.v_label")
@@ -437,7 +438,7 @@ const Dilema = ({user, userDB, setUserDB}) => {
                 {switchButton ? <Button variant="dark" onClick={() => {
                     handleFirestoreNewData(data && data.link)
                 }}>{t("msh_user_panel.u_section.s_logo.l_button_confirmation")}</Button> :
-                isLoading ? <Spinner animation="grow" /> : <Button variant="outline-dark" onClick={(event) => {
+                isLoading ? <Spinner animation="grow" /> : <Button className="btn-msh-dark-outline" onClick={(event) => {
                     if(newImg !== null) {
                         setIsLoading(true)
                         handleUploadLogo().then(() => {
@@ -496,10 +497,10 @@ const Dilema = ({user, userDB, setUserDB}) => {
         <Modal.Body>
             <p style={{textAlign: "center"}}>{t("msh_user_panel.u_update_photo.u_modal.m_title")}</p>
         </Modal.Body>
-        <Modal.Footer>
+        <Modal.Footer className="msh-bg">
             <div>
-                <Button size="sm" variant="success" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_yes")}</Button>
-                <Button size="sm" variant="danger" onClick={() => {
+                <Button size="sm"  className="btn btn-msh-dark-outline" style={{marginRight: "1vw"}} onClick={handleChangePhotoUrl}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_yes")}</Button>
+                <Button size="sm" className="btn btn-msh-dark" onClick={() => {
                     setImg(null)
                     handleCloseUpdatePhoto()
                 }}>{t("msh_user_panel.u_update_photo.u_modal.m_button.b_no")}</Button>

@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, DropdownButton, Dropdown, ButtonGroup, ToggleButton } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { db, functions } from '../../../../Firebase'
+import { db, functions, FirebaseContext } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../svg/close.svg'
 
-export default function PhoneMagic({user, userDB}) {
+export default function PhoneMagic() {
+    const { user, userDB } = useContext(FirebaseContext)
     const [formValue, setFormValue] = useState({
         username: "", 
         email: "", 

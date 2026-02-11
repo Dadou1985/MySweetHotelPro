@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
-import { storage } from '../../Firebase'
+import { storage, FirebaseContext } from '../../Firebase'
 import moment from 'moment'
 import Picture from '../../svg/picture.svg'
 import { StaticImage } from 'gatsby-plugin-image'
@@ -14,7 +14,8 @@ import InputElement from '../../helper/common/InputElement'
 import TextareaElement from '../../helper/common/textareaElement'
 import AddPhotoURL from '../../svg/camera.svg'
 
-const LostNFound = ({userDB}) =>{
+const LostNFound = () =>{
+    const { userDB } = useContext(FirebaseContext)
     const { t } = useTranslation()
 
     const [list, setList] = useState(false)

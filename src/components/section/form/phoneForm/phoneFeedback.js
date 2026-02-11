@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
@@ -6,8 +6,10 @@ import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import { handleSubmitData2, addNotification } from '../../../../helper/globalCommonFunctions';
 import { handleChange } from '../../../../helper/formCommonFunctions'
 import TextareaElement from '../../../../helper/common/textareaElement'
+import { FirebaseContext } from '../../../../Firebase'
 
-function PhoneFeedback({userDB}) {
+function PhoneFeedback() {
+    const { userDB } = useContext(FirebaseContext)
     
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})

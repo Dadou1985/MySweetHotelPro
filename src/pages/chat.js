@@ -24,7 +24,7 @@ const isBrowser = () => typeof window !== "undefined"
               <div id="iziChat" className="dark_messenger_communizi_container">
                 <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
                 {!!userDB && !!user&&
-                <Chat userDB={userDB} user={user} />}
+                <Chat />}
               </div>
             </> : 
             <>
@@ -32,7 +32,7 @@ const isBrowser = () => typeof window !== "undefined"
               <div id="iziChat" className="dark_messenger_communizi_container">
                 <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
                 {!!userDB && !!user&&
-                <PhoneChat userDB={userDB} user={user} />}
+                <PhoneChat />}
               </div>
             </>}
           </div>

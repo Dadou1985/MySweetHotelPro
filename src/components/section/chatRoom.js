@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useMemo, useCallback } from 'react'
+import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
     fetchCollectionByMapping2,
     fetchCollectionBySorting3
 } from '../../helper/globalCommonFunctions'
+import { FirebaseContext } from '../../Firebase'
 import moment from 'moment'
 // Helper to process Firestore snapshots
 const processSnapshot = (snapshot) => {
@@ -15,7 +16,8 @@ const processSnapshot = (snapshot) => {
     return data
 }
 
-export default function ChatRoom({ user, userDB, title }) {
+export default function ChatRoom({ title }) {
+    const { user, userDB } = useContext(FirebaseContext)
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)
 

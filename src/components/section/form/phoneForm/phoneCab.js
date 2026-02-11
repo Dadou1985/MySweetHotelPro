@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import moment from 'moment'
 import Drawer from '@material-ui/core/Drawer'
@@ -19,8 +19,10 @@ import {
     handleDeleteData2
 } from '../../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../../Firebase'
 
-const PhoneCab = ({userDB}) =>{
+const PhoneCab = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({
         room: "", 

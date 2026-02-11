@@ -1,15 +1,16 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../itemList'
 import Maid from '../../../svg/maid.svg'
-import { db } from '../../../Firebase'
+import { db, FirebaseContext } from '../../../Firebase'
 import Badge from '@material-ui/core/Badge'
 import StyleBadge from '../../../helper/common/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next"
 import { fetchCollectionBySorting3 } from '../../../helper/globalCommonFunctions'
 
-const HouseKeeping = ({userDB}) =>{
+const HouseKeeping = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
     const [towel, setTowel] = useState([])

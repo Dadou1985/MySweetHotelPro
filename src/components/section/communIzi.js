@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -7,25 +7,27 @@ import { Tab, Tabs, Table } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { functions, storage } from '../../Firebase'
+import { functions, storage, FirebaseContext } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import Bubbles from '../../images/bubbles.png'
 import { StaticImage } from 'gatsby-plugin-image'
 import Send from '../../images/paper-plane.png'
-import { 
-    handleUpdateData2, 
-    fetchCollectionByMapping1, 
-    fetchCollectionByMapping2, 
-    handleSubmitData3, 
+import {
+    handleUpdateData2,
+    fetchCollectionByMapping1,
+    fetchCollectionByMapping2,
+    handleSubmitData3,
+    handleSubmitData1
 } from '../../helper/globalCommonFunctions'
 import '../css/section/chat.css'
 
-/* 
+/*
   ! FIX => SUBMIT ONKEYDOWN
 */
 
-export default function CommunIzi({userDB, user}) {
+export default function CommunIzi() {
+  const { user, userDB } = useContext(FirebaseContext)
   const [present, setPresent] = useState([]);
   const [arrival, setArrival] = useState([]);
   const [note, setNote] = useState('')
@@ -70,6 +72,16 @@ export default function CommunIzi({userDB, user}) {
   const handleRowSelection = (flow) => {
     flow.status === true && guest !== flow.id ? setGuest(flow.id) : setGuest(null)
     return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
+  }
+
+  const addNotification = async (event, notification) => {
+    const notif = {
+            content: notification,
+            hotelId: userDB.hotelId,
+            markup: Date.now()
+        }
+    handleSubmitData1(event, "notifications", notif)
+    return console.log('nouvelle notitfication')
   }
 
   const handleSubmit = (event) =>{
@@ -187,31 +199,37 @@ export default function CommunIzi({userDB, user}) {
             </>}
           <PerfectScrollbar>
             {user&& userDB&& guest !== null ?
-              <ChatRoom user={user} userDB={userDB} title={guest} /> : null}
+              <ChatRoom title={guest} /> : null}
           </PerfectScrollbar>
         </div>
         <div className={typeof window !== `undefined` && window.innerWidth < 768 ? "communizi_form_input_div" : "none"}>
-          <Form className="communizi_form">
-          <FormGroup  className="communizi_form_input_container"> 
-            <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
-            value={note}
-            onChange={(event) => {
-              setNote(event.target.value)
-              if(showAlert) {setShowAlert(false)}
-            }}
-            onKeyDown={(e) => {
-              if(guest !== "") {
-                if(e.key === "Enter" && note) {
-                  handleSubmit(e)
-                  handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
-                  sendPushNotification({payload: payload})
-                }
-              }else{
-                return setShowAlert(true)
-              }
-            }}
-            id="dark_message_note" />
-          </FormGroup>
+          <Form className="communizi_form" onSubmit={(e) => e.preventDefault()}>
+            <FormGroup  className="communizi_form_input_container"> 
+              <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
+              value={note}
+              onChange={(event) => {
+                setNote(event.target.value)
+                if(showAlert) {setShowAlert(false)}
+              }}
+              onKeyDown={(e) => {
+                if(guest) {
+                  if(e.key === "Enter" && note) {
+                    handleSubmit(e)
+                    handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
+                    sendPushNotification({payload: payload})
+                  } else {
+                    if(e.key === "Enter") {
+                      return addNotification(e, t("msh_chat.c_alert_no_message"))
+                    }
+                  }
+                } else {
+                  if(e.key === "Enter") {
+                    return addNotification(e, t("msh_chat.c_alert"))
+                  }
+                } 
+              }}
+              id="dark_message_note" />
+            </FormGroup>
             <div className="communizi-button-container">
               <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                 if(guest) {
@@ -219,12 +237,11 @@ export default function CommunIzi({userDB, user}) {
                     handleSubmit(event)
                     handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
                     sendPushNotification({payload: payload})
-                    if(showAlert) {
-                      showAlert(false)
-                    }
+                  } else {
+                    return addNotification(event, t("msh_chat.c_alert_no_message"))
                   }
-                }else{
-                  return setShowAlert(true)
+                } else {
+                  addNotification(event, t("msh_chat.c_alert"))
                 }
               }} />          
             </div>

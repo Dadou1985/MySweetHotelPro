@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import moment from 'moment'
 import 'moment/locale/fr'
@@ -12,9 +12,11 @@ import MaintenanceRate from './maintenanceRate'
 import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../helper/globalCommonFunctions';
 import { stackedDataForWeek } from '../../helper/common/timeRange/stackedData'
 import { sevenDayAgo } from '../../helper/common/timeRange/week'
+import { FirebaseContext } from '../../Firebase'
 import '../css/section/dashboard.css'
 
-const Dashboard = ({userDB}) => {
+const Dashboard = () => {
+  const { userDB } = useContext(FirebaseContext)
   const { t } = useTranslation()
   const [consigne, setConsigne] = useState([]);
   const [chat, setChat] = useState([]);
@@ -277,8 +279,8 @@ const roomChangeData = {
           </div>
         </div>
 
-        <RoomChangeRate userDB={userDB} showModal={showRoomChangeModal} closeModal={() => setShowRoomChangeModal(false)} />
-        <MaintenanceRate userDB={userDB} showModal={showMaintenanceModal} closeModal={() => setShowMaintenanceModal(false)} />
+        <RoomChangeRate showModal={showRoomChangeModal} closeModal={() => setShowRoomChangeModal(false)} />
+        <MaintenanceRate showModal={showMaintenanceModal} closeModal={() => setShowMaintenanceModal(false)} />
   </div>;
 }
 

@@ -1,16 +1,18 @@
-import React, {useState } from 'react'
+import React, {useState, useContext } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useTranslation } from "react-i18next"
 import '../css/section/createSticker.css'
 import PostIt from '../../images/postItPlus.png'
 import { handleChange } from '../../helper/formCommonFunctions'
 import { handleSubmitData2 } from '../../helper/globalCommonFunctions'
+import { FirebaseContext } from '../../Firebase'
 
-/* 
+/*
     ! FIX => OVERLAYtRIGGER TOOLTIP POSITION
 */
 
-const CreateSticker = ({userDB}) => {
+const CreateSticker = () => {
+    const { userDB } = useContext(FirebaseContext)
     const [visible, setVisible] = useState(false)
     const [formValue, setFormValue] = useState({title: "", text: ""})
     const { t } = useTranslation()

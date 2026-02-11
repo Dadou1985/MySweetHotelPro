@@ -10,7 +10,7 @@ const HouseKeeping = () => {
     <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneHouseKeeping user={user} userDB={userDB} />}
+        <PhoneHouseKeeping />}
     </>
   )
 }

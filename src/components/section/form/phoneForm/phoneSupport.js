@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form } from 'react-bootstrap'
 import Send from '../../../../images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { db } from '../../../../Firebase'
+import { db, FirebaseContext } from '../../../../Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../../../svg/profile.png"
 import { useTranslation } from "react-i18next"
@@ -17,7 +17,8 @@ import {
 import { handleChange } from '../../../../helper/formCommonFunctions'
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 
-export default function PhoneSupport({user, userDB}) {
+export default function PhoneSupport() {
+    const { user, userDB } = useContext(FirebaseContext)
     const [note, setNote] = useState("")
     const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)

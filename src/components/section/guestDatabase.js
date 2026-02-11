@@ -1,7 +1,7 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { functions, specialFirestoreOptions } from '../../Firebase'
+import { functions, specialFirestoreOptions, FirebaseContext } from '../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -24,7 +24,8 @@ import '../css/common/loader.css'
  ! FIX => OVERLAYTRIGGER TOOLTIP POSITION (CHAT)
 */
 
-const GuestDatabase = ({user, userDB}) =>{
+const GuestDatabase = () =>{
+    const { user, userDB } = useContext(FirebaseContext)
     const { t } = useTranslation()
 
     const [list, setList] = useState(false)
@@ -354,7 +355,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 </div>
                 <div style={{width: "25%", padding: "2% 0px", filter: "drop-shadow(2px 4px 6px)", minWidth: "380px", maxWidth: "380px"}}>
                 <PerfectScrollbar style={{mawHeight: "75vh"}}>
-                    {showTimeLine ? <TimeLine user={user} userDB={userDB} guestId={guestId} /> : <Card style={{ width: '100%', borderRadius: "10px", maxHeight: "70vh", border: "1px solid lightgrey", minHeight: "490px"}} className="softSkin">
+                    {showTimeLine ? <TimeLine guestId={guestId} /> : <Card style={{ width: '100%', borderRadius: "10px", maxHeight: "70vh", border: "1px solid lightgrey", minHeight: "490px"}} className="softSkin">
                         <Card.Img variant="top" src={item.photo ? item.photo : defaultImg} style={{width: "100%", height: "303px"}} />
                         <Card.Body style={{
                             display: "flex",
@@ -421,7 +422,7 @@ const GuestDatabase = ({user, userDB}) =>{
                     </Card>}
                 </PerfectScrollbar>
                 </div>
-                {guestId !== null && window?.innerWidth > 1439 && <TimeLine user={user} userDB={userDB} guestId={guestId} />}
+                {guestId !== null && window?.innerWidth > 1439 && <TimeLine guestId={guestId} />}
             </div>
 
             <Modal show={showChat}
@@ -439,7 +440,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 
                 <div style={{width: "100%", padding: "2%"}}>
                     <PerfectScrollbar style={{maxHeight: "70vh"}}>
-                        <Chat user={user} userDB={userDB} title={item.username} />
+                        <Chat title={item.username} />
                     </PerfectScrollbar>
                 </div>
 
@@ -452,7 +453,7 @@ const GuestDatabase = ({user, userDB}) =>{
                 centered
                 onHide={() => setShowTimeLine(false)}
                 >
-                {guestId !== null && <TimeLine user={user} userDB={userDB} guestId={guestId} />}
+                {guestId !== null && <TimeLine guestId={guestId} />}
             </Modal> */}
         </div>
     )

@@ -16,21 +16,21 @@ const ToolBar = () =>{
     return(
         <div className="toolbar_container">
             {userDB && user &&
-                <HouseKeeping userDB={userDB} user={user}  />}
+                <HouseKeeping />}
             {userDB && user &&
-                <Cab userDB={userDB} user={user}  />}
+                <Cab />}
             {userDB && user &&
-                <Maid userDB={userDB} user={user}  />}
+                <Maid />}
             {userDB && user &&
-                <Clock userDB={userDB} user={user}  />}
+                <Clock />}
             {userDB && user &&
-                <Repair userDB={userDB} user={user}  />}
+                <Repair />}
             {userDB && user &&
-                <CheckList userDB={userDB} user={user} />}
+                <CheckList />}
             {userDB && user &&
-                <Caisse userDB={userDB} user={user} />} 
+                <Caisse />}
             {/* {userDB && user &&
-                <CallCenter user={user} userDB={userDB} />}  */}
+                <CallCenter />}  */}
 
         </div>
     )

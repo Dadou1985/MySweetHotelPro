@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Assistance from '../../../../../svg/support-technique.svg'
-import { db } from '../../../../../Firebase'
+import { db, FirebaseContext } from '../../../../../Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
 import { StaticImage } from 'gatsby-plugin-image'
 import { fetchCollectionByMapping1, handleUpdateData1 } from '../../../../../helper/globalCommonFunctions'
 
-function CallCenterOverlay({userDB}) {
+function CallCenterOverlay() {
+    const { userDB } = useContext(FirebaseContext)
     const [chatRoomQty, setChatRoomQty] = useState([])
 
     useEffect(() => {

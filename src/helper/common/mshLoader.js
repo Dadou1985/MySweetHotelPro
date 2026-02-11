@@ -5,26 +5,20 @@ import Mascott from '../../svg/receptionist.svg'
 import '../../components/css/common/loader.css'
 
 const ShiftLoader = ({hide}) => {
+  const isBrowser = () => typeof window !== "undefined"
+  const screenWidth = isBrowser() && window?.innerWidth
+  const screenHeight = isBrowser() && window?.innerHeight
 
   return (
     <div className="Loader-container" style={{display: hide}}>
         <div className="Loader-box">
-        {typeof window !== `undefined` && window.innerWidth > 768 ?
           <Puff
                 color="rgb(25,23,25)"
-                height={1000}
-                width={1000}
+                height={screenHeight}
+                width={screenWidth}
                 timeout={10000}
             />
-        :
-          <Puff
-                color="rgb(25,23,25)"
-                height={700}
-                width={400}
-                timeout={10000}
-              />}
         </div>
-        <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/receptionist.svg' className="Loader-img" alt="Receptionnist Logo" />
     </div>
   )
 }

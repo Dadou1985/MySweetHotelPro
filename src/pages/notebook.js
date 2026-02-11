@@ -27,14 +27,12 @@ const NotebookPage = () => {
   const isBrowser = () => typeof window !== "undefined"
   moment.locale("fr")
 
-  console.log("DATE+++++++++++++", filterDate)
-
   return(
     <> 
         <div className="landscape-display"></div> 
         <div style={{
             display: "flex",
-            backgroundImage: isBrowser() && window.innerWidth > 768 ? `url(${Background})` : "none",
+            backgroundImage: isBrowser() && window?.innerWidth > 768 ? `url(${Background})` : "none",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           }}>
@@ -54,11 +52,11 @@ const NotebookPage = () => {
                 flexFlow: "column",
                 // alignItems: "end",
                 height: "80vh",
-                width: window.innerWidth > 1023 ? "55%" : "100%",
+                width: isBrowser() && window?.innerWidth > 1023 ? "55%" : "100%",
                 marginTop: "3vh", 
                 padding: "3%"
               }}>
-                <div style={{paddingRight: window.innerWidth > 768 ? "0vw" : "2vw"}}>
+                <div style={{paddingRight: isBrowser() && window?.innerWidth > 768 ? "0vw" : "2vw"}}>
                   <MuiPickersUtilsProvider utils={DateFnsUtils} >
                     <DatePicker
                         variant="inline"

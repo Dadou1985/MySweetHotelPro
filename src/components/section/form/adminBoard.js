@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Tooltip, OverlayTrigger, Modal, Tab, Tabs } from 'react-bootstrap'
 import AdminRegister from './adminRegister'
 import UserList from './userList'
 import Divider from '@material-ui/core/Divider';
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
+import { FirebaseContext } from '../../../Firebase'
 
-const AdminBoard = ({user, userDB}) =>{
+const AdminBoard = () =>{
+    const { user, userDB } = useContext(FirebaseContext)
 
     const [tab, setTab] = useState(false)
     const { t } = useTranslation()
@@ -51,7 +53,7 @@ const AdminBoard = ({user, userDB}) =>{
                                     <Divider style={{width: "90%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                                 </div>
                                 {!!user && !!userDB &&
-                                <AdminRegister user={user} userDB={userDB} hide={handleCloseTab} /> }  
+                                <AdminRegister hide={handleCloseTab} /> }  
                             </Tab>
                             <Tab eventKey="Supprimer" title={t("msh_admin_board.a_second_tab_title")}>
                             <div style={{
@@ -63,7 +65,7 @@ const AdminBoard = ({user, userDB}) =>{
                                     <Divider style={{width: "90%", marginBottom: "2vh", filter: "drop-shadow(1px 1px 1px)"}} />
                                 </div>
                                 {!!user && !!userDB &&
-                                <UserList user={user} userDB={userDB} />}
+                                <UserList />}
                             </Tab>
                         </Tabs>
                     </Modal.Body>

@@ -1,12 +1,12 @@
-import React, {useState, useEffect } from 'react'
-import { 
-    Form, 
-    Button, 
-    Table, 
-    Tabs, 
-    Tab, 
-    Modal, 
-    FloatingLabel 
+import React, {useState, useEffect, useContext } from 'react'
+import {
+    Form,
+    Button,
+    Table,
+    Tabs,
+    Tab,
+    Modal,
+    FloatingLabel
 } from 'react-bootstrap'
 import Maintenance from '../../../svg/repair.svg'
 import moment from 'moment'
@@ -31,8 +31,10 @@ import {
     handleDeleteData2
 } from '../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../Firebase'
 
-const Repair = ({userDB}) =>{
+const Repair = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])

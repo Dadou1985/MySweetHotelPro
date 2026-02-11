@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import { Modal, ModalBody } from 'react-bootstrap'
 import MaintenancePieChart from "./maintenancePieChart"
 import { oneWeekAgo, fourWeekAgo } from '../../helper/common/timeRange/month'
 import { sixMonthAgo, twelveMonthAgo } from '../../helper/common/timeRange/year'
+import { FirebaseContext } from '../../Firebase'
 
-const MaintenanceRate = ({userDB, showModal, closeModal}) => {
+const MaintenanceRate = ({showModal, closeModal}) => {
+    const { userDB } = useContext(FirebaseContext)
     const [filter, setFilter] = useState(Date.now() - oneWeekAgo)
     const [activeTab, setActiveTab] = useState("week");
     const { t } = useTranslation()

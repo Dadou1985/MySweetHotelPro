@@ -1,9 +1,11 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import Maid from '../../../../../svg/maid.svg'
 import { navigate } from 'gatsby'
 import { fetchCollectionBySorting3 } from '../../../../../helper/globalCommonFunctions'
+import { FirebaseContext } from '../../../../../Firebase'
 
-function HousekeepingOverlay({userDB}) {
+function HousekeepingOverlay() {
+    const { userDB } = useContext(FirebaseContext)
     const [towel, setTowel] = useState([])
     const [soap, setSoap] = useState([])
     const [toiletPaper, setToiletPaper] = useState([])

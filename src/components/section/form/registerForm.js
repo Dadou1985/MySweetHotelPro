@@ -6,7 +6,7 @@ import { handleChange } from '../../../helper/formCommonFunctions'
 import { Button } from 'react-bootstrap'
 import { sha256 } from 'js-sha256'
 
-const RegisterForm = (handleClose) => {
+const RegisterForm = ({handleClose}) => {
 
   const [formValue, setFormValue] = useState({
     firstName: "",
@@ -24,7 +24,8 @@ const RegisterForm = (handleClose) => {
     adresse: "1 rue du paradis", 
     website: "https://www.plazahotel.com", 
     hotelName: "Plaza Hotel", 
-})
+  })
+  const [error, setError] = useState({status: true, category: "", message: ""})
   const { t } = useTranslation()
 
   const newHotelId = "mshPro" + Date.now() + sha256(formValue.hotelName)
@@ -33,6 +34,8 @@ const RegisterForm = (handleClose) => {
 
   const mailNewSubscriber = isBrowser && functions ? functions.httpsCallable("sendNewSubscriber") : null
   const mailWelcome = isBrowser && functions ? functions.httpsCallable("sendWelcomeMail") : null
+
+  const handleResetError = () => setError({status: false, category: "", message: ""})
 
   const createHotel = async () => {
     try {
@@ -81,10 +84,10 @@ const RegisterForm = (handleClose) => {
       mailWelcome({
         firstName: formValue.firstName, 
         email: formValue.email,
-        password: `msh-pass-${formValue.firstName}`, 
+        password: `msh-pass-${formValue.firstName.toLowerCase()}`, 
         appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`, 
         mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
-        mshBanner: "https://i.postimg.cc/h40kFMNY/new-logo-msh.png",
+        mshBanner: "https://i.postimg.cc/jSnhjL1R/msh-logo-bg.png",
         isTester: true
       })
       return console.log("Send registration emails: accomplished")
@@ -103,7 +106,7 @@ const RegisterForm = (handleClose) => {
       adminStatus: true, 
       adresse: formValue.adresse,
       email: formValue.email,
-      password: sha256(`msh-pass-${formValue.firstName}`),
+      password: sha256(`msh-pass-${formValue.firstName.toLowerCase()}`),
       website: formValue.website,
       hotelId: newHotelId,
       hotelName: formValue.hotelName,
@@ -137,7 +140,7 @@ const RegisterForm = (handleClose) => {
       .set({
         username: `${formValue.firstName} ${formValue.lastName}`,
         email: formValue.email.trim(),
-        password: sha256(`msh-pass-${formValue.firstName}`),
+        password: sha256(`msh-pass-${formValue.firstName.toLowerCase()}`),
         language: "fr",
         lastTimeConnected: Date.now(),
         userId: userId,
@@ -174,27 +177,41 @@ const RegisterForm = (handleClose) => {
   }
   
   const handleCreateUser = async () => {
+    const notif = t("msh_admin_board.a_notif") 
     try {
-      const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-pass-${formValue.firstName}`)
+      const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-pass-${formValue.firstName.toLowerCase()}`)
       authUser.user.updateProfile({
         displayName: `${formValue.firstName} ${formValue.lastName}`
       })
       handleFirestoreNewData()
-      return sendwelcomeMail()
+      sendwelcomeMail()
+      setError({status: true, category: "success", message: notif})
+      setTimeout(() => {
+        setFormValue({... formValue, firstName: "", lastName: ""})
+        return handleClose()
+      }, 3000);
     } catch (e) {
-      throw new Error(e);
+      const notif = t("msh_admin_board.a_notif_error_create_user") 
+      setError({status: true, category: "fail", message: notif})
     }
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault()
-    handleCreateUser()
-    return handleClose()
+    await handleCreateUser()
   }   
     
   return (
     <div className="">
-        <form 
+        {error.status && error.category === "success" ? <div style={{
+          paddingInline: "10%",
+          paddingTop: "5%",
+          paddingBottom: "5%",
+           textAlign: "center",
+           fontSize: "1.5em"
+        }}>
+          {t("msh_admin_board.a_notif")} <b style={{color: "#B8860B"}}>{formValue.firstName} {formValue.lastName}</b>
+        </div> : <form 
           method="post"
           className="text-center p-5"
           onSubmit={(event) => handleSubmit(event)}>  
@@ -207,7 +224,10 @@ const RegisterForm = (handleClose) => {
                   name="firstName" 
                   className="form-control mb-4" 
                   placeholder={t('msh_connexion.c_first_Name')}
-                  onChange={(event) => handleChange(event, setFormValue)}
+                  onChange={(event) => {
+                    handleResetError()
+                    handleChange(event, setFormValue
+                    )}}
                   required />
 
                 <input 
@@ -217,7 +237,10 @@ const RegisterForm = (handleClose) => {
                   name="lastName" 
                   className="form-control mb-4" 
                   placeholder={t('msh_connexion.c_flast_Name')}
-                  onChange={(event) => handleChange(event, setFormValue)}
+                  onChange={(event) => {
+                    handleResetError()
+                    handleChange(event, setFormValue
+                    )}}
                   required />
             </div>
 
@@ -228,7 +251,10 @@ const RegisterForm = (handleClose) => {
                 name="email" 
                 className="form-control mb-4" 
                 placeholder={t("msh_connexion.c_email_maj")}
-                onChange={(event) => handleChange(event, setFormValue)}
+                onChange={(event) => {
+                  handleResetError()
+                  handleChange(event, setFormValue
+                  )}}
                 required />
 
             <div data-testid="warning" id="warning"></div>
@@ -236,7 +262,16 @@ const RegisterForm = (handleClose) => {
             <div style={{display: "flex", flexDirection: "column"}}>
                 <Button className='btn btn-msh' type="submit">{t("msh_general.g_button.b_send")}</Button>
             </div>
-        </form>
+        </form>}
+        {error.status && error.category === "fail" && <div style={{
+          paddingInline: "2%",
+          paddingTop: "2%",
+          paddingBottom: "2%",
+          textAlign: "center",
+          fontSize: "1.2em",
+          marginBottom: "1vh",
+          color: "#9A0A0A"
+        }}>{t("msh_admin_board.a_notif_error_create_user")}</div>}
     </div>
   )
 }

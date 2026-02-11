@@ -10,7 +10,7 @@ function AdminBoard() {
        <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneAdmin user={user} userDB={userDB} />}
+        <PhoneAdmin />}
     </>
     )
 }
