@@ -1,12 +1,13 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { functions } from '../../../Firebase'
+import { functions, FirebaseContext } from '../../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from '../../../helper/globalCommonFunctions';
 
-const UserList = ({userDB}) => {
+const UserList = () => {
+    const { userDB } = useContext(FirebaseContext)
     const [info, setInfo] = useState([])
     const { t } = useTranslation()
     const isTablet = window && window.innerWidth > 1023 && "none"
@@ -37,8 +38,8 @@ const UserList = ({userDB}) => {
                         <tr>
                         <th>{t("msh_general.g_table.t_username")}</th>
                         <th style={{display: isTablet}}>{t("msh_connexion.c_email_maj")}</th>
-                        <th>{t("msh_general.g_table.t_administrator")}</th>
-                        <th></th>
+                        {userDB?.adminStatus && <th>{t("msh_general.g_table.t_administrator")}</th>}
+                        <th className="bg-dark"></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -46,7 +47,7 @@ const UserList = ({userDB}) => {
                         <tr key={key}>
                         <td>{flow.username}</td>
                         <td style={{display: isTablet}}>{flow.email}</td>
-                        <td>
+                        {userDB?.adminStatus && <td>
                             <Switch
                                 checked={flow.adminStatus}
                                 onChange={() => {
@@ -54,8 +55,8 @@ const UserList = ({userDB}) => {
                                     return handleUpdateData1("businessUsers", flow.id, {adminStatus: userStatus})}}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
-                        </td>
-                        <td className="bg-light"><Button variant="outline-danger" size="sm" onClick={async()=>{
+                        </td>}
+                        <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={async()=>{
                             await handleDeleteData1('businessUsers', flow.id)
                             return deleteUser({uid: flow.userId})
                         }}>{window?.innerWidth > 1439 ? t("msh_general.g_button.b_delete") : "X"}</Button></td>

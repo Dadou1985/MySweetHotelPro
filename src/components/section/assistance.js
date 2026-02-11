@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -25,8 +25,10 @@ import {
   handleSubmitData2, 
   addNotification 
 } from '../../helper/globalCommonFunctions'
+import { FirebaseContext } from '../../Firebase'
 
-export default function Assistance({userDB, user}) {
+export default function Assistance() {
+  const { user, userDB } = useContext(FirebaseContext)
     
   const [info, setInfo] = useState([])
   const [note, setNote] = useState('')
@@ -103,7 +105,7 @@ export default function Assistance({userDB, user}) {
                     </AccordionItemHeading>
                     <AccordionItemPanel style={{marginBottom: "1vh"}}>
                       {user&& userDB&& 
-                      <SupportRoom user={user} userDB={userDB} title={flow.id} />}
+                      <SupportRoom title={flow.id} />}
                     </AccordionItemPanel>
                   </AccordionItem>
                 ))}

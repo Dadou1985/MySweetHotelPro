@@ -15,7 +15,7 @@ const UserDatabase = () => {
           }}>
           <ToolBar />
           {!!user && !!userDB &&
-          <GuestDatabase user={user} userDB={userDB} />}
+          <GuestDatabase />}
         </div>
     </>
   )

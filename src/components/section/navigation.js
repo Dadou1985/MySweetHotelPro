@@ -194,7 +194,7 @@ const Navigation = () =>{
                     paddingInline: "2vw"
                 }}>
                 {!!user && userDB &&
-                <Drawer className="drawer" user={user} userDB={userDB} style={{display: isMobile}} />}
+                <Drawer className="drawer" style={{display: isMobile}} />}
                 <Navbar.Brand className="brand"
                     onClick={handleMove}>
                         <img src={userDB?.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
@@ -262,11 +262,11 @@ const Navigation = () =>{
                         <Tab.Content>
                             <Tab.Pane eventKey="Créer">
                                 {!!user && !!userDB &&
-                                <AdminRegister user={user} userDB={userDB} hide={() => setShowAdminModal(false)} /> }
+                                <AdminRegister hide={() => setShowAdminModal(false)} /> }
                             </Tab.Pane>
                             <Tab.Pane eventKey="Supprimer">
                                 {!!user && !!userDB &&
-                                <UserList user={user} userDB={userDB} />}
+                                <UserList />}
                             </Tab.Pane>
                         </Tab.Content>
                         </Col>

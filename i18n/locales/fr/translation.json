@@ -109,6 +109,7 @@
         "c_send_button": "Envoyer",
         "c_notification": "Votre message a bien été envoyé !",
         "c_alert": "Vous devez d'abord choisir une conversation !",
+        "c_alert_no_message": "Vous n'avez rien écrit !",
         "c_guest_present": "En séjour",
         "c_guest_arrival": "En arrivée",
         "c_chat_room": "Aucune conversation pour le moment"
@@ -130,6 +131,8 @@
         "m_drawer_title": "Ecrire une note de service",
         "m_drawer_note_title": "Titre de la note",
         "m_notif": "Votre note a bien été enregistrée pour le ",
+        "m_notif_change_date": "Vous venez de programmer votre note pour le ",
+        "m_notif_submit_error": "Vous devez remplir le champs Titre et écrire une consigne",
         "m_calendar": "Sélectionner une date"
     },
     "msh_memo": {
@@ -401,7 +404,8 @@
             "b_show_modal": "Ajouter un collaborateur",
             "b_validation": "Créer un compte maintenant"
         },
-        "a_notif": "Vous venez de créer un compte collaborateur !"
+        "a_notif": "Vous venez de créer un compte collaborateur pour",
+        "a_notif_error_create_user": "L'adresse e-mail que vous avez renseigné est déjà utilisée !"
     },
     "msh_feedback_box": {
         "f_title": "Feedback Box",

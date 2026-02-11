@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { db, functions } from '../../../../Firebase'
+import { db, functions, FirebaseContext } from '../../../../Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
 
-function PhoneAdmin({userDB}) {
+function PhoneAdmin() {
+    const { userDB } = useContext(FirebaseContext)
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [activate, setActivate] = useState(false)
     const [info, setInfo] = useState([])
@@ -113,7 +114,7 @@ function PhoneAdmin({userDB}) {
                 <thead className="bg-dark text-center text-light">
                     <tr>
                     <th>{t("msh_general.g_table.t_username")}</th>
-                    <th>{t("msh_general.g_table.t_administrator")}</th>
+                    {userDB?.adminStatus && <th>{t("msh_general.g_table.t_administrator")}</th>}
                     {expand && <th>E-mail</th>}
                     <th></th>
                     </tr>
@@ -122,7 +123,7 @@ function PhoneAdmin({userDB}) {
                 {info.map(flow =>(
                     <tr key={flow.markup}>
                     <td>{flow.username}</td>
-                    <td>
+                    {userDB?.adminStatus && <td>
                         <Switch
                             checked={flow.adminStatus}
                             onChange={() => {
@@ -130,7 +131,7 @@ function PhoneAdmin({userDB}) {
                                 return changeUserStatus(flow.id, userStatus)}}
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
-                    </td>
+                    </td>}
                     {expand && <td>{flow.email}</td>}
                     <td className="bg-light"><Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={async()=>{
                         await db.collection('businessUsers')

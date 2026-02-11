@@ -12,7 +12,7 @@ function Assistance() {
        <div id="iziChat" className="dark_messenger_communizi_container">
             <h5 className="font-weight-bolder dark_messenger_title">Support Technique</h5>
             {!!userDB && !!user&&
-            <Support userDB={userDB} user={user} />}
+            <Support />}
         </div>
     </>
     )

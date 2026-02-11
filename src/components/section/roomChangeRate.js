@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import { Modal, ModalBody } from 'react-bootstrap'
 import DoughnutChart from "./roomChangeDoughtnut"
 import { oneWeekAgo, fourWeekAgo } from '../../helper/common/timeRange/month'
 import { sixMonthAgo, twelveMonthAgo } from '../../helper/common/timeRange/year'
+import { FirebaseContext } from '../../Firebase'
 
-const RoomChangeRate = ({userDB, showModal, closeModal}) => {
+const RoomChangeRate = ({showModal, closeModal}) => {
+    const { userDB } = useContext(FirebaseContext)
     const [filter, setFilter] = useState(Date.now() - 604800000);
     const { t } = useTranslation() 
     const [activeTab, setActiveTab] = useState("week");

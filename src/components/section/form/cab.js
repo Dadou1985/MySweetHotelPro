@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { 
     Form, 
     Button, 
@@ -29,12 +29,14 @@ import {
     addNotification,
 } from '../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../Firebase'
 
-/* 
+/*
  ! FIX => SELECT DEFAULT OPTION
 */
 
-const Cab = ({userDB}) =>{
+const Cab = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])

@@ -10,7 +10,7 @@ const Assistance = () => {
     <>
       <div className="landscape-display"></div>     
       {!!user && !!userDB &&
-      <PhoneSupport user={user} userDB={userDB} />}
+      <PhoneSupport />}
     </>
   )
 }

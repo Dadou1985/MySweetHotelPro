@@ -24,6 +24,10 @@
     margin-top: 4vh;
 }
 
+.MuiSnackbarContent-root {
+    justify-content: center;
+}
+
 *{outline: none;}
 
 .modal-90w {width: 90vw}
@@ -88,7 +92,7 @@ color: white;
 }
 
 .btn-msh-dark-outline {
-    background-color: white; 
+    background-color: transparent; 
     border-color: black; 
     color: black;    
 }

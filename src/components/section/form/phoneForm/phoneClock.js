@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -20,8 +20,10 @@ import {
     handleDeleteData2
 } from '../../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../../Firebase'
 
-const PhoneClock = ({userDB}) =>{
+const PhoneClock = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({
         room: "", 

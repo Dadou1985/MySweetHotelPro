@@ -94,7 +94,7 @@ const NoteBox = ({filterDate, category, title}) => {
                       paddingLeft: "1%",
                       paddingRight: "1%",
                       borderLeft: `5px solid ${flow.status}`,
-                      borderBottom: `1px solid ${flow.status}`,
+                      borderBottom: `5px solid ${flow.status}`,
                       borderTopLeftRadius: "5px",
                       borderTopRightRadius: "5px"
                       }}>
@@ -138,7 +138,7 @@ const NoteBox = ({filterDate, category, title}) => {
                             <img src={flow.img} style={{width: "100%", backgroundSize: "cover", marginBottom: "1vh"}} />
                         </span>}
                       {flow.text}
-                    <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.markup).format('LT')}</i></div>
+                    {flow.markup !== 0 && <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.markup).format('LT')}</i></div>}
                     </AccordionItemPanel>
                   </AccordionItem> 
                 })}

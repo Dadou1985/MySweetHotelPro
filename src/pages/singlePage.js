@@ -50,7 +50,7 @@ const SinglePage = () => {
                 color: "gray", 
                 justifyContent: isBrowser() && window.innerWidth > 768 ? "left" : "center"}}>{moment().format('LL')}</div>
               {!!userDB && !!user&&
-              <Dashboard userDB={userDB} user={user} />}
+              <Dashboard />}
             </div>
           </div>
       </div>

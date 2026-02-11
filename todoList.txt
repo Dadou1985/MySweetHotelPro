@@ -1,7 +1,1 @@
-1. Banner/Flyer => Fix les logos sur les bannières et flyers || DONE !!
-2. Chat => Fix envoi message + "enter" key reloading || DONE !!
-3. Messenger => Fix accordion button + Post It => affichage titre hovered || DONE !!
-4. Lost and Found => Fix record item modal select fields || DONE !!
-5. Toolbar => add cursor pointer on icons || DONE !!
-6. Safe => Fix posting amount data to DB || PARTIALLY DONE !!
-7. GuestTimeline => Fix icon highlights
+1. Refacto phoneAdmin.js pour gérer les erreurs à la soummission

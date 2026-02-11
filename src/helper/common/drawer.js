@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
@@ -12,7 +12,7 @@ import Notifications from '../../components/section/notifications'
 import Fom from '../../svg/fom.svg'
 import Notebook from '../../svg/notebook.png'
 import Feedback from '../../svg/feedbackBox.svg'
-import { auth } from '../../Firebase'
+import { auth, FirebaseContext } from '../../Firebase'
 import Housekeeping from '../../components/section/form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
 import Support from '../../components/section/form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
 import Connection from '../../images/admin.png'
@@ -20,7 +20,8 @@ import PhoneOverlay from '../../components/customHooks/phoneOverlayHook'
 import { t } from 'i18next';
 import '../../components/css/common/drawer.css'
 
-export default function TemporaryDrawer({userDB, user}) {
+export default function TemporaryDrawer() {
+  const { user, userDB } = useContext(FirebaseContext)
   const [state, setState] = React.useState({left: false,});
 
   const toggleDrawer = (anchor, open) => (event) => {
@@ -46,21 +47,21 @@ export default function TemporaryDrawer({userDB, user}) {
         <List className="drawer_listIcons">
         <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
         {!!user && !!userDB &&
-        <PhoneOverlay category="chat" userDB={userDB} index={3} />}
+        <PhoneOverlay category="chat" index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
         </List>
         <Divider />
       <List className="drawer_listIcons2">
         {!!user && !!userDB &&
-        <Housekeeping user={user} userDB={userDB} />}
+        <Housekeeping />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="cab" userDB={userDB} index={0} />}
+        <PhoneOverlay category="cab" index={0} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="clock" userDB={userDB} index={1} />}
+        <PhoneOverlay category="clock" index={1} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="maintenance" userDB={userDB} index={2} />}
+        <PhoneOverlay category="maintenance" index={2} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="roomChange" userDB={userDB} index={4} />}
+        <PhoneOverlay category="roomChange" index={4} />}
         <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
       </List>
       <Divider />
@@ -89,7 +90,7 @@ export default function TemporaryDrawer({userDB, user}) {
         </React.Fragment>
       ))}
       {!!userDB && !!user &&
-            <Notifications userDB={userDB} user={user} />}
+            <Notifications />}
     </div>
   );
 }

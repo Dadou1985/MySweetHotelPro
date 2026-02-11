@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, useContext} from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
-import { db, storage } from '../../../../Firebase'
+import { db, storage, FirebaseContext } from '../../../../Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -12,7 +12,8 @@ import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
 
-const PhoneLost = ({userDB}) =>{
+const PhoneLost = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({type: "", place: "", details: "", description: "", url: ""})
     const [info, setInfo] = useState([])

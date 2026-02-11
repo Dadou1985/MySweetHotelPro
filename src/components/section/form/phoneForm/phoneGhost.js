@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
-import { db } from '../../../../Firebase'
+import { db, FirebaseContext } from '../../../../Firebase'
 import { Input } from 'reactstrap'
 
-export default function PhoneGhost({user, userDB, setUserDB}) {
+export default function PhoneGhost() {
+    const { user, userDB, setUserDB } = useContext(FirebaseContext)
     const [formValue, setFormValue] = useState({
         username: "", 
         email: "", 

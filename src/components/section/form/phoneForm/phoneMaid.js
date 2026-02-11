@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import moment from 'moment'
@@ -21,12 +21,14 @@ import {
     handleDeleteData2
 } from '../../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../../Firebase'
 
-/* 
+/*
     ! FIX => PHOTO SUBMISSION
 */
 
-const PhoneMaid = ({userDB}) =>{
+const PhoneMaid = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({
         client: "", 

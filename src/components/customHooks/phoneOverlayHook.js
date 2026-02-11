@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import Cab from '../../svg/taxi.svg'
 import Clock from '../../svg/timer.svg'
 import Maintenance from '../../svg/repair.svg'
 import Chat from '../../svg/chat.png'
 import RoomChange from '../../svg/logout.svg'
 
-import { db } from '../../Firebase'
+import { db, FirebaseContext } from '../../Firebase'
 import { navigate } from 'gatsby'
 
-function PhoneOverlayHook({userDB, category, index}) {
+function PhoneOverlayHook({category, index}) {
+    const { userDB } = useContext(FirebaseContext)
     const [quantity, setQuantity] = useState([])
     const imgSrc = [Cab, Clock, Maintenance, Chat, RoomChange]
 

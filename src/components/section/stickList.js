@@ -59,7 +59,7 @@ const StickList = () => {
                 width: "1vw",
                 marginTop: "3vh",
             }}>
-            {userDB && <CreateSticker userDB={userDB} />}
+            {userDB && <CreateSticker />}
             </div>}
         </div>
     )

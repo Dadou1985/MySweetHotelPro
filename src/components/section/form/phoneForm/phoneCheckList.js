@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import { FirebaseContext } from '../../../../Firebase'
 
-const PhoneCheckList = ({user, userDB}) =>{
+const PhoneCheckList = () =>{
+    const { user, userDB } = useContext(FirebaseContext)
     const { t } = useTranslation()
 
 
@@ -30,15 +32,15 @@ const PhoneCheckList = ({user, userDB}) =>{
                 <Tab.Content>
                     <Tab.Pane eventKey="matin">
                         {!!userDB && !!user && 
-                        <CheckListTable shift="matin" userDB={userDB} user={user} />}
+                        <CheckListTable shift="matin" />}
                     </Tab.Pane>
                     <Tab.Pane eventKey="soir">
-                    {!!userDB && !!user && 
-                        <CheckListTable shift="soir" userDB={userDB} user={user} />}
+                    {!!userDB && !!user &&
+                        <CheckListTable shift="soir" />}
                     </Tab.Pane>
                     <Tab.Pane eventKey="nuit">
-                    {!!userDB && !!user && 
-                        <CheckListTable shift="nuit" userDB={userDB} user={user} />}
+                    {!!userDB && !!user &&
+                        <CheckListTable shift="nuit" />}
                     </Tab.Pane>
                 </Tab.Content>
                 </Col>

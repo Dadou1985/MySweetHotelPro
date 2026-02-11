@@ -9,7 +9,6 @@ import { FirebaseContext } from '../../Firebase';
 
 const MessageCommunizi = ({author, text, date, translation, photo, markup, title, key, lastMessage}) =>{
   const {userDB} = useContext(FirebaseContext)
-  // console.log("DATE&&&&&&&&&&", moment(date.toDate()).format('L'), moment(new Date()).format('L'))
 
   if(date && moment(date.toDate()).format('L') === moment(new Date()).format('L')){
     if(title === "host"){

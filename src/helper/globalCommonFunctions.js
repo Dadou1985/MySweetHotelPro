@@ -115,8 +115,12 @@ export const handleUpdateData3 = (collection1, document1, collection2, document2
 
 export const handleSubmitData1 = (event, collection, data) => {
     event.preventDefault()
-        return db.collection(collection)
+        try {
+            return db.collection(collection)
         .add(data)
+        } catch (error) {
+            console.error(error)
+        }
 }
 
 export const handleSubmitData2 = (event, collection1, document, collection2, data) => {

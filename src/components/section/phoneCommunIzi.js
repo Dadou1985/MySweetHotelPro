@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useMemo } from 'react'
+import React, {useState, useEffect, useMemo, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -16,16 +16,17 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, functions, storage } from '../../Firebase'
+import { db, functions, storage, FirebaseContext } from '../../Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 
-export default function CommunIzi({userDB, user}) {
+export default function CommunIzi() {
+  const { user, userDB } = useContext(FirebaseContext)
   const [info, setInfo] = useState([])
   const [note, setNote] = useState('')
-  const [expanded, setExpanded] = useState('')
+  const [expanded, setExpanded] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [activate, setActivate] = useState(false)
   const [initialFilter, setInitialFilter] = useState('Liste Clients Présents')
@@ -120,7 +121,13 @@ export default function CommunIzi({userDB, user}) {
     })      
   }
 
-  const handleChangeExpanded = (title) => setExpanded(title)
+  const handleChangeExpanded = (title) => {
+    if(expanded === title) {
+      setExpanded(null)
+    } else {
+      setExpanded(title)
+    }
+  }
 
   useEffect(() => {
     const chatOnAir = () => {
@@ -217,14 +224,11 @@ export default function CommunIzi({userDB, user}) {
         <Accordion allowZeroExpanded>
             {info.map((flow) => (
               flow.status &&
-              <AccordionItem key={flow.id} onClick={() => {
+              <AccordionItem key={flow.id}>
+                <AccordionItemHeading onClick={() => {
                 handleChangeExpanded(flow.id)
                 accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
-                if(showAlert) {
-                  return setShowAlert(false)
-                }
-                }}>
-                <AccordionItemHeading className={flow.room ? "none" : 'softSkin'} style={{
+                }} className={flow.room ? "none" : 'softSkin'} style={{
                   backgroundColor: accordionSelected === flow.markup ? "#B8860B" : "rgb(33, 35, 39)", 
                   filter: flow.room ? "none" : "drop-shadow(1px 1px 1px)",
                   padding: "2%",
@@ -259,7 +263,7 @@ export default function CommunIzi({userDB, user}) {
                 </AccordionItemHeading>
                 <AccordionItemPanel style={{marginBottom: "1vh"}}>
                   {user&& userDB&& 
-                  <ChatRoom user={user} userDB={userDB} title={flow.id} />}
+                  <ChatRoom title={flow.id} />}
                 </AccordionItemPanel>
               </AccordionItem>
             ))}
@@ -267,7 +271,7 @@ export default function CommunIzi({userDB, user}) {
         </div>
         </PerfectScrollbar>
         <div className= "communizi_form_input_div">
-          <Form className="communizi_form">
+          <Form className="communizi_form" onSubmit={(e) => e.preventDefault()}>
           <FormGroup  className="communizi_form_input_container"> 
               <Input type="text" placeholder={t("msh_chat.c_input_placeholder")}  
               value={note}
@@ -277,40 +281,36 @@ export default function CommunIzi({userDB, user}) {
                   if(e.key === "Enter" && note) {
                     handleSubmit(e)
                     updateAdminSpeakStatus()
-                    // sendPushNotification({payload: payload})
+                    sendPushNotification({payload: payload})
                     setShowAlert(false)
+                  } else {
+                    if(e.key === "Enter") {
+                      return addNotification(t("msh_chat.c_alert_no_message"))
+                    }
                   }
                 }else{
                   if(e.key === "Enter") {
-                    e.preventDefault()
-                    return setShowAlert(true)
+                    return addNotification(t("msh_chat.c_alert"))
                   }
                 }
               }}
               id="dark_message_note" />
           </FormGroup>
               <div className="communizi-button-container">
-              {/*<OverlayTrigger
-                  placement="top"
-                  overlay={
-                    <Tooltip id="title">
-                      Ajouter une photo
-                    </Tooltip>
-                  }>
-                  <img src={Plus} alt="plus" className="communizi-file-button" onClick={handleShow} />          
-                </OverlayTrigger>*/}
                   <img src={Send} alt="sendIcon" className="communizi-send-button" onClick={(event) => {
                     if(expanded) {
                       if(note) {
                         handleSubmit(event)
                         updateAdminSpeakStatus()
-                        // sendPushNotification({payload: payload})
+                        sendPushNotification({payload: payload})
                         if(showAlert) {
                           showAlert(false)
                         }
+                      }else {
+                        return addNotification(t("msh_chat.c_alert_no_message"))
                       }
-                    }else{
-                      return setShowAlert(true)
+                    } else {
+                      addNotification(t("msh_chat.c_alert"))
                     }
                   }} />          
               </div>
@@ -407,9 +407,6 @@ export default function CommunIzi({userDB, user}) {
                 sendPushNotification({payload: payload})
               }}>Envoyer</Button>
       </Drawer>
-      {showAlert && <Alert variant="danger" style={{width: "20vw"}}>
-        {t('msh_chat.c_alert')}
-      </Alert>}
     </div>
   )
 }

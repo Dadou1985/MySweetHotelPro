@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { 
     Form, 
     Button, 
@@ -31,8 +31,10 @@ import {
     handleDeleteData2
 } from '../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../Firebase'
 
-const Clock = ({userDB}) =>{
+const Clock = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])

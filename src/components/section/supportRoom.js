@@ -1,9 +1,10 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import Message from './messageSupport'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { db } from '../../Firebase'
+import { db, FirebaseContext } from '../../Firebase'
 
-export default function SupportRoom({user, userDB, title}) {
+export default function SupportRoom({title}) {
+    const { user, userDB } = useContext(FirebaseContext)
 
     const [messages, setMessages] = useState([])
 
@@ -32,12 +33,10 @@ export default function SupportRoom({user, userDB, title}) {
         <div>
             <PerfectScrollbar>
                 {user&& userDB&& messages.map(flow => (
-                    <Message 
+                    <Message
                     author={flow.author}
                     text={flow.text}
                     date={flow.markup}
-                   user={user}
-                   userDB={userDB}
                    photo={flow.photo}
                     />
                 ))}

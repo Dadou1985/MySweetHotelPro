@@ -179,6 +179,7 @@ const Caisse = () =>{
                                 onChange={handleDateChange}
                                 onError={console.log}
                                 format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
+                                style={{left: "10%"}}
                                 autoOk
                             />                                        
                             </MuiPickersUtilsProvider>}

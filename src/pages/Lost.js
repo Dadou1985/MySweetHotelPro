@@ -15,7 +15,7 @@ const Lost = () => {
           }}>
           <ToolBar />
           {!!user && !!userDB &&
-          <LostNFound user={user} userDB={userDB} />}
+          <LostNFound />}
         </div>
     </>
   )

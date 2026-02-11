@@ -1,4 +1,4 @@
-import React, {useState, useEffect } from 'react'
+import React, {useState, useEffect, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import { storage } from '../../../../Firebase'
 import moment from 'moment'
@@ -24,12 +24,14 @@ import {
     handleChange,
     deleteData
 } from '../../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../../Firebase'
 
-/* 
+/*
     ! FIX => PHOTO SUBMISSION
 */
 
-const PhoneRepair = ({userDB}) =>{
+const PhoneRepair = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({
         room: "", 

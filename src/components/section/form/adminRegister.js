@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
-import { db, functions } from '../../../Firebase'
+import { db, functions, FirebaseContext } from '../../../Firebase'
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../../helper/formCommonFunctions'
 import { handleCreateData1, addNotification } from '../../../helper/globalCommonFunctions'
 import InputElement from '../../../helper/common/InputElement'
+import { sha256 } from 'js-sha256'
 
-const AdminRegister = ({hide, userDB}) => {
+const AdminRegister = ({hide}) => {
+    const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
@@ -15,9 +17,7 @@ const AdminRegister = ({hide, userDB}) => {
     const createUser = functions.httpsCallable('createUser')
     const sendNewCoworkerAccountMail = functions.httpsCallable('sendNewCoworkerAccountMail')
 
-    let newUid = userDB.hotelId + Date.now()
-
-    console.log("userDB: " + userDB.hotelId)
+    let newUid = sha256("mshPro" + Date.now() + userDB.hotelId)
 
     const createdData = {  
         username: formValue.username, 
@@ -35,11 +35,11 @@ const AdminRegister = ({hide, userDB}) => {
         room: userDB.room,
         country: userDB.country,
         code_postal: userDB.code_postal,
-        language: language.substring(0, 2),
-        logo: userDB.logo ? userDB.logo : null,
-        appLink: userDB.appLink ? userDB.appLink : null,
-        adresse: userDB.adresse,
-        website: userDB.website ? userDB.website : null,
+        language: language.substring(0, 2) ?? "fr",
+        logo: userDB.logo ?? null,
+        appLink: userDB.appLink ?? null,
+        adresse: userDB.adresse ?? null,
+        website: userDB.website ?? null,
         pricingModel: userDB.pricingModel
     }
 
@@ -50,21 +50,26 @@ const AdminRegister = ({hide, userDB}) => {
             coworkerName: formValue.username, 
             coworkerMail: formValue.email,
             mshLogo: "https://i.postimg.cc/YqRNzcSJ/msh-new-Logo-transparent.png", 
-            mshLogoPro: "https://i.postimg.cc/L68gRJHb/msh-Pro-new-Logo-transparent.png"
+            mshLogoPro: null
         })
     }
  
     const handleSubmit = async(event) => {
         event.preventDefault()
         //setFormValue("")
-        const notif = t("msh_admin_board.a_notif") 
-        await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return handleCreateData1(event, "businessUsers", newUid, createdData) 
-        .then(() => {
-            hide()
+        try {
+            const notif = `${t("msh_admin_board.a_notif")} ${formValue.username}`  
+            await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
+            return handleCreateData1(event, "businessUsers", newUid, createdData) 
+            .then(() => {
+                hide()
+                addNotification(notif, userDB.hotelId)
+                sendWelcomeMail()
+            })
+        } catch (error) {
+            const notif = t("msh_admin_board.a_notif_error_create_user") 
             addNotification(notif, userDB.hotelId)
-            sendWelcomeMail()
-        })
+        }
       }
 
     return (

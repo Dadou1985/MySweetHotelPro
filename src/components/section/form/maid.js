@@ -1,11 +1,11 @@
-import React, {useState, useEffect } from 'react'
-import { 
-    Form, 
-    Button, 
-    Table, 
-    Tabs, 
-    Tab, 
-    Modal, 
+import React, {useState, useEffect, useContext } from 'react'
+import {
+    Form,
+    Button,
+    Table,
+    Tabs,
+    Tab,
+    Modal,
     FloatingLabel,
     Popover,
     OverlayTrigger
@@ -35,8 +35,10 @@ import {
     handleDeleteData2
 } from '../../../helper/globalCommonFunctions'
 import { handleChange } from '../../../helper/formCommonFunctions'
+import { FirebaseContext } from '../../../Firebase'
 
-const Maid = ({userDB}) =>{
+const Maid = () =>{
+    const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
     const [info, setInfo] = useState([])
