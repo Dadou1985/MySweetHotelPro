@@ -1,67 +1,162 @@
+<!--
+  ════════════════════════════════════════════════════════════════════
+  README FLAGSHIP — dépôt Dadou1985/MySweetHotelPro
+  Remplace ce fichier README.md à la racine du dépôt.
+  À compléter avant publication :
+    - les captures d'écran (remplace les liens placeholder)
+    - la commande d'installation réelle si différente
+    - le numéro de couverture de tests si tu le connais
+  ════════════════════════════════════════════════════════════════════
+-->
 
-# My Sweet Hotel Pro
+<div align="center">
 
-My Sweet Hotel Pro est une solution digitale pensée pour aider les hôteliers à moderniser la gestion de leurs établissements.
+# 🏨 My Sweet Hotel Pro
 
-## Appendix
+**Application métier d'un SaaS de gestion hôtelière, en production.**
+Outil quotidien du personnel hôtelier : relation client, communication multilingue, suivi opérationnel et pilotage de l'établissement.
 
-Cette solution se décline en 2 entités applicatives (indépendantes mais complémentaires): l'une à destination du personnel hôtelier et l'autre à destination de la clientèle de l'hôtel.
+[🌐 Site vitrine](https://mysweethotel.com/) · [🚀 Application](https://mysweethotelpro.com/) · [⚙️ API (back-office)](https://github.com/Dadou1985/MSH-BackOffice)
 
-Il s'agit ici de l'application conçue pour accompagner le personnel hôtelier dans l'accomplissement de ses tâches quotidiennes.
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![Redux](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=white)
+![Gatsby](https://img.shields.io/badge/Gatsby-663399?logo=gatsby&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?logo=tailwind-css&logoColor=white)
+![Jest](https://img.shields.io/badge/Tested_with-Jest-C21325?logo=jest&logoColor=white)
+![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
+![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
-## Features
+</div>
 
-- Instruction book
-- Chat with translation in 5 languages
-- Customer relationship management
-- Lost & found
-- Dasboard with hotel metrics
-- Checklist editor
-- VTC call scheduler
-- Wake up call scheduler
-- Maintenance book
-- Cash sheet
-- Custom visual generator 
+---
 
+## 📌 En bref
 
-![Logo](https://i.postimg.cc/rmBw78YL/MSH-logo-small.png)
+My Sweet Hotel Pro est l'une des trois applications de la plateforme **My Sweet Hotel**, une solution digitale qui aide les hôteliers à moderniser la gestion de leurs établissements. La plateforme se décline en deux entités indépendantes mais complémentaires :
 
+- **My Sweet Hotel Pro** *(ce dépôt)* — l'application **destinée au personnel** de l'hôtel.
+- **My Sweet Hotel** — l'application **destinée aux clients** de l'hôtel.
 
-## Authors
+Ce dépôt couvre le front métier ; il s'appuie sur l'API **[MSH-BackOffice](https://github.com/Dadou1985/MSH-BackOffice)** (Node / TypeScript, GraphQL, temps réel) pour les données et la logique serveur.
 
-- [@davidsimba](https://www.github.com/Dadou1985)
+> 💡 **Mon rôle :** conception et développement de bout en bout — architecture front, intégration de l'API GraphQL et du temps réel, internationalisation, mise en place des tests, de la conteneurisation et du pipeline de déploiement.
 
+---
 
-## Demo
+## ✨ Fonctionnalités
 
-Voici le lien vers le site vitrine de notre solution: https://mysweethotel.com/
+| | Fonctionnalité | Description |
+|---|---|---|
+| 📖 | **Instruction book** | Base de procédures internes de l'établissement |
+| 💬 | **Chat multilingue** | Messagerie avec traduction automatique en 5 langues |
+| 👥 | **CRM** | Gestion de la relation client |
+| 🧳 | **Lost & found** | Suivi des objets trouvés |
+| 📊 | **Dashboard** | Indicateurs et métriques de l'hôtel |
+| ✅ | **Checklist editor** | Création et suivi de check-lists opérationnelles |
+| 🚕 | **VTC call scheduler** | Planification des courses VTC |
+| ⏰ | **Wake-up call scheduler** | Planification des réveils clients |
+| 🔧 | **Maintenance book** | Carnet de maintenance |
+| 💶 | **Cash sheet** | Suivi de caisse |
+| 🎨 | **Custom visual generator** | Génération de visuels personnalisés |
 
-Voici le lien vers l'application: https://mysweethotelpro.com/ 
+---
 
-Pour pouvoir la tester, il vous suffit de nous faire parvenir votre nom, prénom et adresse à l'adresse suivante: contact@mysweethotel.com
+## 🖼️ Captures d'écran
 
-Vous recevrez alors un e-mail contenant vos identifiants de connexion valables pendant 48h.
+> _À remplacer par de vraies captures — c'est le point le plus important pour un visiteur qui ne peut pas exécuter le code._
 
-## Installation
+| Tableau de bord | Chat multilingue |
+|---|---|
+| ![Dashboard](docs/screenshots/dashboard.png) | ![Chat](docs/screenshots/chat.png) |
 
-Install my-project with npm
+---
+
+## 🏗️ Architecture
+
+```
+┌─────────────────────────────┐        GraphQL (queries / mutations)
+│   My Sweet Hotel Pro         │  ───────────────────────────────────►  ┌──────────────────────────┐
+│   (ce dépôt)                 │                                         │   MSH-BackOffice (API)   │
+│                              │  ◄───────────────────────────────────   │   Node · TypeScript      │
+│   Gatsby · React · Zustand   │        Socket.IO (temps réel)           │   Apollo · Socket.IO     │
+│   Bootstap · i18n            │                                         │   MongoDB · Redis · JWT  │
+└─────────────────────────────┘                                         └──────────────────────────┘
+```
+
+Le front consomme l'API GraphQL pour les données et ouvre une connexion **Socket.IO** pour les notifications et le chat en temps réel. L'authentification repose sur des **JWT** délivrés par l'API.
+
+---
+
+## 🛠️ Stack technique
+
+**Front-end**
+- **Gatsby** (React) pour le rendu et l'organisation de l'application
+- **Redux** pour la gestion d'état
+- **Bootstrap** pour le styling
+- **i18n** — internationalisation de l'interface (dossier `i18n/`) ; chat traduit en 5 langues
+
+**Qualité & outillage**
+- **Jest** + mocks pour les tests unitaires (`__tests__/`, `__mocks__/`)
+- **Docker** / Docker Compose (dev & prod)
+- **GitHub Actions** pour l'intégration et le déploiement continus
+- **Firebase Hosting** (App Hosting) pour la mise en ligne
+
+**Back-end** *(dépôt séparé)*
+- [MSH-BackOffice](https://github.com/Dadou1985/MSH-BackOffice) — Node, TypeScript, Express, Apollo GraphQL, Socket.IO, MongoDB, Redis
+
+---
+
+## 🚀 Démo
+
+L'application est en production. Pour la tester avec un accès dédié :
+
+1. Envoie tes **nom, prénom et adresse** à [contact@mysweethotel.com](mailto:contact@mysweethotel.com)
+2. Tu recevras des identifiants de connexion valables **48 h**
+3. Connecte-toi sur [mysweethotelpro.com](https://mysweethotelpro.com/)
+
+---
+
+## 💻 Installation locale
+
+> Le projet nécessite l'accès à l'API [MSH-BackOffice](https://github.com/Dadou1985/MSH-BackOffice) et aux services Firebase.
 
 ```bash
-  npm install my-project
-  cd my-project
-```
-    
-## Deployment
+# Cloner le dépôt
+git clone https://github.com/Dadou1985/MySweetHotelPro.git
+cd MySweetHotelPro
 
-To deploy this project run
+# Installer les dépendances
+npm install
+
+# Lancer en développement
+npm run develop
+```
+
+Configurer les variables d'environnement nécessaires (clés Firebase, URL de l'API…) dans un fichier `.env` avant de démarrer.
 
 ```bash
-  npm run deploy
+# Lancer les tests
+npm test
+
+# Déployer
+npm run deploy
 ```
 
-## Tech Stack
+---
 
-**Client:** Gatsby.js, Bootstrap, Zustand, Tanstack Query
+## 🧠 Choix techniques notables
 
-**Server:** Node, Express
+- **Gatsby (React)** — un socle React structuré pour une application riche en écrans, avec un build optimisé et une bonne expérience de développement.
+- **GraphQL + Socket.IO** — GraphQL pour des échanges de données précis et typés avec l'API, Socket.IO pour le temps réel (chat, notifications) là où une requête classique ne suffit pas.
+- **Internationalisation native** — la traduction (5 langues) est pensée dès la conception, contrainte directe du secteur hôtelier international.
+- **Conteneurisation & CI/CD** — Docker + GitHub Actions pour des déploiements reproductibles, du dev à la production.
 
+---
+
+## 👤 Auteur
+
+**David Simba** — [@Dadou1985](https://github.com/Dadou1985) · [david.simba1985@gmail.com](mailto:david.simba1985@gmail.com)
+
+## 📄 Licence
+
+Distribué sous licence **MIT**.
