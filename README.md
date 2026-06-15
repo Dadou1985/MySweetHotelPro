@@ -24,7 +24,7 @@ Il s'agit ici de l'application conçue pour accompagner le personnel hôtelier d
 - Custom visual generator 
 
 
-![Logo](https://i.postimg.cc/pVY7w8Br/msh-Pro-new-Logo-transparent.png)
+![Logo](https://i.postimg.cc/rmBw78YL/MSH-logo-small.png)
 
 
 ## Authors
@@ -59,15 +59,9 @@ To deploy this project run
   npm run deploy
 ```
 
-
-## Screenshots
-
-![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
-
-
 ## Tech Stack
 
-**Client:** React, Redux, TailwindCSS
+**Client:** Gatsby.js, Bootstrap, Zustand, Tanstack Query
 
 **Server:** Node, Express
 
