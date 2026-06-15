@@ -75,11 +75,11 @@ Ce dépôt couvre le front métier ; il s'appuie sur l'API **[MSH-BackOffice](ht
 
 ```
 ┌─────────────────────────────┐        GraphQL (queries / mutations)
-│   My Sweet Hotel Pro         │  ───────────────────────────────────►  ┌──────────────────────────┐
-│   (ce dépôt)                 │                                         │   MSH-BackOffice (API)   │
-│                              │  ◄───────────────────────────────────   │   Node · TypeScript      │
-│   Gatsby · React · Zustand   │        Socket.IO (temps réel)           │   Apollo · Socket.IO     │
-│   Bootstap · i18n            │                                         │   MongoDB · Redis · JWT  │
+│   My Sweet Hotel Pro        │  ───────────────────────────────────►   ┌──────────────────────────┐
+│   (ce dépôt)                │                                         │   MSH-BackOffice (API)   │
+│                             │  ◄───────────────────────────────────   │   Node · TypeScript      │
+│   Gatsby · React · Zustand  │        Socket.IO (temps réel)           │   Apollo · Socket.IO     │
+│   Bootstap · i18n           │                                         │   MongoDB · Redis · JWT  │
 └─────────────────────────────┘                                         └──────────────────────────┘
 ```
 
