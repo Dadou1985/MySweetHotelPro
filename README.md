@@ -57,8 +57,9 @@ Ce dépôt couvre le front métier ; il s'appuie sur l'API **[MSH-BackOffice](ht
 
 ## 🖼️ Vidéo promotionnelle
 
-| ![](https://i.postimg.cc/d3vpC52s/Capture-d-e-cran-2026-06-15-a-17-26-03.png) |
-| ![Cliquez ici pour voir la vidéo](https://youtu.be/HWVkct0n6Zs?si=KYkKfblcUg6yq1_l) |
+![](https://i.postimg.cc/d3vpC52s/Capture-d-e-cran-2026-06-15-a-17-26-03.png) 
+
+![Cliquez ici pour voir la vidéo](https://youtu.be/HWVkct0n6Zs?si=KYkKfblcUg6yq1_l) 
 
 ---
 
