@@ -16,14 +16,8 @@
 **Application métier d'un SaaS de gestion hôtelière, en production.**
 Outil quotidien du personnel hôtelier : relation client, communication multilingue, suivi opérationnel et pilotage de l'établissement.
 
-[🌐 Site vitrine](https://mysweethotel.com/) · [🚀 Application](https://mysweethotelpro.com/) · [⚙️ API (back-office)](https://github.com/Dadou1985/MSH-BackOffice)
+[🚀 Application mobile](https://github.com/Dadou1985/MySweetHotel) · [🚀 Application](https://mysweethotelpro.com/) · [⚙️ API (back-office)](https://github.com/Dadou1985/MSH-BackOffice)
 
-![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
-![Redux](https://img.shields.io/badge/Redux-764ABC?logo=redux&logoColor=white)
-![Gatsby](https://img.shields.io/badge/Gatsby-663399?logo=gatsby&logoColor=white)
-![Tailwind CSS](https://img.shields.io/badge/Tailwind-38B2AC?logo=tailwind-css&logoColor=white)
-![Jest](https://img.shields.io/badge/Tested_with-Jest-C21325?logo=jest&logoColor=white)
-![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=white)
 ![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)
 
 </div>
