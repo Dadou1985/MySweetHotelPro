@@ -11,7 +11,7 @@ import { Modal, Button, Tooltip, OverlayTrigger, } from 'react-bootstrap'
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import Drawer from '@material-ui/core/Drawer'
-import { FirebaseContext, db, storage } from '../../Firebase'
+import { FirebaseContext, db, storage } from '../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"

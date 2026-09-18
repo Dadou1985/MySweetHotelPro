@@ -1,16 +1,16 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
-import { FirebaseContext } from '../../Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../helper/formCommonFunctions'
+import { handleChange } from '../../utils/formCommonFunctions'
 import { 
     handleUpdateData3, 
     fetchCollectionBySorting3, 
     handleSubmitData3, 
     handleDeleteData3,
     addNotification
-} from '../../helper/globalCommonFunctions'
+} from '../../utils/globalCommonFunctions'
 import '../css/section/checkList.css'
 
 const CheckListTable = ({shift}) => {

@@ -4,7 +4,7 @@ import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import 'moment/locale/fr';
 import '../css/section/chatTemplate.css'
-import { FirebaseContext } from '../../Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 
   const MessageSupport = ({author, text, date, photo}) =>{
     const { userDB } = useContext(FirebaseContext)

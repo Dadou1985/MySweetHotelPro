@@ -3,9 +3,9 @@ import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useTranslation } from "react-i18next"
 import '../css/section/createSticker.css'
 import PostIt from '../../images/postItPlus.png'
-import { handleChange } from '../../helper/formCommonFunctions'
-import { handleSubmitData2 } from '../../helper/globalCommonFunctions'
-import { FirebaseContext } from '../../Firebase'
+import { handleChange } from '../../utils/formCommonFunctions'
+import { handleSubmitData2 } from '../../utils/globalCommonFunctions'
+import { FirebaseContext } from '../../config/Firebase'
 
 /*
     ! FIX => OVERLAYtRIGGER TOOLTIP POSITION

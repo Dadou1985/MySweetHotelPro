@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { db, FirebaseContext } from '../../Firebase'
+import { db, FirebaseContext } from '../../config/Firebase'
 
 export default function ChatRoom({title}) {
     const { user, userDB } = useContext(FirebaseContext)

@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
-import Drawer from '../../helper/common/drawer'
+import Drawer from '../../utils/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
 import { StaticImage } from 'gatsby-plugin-image'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
 import Notifications from './notifications'
-import { db, auth, storage } from '../../Firebase'
+import { db, auth, storage } from '../../config/Firebase'
 import List from '@material-ui/core/List';
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -20,9 +20,9 @@ import { Link } from 'gatsby'
 import { Menubar } from 'primereact/menubar';
 import AdminRegister from './form/adminRegister'
 import UserList from './form/userList'
-import Logo from '../../svg/msh-newLogo-transparent.png'
+import Logo from '../../assets/svg/msh-newLogo-transparent.png'
 import '../css/section/navigation.css'
-import {FirebaseContext} from '../../Firebase'
+import {FirebaseContext} from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
 const Navigation = () =>{

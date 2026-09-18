@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import Support from '../../../../../svg/support.svg'
-import { db } from '../../../../../Firebase'
+import { db } from '../../../../../config/Firebase'
 import { navigate } from 'gatsby'
-import { fetchCollectionByMapping1 } from '../../../../../helper/globalCommonFunctions'
+import { fetchCollectionByMapping1 } from '../../../../../utils/commonFunctions'
 
 function SupportOverlay() {
   const [chatRoomQty, setChatRoomQty] = useState([])

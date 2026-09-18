@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { functions, specialFirestoreOptions, FirebaseContext } from '../../Firebase'
+import { functions, specialFirestoreOptions, FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -14,10 +14,10 @@ import { useTranslation } from "react-i18next"
 import TimeLine from './guestTimeLine'
 import defaultImg from "../../images/avatar-client.png"
 import { StaticImage } from 'gatsby-plugin-image'
-import { addNotification, handleCreateData2, fetchCollectionByMapping1, handleUpdateData1 } from '../../helper/globalCommonFunctions'
-import { handleChange } from '../../helper/formCommonFunctions'
-import InputElement from '../../helper/common/InputElement'
-import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate'
+import { addNotification, handleCreateData2, fetchCollectionByMapping1, handleUpdateData1 } from '../../utils/globalCommonFunctions'
+import { handleChange } from '../../utils/formCommonFunctions'
+import InputElement from '../../utils/InputElement'
+import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
 import '../css/common/loader.css'
 
 /* 

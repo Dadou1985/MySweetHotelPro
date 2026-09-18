@@ -1,10 +1,10 @@
 import React, { useState, useContext } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
-import { db, functions, FirebaseContext } from '../../../Firebase'
+import { db, functions, FirebaseContext } from '../../../config/Firebase'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../../helper/formCommonFunctions'
-import { handleCreateData1, addNotification } from '../../../helper/globalCommonFunctions'
-import InputElement from '../../../helper/common/InputElement'
+import { handleChange } from '../../../utils/formCommonFunctions'
+import { handleCreateData1, addNotification } from '../../../utils/commonFunctions'
+import InputElement from '../../../utils/form/InputElement'
 import { sha256 } from 'js-sha256'
 
 const AdminRegister = ({hide}) => {

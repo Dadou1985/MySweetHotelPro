@@ -10,7 +10,7 @@ import moment from 'moment'
 import 'moment/locale/fr';
 import Avatar from 'react-avatar'
 import Checkbox from '@material-ui/core/Checkbox';
-import { FirebaseContext, db } from '../../Firebase'
+import { FirebaseContext, db } from '../../config/Firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import '../css/section/accordion.css'

@@ -1,7 +1,7 @@
 import React, {useState, useEffect } from 'react'
 import { Form, Button, Alert, DropdownButton, Dropdown, Spinner, Modal, ProgressBar } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { auth, db, storage, functions } from '../../Firebase'
+import { auth, db, storage, functions } from '../../config/Firebase'
 import { useShortenUrl } from 'react-shorten-url';
 import { sha256 } from 'js-sha256';
 import Divider from '@material-ui/core/Divider';
@@ -10,8 +10,8 @@ import Drawer from '@material-ui/core/Drawer'
 import '../css/section/registerFormSteps.css'
 import { useTranslation } from "react-i18next"
 
-import HotelLogo from '../../svg/hotel.svg'
-import Close from '../../svg/close.svg'
+import HotelLogo from '../../assets/svg/hotel.svg'
+import Close from '../../assets/svg/close.svg'
 
 export default function RegisterFormSteps() {
     const [stepOne, setStepOne] = useState(true)

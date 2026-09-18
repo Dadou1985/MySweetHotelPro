@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
-import { auth } from '../Firebase'
+import { auth } from '../config/Firebase'
 import { navigate } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../i18n/withTrans'
-import { handleChange } from '../helper/formCommonFunctions'
+import { handleChange } from '../utils/formCommonFunctions'
 import './css/section/connection.css'
 import { Modal } from 'react-bootstrap'
 import RegisterForm from './section/form/registerForm'

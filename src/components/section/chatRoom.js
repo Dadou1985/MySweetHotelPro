@@ -4,8 +4,8 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import {
     fetchCollectionByMapping2,
     fetchCollectionBySorting3
-} from '../../helper/globalCommonFunctions'
-import { FirebaseContext } from '../../Firebase'
+} from '../../utils/globalCommonFunctions'
+import { FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
 // Helper to process Firestore snapshots
 const processSnapshot = (snapshot) => {

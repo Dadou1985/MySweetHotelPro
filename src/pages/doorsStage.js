@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import Dilema from '../components/section/dilema'
-import {FirebaseContext} from '../Firebase'
+import {FirebaseContext} from '../config/Firebase'
 import { ShortenUrlProvider } from 'react-shorten-url';
 import { withTrans } from '../../i18n/withTrans'
 

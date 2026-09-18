@@ -2,13 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useTranslation } from "react-i18next"
 import { Chart } from 'primereact/chart'
 import { StaticImage } from 'gatsby-plugin-image'
-import { fetchCollectionByMapping2 } from '../../helper/globalCommonFunctions';
+import { fetchCollectionByMapping2 } from '../../utils/globalCommonFunctions';
 import {
     stackedDataForWeek, 
     stackedDataForMonth, 
     stackedDataForSemester, 
     stackedDataForYear} 
-from '../../helper/common/timeRange/stackedData';
+from '../../utils/timeRange/stackedData';
 
 const MaintenancePieChart = ({userDB, filter, period}) => {
     const [data, setData] = useState([])

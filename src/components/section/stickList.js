@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import PostIt from './postIt'
 import CreateSticker from './createSticker'
-import { db } from '../../Firebase'
-import { FirebaseContext } from '../../Firebase'
+import { db } from '../../config/Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 
 const StickList = () => {
 

@@ -4,15 +4,15 @@ import moment from 'moment'
 import 'moment/locale/fr'
 import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
-import Notebook from '../../svg/notebook.png'
+import Notebook from '../../assets/svg/notebook.png'
 import ChatLogo from '../../images/chat.png'
 import BarChart from '../../images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate'
-import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../helper/globalCommonFunctions';
-import { stackedDataForWeek } from '../../helper/common/timeRange/stackedData'
-import { sevenDayAgo } from '../../helper/common/timeRange/week'
-import { FirebaseContext } from '../../Firebase'
+import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../utils/globalCommonFunctions';
+import { stackedDataForWeek } from '../../utils/timeRange/stackedData'
+import { sevenDayAgo } from '../../utils/timeRange/week'
+import { FirebaseContext } from '../../config/Firebase'
 import '../css/section/dashboard.css'
 
 const Dashboard = () => {

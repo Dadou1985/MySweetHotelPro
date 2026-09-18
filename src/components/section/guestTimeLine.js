@@ -12,9 +12,9 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import moment from 'moment'
 import 'moment/locale/fr';
-import { fetchCollectionBySorting3, fetchCollectionByCombo2 } from '../../helper/globalCommonFunctions'
-import { FirebaseContext } from '../../Firebase'
-import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
+import { fetchCollectionBySorting3, fetchCollectionByCombo2 } from '../../utils/globalCommonFunctions'
+import { FirebaseContext } from '../../config/Firebase'
+import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate';
 import '../css/section/timeLine.css'
 
 const GuestTimeLine = ({guestId}) => {

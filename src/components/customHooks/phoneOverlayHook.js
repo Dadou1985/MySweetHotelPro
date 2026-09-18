@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
-import Cab from '../../svg/taxi.svg'
-import Clock from '../../svg/timer.svg'
-import Maintenance from '../../svg/repair.svg'
-import Chat from '../../svg/chat.png'
-import RoomChange from '../../svg/logout.svg'
+import Cab from '../../assets/svg/taxi.svg'
+import Clock from '../../assets/svg/timer.svg'
+import Maintenance from '../../assets/svg/repair.svg'
+import Chat from '../../assets/svg/chat.png'
+import RoomChange from '../../assets/svg/logout.svg'
 
-import { db, FirebaseContext } from '../../Firebase'
+import { db, FirebaseContext } from '../../config/Firebase'
 import { navigate } from 'gatsby'
 
 function PhoneOverlayHook({category, index}) {

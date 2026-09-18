@@ -3,7 +3,7 @@ import { QRCode } from 'react-qrcode-logo';
 import Divider from '@material-ui/core/Divider';
 import MshScreen from "./mshAppScreenBand"
 import '../css/section/band.css'
-import MshLogo from '../../svg/new-logo-msh.png'
+import MshLogo from '../../assets/svg/new-logo-msh.png'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
 

@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useContext } from 'react'
 import NotificationsBar from './notificationsBar'
-import { FirebaseContext, db } from '../../Firebase'
+import { FirebaseContext, db } from '../../config/Firebase'
 
 export default function Notifications() {
 

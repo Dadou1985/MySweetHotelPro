@@ -2,9 +2,9 @@ import React, { useState, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import { Modal, ModalBody } from 'react-bootstrap'
 import DoughnutChart from "./roomChangeDoughtnut"
-import { oneWeekAgo, fourWeekAgo } from '../../helper/common/timeRange/month'
-import { sixMonthAgo, twelveMonthAgo } from '../../helper/common/timeRange/year'
-import { FirebaseContext } from '../../Firebase'
+import { oneWeekAgo, fourWeekAgo } from '../../utils/timeRange/month'
+import { sixMonthAgo, twelveMonthAgo } from '../../utils/timeRange/year'
+import { FirebaseContext } from '../../config/Firebase'
 
 const RoomChangeRate = ({showModal, closeModal}) => {
     const { userDB } = useContext(FirebaseContext)

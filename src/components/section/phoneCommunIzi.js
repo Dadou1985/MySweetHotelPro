@@ -16,7 +16,7 @@ import {
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import { db, functions, storage, FirebaseContext } from '../../Firebase'
+import { db, functions, storage, FirebaseContext } from '../../config/Firebase'
 import Switch from '@material-ui/core/Switch';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem'
 import { useTranslation } from "react-i18next"

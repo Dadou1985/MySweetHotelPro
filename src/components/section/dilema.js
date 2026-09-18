@@ -2,7 +2,7 @@ import React, {useState, useEffect, useRef, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Form, Button, Modal, OverlayTrigger, Tooltip, Spinner, Alert } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar';
-import { db, auth, storage, FirebaseContext } from '../../Firebase'
+import { db, auth, storage, FirebaseContext } from '../../config/Firebase'
 import Divider from '@material-ui/core/Divider';
 import Sticker from './sticker'
 import Flyer from './flyer'
@@ -12,8 +12,8 @@ import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
 import DefaultProfile from "../../svg/profile.png"
 import { StaticImage } from 'gatsby-plugin-image'
-import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../helper/globalCommonFunctions'
-import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate';
+import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../utils/globalCommonFunctions'
+import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate';
 import '../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
 

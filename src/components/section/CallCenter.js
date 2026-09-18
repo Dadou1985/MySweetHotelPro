@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { Form, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
-import Assistance from '../../svg/support-technique.svg'
+import Assistance from '../../assets/svg/support-technique.svg'
 import Send from '../../images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { db, FirebaseContext } from '../../Firebase'
+import { db, FirebaseContext } from '../../config/Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../svg/profile.png"
 import Bubble from "../../svg/bubble.svg"
@@ -16,7 +16,7 @@ import {
   fetchCollectionBySorting2, 
   handleSubmitData2, 
   handleCreateData1
-} from '../../helper/globalCommonFunctions'
+} from '../../utils/globalCommonFunctions'
 import '../css/section/chatTemplate.css'
 
 export default function CallCenter() {

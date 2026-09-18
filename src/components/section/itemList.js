@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { FirebaseContext } from '../../Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { fetchCollectionBySorting3, handleDeleteData3 } from '../../helper/globalCommonFunctions';
+import { fetchCollectionBySorting3, handleDeleteData3 } from '../../utils/globalCommonFunctions';
 
 const ItemList = ({item}) => {
 

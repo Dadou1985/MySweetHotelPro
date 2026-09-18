@@ -7,7 +7,7 @@ import { Tab, Tabs, Table } from 'react-bootstrap'
 import Avatar from 'react-avatar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { functions, storage, FirebaseContext } from '../../Firebase'
+import { functions, storage, FirebaseContext } from '../../config/Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import Bubbles from '../../images/bubbles.png'
@@ -19,7 +19,7 @@ import {
     fetchCollectionByMapping2,
     handleSubmitData3,
     handleSubmitData1
-} from '../../helper/globalCommonFunctions'
+} from '../../utils/globalCommonFunctions'
 import '../css/section/chat.css'
 
 /*

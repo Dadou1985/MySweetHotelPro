@@ -1,7 +1,7 @@
 import React, {useState } from 'react'
 import Stick from '../../images/postIt.png'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { db } from '../../Firebase'
+import { db } from '../../config/Firebase'
 import Avatar from 'react-avatar'
 import  '../css/section/post-it.css'
 import { useTranslation } from "react-i18next"

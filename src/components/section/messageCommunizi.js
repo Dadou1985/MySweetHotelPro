@@ -5,7 +5,7 @@ import DefaultProfile from "../../svg/profile.png"
 import DefaultImg from "../../images/avatar-client.png"
 import 'moment/locale/fr';
 import '../css/section/chatTemplate.css'
-import { FirebaseContext } from '../../Firebase';
+import { FirebaseContext } from '../../config/Firebase';
 
 const MessageCommunizi = ({author, text, date, translation, photo, markup, title, key, lastMessage}) =>{
   const {userDB} = useContext(FirebaseContext)

@@ -18,14 +18,14 @@ import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
-import { handleChange } from '../../helper/formCommonFunctions'
+import { handleChange } from '../../utils/formCommonFunctions'
 import { 
   handleUpdateData1, 
   fetchCollectionBySorting1, 
   handleSubmitData2, 
   addNotification 
-} from '../../helper/globalCommonFunctions'
-import { FirebaseContext } from '../../Firebase'
+} from '../../utils/globalCommonFunctions'
+import { FirebaseContext } from '../../config/Firebase'
 
 export default function Assistance() {
   const { user, userDB } = useContext(FirebaseContext)

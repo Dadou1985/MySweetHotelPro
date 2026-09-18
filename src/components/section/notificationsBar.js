@@ -1,6 +1,6 @@
 import React, {useState } from 'react'
 import { Snackbar } from '@material-ui/core'
-import { db } from '../../Firebase'
+import { db } from '../../config/Firebase'
 
 
 export default function NotificationsBar({message, markup}) {

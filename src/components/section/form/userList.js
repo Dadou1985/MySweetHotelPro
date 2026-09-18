@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
-import { functions, FirebaseContext } from '../../../Firebase'
+import { functions, FirebaseContext } from '../../../config/Firebase'
 import Switch from '@material-ui/core/Switch';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from '../../../helper/globalCommonFunctions';
+import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from '../../../utils/commonFunctions';
 
 const UserList = () => {
     const { userDB } = useContext(FirebaseContext)

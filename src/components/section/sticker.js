@@ -1,10 +1,10 @@
 import React from 'react'
 import { QRCode } from 'react-qrcode-logo';
-import ChatLogo from '../../svg/chat.png'
-import HousekeepingLogo from '../../svg/maid.svg'
-import RepairLogo from '../../svg/repair.svg'
-import TimerLogo from '../../svg/timer.svg'
-import CabLogo from '../../svg/taxi.svg'
+import ChatLogo from '../../assets/svg/chat.png'
+import HousekeepingLogo from '../../assets/svg/maid.svg'
+import RepairLogo from '../../assets/svg/repair.svg'
+import TimerLogo from '../../assets/svg/timer.svg'
+import CabLogo from '../../assets/svg/taxi.svg'
 import '../css/section/sticker.css'
 import { useTranslation } from "react-i18next"
 

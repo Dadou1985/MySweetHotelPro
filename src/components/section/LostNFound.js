@@ -1,18 +1,18 @@
 import React, { useState, useEffect, useContext } from 'react'
 import LostOnes from '../../images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
-import { storage, FirebaseContext } from '../../Firebase'
+import { storage, FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
-import Picture from '../../svg/picture.svg'
+import Picture from '../../assets/svg/picture.svg'
 import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../helper/formCommonFunctions'
-import { addNotification, fetchCollectionByCombo2, handleDeleteData2, handleSubmitData2 } from '../../helper/globalCommonFunctions'
-import ModalHeaderFormTemplate from '../../helper/common/modalHeaderFormTemplate'
-import InputElement from '../../helper/common/InputElement'
-import TextareaElement from '../../helper/common/textareaElement'
-import AddPhotoURL from '../../svg/camera.svg'
+import { handleChange } from '../../utils/formCommonFunctions'
+import { addNotification, fetchCollectionByCombo2, handleDeleteData2, handleSubmitData2 } from '../../utils/globalCommonFunctions'
+import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
+import InputElement from '../../utils/InputElement'
+import TextareaElement from '../../utils/textareaElement'
+import AddPhotoURL from '../../assets/svg/camera.svg'
 
 const LostNFound = () =>{
     const { userDB } = useContext(FirebaseContext)

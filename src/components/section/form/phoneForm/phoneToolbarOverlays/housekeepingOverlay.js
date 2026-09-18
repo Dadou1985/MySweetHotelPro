@@ -2,7 +2,7 @@ import React, {useState, useEffect, useContext } from 'react'
 import Maid from '../../../../../svg/maid.svg'
 import { navigate } from 'gatsby'
 import { fetchCollectionBySorting3 } from '../../../../../helper/globalCommonFunctions'
-import { FirebaseContext } from '../../../../../Firebase'
+import { FirebaseContext } from '../../../../../config/Firebase'
 
 function HousekeepingOverlay() {
     const { userDB } = useContext(FirebaseContext)

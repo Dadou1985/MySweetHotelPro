@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react'
 import Assistance from '../../../../../svg/support-technique.svg'
-import { db, FirebaseContext } from '../../../../../Firebase'
+import { db, FirebaseContext } from '../../../../../config/Firebase'
 import { navigate } from 'gatsby'
 import Bubble from "../../../../../svg/bubble.svg"
 import { StaticImage } from 'gatsby-plugin-image'

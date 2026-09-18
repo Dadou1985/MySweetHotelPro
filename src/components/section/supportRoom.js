@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useContext } from 'react'
 import Message from './messageSupport'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import { db, FirebaseContext } from '../../Firebase'
+import { db, FirebaseContext } from '../../config/Firebase'
 
 export default function SupportRoom({title}) {
     const { user, userDB } = useContext(FirebaseContext)

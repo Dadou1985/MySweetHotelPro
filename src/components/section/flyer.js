@@ -4,7 +4,7 @@ import Divider from '@material-ui/core/Divider';
 import MshScreen from "./mshAppScreenFlyer"
 import '../css/section/flyer.css'
 import { useTranslation } from "react-i18next"
-import MshLogo from '../../svg/new-logo-msh.png'
+import MshLogo from '../../assets/svg/new-logo-msh.png'
 
 export default function Flyer({url, logo}) {
     const { t } = useTranslation()
