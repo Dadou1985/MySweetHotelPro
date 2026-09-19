@@ -1,10 +1,10 @@
 import React, {useState, useContext } from 'react'
 import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import ItemList from '../itemList'
-import Maid from '../../../svg/maid.svg'
+import Maid from '../../../assets/svg/maid.svg'
 import { FirebaseContext } from '../../../config/Firebase'
 import Badge from '@material-ui/core/Badge'
-import StyleBadge from '../../../utils/common/badgeMaker'
+import StyleBadge from '../../../utils/badge/badgeMaker'
 import { withStyles } from '@material-ui/core/styles';
 import { useTranslation } from "react-i18next"
 import { useFirestoreSubscription } from '../../../utils/hooks/useFirestore'

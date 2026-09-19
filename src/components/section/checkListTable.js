@@ -3,7 +3,7 @@ import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext } from '../../config/Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../utils/formCommonFunctions'
+import { handleChange } from '../../utils/form/formCommonFunctions'
 import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../utils/hooks/useFirestore'
 import '../css/section/checkList.css'
 

@@ -11,7 +11,7 @@ import {
 } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import InputElement from '../../../../helper/common/InputElement'
+import InputElement from '../../../../utils/form/InputElement'
 import { handleChange } from '../../../../utils/form/formCommonFunctions'
 import { FirebaseContext } from '../../../../config/Firebase'
 import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'

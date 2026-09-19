@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, DropdownButton, Dropdown, ButtonGroup, ToggleButton } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { db, functions, FirebaseContext } from '../../../../Firebase'
+import { functions, FirebaseContext } from '../../../../config/Firebase'
 import Drawer from '@material-ui/core/Drawer'
-import Close from '../../../../svg/close.svg'
+import Close from '../../../../assets/svg/close.svg'
+import { useFirestoreSubscription, useAdd } from '../../../../utils/hooks/useFirestore'
+import { handleMutateUpdate, handleMutateAdd, handleMutateSet } from '../../../../utils/commonFunctions'
 
 export default function PhoneMagic() {
     const { user, userDB } = useContext(FirebaseContext)
@@ -32,12 +34,15 @@ export default function PhoneMagic() {
     })
     const [activateAdminMaker, setActivateAdminMaker] = useState(false)
     const [activateCreateHotel, setActivateCreateHotel] = useState(false)
-    const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
-    const [hotelUsers, setHotelUsers] = useState([])
     const [radioValue, setRadioValue] = useState('Freemium');
+
+    const { data: info = [] } = useFirestoreSubscription(['hotels'], { where: ['code_postal', '==', filter], enabled: !!filter })
+    const { data: hotelUsers = [] } = useFirestoreSubscription(['businessUsers'], { where: ['hotelId', '==', formValue.hotelId], enabled: !!formValue.hotelId })
+
+    const { mutate: notify } = useAdd()
 
 
     const handleChange = (event) =>{
@@ -57,69 +62,17 @@ export default function PhoneMagic() {
         setInitialFilter(event.currentTarget.value)
     }
 
-    useEffect(() => {
-        const getHotel = () => {
-            return db.collection("hotels")
-            .where("code_postal", "==", filter)
-            }
-
-        let unsubscribe = getHotel().onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-    }, [filter])
-
-    useEffect(() => {
-            if(formValue.hotelId) {
-                const getHotelUsers = () => {
-                    return db.collection("businessUsers")
-                    .where("hotelId", "==", formValue.hotelId)
-                    }
-        
-                let unsubscribe = getHotelUsers().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setHotelUsers(snapInfo)
-                });
-                return unsubscribe
-            }
-    }, [formValue.hotelId])
-
-    const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
     const handleChangeUserPricingModel = (userId, newPricingModel) => {
-        return db.collection('businessUsers')
-            .doc(userId)
-            .update({pricingModel: newPricingModel})
+        return handleMutateUpdate(['businessUsers', userId], { pricingModel: newPricingModel })
     }
 
     const getPartner = async(pricingModel) => {
         const notif = `${hotelName} a été activé avec succès en compte ${pricingModel} !`
-            await db.collection("hotels")
-                .doc(formValue.hotelId)
-                .update({
+            await handleMutateUpdate(['hotels', formValue.hotelId], {
                     partnership: true,
                     pricingModel: pricingModel
-                })                
-                .then(addNotification(notif))
+                })
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
 
                 if(hotelUsers.length > 0) {
                     return hotelUsers.map(user => {
@@ -127,13 +80,12 @@ export default function PhoneMagic() {
                     })
                 }
 
-            
+
         }
 
     const createHotel = () => {
         const notif = "Vous venez de créer un hôtel !"
-        return db.collection("hotels")
-            .add({
+        return handleMutateAdd(['hotels'], {
                 hotelName: formValue.hotelName,
                 adresse: formValue.adress,
                 classement: formValue.standing,
@@ -153,8 +105,8 @@ export default function PhoneMagic() {
             .then(()=>{
                 setFormValue("" || 0)
                 setActivateCreateHotel(false)
-                addNotification(notif)
-            }) 
+                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+            })
         }
     
 
@@ -168,11 +120,9 @@ export default function PhoneMagic() {
         //setFormValue("")
         const notif = "Vous venez de créer un super-administrateur !"
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return db.collection('businessUsers')
-        .doc(newUid)
-        .set({   
-        username: formValue.username, 
-        adminStatus: true, 
+        return handleMutateSet(['businessUsers', newUid], {
+        username: formValue.username,
+        adminStatus: true,
         email: formValue.email,
         password: "password",
         hotelId: formValue.hotelId,
@@ -190,12 +140,12 @@ export default function PhoneMagic() {
         logo: formValue.logo,
         appLink: formValue.appLink,
         pricingModel: formValue.pricing
-        }) 
+        })
         .then(()=>{
             setFormValue("" || 0)
             setActivateAdminMaker(false)
-            addNotification(notif)
-        }) 
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+        })
     }
 
     const sendEmail = () => {

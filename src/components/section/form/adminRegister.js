@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
 import { functions, FirebaseContext } from '../../../config/Firebase'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../../utils/formCommonFunctions'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import InputElement from '../../../utils/form/InputElement'
 import { sha256 } from 'js-sha256'
 import { useSet, useAdd } from '../../../utils/hooks/useFirestore'

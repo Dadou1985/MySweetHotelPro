@@ -4,7 +4,7 @@ import { FirebaseContext } from '../../../config/Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
-import { handleChange } from '../../../utils/formCommonFunctions'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import InputElement from '../../../utils/form/InputElement'
 import { useFirestoreSubscription, useAdd, useDelete } from '../../../utils/hooks/useFirestore'
 
@@ -53,7 +53,7 @@ const Annuaire = () =>{
                 {t("msh_coolbar.tooltip_phone_book")}
               </Tooltip>
             }>
-                <StaticImage objectFit='contain' src='../../../svg/contacts.svg' placeholder="blurred" className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
+                <StaticImage objectFit='contain' src='../../../assets/svg/contacts.svg' placeholder="blurred" className="icon" alt="contact" onClick={handleShow} style={{width: "25%"}} />
             </OverlayTrigger>
 
 

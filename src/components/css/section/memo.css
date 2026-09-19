@@ -1,7 +1,7 @@
 .memo_container {
     width: 95%;
     height: 65vh;
-    background-image: url("../../../images/tableau.jpg");
+    background-image: url("../../../assets/images/tableau.jpg");
     background-size: contain;
     background-repeat: no-repeat;
     background-position-x: center;

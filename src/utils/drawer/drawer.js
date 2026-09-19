@@ -4,7 +4,7 @@ import List from '@material-ui/core/List';
 import Divider from '@material-ui/core/Divider';
 import MenuSharpIcon from '@material-ui/icons/MenuSharp'
 import Lost from '../../assets/svg/lost-items.svg'
-import Dasboard from "../../images/dashboard.png"
+import Dasboard from "../../assets/images/dashboard.png"
 import CheckList from '../../assets/svg/todoList.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'

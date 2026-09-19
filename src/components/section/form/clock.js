@@ -7,7 +7,7 @@ import {
     Tab,
     Modal,
 } from 'react-bootstrap'
-import Timer from '../../../svg/timer.svg'
+import Timer from '../../../assets/svg/timer.svg'
 import moment from 'moment'
 import 'moment/locale/fr'
 import Switch from '@material-ui/core/Switch'
@@ -18,11 +18,11 @@ import {
 } from '@material-ui/pickers';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { StyledBadge } from '../../../utils/formCommonUI'
+import { StyledBadge } from '../../../utils/form/formCommonUI'
 import InputElement from "../../../utils/form/InputElement"
-import BadgeContent from '../../../utils/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
-import { handleChange } from '../../../utils/formCommonFunctions'
+import BadgeContent from '../../../utils/badge/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/modal/modalHeaderFormTemplate'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import { FirebaseContext } from '../../../config/Firebase'
 import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../utils/hooks/useFirestore'
 

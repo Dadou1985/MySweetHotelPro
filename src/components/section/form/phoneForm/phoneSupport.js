@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { Form } from 'react-bootstrap'
-import Send from '../../../../images/paper-plane.png'
+import Send from '../../../../assets/images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
 import { db, FirebaseContext } from '../../../../config/Firebase'
 import Avatar from '@material-ui/core/Avatar';
-import DefaultProfile from "../../../../svg/profile.png"
+import DefaultProfile from "../../../../assets/svg/profile.png"
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../../../utils/form/formCommonFunctions'
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'

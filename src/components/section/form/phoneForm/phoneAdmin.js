@@ -5,7 +5,7 @@ import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import InputElement from '../../../../helper/common/InputElement'
+import InputElement from '../../../../utils/form/InputElement'
 import { useFirestoreSubscription, useAdd, useSet, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 function PhoneAdmin() {

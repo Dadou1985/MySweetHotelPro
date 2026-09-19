@@ -1,19 +1,20 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar'
-import DefaultProfile from "../../../../svg/profile.png"
+import DefaultProfile from "../../../../assets/svg/profile.png"
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import { auth, db, storage } from '../../../../Firebase'
+import { auth, db, storage } from '../../../../config/Firebase'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phoneUserProfile.css'
-import InputElement from '../../../../helper/common/InputElement'
+import InputElement from '../../../../utils/form/InputElement'
 import { sha256 } from 'js-sha256'
+import { useFirestoreSubscription, useAdd } from '../../../../utils/hooks/useFirestore'
+import { handleMutateUpdate } from '../../../../utils/commonFunctions'
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [formValue, setFormValue] = useState({email: "", password: ""})
     const [img, setImg] = useState(null)
@@ -22,6 +23,9 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const [confModal, setConfModal] = useState(true)
     const [url, setUrl] = useState("")
     const { t, i18n } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(['businessUsers'], { where: ['userId', '==', user.uid] })
+    const { mutate: notify } = useAdd()
 
     const handleChange = (event) =>{
         event.persist()
@@ -55,24 +59,16 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const handleUpdateEmail = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        
-        return db.collection('businessUsers')
-            .doc(user.uid)
-            .update({
-                email: field
-            })
+
+        return handleMutateUpdate(['businessUsers', user.uid], { email: field })
             .then(handleLoadUserDB())
     }
 
     const handleUpdatePassword = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        
-        return db.collection('businessUsers')
-            .doc(user.uid)
-            .update({
-                password: sha256(field)
-            })
+
+        return handleMutateUpdate(['businessUsers', user.uid], { password: sha256(field) })
             .then(handleLoadUserDB())
     }
 
@@ -110,52 +106,23 @@ const UserProfile = ({user, userDB, setUserDB}) => {
 
     const handleCloseUpdatePhoto = () => setConfModal(false)
 
-      useEffect(() => {
-        const iziUserOnAir2 = () => {
-            return db.collection('businessUsers')
-                .where("userId", "==", user.uid)
-        }
-
-       let unsubscribe = iziUserOnAir2().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-               
-                return unsubscribe
-                
-     },[])
-
-     const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
     const handleChangeEmail = () => {
         const notif = t("msh_user_panel.u_section.s_email.e_notif")
 
          auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
-            addNotification(notif)
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
       }
 
       const handleChangePassword = () => {
-        const notif = t("msh_user_panel.u_section.s_password.p_notif")  
+        const notif = t("msh_user_panel.u_section.s_password.p_notif")
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updatePassword(formValue.password)
-            addNotification(notif)
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
     }
     

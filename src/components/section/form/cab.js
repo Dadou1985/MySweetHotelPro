@@ -7,7 +7,7 @@ import {
     Modal,
     FloatingLabel
 } from 'react-bootstrap'
-import Taxi from '../../../svg/taxi.svg'
+import Taxi from '../../../assets/svg/taxi.svg'
 import moment from 'moment'
 import 'moment/locale/fr';
 import DateFnsUtils from '@date-io/date-fns';
@@ -17,12 +17,12 @@ import {
 } from '@material-ui/pickers';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { StyledBadge } from '../../../utils/formCommonUI'
+import { StyledBadge } from '../../../utils/form/formCommonUI'
 import InputElement from "../../../utils/form/InputElement"
-import BadgeContent from '../../../utils/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
-import TableTemplate from '../../../utils/common/tableTemplate';
-import { handleChange } from '../../../utils/formCommonFunctions'
+import BadgeContent from '../../../utils/badge/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/modal/modalHeaderFormTemplate'
+import TableTemplate from '../../../utils/table/tableTemplate';
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import { FirebaseContext } from '../../../config/Firebase'
 import { useFirestoreSubscription, useAdd } from '../../../utils/hooks/useFirestore'
 

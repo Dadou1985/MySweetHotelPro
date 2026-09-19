@@ -4,7 +4,7 @@ import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import { handleChange } from '../../../../utils/form/formCommonFunctions'
-import TextareaElement from '../../../../helper/common/textareaElement'
+import TextareaElement from '../../../../utils/form/textareaElement'
 import { FirebaseContext } from '../../../../config/Firebase'
 import { useAdd } from '../../../../utils/hooks/useFirestore'
 

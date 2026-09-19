@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
 import { navigate } from 'gatsby'
 import { Navbar,  Modal, Button, Tab, FloatingLabel, Row, Col, Nav, Form } from 'react-bootstrap'
-import Drawer from '../../utils/drawer'
+import Drawer from '../../utils/drawer/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
 import { StaticImage } from 'gatsby-plugin-image'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
@@ -199,7 +199,7 @@ const Navigation = () =>{
                     onClick={handleMove}>
                         <img src={userDB?.logo ? userDB.logo : Logo} className="logo-msh" alt="Logo MSH" /></Navbar.Brand>
                     {user?.uid === process.env.GATSBY_GHOST_HOST_UID && <div onClick={() => handleShowDrawer()}>
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/superhero.svg' className="super-admin-icon" style={{display: isMobile}} alt="Logo" />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/superhero.svg' className="super-admin-icon" style={{display: isMobile}} alt="Logo" />
                         </div>}
                     {/*<div style={{display: typeof window && window.innerWidth < 768 ? "none" : "flex", fontSize: "1.5em"}}>{moment().format('LL')}</div>*/}
                     <div style={{
@@ -356,9 +356,9 @@ const Navigation = () =>{
                 <h4 className="drawer_title">Super Menu</h4>
                     <List className="drawer_listIcons3">
                     <Support />
-                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><StaticImage objectFit='contain' placeholder='blurred' src='../../svg/magician.svg' alt="Magic box" className="drawer_icons" /></a>
+                    <a href="https://mysweethotelpro.com/registerForm" target="_blank"><StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/magician.svg' alt="Magic box" className="drawer_icons" /></a>
                     <div onClick={()=>{navigate("/ghostHost")}}>
-                        <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/ghost.svg' alt="Ghost Host" className="drawer_icons" />
+                        <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/svg/ghost.svg' alt="Ghost Host" className="drawer_icons" />
                     </div>
                     </List>
                </div>

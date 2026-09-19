@@ -8,21 +8,21 @@ import {
     Modal,
     FloatingLabel
 } from 'react-bootstrap'
-import Maintenance from '../../../svg/repair.svg'
+import Maintenance from '../../../assets/svg/repair.svg'
 import moment from 'moment'
 import 'moment/locale/fr'
 import Switch from '@material-ui/core/Switch'
-import Picture from '../../../svg/picture.svg'
+import Picture from '../../../assets/svg/picture.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleDeleteImg } from '../../../utils/commonFunctions'
-import { StyledBadge } from '../../../utils/formCommonUI'
+import { handleDeleteImg } from '../../../utils/form/formCommonFunctions'
+import { StyledBadge } from '../../../utils/form/formCommonUI'
 import InputElement from "../../../utils/form/InputElement"
-import BadgeContent from '../../../utils/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
-import TextareaElement from '../../../utils/common/textareaElement'
-import ModalFormImgLayout from '../../../utils/common/modalFormImgLayout'
-import { handleChange } from '../../../utils/formCommonFunctions'
+import BadgeContent from '../../../utils/badge/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/modal/modalHeaderFormTemplate'
+import TextareaElement from '../../../utils/form/textareaElement'
+import ModalFormImgLayout from '../../../utils/modal/modalFormImgLayout'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import { FirebaseContext } from '../../../config/Firebase'
 import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../utils/hooks/useFirestore'
 

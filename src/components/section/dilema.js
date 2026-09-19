@@ -12,8 +12,8 @@ import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
 import DefaultProfile from "../../assets/svg/profile.png"
 import { StaticImage } from 'gatsby-plugin-image'
-import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../utils/globalCommonFunctions'
-import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate';
+import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../utils/commonFunctions'
+import ModalHeaderFormTemplate from '../../utils/modal/modalHeaderFormTemplate';
 import '../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
 
@@ -471,7 +471,7 @@ const Dilema = () => {
         }}
         onClick={() => navigate("/userPage")} />
        
-        <StaticImage objectFit='contain' src='../../svg/camera.svg' placeholder="blurred" alt="add photoURL" 
+        <StaticImage objectFit='contain' src='../../assets/svg/camera.svg' placeholder="blurred" alt="add photoURL" 
         className="dilema-add-photo-icon" />
         
         <OverlayTrigger

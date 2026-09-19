@@ -15,9 +15,9 @@ import TimeLine from './guestTimeLine'
 import defaultImg from "../../assets/images/avatar-client.png"
 import { StaticImage } from 'gatsby-plugin-image'
 import { useFirestoreSubscription, useUpdate, useSet, useAdd } from '../../utils/hooks/useFirestore'
-import { handleChange } from '../../utils/formCommonFunctions'
-import InputElement from '../../utils/InputElement'
-import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
+import { handleChange } from '../../utils/form/formCommonFunctions'
+import InputElement from '../../utils/form/InputElement'
+import ModalHeaderFormTemplate from '../../utils/modal/modalHeaderFormTemplate'
 import '../css/common/loader.css'
 
 /* 

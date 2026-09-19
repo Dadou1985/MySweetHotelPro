@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
-import { auth, db, functions } from '../../../Firebase'
+import { auth, functions } from '../../../config/Firebase'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../../../i18n/withTrans'
-import { handleChange } from '../../../helper/formCommonFunctions'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
+import { handleMutateSet } from '../../../utils/form/formCommonFunctions'
 import { Button } from 'react-bootstrap'
 import { sha256 } from 'js-sha256'
 
@@ -39,9 +40,7 @@ const RegisterForm = ({handleClose}) => {
 
   const createHotel = async () => {
     try {
-      await db.collection("hotels")
-      .doc(newHotelId)
-      .set({
+      await handleMutateSet(['hotels', newHotelId], {
         hotelName: formValue.hotelName,
         adresse: formValue.adresse,
         classement: `${formValue.standing} étoiles`,
@@ -99,33 +98,31 @@ const RegisterForm = ({handleClose}) => {
 
   const adminMaker = async(userId) => {
     try {
-      await db.collection('businessUsers')
-      .doc(userId)
-      .set({   
-      username: `${formValue.firstName} ${formValue.lastName}`, 
-      adminStatus: true, 
-      adresse: formValue.adresse,
-      email: formValue.email,
-      password: sha256(`msh-pass-${formValue.firstName.toLowerCase()}`),
-      website: formValue.website,
-      hotelId: newHotelId,
-      hotelName: formValue.hotelName,
-      hotelRegion: formValue.region,
-      hotelDept: formValue.departement,
-      createdAt: Date.now(),
-      userId: userId,
-      classement: `${formValue.standing} étoiles`,
-      code_postal: formValue.code_postal,
-      country: "FRANCE",
-      city: formValue.city,
-      room: formValue.room,
-      language: "fr",
-      logo: null,
-      base64Url: null,
-      appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
-      pricingModel: "Premium",
-      tester: true
-      }) 
+      await handleMutateSet(['businessUsers', userId], {
+        username: `${formValue.firstName} ${formValue.lastName}`,
+        adminStatus: true,
+        adresse: formValue.adresse,
+        email: formValue.email,
+        password: sha256(`msh-pass-${formValue.firstName.toLowerCase()}`),
+        website: formValue.website,
+        hotelId: newHotelId,
+        hotelName: formValue.hotelName,
+        hotelRegion: formValue.region,
+        hotelDept: formValue.departement,
+        createdAt: Date.now(),
+        userId: userId,
+        classement: `${formValue.standing} étoiles`,
+        code_postal: formValue.code_postal,
+        country: "FRANCE",
+        city: formValue.city,
+        room: formValue.room,
+        language: "fr",
+        logo: null,
+        base64Url: null,
+        appLink: `https://mysweethotel.eu/?hotelId=${newHotelId}&hotelName=${hotelNameForUrl}`,
+        pricingModel: "Premium",
+        tester: true
+      })
       return console.log("Registration in business users collection: accomplished")
     } catch (e) {
       console.log("Registration in business users collection: failed")
@@ -135,9 +132,7 @@ const RegisterForm = ({handleClose}) => {
 
   const freeRegister = async (userId) => {
     try {
-      await db.collection('guestUsers')
-      .doc(userId)
-      .set({
+      await handleMutateSet(['guestUsers', userId], {
         username: `${formValue.firstName} ${formValue.lastName}`,
         email: formValue.email.trim(),
         password: sha256(`msh-pass-${formValue.firstName.toLowerCase()}`),
@@ -151,7 +146,7 @@ const RegisterForm = ({handleClose}) => {
         guestCategoryClone: t("tourisme"),
         notificationStatus: "default",
         photo: null
-      })  
+      })
       return console.log("Registration in guest users collection: accomplished")
     }catch (e) {
       console.log("Registration in guest users collection: failed")

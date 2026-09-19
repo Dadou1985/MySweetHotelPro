@@ -4,13 +4,13 @@ import { storage, FirebaseContext } from '../../../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
-import Close from '../../../../svg/close.svg'
-import Picture from '../../../../svg/picture.svg'
-import AddPhotoURL from '../../../../svg/camera.svg'
+import Close from '../../../../assets/svg/close.svg'
+import Picture from '../../../../assets/svg/picture.svg'
+import AddPhotoURL from '../../../../assets/svg/camera.svg'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import InputElement from '../../../../helper/common/InputElement'
-import TextareaElement from '../../../../helper/common/textareaElement'
+import InputElement from '../../../../utils/form/InputElement'
+import TextareaElement from '../../../../utils/form/textareaElement'
 import { useFirestoreSubscription, useAdd, useDelete } from '../../../../utils/hooks/useFirestore'
 
 const PhoneLost = () =>{

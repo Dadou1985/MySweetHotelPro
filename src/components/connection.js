@@ -4,7 +4,7 @@ import { navigate } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../i18n/withTrans'
-import { handleChange } from '../utils/formCommonFunctions'
+import { handleChange } from '../utils/form/formCommonFunctions'
 import './css/section/connection.css'
 import { Modal } from 'react-bootstrap'
 import RegisterForm from './section/form/registerForm'

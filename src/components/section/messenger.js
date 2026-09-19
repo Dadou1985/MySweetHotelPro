@@ -83,19 +83,19 @@ const Messenger = ({filterDate}) =>{
         switch(status) {
           case 'darkgoldenrod':
             return <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
           case 'red':
             return <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/red-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/red-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
           case 'lightskyblue':
             return <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/blue-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/blue-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         default:
             return <div style={{width: "9%"}} onClick={() => setChecked(!checked)}>
-                <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
+                <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/yellow-circle.svg' alt="important" className="modal-note-circle"  />
             </div>
         }
       }
@@ -211,7 +211,7 @@ const Messenger = ({filterDate}) =>{
                     <div className="icon-add-note-container" onClick={() => {
                         setStatus(data.category)
                         handleShow()}}>
-                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus3.svg' alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/plus3.svg' alt="Plus" className="icon-add-note" /> {t("msh_messenger.m_add_note")}
                     </div>
                 </div>
                 )}
@@ -234,7 +234,7 @@ const Messenger = ({filterDate}) =>{
                             <div className="modal-note-button-container">
                                 <div style={{width: "5%", position: "relative", marginRight: "2vw", cursor: "pointer"}}>
                                     <input type="file" className="modal-note-file-input" onChange={handleImgChange} />
-                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                                 </div>
                                 <div style={{width: "5%", position: "relative", marginRight: "2vw"}}>
                                     <DatePicker
@@ -252,7 +252,7 @@ const Messenger = ({filterDate}) =>{
                                         dateFormat="d MMMM yyyy"
                                         minDate={new Date()}
                                     />
-                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                                    <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
                                 </div>
                                 <img src={Send} alt="sendIcon" className="modal-note-send-icon" onClick={() => {
                                     if(title && note) {
@@ -285,7 +285,7 @@ const Messenger = ({filterDate}) =>{
                         handleHideDrawer()
                         setChecked(false)
                         }} >
-                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/close.svg' alt="Close Button" style={{width: "5%", float: "right", zIndex: 100}}/>
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/close.svg' alt="Close Button" style={{width: "5%", float: "right", zIndex: 100}}/>
                     </div>
                     <h4 className='phone_tab'>{t("msh_messenger.m_drawer_title")}</h4>
                     <div><Input type="text" name="title" placeholder={t("msh_messenger.m_drawer_note_title")} className="modal-note-title" maxLength="35" onChange={handleChangeTitle} required /></div>
@@ -294,7 +294,7 @@ const Messenger = ({filterDate}) =>{
                         <span className="white-band"></span>
                         <input type="file" className="modal-note-file-input"
                           onChange={handleImgChange} />
-                        <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
+                        <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/plus2.svg' className="modal-note-file-icon" alt="uploadIcon" />
                         {renderSwitch(status)}
                         <div style={{width: "9%", position: "relative"}}>
                             <DatePicker
@@ -313,7 +313,7 @@ const Messenger = ({filterDate}) =>{
                                 withPortal
                                 minDate={new Date()}
                             />
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/svg/calendar.svg' alt="sendIcon" className="modal-note-calendar-icon" />
                         </div>
                         <div style={{width: "9%"}} onClick={() => {
                                     if(title && note) {
@@ -337,7 +337,7 @@ const Messenger = ({filterDate}) =>{
                             <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('darkgoldenrod')
                                     setChecked(false)}}>
-                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/svg/yellow-circle.svg' alt="important" className="modal-note-list-circle" />
                                     <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_reception_team")}</div>
                                 </div>
                             </ListItemIcon>
@@ -347,7 +347,7 @@ const Messenger = ({filterDate}) =>{
                             <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('lightskyblue')
                                     setChecked(false)}}>
-                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/svg/blue-circle.svg' alt="info" className="modal-note-list-circle" />
                                     <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_housekeeping_team")}</div>
                                 </div>
                             </ListItemIcon>
@@ -357,7 +357,7 @@ const Messenger = ({filterDate}) =>{
                             <div style={{width: "100%", textAlign: "center"}} onClick={() => {
                                     setStatus('red')
                                     setChecked(false)}}>
-                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
+                                    <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/svg/red-circle.svg' alt="urgent" className="modal-note-list-circle" />
                                     <div style={{width: "100%", textAlign: "center"}}>{t("msh_messenger.m_technical_team")}</div>
                                 </div>    
                             </ListItemIcon>

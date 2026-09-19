@@ -454,7 +454,7 @@ export default function RegisterFormSteps() {
                     <div className="stepThree_upload_container">
                         <input type="file" className="steps-camera-icon"
                             onChange={handleImgChange} />
-                        <StaticImage objectFit='contain' placeholder="blurred" src='../../svg/hotel.svg' className="stepThree_upload_logo" />
+                        <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/svg/hotel.svg' className="stepThree_upload_logo" />
                     </div>
                     <div>{newImg && newImg.name}</div>
                     <Button variant="outline-dark" style={{marginTop: "1vh"}} onClick={() => {
@@ -561,7 +561,7 @@ export default function RegisterFormSteps() {
                         <p>{t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_one")}<br/>
                         {t("msh_register_form.r_step.s_final.f_message.third_paragraph.part_two")} <StaticImage objectFit='contain' 
                             placeholder='blurred' 
-                            src='../../svg/fom.svg' 
+                            src='../../assets/svg/fom.svg' 
                             alt="Fom" 
                             style={{
                                 width: "5%", 

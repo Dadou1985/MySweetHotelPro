@@ -7,11 +7,11 @@ import Picture from '../../assets/svg/picture.svg'
 import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleChange } from '../../utils/formCommonFunctions'
+import { handleChange } from '../../utils/form/formCommonFunctions'
 import { useFirestoreSubscription, useAdd, useDelete } from '../../utils/hooks/useFirestore'
-import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
-import InputElement from '../../utils/InputElement'
-import TextareaElement from '../../utils/textareaElement'
+import ModalHeaderFormTemplate from '../../utils/modal/modalHeaderFormTemplate'
+import InputElement from '../../utils/form/InputElement'
+import TextareaElement from '../../utils/form/textareaElement'
 import AddPhotoURL from '../../assets/svg/camera.svg'
 
 const LostNFound = () =>{
@@ -143,7 +143,7 @@ const LostNFound = () =>{
                                         setImg(flow.img)
                                         setImgFrame(true)
                                         }}><img src={flow.img} style={{height: "49px", borderRadius: "5%"}} /></td> : 
-                                        <td><StaticImage objectFit='contain' src='../../svg/picture.svg' style={{width: "1vw"}} /></td>}
+                                        <td><StaticImage objectFit='contain' src='../../assets/svg/picture.svg' style={{width: "1vw"}} /></td>}
                                         <td>{flow.description}</td>
                                         <td>{moment(flow.markup).format('L')}</td>
                                         <td>{flow.placeClone}</td>

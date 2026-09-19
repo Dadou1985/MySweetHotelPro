@@ -18,7 +18,7 @@ import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
-import { handleChange } from '../../utils/formCommonFunctions'
+import { handleChange } from '../../utils/form/formCommonFunctions'
 import { useFirestoreSubscription, useUpdate, useAdd } from '../../utils/hooks/useFirestore'
 import { FirebaseContext } from '../../config/Firebase'
 

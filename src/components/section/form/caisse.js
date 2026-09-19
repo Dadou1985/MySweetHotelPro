@@ -7,7 +7,7 @@ import {
     Tab,
     Modal
 } from 'react-bootstrap'
-import Safe from '../../../svg/vault.svg'
+import Safe from '../../../assets/svg/vault.svg'
 import { useReactToPrint } from 'react-to-print';
 import { FirebaseContext } from '../../../config/Firebase'
 import moment from 'moment'
@@ -19,11 +19,11 @@ import {
     DatePicker
   } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
-import { StyledBadge } from '../../../utils/formCommonUI'
-import BadgeContent from '../../../utils/common/badgeContent'
-import SafeTableRow from '../../../utils/common/safeTableRow'
-import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../utils/common/safeDetailSheet'
-import { handleChange } from '../../../utils/formCommonFunctions'
+import { StyledBadge } from '../../../utils/form/formCommonUI'
+import BadgeContent from '../../../utils/badge/badgeContent'
+import SafeTableRow from '../../../utils/safe/safeTableRow'
+import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../utils/safe/safeDetailSheet'
+import { handleChange } from '../../../utils/form/formCommonFunctions'
 import { useFirestoreSubscription, useAdd, useDelete } from '../../../utils/hooks/useFirestore'
 
 /* 

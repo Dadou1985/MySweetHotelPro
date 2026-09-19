@@ -19,7 +19,7 @@ import {
     fetchCollectionByMapping2,
     handleSubmitData3,
     handleSubmitData1
-} from '../../utils/globalCommonFunctions'
+} from '../../utils/commonFunctions'
 import '../css/section/chat.css'
 
 /*

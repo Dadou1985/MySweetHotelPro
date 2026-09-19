@@ -12,14 +12,16 @@ import TextareaElement from '../../../utils/form/textareaElement'
 import Feedback from '../../../assets/images/feedback.png'
 import { useTranslation } from "react-i18next"
 import {
-    handleChange,
-    handleSubmit
+    handleChange
 } from '../../../utils/form/formCommonFunctions'
+import { useAdd } from '../../../utils/hooks/useFirestore'
 
 const FeedbackBox = ({userDB}) =>{
-   
+
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
+    const { mutate: addFeedback } = useAdd()
+    const { mutate: notify } = useAdd()
     const { t } = useTranslation()
 
     const handleShow = () => setList(true)
@@ -30,15 +32,6 @@ const FeedbackBox = ({userDB}) =>{
 
     const notif = t("msh_feedback_box.f_notif")
     const modalTitle = t("msh_feedback_box.f_title")
-
-    const newData = {
-        author: userDB.username,
-        hotelName: userDB.hotelName,
-        hotelRegion: userDB.hotelRegion,
-        hotelDept: userDB.hotelDept,
-        text: formValue.feedback,
-        markup: Date.now()
-    }
 
     return(
         <div>
@@ -109,15 +102,17 @@ const FeedbackBox = ({userDB}) =>{
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="dark" onClick={(event) => {
-                            return handleSubmit(
-                                event, 
-                                notif, 
-                                userDB.hotelId,
-                                "feedbacks",
-                                "category", 
-                                formValue.categorie, 
-                                newData, 
-                                handleClose)
+                            event.preventDefault()
+                            addFeedback({ path: ['feedbacks', 'category', formValue.categorie], data: {
+                                author: userDB.username,
+                                hotelName: userDB.hotelName,
+                                hotelRegion: userDB.hotelRegion,
+                                hotelDept: userDB.hotelDept,
+                                text: formValue.feedback,
+                                markup: Date.now()
+                            }})
+                            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+                            handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                 </Modal.Footer>
             </Modal>

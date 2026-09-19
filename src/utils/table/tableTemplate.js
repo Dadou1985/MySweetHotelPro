@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Table } from 'react-bootstrap'
 import Switch from '@material-ui/core/Switch';
-import { handleUpdateData2, handleDeleteData2 } from '../globalCommonFunctions';
+import { handleUpdateData2, handleDeleteData2 } from '../commonFunctions';
 import { useTranslation } from "react-i18next"
 
 const TableTemplate = ({data, scale, userDB, dataStatus}) => {

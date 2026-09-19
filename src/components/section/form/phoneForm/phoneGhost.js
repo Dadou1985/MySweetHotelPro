@@ -1,7 +1,9 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, DropdownButton, Dropdown } from 'react-bootstrap'
-import { db, FirebaseContext } from '../../../../Firebase'
+import { db, FirebaseContext } from '../../../../config/Firebase'
 import { Input } from 'reactstrap'
+import { useFirestoreSubscription, useAdd } from '../../../../utils/hooks/useFirestore'
+import { handleMutateUpdate } from '../../../../utils/commonFunctions'
 
 export default function PhoneGhost() {
     const { user, userDB, setUserDB } = useContext(FirebaseContext)
@@ -24,46 +26,20 @@ export default function PhoneGhost() {
         classement: "",
         appLink: "",
         logo: ""})
-    const [info, setInfo] = useState([])
     const [filter, setFilter] = useState("")
     const [initialFilter, setInitialFilter] = useState("")
     const [hotelName, setHotelName] = useState("Sélectionner un hôtel")
+
+    const { data: info = [] } = useFirestoreSubscription(['hotels'], { where: ['partnership', '==', true] })
+
+    const { mutate: notify } = useAdd()
 
     const handleChangeInitialfilter = event =>{
         setInitialFilter(event.currentTarget.value)
     }
 
-    useEffect(() => {
-        const getHotel = () => {
-            return db.collection("hotels")
-            .where("partnership", "==", true)
-            }
-
-        let unsubscribe = getHotel().onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-    }, [filter])
-
-    const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-    
     const ghostIn = () => {
-        return db.collection('businessUsers')
-        .doc(user.uid)
-        .update({   
+        return handleMutateUpdate(['businessUsers', user.uid], {
             hotelId: formValue.hotelId,
             hotelName: hotelName,
             hotelRegion: formValue.region,
@@ -74,29 +50,27 @@ export default function PhoneGhost() {
             room: formValue.room,
             appLink: formValue.appLink,
             logo: formValue.logo
-        }) 
+        })
     }
 
     const ghostOut = () => {
-        return db.collection('businessUsers')
-        .doc(user.uid)
-        .update({   
-        hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",
-        hotelName: "Bates Motel",
-        hotelRegion: "NOWHERE",
-        hotelDept: "EVERYWHERE",
-        city: "Gotham",
-        classement: "infinity",
-        room: "99",
-        code_postal: "99999",
-        country: "FRANCE",
-        mail: "david.simba1985@gmail.com",
-        phone: "0659872884",
-        website: "https://mysweethotelpro.com/",
-        adresse: "11 allée de la Loire",
-        appLink: "https://mysweethotel.eu/?url=https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png&hotelId=06nOvemBre198524SEptEMbrE201211noVEMbre2017&hotelName=Bates%20Motel",
-        logo: "https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png"
-        }) 
+        return handleMutateUpdate(['businessUsers', user.uid], {
+            hotelId: "06nOvemBre198524SEptEMbrE201211noVEMbre2017",
+            hotelName: "Bates Motel",
+            hotelRegion: "NOWHERE",
+            hotelDept: "EVERYWHERE",
+            city: "Gotham",
+            classement: "infinity",
+            room: "99",
+            code_postal: "99999",
+            country: "FRANCE",
+            mail: "david.simba1985@gmail.com",
+            phone: "0659872884",
+            website: "https://mysweethotelpro.com/",
+            adresse: "11 allée de la Loire",
+            appLink: "https://mysweethotel.eu/?url=https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png&hotelId=06nOvemBre198524SEptEMbrE201211noVEMbre2017&hotelName=Bates%20Motel",
+            logo: "https://i.postimg.cc/g0tYTRpD/bates-Motel-Icon.png"
+        })
     }
 
     const enableGhostMode = async() => {
@@ -113,7 +87,7 @@ export default function PhoneGhost() {
                 console.log("No such document!");
             }
         }).then(() => {
-            addNotification(notif)
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
     }
 
@@ -131,7 +105,7 @@ export default function PhoneGhost() {
                 console.log("No such document!");
             }
         }).then(() => {
-            addNotification(notif)
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
     }
         
