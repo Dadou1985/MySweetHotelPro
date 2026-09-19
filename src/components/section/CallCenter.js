@@ -1,67 +1,46 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
 import Assistance from '../../assets/svg/support-technique.svg'
-import Send from '../../images/paper-plane.png'
+import Send from '../../assets/images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
 import { db, FirebaseContext } from '../../config/Firebase'
 import Avatar from '@material-ui/core/Avatar';
-import DefaultProfile from "../../svg/profile.png"
-import Bubble from "../../svg/bubble.svg"
+import DefaultProfile from "../../assets/svg/profile.png"
+import Bubble from "../../assets/svg/bubble.svg"
 import { useTranslation } from "react-i18next"
-import { 
-  handleUpdateData1, 
-  fetchCollectionByMapping1,
-  fetchCollectionBySorting2, 
-  handleSubmitData2, 
-  handleCreateData1
-} from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription, useUpdate, useSet, useAdd } from '../../utils/hooks/useFirestore'
 import '../css/section/chatTemplate.css'
 
 export default function CallCenter() {
   const { user, userDB } = useContext(FirebaseContext)
   const [list, setList] = useState(false)
   const [note, setNote] = useState("")
-  const [messages, setMessages] = useState([])
-  const [chatRoom, setChatRoom] = useState(null)
-  const [adminSpeakStatus, setAdminSpeakStatus] = useState([])
   const handleClose = () => setList(false)
   const handleShow = () => setList(true)
   const { t } = useTranslation()
 
-  useEffect(() => {
-    let unsubscribe = fetchCollectionBySorting2("assistance", userDB.hotelName, "chatRoom", "markup", "desc", 50).onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-        setMessages(snapInfo)
-    });
-    return unsubscribe
-  }, [])
+  const { data: messages = [] } = useFirestoreSubscription(
+    ['assistance', userDB.hotelName, 'chatRoom'],
+    { orderBy: ['markup', 'desc'], limit: 50 }
+  )
 
-  const getChatRoom = async () => {
-      const doc = await db.collection('assistance')
-      .doc(userDB.hotelName)
-      .get()
-    if (doc.exists) {
-      setChatRoom(doc.data())
-    } else {
-      // doc.data() will be undefined in this case
-      console.log("No such document!")
-    }
-  }
+  const { data: adminSpeakStatus = [] } = useFirestoreSubscription(
+    ['assistance'],
+    { where: ['hotelId', '==', userDB.hotelId] }
+  )
+
+  const { mutate: updateAssistance } = useUpdate([['assistance']])
+  const { mutate: setAssistance } = useSet([['assistance']])
+  const { mutate: addMessage } = useAdd([['assistance', userDB.hotelName, 'chatRoom']])
 
   const updatedData = {
     status: true,
     markup: Date.now(),
     pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
   }
-  
+
   const createdData = {
     adminSpeak: false,
     hotelId: userDB.hotelId,
@@ -90,35 +69,17 @@ export default function CallCenter() {
     markup: Date.now(),
   }
 
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping1("assistance", "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
-      const snapInfo = []
-        snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-      setAdminSpeakStatus(snapInfo)
-    });
-  return unsubscribe
-  },[])
-
   const handleSubmit = async(event) => {
     event.preventDefault()
-    await getChatRoom()
-    if(chatRoom !== null) {
-      return handleUpdateData1(event, 'assistance', userDB.hotelName, updatedData)
-      .then(() => {
-          setNote("")
-          handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
-      })
-    }else{
-      return handleCreateData1(event, 'assistance', userDB.hotelName, createdData)
-      .then(() => {
-          setNote("")
-          handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
-      })
+    const doc = await db.collection('assistance').doc(userDB.hotelName).get()
+    if (doc.exists) {
+      updateAssistance({ path: ['assistance', userDB.hotelName], data: updatedData })
+      setNote("")
+      addMessage({ path: ['assistance', userDB.hotelName, 'chatRoom'], data: newData })
+    } else {
+      setAssistance({ path: ['assistance', userDB.hotelName], data: createdData })
+      setNote("")
+      addMessage({ path: ['assistance', userDB.hotelName, 'chatRoom'], data: newData })
     }
   }
 
@@ -138,7 +99,7 @@ export default function CallCenter() {
               }>
               <img src={Assistance} className="icon" alt="contact" onClick={() => {
                 handleShow()
-                handleUpdateData1("assistance", userDB.hotelName, adminStatusData )
+                updateAssistance({ path: ['assistance', userDB.hotelName], data: adminStatusData })
                 }} style={{width: "2vw", minWidth: "24px", cursor: "pointer"}} />
 
               </OverlayTrigger>

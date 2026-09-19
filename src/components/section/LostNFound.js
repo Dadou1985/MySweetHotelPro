@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react'
-import LostOnes from '../../images/lostNfound.png'
+import React, { useState, useContext } from 'react'
+import LostOnes from '../../assets/images/lostNfound.png'
 import { Form, Button, Table, Tabs, Tab, Card, Modal, FloatingLabel } from 'react-bootstrap'
 import { storage, FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
@@ -8,7 +8,7 @@ import { StaticImage } from 'gatsby-plugin-image'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../utils/formCommonFunctions'
-import { addNotification, fetchCollectionByCombo2, handleDeleteData2, handleSubmitData2 } from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription, useAdd, useDelete } from '../../utils/hooks/useFirestore'
 import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
 import InputElement from '../../utils/InputElement'
 import TextareaElement from '../../utils/textareaElement'
@@ -20,7 +20,6 @@ const LostNFound = () =>{
 
     const [list, setList] = useState(false)
     const [showObject, setShowObject] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({type: "tech", place: "hall", details: "", description: ""})
     const [typeClone, setTypeClone] = useState("")
     const [placeClone, setPlaceClone] = useState("test")
@@ -51,6 +50,15 @@ const LostNFound = () =>{
         img: url
     }
 
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'lostAndFound'],
+        { where: ['type', '==', filter], orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addLostItem } = useAdd([['hotels', userDB.hotelId, 'lostAndFound']])
+    const { mutate: deleteLostItem } = useDelete([['hotels', userDB.hotelId, 'lostAndFound']])
+    const { mutate: notify } = useAdd()
+
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
     const handleShowObject = () => setShowObject(true)
@@ -59,20 +67,6 @@ const LostNFound = () =>{
             setNewImg(event.target.files[0])
         }
     }
-
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByCombo2("hotels", userDB.hotelId, "lostAndFound", "type", "==", filter, "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-                snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                    })        
-                });
-                setInfo(snapInfo)
-            });
-        return unsubscribe
-    },[filter])
 
     const handleSubmit = (event) =>{
         event.preventDefault()
@@ -88,15 +82,15 @@ const LostNFound = () =>{
               .child(newImg.name)
               .getDownloadURL()
               const uploadTask = () => {
-                handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+                addLostItem({ path: ['hotels', userDB.hotelId, 'lostAndFound'], data: newData })
                 }
                   return setUrl(url, uploadTask())
           }
         )
         }else{
-            handleSubmitData2(event, "hotels", userDB.hotelId, "lostAndFound", newData)
+            addLostItem({ path: ['hotels', userDB.hotelId, 'lostAndFound'], data: newData })
         }
-        
+
     }
 
     console.log("88888888888888888", placeClone)
@@ -155,7 +149,7 @@ const LostNFound = () =>{
                                         <td>{flow.placeClone}</td>
                                         <td>{flow.author}</td>
                                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                                            return handleDeleteData2("hotels", userDB.hotelId, "lostAndFound", flow.id)
+                                            return deleteLostItem({ path: ['hotels', userDB.hotelId, 'lostAndFound', flow.id] })
                                         }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                     </tr>
                                 ))}
@@ -265,7 +259,7 @@ const LostNFound = () =>{
                         <Modal.Footer>
                             <Button className='btn-msh' onClick={(event) => {
                                 setFormValue("")
-                                addNotification(notif, userDB.hotelId)
+                                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                                 return handleClose()
                             }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>

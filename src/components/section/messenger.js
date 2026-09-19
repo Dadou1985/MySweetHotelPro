@@ -5,7 +5,7 @@ import PhoneNoteBox from './phoneNoteBox'
 import DatePicker from "react-datepicker"
 import "../css/messenger_datepicker.css"
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import Send from '../../images/paper-plane.png'
+import Send from '../../assets/images/paper-plane.png'
 import { StaticImage } from 'gatsby-plugin-image'
 import { Modal, Button, Tooltip, OverlayTrigger, } from 'react-bootstrap'
 import List from '@material-ui/core/List';
@@ -322,7 +322,7 @@ const Messenger = ({filterDate}) =>{
                                         addNotification(t("msh_messenger.m_notif_submit_error"))
                                     }
                                 }}>
-                            <StaticImage objectFit='contain' placeholder='blurred' src='../../images/paper-plane.png' alt="sendIcon" className="modal-note-circle"  />
+                            <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/images/paper-plane.png' alt="sendIcon" className="modal-note-circle"  />
                         </div>
                     </div>
                     <List component="nav" aria-label="main mailbox folders" className="modal-note-list" style={{

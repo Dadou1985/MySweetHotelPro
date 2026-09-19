@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import {Form, Button, FloatingLabel} from 'react-bootstrap'
-import { db, functions, FirebaseContext } from '../../../config/Firebase'
+import { functions, FirebaseContext } from '../../../config/Firebase'
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../../utils/formCommonFunctions'
-import { handleCreateData1, addNotification } from '../../../utils/commonFunctions'
 import InputElement from '../../../utils/form/InputElement'
 import { sha256 } from 'js-sha256'
+import { useSet, useAdd } from '../../../utils/hooks/useFirestore'
 
 const AdminRegister = ({hide}) => {
     const { userDB } = useContext(FirebaseContext)
@@ -13,6 +13,9 @@ const AdminRegister = ({hide}) => {
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
     const { t } = useTranslation()
+
+    const { mutate: setUser } = useSet(['businessUsers'])
+    const { mutate: notify } = useAdd()
 
     const createUser = functions.httpsCallable('createUser')
     const sendNewCoworkerAccountMail = functions.httpsCallable('sendNewCoworkerAccountMail')
@@ -58,17 +61,15 @@ const AdminRegister = ({hide}) => {
         event.preventDefault()
         //setFormValue("")
         try {
-            const notif = `${t("msh_admin_board.a_notif")} ${formValue.username}`  
+            const notif = `${t("msh_admin_board.a_notif")} ${formValue.username}`
             await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-            return handleCreateData1(event, "businessUsers", newUid, createdData) 
-            .then(() => {
-                hide()
-                addNotification(notif, userDB.hotelId)
-                sendWelcomeMail()
-            })
+            setUser({ path: ['businessUsers', newUid], data: createdData })
+            hide()
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+            sendWelcomeMail()
         } catch (error) {
-            const notif = t("msh_admin_board.a_notif_error_create_user") 
-            addNotification(notif, userDB.hotelId)
+            const notif = t("msh_admin_board.a_notif_error_create_user")
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         }
       }
 

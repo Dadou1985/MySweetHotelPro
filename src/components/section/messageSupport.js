@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 import moment from 'moment'
 import Avatar from '@material-ui/core/Avatar';
-import DefaultProfile from "../../svg/profile.png"
+import DefaultProfile from "../../assets/svg/profile.png"
 import 'moment/locale/fr';
 import '../css/section/chatTemplate.css'
 import { FirebaseContext } from '../../config/Firebase'

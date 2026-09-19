@@ -1,15 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { useTranslation } from "react-i18next"
 import moment from 'moment'
 import 'moment/locale/fr'
 import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
 import Notebook from '../../assets/svg/notebook.png'
-import ChatLogo from '../../images/chat.png'
-import BarChart from '../../images/barChart.png'
+import ChatLogo from '../../assets/images/chat.png'
+import BarChart from '../../assets/images/barChart.png'
 import RoomChangeRate from './roomChangeRate'
 import MaintenanceRate from './maintenanceRate'
-import { fetchCollectionByCombo2, fetchCollectionByMapping2 } from '../../utils/globalCommonFunctions';
+import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import { stackedDataForWeek } from '../../utils/timeRange/stackedData'
 import { sevenDayAgo } from '../../utils/timeRange/week'
 import { FirebaseContext } from '../../config/Firebase'
@@ -18,10 +18,6 @@ import '../css/section/dashboard.css'
 const Dashboard = () => {
   const { userDB } = useContext(FirebaseContext)
   const { t } = useTranslation()
-  const [consigne, setConsigne] = useState([]);
-  const [chat, setChat] = useState([]);
-  const [roomChange, setRoomChange] = useState([]);
-  const [maintenance, setMaintenance] = useState([]);
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
   const [showMaintenanceModal, setShowMaintenanceModal] = useState(false);
 
@@ -78,64 +74,26 @@ const roomChangeData = {
     }
   };
 
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByCombo2("hotels", userDB.hotelId, 'note', "date", "==", moment(new Date()).format('LL'), 'markup', 'desc').onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-          snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
+  const { data: consigne = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'note'],
+    { where: ['date', '==', moment(new Date()).format('LL')], orderBy: ['markup', 'desc'] }
+  )
 
-        setConsigne(snapInfo)
-    });
-    return unsubscribe 
-  },[])
+  const { data: chatRaw = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'chat'],
+    { where: ['checkoutDate', '!=', ''] }
+  )
+  const chat = chatRaw.filter(c => c.status === true)
 
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "chat", "checkoutDate", "!=", "").onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-      const chatStatus = snapInfo && snapInfo.filter(chat => chat.status === true)
-      setChat(chatStatus)
-    });
-  return unsubscribe
-  },[])
+  const { data: roomChange = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'roomChange'],
+    { where: ['markup', '>=', sevenDayAgo] }
+  )
 
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "roomChange", "markup", ">=", sevenDayAgo).onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-      setRoomChange(snapInfo)
-    });
-    return unsubscribe
-  },[])
-
-
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping2('hotels', userDB.hotelId, "maintenance", "markup", ">=", sevenDayAgo).onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-      setMaintenance(snapInfo)
-    });
-    return unsubscribe
-  },[])
+  const { data: maintenance = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'maintenance'],
+    { where: ['markup', '>=', sevenDayAgo] }
+  )
 
   return <div style={{
       display: "flex",

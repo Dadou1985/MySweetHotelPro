@@ -1,6 +1,6 @@
 .page-layout-container {
     display: flex;
-    background-image: url("../../../images/newDeskDigital.png");
+    background-image: url("../../../assets/images/newDeskDigital.png");
     background-size: cover;
     background-repeat: no-repeat;
     background-position-x: 5vw;

@@ -1,15 +1,15 @@
-import React, {useState, useEffect, useRef, useContext } from 'react'
-import { 
-    Form, 
-    Button, 
-    Table, 
-    Tabs, 
-    Tab, 
-    Modal 
+import React, {useState, useRef, useContext } from 'react'
+import {
+    Form,
+    Button,
+    Table,
+    Tabs,
+    Tab,
+    Modal
 } from 'react-bootstrap'
 import Safe from '../../../svg/vault.svg'
 import { useReactToPrint } from 'react-to-print';
-import { FirebaseContext, db } from '../../../Firebase'
+import { FirebaseContext } from '../../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
@@ -19,19 +19,12 @@ import {
     DatePicker
   } from '@material-ui/pickers';
 import { useTranslation } from "react-i18next"
-import { StyledBadge } from '../../../helper/formCommonUI'
-import BadgeContent from '../../../helper/common/badgeContent'
-import SafeTableRow from '../../../helper/common/safeTableRow'
-import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../helper/common/safeDetailSheet'
-import { 
-    fetchCollectionByMapping2, 
-    handleSubmitData2, 
-    addNotification,
-    handleDeleteData2
- } from '../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-} from '../../../helper/formCommonFunctions'
+import { StyledBadge } from '../../../utils/formCommonUI'
+import BadgeContent from '../../../utils/common/badgeContent'
+import SafeTableRow from '../../../utils/common/safeTableRow'
+import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../utils/common/safeDetailSheet'
+import { handleChange } from '../../../utils/formCommonFunctions'
+import { useFirestoreSubscription, useAdd, useDelete } from '../../../utils/hooks/useFirestore'
 
 /* 
     ! FIX => BUG SUBMIT DATA (TOTAL AMOUNT AND SHIFT CLONE)
@@ -39,7 +32,6 @@ import {
 
 const Caisse = () =>{
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([""])
     const [formValue, setFormValue] = useState({shift: "matin", shiftClone: ""})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
@@ -101,20 +93,14 @@ const Caisse = () =>{
         setFilterDate(date);
       };
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "safe", "date", "==", moment(filterDate).format('LL')).onSnapshot(function(snapshot) {
-        const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-           
-     },[filterDate])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'safe'],
+        { where: ['date', '==', moment(filterDate).format('LL')] }
+    )
+
+    const { mutate: addSafe } = useAdd(['hotels', userDB.hotelId, 'safe'])
+    const { mutate: deleteSafe } = useDelete(['hotels', userDB.hotelId, 'safe'])
+    const { mutate: notify } = useAdd()
 
     //  const handlePrint = useReactToPrint({
     //     content: () => componentRef.current,
@@ -273,7 +259,7 @@ const Caisse = () =>{
                                             <td>{flow.shiftClone}</td>
                                             <td>{moment(flow.markup).format('L')}</td>
                                             <td className="bg-dark">
-                                                <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "safe", flow.id)}>
+                                                <Button variant="outline-danger" size="sm" onClick={()=> deleteSafe({ path: ['hotels', userDB.hotelId, 'safe', flow.id] })}>
                                                     {t("msh_general.g_button.b_delete")}
                                                 </Button>
                                             </td>
@@ -289,8 +275,9 @@ const Caisse = () =>{
                         {footerState && <>
                             <Button className='btn-msh-dark-outline' onClick={handleReset}>{t("msh_general.g_button.b_reset")}</Button>
                             <Button className='btn-msh-dark' onClick={(event) => {
-                                handleSubmitData2(event, "hotels", userDB.hotelId, "safe", newData)
-                                addNotification(notif, userDB.hotelId)
+                                event.preventDefault()
+                                addSafe({ path: ['hotels', userDB.hotelId, 'safe'], data: newData })
+                                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                                 return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                         </>}

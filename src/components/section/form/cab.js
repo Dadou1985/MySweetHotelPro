@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useContext } from 'react'
-import { 
-    Form, 
-    Button, 
-    Tabs, 
-    Tab, 
-    Modal, 
-    FloatingLabel 
+import React, { useState, useContext } from 'react'
+import {
+    Form,
+    Button,
+    Tabs,
+    Tab,
+    Modal,
+    FloatingLabel
 } from 'react-bootstrap'
 import Taxi from '../../../svg/taxi.svg'
 import moment from 'moment'
@@ -17,19 +17,14 @@ import {
 } from '@material-ui/pickers';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { StyledBadge } from '../../../helper/formCommonUI'
-import InputElement from "../../../helper/common/InputElement"
-import BadgeContent from '../../../helper/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import TableTemplate from '../../../helper/common/tableTemplate';
-import { 
-    fetchCollectionBySorting2, 
-    fetchCollectionByMapping2,
-    handleSubmitData2,
-    addNotification,
-} from '../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../Firebase'
+import { StyledBadge } from '../../../utils/formCommonUI'
+import InputElement from "../../../utils/form/InputElement"
+import BadgeContent from '../../../utils/common/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
+import TableTemplate from '../../../utils/common/tableTemplate';
+import { handleChange } from '../../../utils/formCommonFunctions'
+import { FirebaseContext } from '../../../config/Firebase'
+import { useFirestoreSubscription, useAdd } from '../../../utils/hooks/useFirestore'
 
 /*
  ! FIX => SELECT DEFAULT OPTION
@@ -39,21 +34,22 @@ const Cab = () =>{
     const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({
         room: "",
-        client: "", 
+        client: "",
         date: new Date(),
-        hour: new Date(), 
-        passenger:"", 
-        model:"limousin", 
+        hour: new Date(),
+        passenger:"",
+        model:"limousin",
         destination: ""
     })
     const [modelClone, setModelClone] = useState("")
-    const [demandQty, setDemandQty] = useState([])
     const [step, setStep] = useState(false)
     const [footerState, setFooterState] = useState(true)
     const { t } = useTranslation()
+
+    const { mutate: addCab } = useAdd(['hotels', userDB.hotelId, 'cab'])
+    const { mutate: notify } = useAdd()
 
     const handleShow = () => setList(true)
     const handleClose = () => {
@@ -86,37 +82,19 @@ const Cab = () =>{
         hotelId: userDB.hotelId
     }
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-    },[])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'cab'],
+        { orderBy: ['markup', 'asc'] }
+    )
 
-     useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "cab", "status", "==", true).onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setDemandQty(snapInfo)
-        });
-        return unsubscribe
-     },[])
+    const { data: demandQtyData = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'cab'],
+        { where: ['status', '==', true] }
+    )
 
     return(
         <div>
-            <StyledBadge badgeContent={demandQty.length} color="secondary">
+            <StyledBadge badgeContent={demandQtyData.length} color="secondary">
                 <BadgeContent tooltipTitle={tooltipTitle} icon={Taxi} handleShow={handleShow} />
             </StyledBadge>
             <Modal show={list}
@@ -263,8 +241,9 @@ const Cab = () =>{
                     {step && <>
                         <Button className='btn-msh-dark-outline' onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
                         <Button className='btn-msh-dark' onClick={(event) => {
-                            handleSubmitData2(event, "hotels", userDB.hotelId, "cab", newData)
-                            addNotification(notif, userDB.hotelId,)
+                            event.preventDefault()
+                            addCab({ path: ['hotels', userDB.hotelId, 'cab'], data: newData })
+                            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                             return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </>}

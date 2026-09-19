@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import { Input } from 'reactstrap'
 import moment from 'moment'
@@ -9,19 +9,12 @@ import Close from '../../../../svg/close.svg'
 import Picture from '../../../../svg/picture.svg'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import { handleDeleteImg } from '../../../../helper/globalCommonFunctions'
+import { deleteImg } from '../../../../utils/commonFunctions'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
-import { 
-    fetchCollectionBySorting2, 
-    handleSubmitData2, 
-    addNotification,
-    handleUpdateData1,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../../Firebase'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
+import { FirebaseContext } from '../../../../config/Firebase'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 /*
     ! FIX => PHOTO SUBMISSION
@@ -38,7 +31,6 @@ const PhoneMaid = () =>{
         reason: "", 
         state: ""
     })
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [img, setImg] = useState("")
@@ -51,6 +43,17 @@ const PhoneMaid = () =>{
     const [stateClone, setStateClone] = useState("")
     const { t } = useTranslation()
 
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'roomChange'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addRoomChange } = useAdd([['hotels', userDB.hotelId, 'roomChange']])
+    const { mutate: notify } = useAdd()
+    const { mutate: updateRoomChange } = useUpdate([['hotels', userDB.hotelId, 'roomChange']])
+    const { mutate: updateGuestUser } = useUpdate([['guestUsers']])
+    const { mutate: deleteRoomChange } = useDelete([['hotels', userDB.hotelId, 'roomChange']])
+
     const handleShow = () => setActivate(true)
     const handleHide = () => {
         setActivate(false)
@@ -58,7 +61,7 @@ const PhoneMaid = () =>{
     }
 
     const notif = t("msh_room_change.r_notif")
-    const dataStatus = {status: false} 
+    const dataStatus = {status: false}
     const hotelRoomData = {toRoom: formValue.toRoom}
     const userRoomData = {room: formValue.toRoom}
     const roomStateUpdated = {
@@ -80,21 +83,6 @@ const PhoneMaid = () =>{
         stateClone: stateClone !== "" ? stateClone : t("msh_room_change.r_state.s_dirty"),
         status: false
     }
-
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "roomChange", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-           
-     },[])     
 
     return(
         
@@ -145,7 +133,7 @@ const PhoneMaid = () =>{
                             <td>
                             <Switch
                                 checked={flow.status}
-                                onChange={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, dataStatus)}
+                                onChange={() => updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id], data: dataStatus })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             </td>
@@ -158,9 +146,9 @@ const PhoneMaid = () =>{
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                 if(flow.img){
-                                    handleDeleteImg(flow.img)
+                                    deleteImg(flow.img)
                                 }
-                                return handleDeleteData2("hotels", userDB.hotelId, "roomChange", flow.id)
+                                deleteRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id] })
                             }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             
                             </tr>
@@ -261,8 +249,8 @@ const PhoneMaid = () =>{
                 />
                 </div>
                     <Button className="btn-msh phone_submitButton" onClick={(event) => {
-                            handleSubmitData2(event, "hotels", userDB.hotelId, "roomChange", newData)
-                            addNotification(notif, userDB.hotelId)
+                            addRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange'], data: newData })
+                            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                             return handleHide()
                         }}>{t("msh_room_change.r_phone_button.b_validation")}</Button>
                     </div>
@@ -283,8 +271,8 @@ const PhoneMaid = () =>{
                         />
                     </div>
                     <Button className="btn-msh phone_submitButton" size="md" onClick={() => {
-                        handleUpdateData2("hotels", userDB.hotelId, "roomChange", currentRoom, hotelRoomData)
-                        handleUpdateData1("guestUsers", guestId, userRoomData)
+                        updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', currentRoom], data: hotelRoomData })
+                        updateGuestUser({ path: ['guestUsers', guestId], data: userRoomData })
                         setNewRoom(false)}}>{t("msh_register_form.r_button.b_phone_validation")}
                     </Button>
                 </Drawer>
@@ -305,7 +293,7 @@ const PhoneMaid = () =>{
                         </FloatingLabel>
                         </div>
                     <Button className="btn-msh phone_submitButton" onClick={() => {
-                        handleUpdateData2("hotels", userDB.hotelId, "roomChange", currentRoom, roomStateUpdated)
+                        updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', currentRoom], data: roomStateUpdated })
                         setRoomState(false)
                     }}>{t("msh_register_form.r_button.b_phone_validation")}</Button>
                 </Drawer>

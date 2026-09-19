@@ -6,7 +6,7 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '../config/tanstack-query'
 
 import PropTypes from "prop-types"
-import "./css/layout.css"
+import "../components/css/layout.css"
 
 const Layout = ({ children }) => {
   const [hide, setHide] = useState("flex")

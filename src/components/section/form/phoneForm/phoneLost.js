@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext} from 'react'
+import React, {useState, useContext} from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
-import { db, storage, FirebaseContext } from '../../../../Firebase'
+import { storage, FirebaseContext } from '../../../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -11,12 +11,12 @@ import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
+import { useFirestoreSubscription, useAdd, useDelete } from '../../../../utils/hooks/useFirestore'
 
 const PhoneLost = () =>{
     const { userDB } = useContext(FirebaseContext)
 
     const [formValue, setFormValue] = useState({type: "", place: "", details: "", description: "", url: ""})
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [newImg, setNewImg] = useState(null)
@@ -26,6 +26,15 @@ const PhoneLost = () =>{
     const [typeClone, setTypeClone] = useState(null)
     const [placeClone, setPlaceClone] = useState(null)
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'lostAndFound'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addLostAndFound } = useAdd([['hotels', userDB.hotelId, 'lostAndFound']])
+    const { mutate: notify } = useAdd()
+    const { mutate: deleteLost } = useDelete([['hotels', userDB.hotelId, 'lostAndFound']])
 
     const handleChange = (event) =>{
         event.persist()
@@ -43,35 +52,27 @@ const PhoneLost = () =>{
 
     const handleChangeExpand = () => setExpand(!expand)
 
-    const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
-
       const addLostObject = (event, photo) => {
         event.preventDefault()
         setFormValue("")
         const notif = t("msh_lost_found.l_notif")
-        addNotification(notif)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('lostAndFound')
-            .add({
-            author: userDB.username,
-            date: new Date(),
-            description: formValue.description,
-            details: formValue.details,
-            place: formValue.place,
-            placeClone: placeClone !== null ? placeClone : t("msh_lost_found.l_place.p_hall"),
-            markup: Date.now(),
-            type: formValue.type,
-            typeClone: typeClone !== null ? typeClone : "High Tech",
-            img: photo,
-            status: false
-            })
+        notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+        addLostAndFound({
+            path: ['hotels', userDB.hotelId, 'lostAndFound'],
+            data: {
+                author: userDB.username,
+                date: new Date(),
+                description: formValue.description,
+                details: formValue.details,
+                place: formValue.place,
+                placeClone: placeClone !== null ? placeClone : t("msh_lost_found.l_place.p_hall"),
+                markup: Date.now(),
+                type: formValue.type,
+                typeClone: typeClone !== null ? typeClone : "High Tech",
+                img: photo,
+                status: false
+            }
+        })
     }
 
     const handleSubmit = (event) =>{
@@ -97,30 +98,8 @@ const PhoneLost = () =>{
         }else{
             addLostObject(event)
         }
-        
+
     }
-
-    useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('lostAndFound')
-            .orderBy("markup", "asc")
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
-           
-     },[])
 
      const handleShow = () => setActivate(true)
      const handleHide = () => setActivate(false)
@@ -162,16 +141,7 @@ const PhoneLost = () =>{
                         {expand && <td>{flow.details}</td>}
                         {expand && <td>{flow.author}</td>}
                         {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
-                            return db.collection('hotels')
-                            .doc(userDB.hotelId)
-                            .collection('lostAndFound')
-                            .doc(flow.id)
-                            .delete()
-                            .then(function() {
-                                console.log("Document successfully deleted!");
-                            }).catch(function(error) {
-                                console.log(error);
-                            });
+                            deleteLost({ path: ['hotels', userDB.hotelId, 'lostAndFound', flow.id] })
                         }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                         </tr>
                     ))}

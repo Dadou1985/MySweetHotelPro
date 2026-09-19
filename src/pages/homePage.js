@@ -5,7 +5,7 @@ import {FirebaseContext} from '../config/Firebase'
 import Dashboard from '../components/section/dashboard'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
-import Background from "../images/newDeskDigital.png"
+import Background from "../assets/images/newDeskDigital.png"
 import moment from 'moment'
 import 'moment/locale/fr';
 

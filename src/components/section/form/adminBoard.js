@@ -26,7 +26,7 @@ const AdminBoard = () =>{
                         {t("msh_navigation.tooltip_admin_board")}
                         </Tooltip>
                     }>
-                <StaticImage objectFit='contain' src='../../../images/admin.png' placeholder="blurred" alt="connect" className="nav_icons" onClick={handleShowTab} />
+                <StaticImage objectFit='contain' src='../../../assets/images/admin.png' placeholder="blurred" alt="connect" className="nav_icons" onClick={handleShowTab} />
                 </OverlayTrigger>
     
                 <Modal show={tab}

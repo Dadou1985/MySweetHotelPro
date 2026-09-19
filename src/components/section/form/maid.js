@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import {
     Form,
     Button,
@@ -11,52 +11,58 @@ import {
     OverlayTrigger
 } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import ChangeRoom from '../../../svg/logout.png'
+import ChangeRoom from '../../../assets/svg/logout.png'
 import moment from 'moment'
 import 'moment/locale/fr'
 import Switch from '@material-ui/core/Switch'
 import Picture from '../../../svg/picture.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleDeleteImg } from '../../../helper/globalCommonFunctions'
-import { StyledBadge } from '../../../helper/formCommonUI'
-import InputElement from "../../../helper/common/InputElement"
-import BadgeContent from '../../../helper/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import TextareaElement from '../../../helper/common/textareaElement'
-import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
-import { 
-    fetchCollectionBySorting2, 
-    fetchCollectionByMapping2, 
-    handleSubmitData2, 
-    addNotification,    
-    handleUpdateData1,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../Firebase'
+import { handleDeleteImg } from '../../../utils/commonFunctions'
+import { StyledBadge } from '../../../utils/formCommonUI'
+import InputElement from "../../../utils/form/InputElement"
+import BadgeContent from '../../../utils/common/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
+import TextareaElement from '../../../utils/common/textareaElement'
+import ModalFormImgLayout from '../../../utils/common/modalFormImgLayout'
+import { handleChange } from '../../../utils/formCommonFunctions'
+import { FirebaseContext } from '../../../config/Firebase'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../utils/hooks/useFirestore'
 
 const Maid = () =>{
     const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({
-        client: "", 
-        details: "", 
-        fromRoom: "", 
-        toRoom: "", 
-        reason: "noise", 
+        client: "",
+        details: "",
+        fromRoom: "",
+        toRoom: "",
+        reason: "noise",
         state: "dirty"
     })
-    const [demandQty, setDemandQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
     const [reasonBack, setReasonBack] = useState("")
     const [stateClone, setStateClone] = useState("")
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'roomChange'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { data: demandQty = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'roomChange'],
+        { where: ['status', '==', true] }
+    )
+
+    const { mutate: addRoomChange } = useAdd(['hotels', userDB.hotelId, 'roomChange'])
+    const { mutate: updateRoomChange } = useUpdate(['hotels', userDB.hotelId, 'roomChange'])
+    const { mutate: updateUser } = useUpdate(['guestUsers'])
+    const { mutate: deleteRoomChange } = useDelete(['hotels', userDB.hotelId, 'roomChange'])
+    const { mutate: notify } = useAdd()
 
     const handleShow = () => setList(true)
     const handleClose = () => {
@@ -89,36 +95,6 @@ const Maid = () =>{
         stateClone: stateClone !== "" ? stateClone : t("msh_room_change.r_state.s_dirty"),
         status: false
     }
-
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "roomChange", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-           
-     },[])
-
-     useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "roomChange", "status", "==", true).onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setDemandQty(snapInfo)
-        });
-        return unsubscribe
-           
-     },[])
 
     return(
         <div>
@@ -304,8 +280,8 @@ const Maid = () =>{
                                                         </Popover.Header>
                                                         <Popover.Body className="text-center">
                                                             <Button className="btn-msh-dark" size="sm" onClick={() => {
-                                                                handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, hotelRoomData)
-                                                                handleUpdateData1("guestUsers", flow.userId, userRoomData)
+                                                                updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id], data: hotelRoomData })
+                                                                updateUser({ path: ['guestUsers', flow.userId], data: userRoomData })
                                                             }}>{t("msh_general.g_button.b_send")}
                                                             </Button>
                                                         </Popover.Body>
@@ -338,7 +314,7 @@ const Maid = () =>{
                                                                     </select>
                                                                 </Popover.Header>
                                                                 <Popover.Body className="text-center">
-                                                                    <Button className="btn-msh-dark" size="sm" onClick={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, roomState)}>{t("msh_general.g_button.b_send")}</Button>
+                                                                    <Button className="btn-msh-dark" size="sm" onClick={() => updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id], data: roomState })}>{t("msh_general.g_button.b_send")}</Button>
                                                                 </Popover.Body>
                                                             </Popover>
                                                             }
@@ -358,7 +334,7 @@ const Maid = () =>{
                                                 <td>
                                                 <Switch
                                                     checked={flow.status}
-                                                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "roomChange", flow.id, dataStatus)}
+                                                    onChange={() => updateRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id], data: dataStatus })}
                                                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                 />
                                                 </td>
@@ -366,7 +342,7 @@ const Maid = () =>{
                                                     if(flow.img) {
                                                         handleDeleteImg(flow.img)
                                                     }
-                                                    return handleDeleteData2("hotels", userDB.hotelId, "roomChange", flow.id)
+                                                    return deleteRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange', flow.id] })
                                                 }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -382,8 +358,9 @@ const Maid = () =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         <Button className='btn-msh-dark' onClick={(event) => {
-                            handleSubmitData2(event, "hotels", userDB.hotelId, "roomChange", newData)
-                            addNotification(notif, userDB.hotelId)
+                            event.preventDefault()
+                            addRoomChange({ path: ['hotels', userDB.hotelId, 'roomChange'], data: newData })
+                            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                             return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}

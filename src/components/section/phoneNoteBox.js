@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import {
     Accordion,
     AccordionItem,
@@ -10,49 +10,30 @@ import moment from 'moment'
 import 'moment/locale/fr';
 import Avatar from 'react-avatar'
 import Checkbox from '@material-ui/core/Checkbox';
-import { FirebaseContext, db } from '../../config/Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 import { withStyles } from '@material-ui/core/styles';
 import { green } from '@material-ui/core/colors';
 import '../css/section/accordion.css'
+import { useFirestoreSubscription, useUpdate } from '../../utils/hooks/useFirestore'
 
 const NoteBox = ({filterDate}) => {
 
-    const [messages, setMessages] = useState([])
     const [expanded, setExpanded] = useState(null)
     const {userDB} = useContext(FirebaseContext)
 
-    useEffect(() => {
-      const noteOnAir = () => {
-        return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('note')
-          .where("date", "==", moment(filterDate).format('LL'))
-          .orderBy('markup', "desc")
-          .limit(50)
+    const { data: messages = [] } = useFirestoreSubscription(
+      ['hotels', userDB.hotelId, 'note'],
+      {
+        where: ['date', '==', moment(filterDate).format('LL')],
+        orderBy: ['markup', 'desc'],
+        limit: 50,
       }
+    )
 
-        let unsubscribe = noteOnAir().onSnapshot(function(snapshot) {
-                    const snapMessages = []
-                  snapshot.forEach(function(doc) {          
-                      snapMessages.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setMessages(snapMessages)
-                });
-                return unsubscribe
-           
-     },[filterDate])
+    const { mutate: updateNote } = useUpdate(['hotels', userDB.hotelId, 'note'])
 
     const handleChangeCheckboxStatus = (noteId, status) => {
-      return db.collection('hotels')
-          .doc(userDB.hotelId)
-          .collection('note')
-          .doc(noteId)
-          .update({
-            isChecked: status
-          })
+      return updateNote({ path: ['hotels', userDB.hotelId, 'note', noteId], data: { isChecked: status } })
     }
 
     const GreenCheckbox = withStyles({

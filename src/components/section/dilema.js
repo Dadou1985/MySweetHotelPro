@@ -10,7 +10,7 @@ import Band from './band'
 import { PDFExport } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
-import DefaultProfile from "../../svg/profile.png"
+import DefaultProfile from "../../assets/svg/profile.png"
 import { StaticImage } from 'gatsby-plugin-image'
 import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../utils/globalCommonFunctions'
 import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate';
@@ -285,14 +285,14 @@ const Dilema = () => {
                         <div className="softSkin space-card"
                             onClick={handleShowUpdateEmail}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_email.e_label")}</h2>
-                        <StaticImage objectFit='contain' src="../../images/email.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../assets/images/email.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={handleShowUpdatePassword}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_password.p_label")}</h2>
-                        <StaticImage objectFit='contain' src="../../images/password.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../assets/images/password.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                 </div>
@@ -301,14 +301,14 @@ const Dilema = () => {
                         <div className="softSkin space-card"
                             onClick={() => setlistVisuel(true)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_label")}</h2>
-                        <StaticImage objectFit='contain' src="../../images/visuel.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src="../../assets/images/visuel.png" placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                     <div className="space-box">
                         <div className="softSkin space-card"
                             onClick={() => setListLogo(true)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_logo.l_label")}</h2>
-                        <StaticImage objectFit='contain' src='../../images/hotelLogo.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../assets/images/hotelLogo.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                         </div>
                     </div>
                 </div>}
@@ -382,7 +382,7 @@ const Dilema = () => {
                     <div className="softSkin space-card"
                             onClick={() => exportPDF(stickerPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_sticker.s_title")}</h2>
-                        <StaticImage objectFit='contain' src='../../images/qr_code.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../assets/images/qr_code.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
                 <div className="visuel">
@@ -394,7 +394,7 @@ const Dilema = () => {
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(flyerPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_flyer.f_title")}</h2>
-                        <StaticImage objectFit='contain' src='../../images/flyer.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../assets/images/flyer.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
                 <div className="visuel">
@@ -406,7 +406,7 @@ const Dilema = () => {
                     <div className="softSkin space-card"
                         onClick={() => exportPDF(bandPdfRef)}>
                         <h2 style={{textAlign: "center", fontSize: "1.5em"}}>{t("msh_user_panel.u_section.s_visuals.v_band.b_title")}</h2>
-                        <StaticImage objectFit='contain' src='../../images/band.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
+                        <StaticImage objectFit='contain' src='../../assets/images/band.png' placeholder="blurred" alt="Fom" className="white-fom-icon" />
                     </div>
                 </div>
             </div>
@@ -424,7 +424,7 @@ const Dilema = () => {
             <div className="dilema_upload_container">
                 <input type="file" className="dilema-camera-icon"
                     onChange={handleIconChange} />
-                <StaticImage objectFit='contain' src='../../images/hotelLogo.png' placeholder="blurred" className="dilema_upload_logo" />
+                <StaticImage objectFit='contain' src='../../assets/images/hotelLogo.png' placeholder="blurred" className="dilema_upload_logo" />
             </div>
             <div>{newImg && newImg.name}</div>
             {alert.success && <Alert variant="success" className="stepThree_alert">

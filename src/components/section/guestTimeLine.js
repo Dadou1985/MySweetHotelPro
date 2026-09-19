@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { Modal, Table, Tabs, Tab } from 'react-bootstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
@@ -12,7 +12,7 @@ import TimelineDot from '@mui/lab/TimelineDot';
 import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
 import moment from 'moment'
 import 'moment/locale/fr';
-import { fetchCollectionBySorting3, fetchCollectionByCombo2 } from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import { FirebaseContext } from '../../config/Firebase'
 import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate';
 import '../css/section/timeLine.css'
@@ -20,9 +20,7 @@ import '../css/section/timeLine.css'
 const GuestTimeLine = ({guestId}) => {
     const { userDB } = useContext(FirebaseContext)
     const [tab, setTab] = useState(false)
-    const [timelineData, setTimelineData] = useState([])
     const [housekeepingFilter, setHousekeepingFilter] = useState(null)
-    const [housekeeping, setHousekeeping] = useState([])
     const [journey, setJourney] = useState({
         cab: [],
         clock: [],
@@ -45,40 +43,16 @@ const GuestTimeLine = ({guestId}) => {
     }
 
     const handleCloseTab = () => setTab(false)
-    
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByCombo2("guestUsers", guestId, "journey", "hotelId", "==", userDB.hotelId, "markup", "desc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setTimelineData(snapInfo)
-        });
-        return unsubscribe
-    },[guestId])
 
-    useEffect(() => {
-        if(housekeepingFilter !== null){
-            const handleGetHousekeepingData = () => {
-                return fetchCollectionBySorting3("guestUsers", guestId, "journey", housekeepingFilter, "housekeeping", "markup", "desc")
-            }
+    const { data: timelineData = [] } = useFirestoreSubscription(
+        ['guestUsers', guestId, 'journey'],
+        { where: ['hotelId', '==', userDB.hotelId], orderBy: ['markup', 'desc'], enabled: !!guestId }
+    )
 
-        let unsubscribe = handleGetHousekeepingData().onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setHousekeeping(snapInfo)
-        });
-        return unsubscribe
-    }
-       },[guestId, housekeepingFilter])
+    const { data: housekeeping = [] } = useFirestoreSubscription(
+        ['guestUsers', guestId, 'journey', housekeepingFilter, 'housekeeping'],
+        { orderBy: ['markup', 'desc'], enabled: !!(guestId && housekeepingFilter) }
+    )
 
     if(timelineData.length > 0) {
         return (

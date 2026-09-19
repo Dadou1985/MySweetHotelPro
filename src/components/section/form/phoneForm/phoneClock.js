@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
 import moment from 'moment'
 import 'moment/locale/fr';
@@ -12,15 +12,9 @@ import {
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
-import { 
-    fetchCollectionBySorting2, 
-    handleSubmitData2, 
-    addNotification,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../../Firebase'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
+import { FirebaseContext } from '../../../../config/Firebase'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 const PhoneClock = () =>{
     const { userDB } = useContext(FirebaseContext)
@@ -31,11 +25,20 @@ const PhoneClock = () =>{
         hour: new Date(), 
         date: new Date()
     })
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'clock'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addClock } = useAdd([['hotels', userDB.hotelId, 'clock']])
+    const { mutate: notify } = useAdd()
+    const { mutate: updateClock } = useUpdate([['hotels', userDB.hotelId, 'clock']])
+    const { mutate: deleteClock } = useDelete([['hotels', userDB.hotelId, 'clock']])
 
     const handleShow = () => setActivate(true)
     const handleHide = () => {
@@ -49,7 +52,7 @@ const PhoneClock = () =>{
     };
 
     const notif = t("msh_alarm.a_notif")
-    const dataStatus = {status: false} 
+    const dataStatus = {status: false}
     const breakPoint = window.innerWidth > 510
 
     const newData = {
@@ -59,24 +62,9 @@ const PhoneClock = () =>{
         day: Date.now(),
         markup: Date.now(),
         hour: moment(formValue.date).format('LT'),
-        date: moment(formValue.date).format('L'),            
+        date: moment(formValue.date).format('L'),
         status: false
     }
-
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "clock", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-           
-     },[])
 
     return(
 
@@ -114,14 +102,14 @@ const PhoneClock = () =>{
                                     <td>
                                         <Switch
                                             checked={flow.status}
-                                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "clock", flow.id, dataStatus)}
+                                            onChange={() => updateClock({ path: ['hotels', userDB.hotelId, 'clock', flow.id], data: dataStatus })}
                                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                                         />
                                         </td>
                                     {expand && <td>{moment(flow.date).format('LLL')}</td>}
                                     {expand && <td>{flow.author}</td>}
                                     {expand && <td className="bg-dark">
-                                            <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "clock", flow.id)}>
+                                            <Button variant="outline-danger" size="sm" onClick={()=> deleteClock({ path: ['hotels', userDB.hotelId, 'clock', flow.id] })}>
                                                 {t("msh_general.g_button.b_delete")}
                                             </Button>
                                         </td>}
@@ -180,9 +168,9 @@ const PhoneClock = () =>{
                 </>}
                 {step && <>
                     <Button variant='link' className="btn-msh-outline phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
-                    <Button  className="btn-msh phone_submitButton" onClick={(event) => {
-                        handleSubmitData2(event, "hotels", userDB.hotelId, "clock", newData)
-                        addNotification(notif, userDB.hotelId)
+                    <Button  className="btn-msh phone_submitButton" onClick={() => {
+                        addClock({ path: ['hotels', userDB.hotelId, 'clock'], data: newData })
+                        notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                         return handleHide()
                     }}>{t("msh_alarm.a_phone_button.b_validation")}</Button>                
                 </>}

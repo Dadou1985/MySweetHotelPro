@@ -1,5 +1,5 @@
-import React, {useState, useEffect, useContext } from 'react'
-import LostOnes from '../../images/lostNfound.png'
+import React, {useState, useContext } from 'react'
+import LostOnes from '../../assets/images/lostNfound.png'
 import { Modal, Table, Card, Button, Form, ButtonGroup, ToggleButton, FloatingLabel, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { functions, specialFirestoreOptions, FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
@@ -12,9 +12,9 @@ import {Loader} from "react-loader-spinner"
 import Chat from './chatRoom'
 import { useTranslation } from "react-i18next"
 import TimeLine from './guestTimeLine'
-import defaultImg from "../../images/avatar-client.png"
+import defaultImg from "../../assets/images/avatar-client.png"
 import { StaticImage } from 'gatsby-plugin-image'
-import { addNotification, handleCreateData2, fetchCollectionByMapping1, handleUpdateData1 } from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription, useUpdate, useSet, useAdd } from '../../utils/hooks/useFirestore'
 import { handleChange } from '../../utils/formCommonFunctions'
 import InputElement from '../../utils/InputElement'
 import ModalHeaderFormTemplate from '../../utils/modalHeaderFormTemplate'
@@ -29,7 +29,6 @@ const GuestDatabase = () =>{
     const { t } = useTranslation()
 
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({title: "", gender: "", phone:"", email: "", category: ""})
     const [categoryClone, setCategoryClone] = useState("")
     const [img, setImg] = useState("")
@@ -50,7 +49,7 @@ const GuestDatabase = () =>{
 
     const userDataRemoved = {hotelVisitedArray: specialFirestoreOptions.arrayRemove(userDB.hotelId)}
     const emailSentNotif = t("msh_crm.c_notif_mails")
-    const userCreationNotif = t("msh_crm.c_notif") 
+    const userCreationNotif = t("msh_crm.c_notif")
     const modalTitle = t("msh_crm.c_button.b_add")
 
     const userDataCreated = {
@@ -64,6 +63,15 @@ const GuestDatabase = () =>{
         markup: Date.now()
     }
 
+    const { data: info = [] } = useFirestoreSubscription(
+        ['guestUsers'],
+        { where: ['hotelVisitedArray', 'array-contains', userDB.hotelId] }
+    )
+
+    const { mutate: updateGuest } = useUpdate([['guestUsers']])
+    const { mutate: setGuestChat } = useSet([['hotels', userDB.hotelId, 'chat']])
+    const { mutate: notify } = useAdd()
+
     const handleClose = () => setList(false)
     const handleShow = () => setList(true)
 
@@ -76,22 +84,8 @@ const GuestDatabase = () =>{
         return guestMail.push(email)
     }
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping1("guestUsers", "hotelVisitedArray", "array-contains", userDB.hotelId).onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-       },[])
-
     const handleDeleteGuest = (guestId) => {
-        return handleUpdateData1("guestUsers", guestId, userDataRemoved)
+        return updateGuest({ path: ['guestUsers', guestId], data: userDataRemoved })
     }
 
     const sendCheckinMail = functions.httpsCallable('sendCheckinMail')
@@ -105,7 +99,7 @@ const GuestDatabase = () =>{
         setSendingMail(false)
         setIsLoading(false)
         setguestMail([])
-        return addNotification(emailSentNotif, userDB.hotelId)
+        return notify({ path: ['notifications'], data: { content: emailSentNotif, hotelId: userDB.hotelId, markup: Date.now() } })
     }
 
     const StyledBadge = withStyles((theme) => ({
@@ -120,25 +114,25 @@ const GuestDatabase = () =>{
       const renderSwitchFlag = (country) => {
         switch(country) {
             case 'fr':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/france.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/france.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'en':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/royaume-uni.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/royaume-uni.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'es':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/espagne.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/espagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'de':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/allemagne.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/allemagne.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'it':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/italie.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/italie.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             case 'pt':
-                return <StaticImage objectFit='contain' placeholder="blurred" src='../../images/le-portugal.png' 
+                return <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/le-portugal.png' 
                 style={{width: "50%", paddingTop: "1vh"}} />
             default:
-                return <StaticImage objectFit='contain' placeholder="blurred" src={'../../images/france.png'} 
+                return <StaticImage objectFit='contain' placeholder="blurred" src={'../../assets/images/france.png'} 
                 style={{width: "50%", paddingTop: "1vh"}} />
         }
     }
@@ -345,9 +339,9 @@ const GuestDatabase = () =>{
                     </Modal.Body>
                         {footerState && <Modal.Footer>
                             <Button className='btn-msh' onClick={(event) => {
-                                handleCreateData2(event, "hotels", userDB.hotelId, "chat", formValue.title, userDataCreated)
+                                setGuestChat({ path: ['hotels', userDB.hotelId, 'chat', formValue.title], data: userDataCreated })
                                 setFormValue("")
-                                addNotification(userCreationNotif, userDB.hotelId)
+                                notify({ path: ['notifications'], data: { content: userCreationNotif, hotelId: userDB.hotelId, markup: Date.now() } })
                                 return handleClose()
                             }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}
@@ -371,23 +365,23 @@ const GuestDatabase = () =>{
                                 paddingBottom: "1vh",
                                 marginBottom: "2vh"}}>{item.username}</Card.Title>
                             {/* {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/email.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/email.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.email}
                             </Card.Text>} */}
                             {item.room && item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/room2.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/room2.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.room}
                             </Card.Text>}
                             {item.checkoutDate && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/checkout.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/checkout.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.checkoutDate}
                             </Card.Text>}
                             {item.phone && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/phone.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/phone.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {item.phone}
                             </Card.Text>}
                             {item.email && <Card.Text style={{paddingLeft: "1vw"}}>
-                                <StaticImage objectFit='contain' placeholder="blurred" src='../../images/calendar.png' style={{width: "5%", marginRight: "1vw"}} />
+                                <StaticImage objectFit='contain' placeholder="blurred" src='../../assets/images/calendar.png' style={{width: "5%", marginRight: "1vw"}} />
                                 {moment(item.lastTimeConnected).format('LL')}
                             </Card.Text>}
                             {item.email && <div style={{display: "flex", flexFlow: "row", justifyContent: "space-around", width: "35%", marginTop: "1vh"}}>
@@ -400,7 +394,7 @@ const GuestDatabase = () =>{
                                 </Tooltip>
                                 }>
                                     <div onClick={() => setShowChat(true)}>
-                                        <StaticImage objectFit='contain' src='../../images/dialog.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer"}} />
+                                        <StaticImage objectFit='contain' src='../../assets/images/dialog.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer"}} />
                                     </div>
                                 </OverlayTrigger>
                                 {window?.innerWidth < 1439 && <OverlayTrigger
@@ -411,7 +405,7 @@ const GuestDatabase = () =>{
                                 </Tooltip>
                                 }>
                                     <div onClick={() => setShowTimeLine(true)}>
-                                        <StaticImage objectFit='contain' src='../../images/dodo.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer"}} />
+                                        <StaticImage objectFit='contain' src='../../assets/images/dodo.png' placeholder="blurred" style={{width: "2vw", cursor: "pointer"}} />
                                     </div>
                                 </OverlayTrigger>}
                                 </div>}

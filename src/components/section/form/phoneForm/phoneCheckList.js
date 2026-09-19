@@ -3,7 +3,7 @@ import { Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from '../../checkListTable'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import { FirebaseContext } from '../../../../Firebase'
+import { FirebaseContext } from '../../../../config/Firebase'
 
 const PhoneCheckList = () =>{
     const { user, userDB } = useContext(FirebaseContext)

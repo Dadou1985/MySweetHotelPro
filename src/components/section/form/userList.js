@@ -1,31 +1,23 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, { useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { functions, FirebaseContext } from '../../../config/Firebase'
 import Switch from '@material-ui/core/Switch';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { fetchCollectionByMapping1, handleUpdateData1, handleDeleteData1 } from '../../../utils/commonFunctions';
+import { useFirestoreSubscription, useUpdate, useDelete } from '../../../utils/hooks/useFirestore'
 
 const UserList = () => {
     const { userDB } = useContext(FirebaseContext)
-    const [info, setInfo] = useState([])
     const { t } = useTranslation()
     const isTablet = window && window.innerWidth > 1023 && "none"
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping1('businessUsers', "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
-        const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            console.log(snapInfo)
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-     },[])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['businessUsers'],
+        { where: ['hotelId', '==', userDB.hotelId] }
+    )
+
+    const { mutate: updateUser } = useUpdate(['businessUsers'])
+    const { mutate: deleteUser2 } = useDelete(['businessUsers'])
 
     const deleteUser = functions.httpsCallable('deleteUser')
 
@@ -52,12 +44,12 @@ const UserList = () => {
                                 checked={flow.adminStatus}
                                 onChange={() => {
                                     let userStatus = !flow.adminStatus
-                                    return handleUpdateData1("businessUsers", flow.id, {adminStatus: userStatus})}}
+                                    return updateUser({ path: ['businessUsers', flow.id], data: { adminStatus: userStatus } })}}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                         </td>}
                         <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={async()=>{
-                            await handleDeleteData1('businessUsers', flow.id)
+                            deleteUser2({ path: ['businessUsers', flow.id] })
                             return deleteUser({uid: flow.userId})
                         }}>{window?.innerWidth > 1439 ? t("msh_general.g_button.b_delete") : "X"}</Button></td>
                     </tr>

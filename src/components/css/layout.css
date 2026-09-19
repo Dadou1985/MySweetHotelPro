@@ -160,7 +160,7 @@ tbody, td, tfoot, th, thead, tr {
             z-index: 100;
             width: 100vw;
             height: 100vh;
-            background-image: url('../../svg/new-logo-msh.png');
+            background-image: url('../../assets/svg/new-logo-msh.png');
             background-repeat: no-repeat;
             background-size: contain;
             background-position: center;

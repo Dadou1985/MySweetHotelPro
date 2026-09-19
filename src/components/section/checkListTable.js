@@ -1,21 +1,14 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Button, Table, Form, InputGroup, FormControl } from 'react-bootstrap'
 import { FirebaseContext } from '../../config/Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../utils/formCommonFunctions'
-import { 
-    handleUpdateData3, 
-    fetchCollectionBySorting3, 
-    handleSubmitData3, 
-    handleDeleteData3,
-    addNotification
-} from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../utils/hooks/useFirestore'
 import '../css/section/checkList.css'
 
 const CheckListTable = ({shift}) => {
 
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({task: "", status: false})
     const { t } = useTranslation()
 
@@ -30,25 +23,21 @@ const CheckListTable = ({shift}) => {
     }
     const isMobile = window.innerWidth < 768
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, "checkList", "lists", shift, "markup", "asc").onSnapshot(function(snapshot) {
-        const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe   
-    },[shift])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'checkList', 'lists', shift],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addTask } = useAdd([['hotels', userDB.hotelId, 'checkList', 'lists', shift]])
+    const { mutate: updateTask } = useUpdate([['hotels', userDB.hotelId, 'checkList', 'lists', shift]])
+    const { mutate: deleteTask } = useDelete([['hotels', userDB.hotelId, 'checkList', 'lists', shift]])
+    const { mutate: notify } = useAdd()
 
     let taskStatus = info.length > 0 && info.filter(status => status.status === true)
 
     const handleCleanCheckboxes = () => {
         taskStatus.length > 0 && taskStatus.map(task => {
-            return handleUpdateData3("hotels", userDB.hotelId, "checkList", "lists", shift, task.id, checkboxStatusCleaned)
+            return updateTask({ path: ['hotels', userDB.hotelId, 'checkList', 'lists', shift, task.id], data: checkboxStatusCleaned })
         })
     }
 
@@ -66,14 +55,14 @@ const CheckListTable = ({shift}) => {
                 onKeyDown={(e) => {
                     if(e.key === "Enter") {
                         setFormValue({task: ""})
-                        addNotification(notif, userDB.hotelId)
-                        return handleSubmitData3(e, "hotels", userDB.hotelId, "checkList", "lists", shift, newData)
+                        notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+                        return addTask({ path: ['hotels', userDB.hotelId, 'checkList', 'lists', shift], data: newData })
                     }
                 }}
                 />
                     <Button className='btn-msh' onClick={(event) => {
                         setFormValue({task: ""})
-                        return handleSubmitData3(event, "hotels", userDB.hotelId, "checkList", "lists", shift, newData)
+                        return addTask({ path: ['hotels', userDB.hotelId, 'checkList', 'lists', shift], data: newData })
                     }}>{t("msh_check_list.c_button.b_validate")}</Button>
             </InputGroup>
             <PerfectScrollbar style={{height: "55vh"}}>
@@ -84,7 +73,7 @@ const CheckListTable = ({shift}) => {
                             <td>
                                 <Form.Group controlId="formBasicCheckbox">
                                     <Form.Check type="checkbox" checked={flow.status} onChange={() => {
-                                        return handleUpdateData3("hotels", userDB.hotelId, "checkList", "lists", shift, flow.id, {status: !flow.status})
+                                        return updateTask({ path: ['hotels', userDB.hotelId, 'checkList', 'lists', shift, flow.id], data: {status: !flow.status} })
                                     }} />
                                 </Form.Group> 
                             </td>
@@ -93,7 +82,7 @@ const CheckListTable = ({shift}) => {
                             </td>
                             <td className="bg-dark">
                                 <Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={()=>{
-                                    return handleDeleteData3('hotels', userDB.hotelId, "checkList", "lists", shift, flow.id)
+                                    return deleteTask({ path: ['hotels', userDB.hotelId, 'checkList', 'lists', shift, flow.id] })
                                 }}>{isMobile ? "x": t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>

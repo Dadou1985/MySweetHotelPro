@@ -1,28 +1,22 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, Tabs, Tab, Tooltip, OverlayTrigger, Modal } from 'react-bootstrap'
-import { FirebaseContext, db } from '../../../Firebase'
+import { FirebaseContext } from '../../../config/Firebase'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
-import { handleChange } from '../../../helper/formCommonFunctions'
-import { 
-    fetchCollectionBySorting2, 
-    handleSubmitData2, 
-    addNotification, 
-    handleDeleteData2 
-} from '../../../helper/globalCommonFunctions'
-import InputElement from '../../../helper/common/InputElement'
+import { handleChange } from '../../../utils/formCommonFunctions'
+import InputElement from '../../../utils/form/InputElement'
+import { useFirestoreSubscription, useAdd, useDelete } from '../../../utils/hooks/useFirestore'
 
 const Annuaire = () =>{
 
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({name: "", mobile: "", fix: ""})
     const {userDB} = useContext(FirebaseContext)
     const [footerState, setFooterState] = useState(true)
     const { t } = useTranslation()
 
-    const notif = t("msh_phone_book.p_notif") 
+    const notif = t("msh_phone_book.p_notif")
 
     const handleShow = () => setList(true)
     const handleClose = () => {
@@ -37,19 +31,14 @@ const Annuaire = () =>{
         markup: Date.now()
     }
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2('hotels', userDB.hotelId, 'contact', "name", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-                snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                    })        
-                });
-                setInfo(snapInfo)
-            });
-        return unsubscribe
-     },[])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'contact'],
+        { orderBy: ['name', 'asc'] }
+    )
+
+    const { mutate: addContact } = useAdd(['hotels', userDB.hotelId, 'contact'])
+    const { mutate: deleteContact } = useDelete(['hotels', userDB.hotelId, 'contact'])
+    const { mutate: notify } = useAdd()
 
     return(
         <div style={{
@@ -80,7 +69,7 @@ const Annuaire = () =>{
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                    
+
                     <Tabs defaultActiveKey="Ajouter un contact" id="annuaire" onSelect={(eventKey) => {
                         if(eventKey === 'Répertoire'){
                             return setFooterState(false)
@@ -100,11 +89,11 @@ const Annuaire = () =>{
                                     key={flow.markup}>
                                         <div style={{padding: "2%", width: "50%"}}>
                                             <h5 className="bold">{flow.name}</h5>
-                                            <p><i>{t("msh_phone_book.p_mobile")} : {flow.mobile}</i> 
+                                            <p><i>{t("msh_phone_book.p_mobile")} : {flow.mobile}</i>
                                             <br /><i>{t("msh_phone_book.p_local")} : {flow.fix}</i></p>
                                         </div>
                                             <Button variant="outline-danger" size="sm" onClick={() => {
-                                                return handleDeleteData2('hotels', user, 'contact', flow.id)
+                                                return deleteContact({ path: ['hotels', userDB.hotelId, 'contact', flow.id] })
                                             }}>{t("msh_general.g_button.b_delete")}</Button>
                                     </div>
                                 ))}
@@ -121,7 +110,7 @@ const Annuaire = () =>{
                                 }}>
                                     <Form.Row>
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "0"}}
                                             label={t("msh_phone_book.p_contact")}
                                             placeholder="ex: Jane Doe"
                                             size="25vw"
@@ -138,7 +127,7 @@ const Annuaire = () =>{
                                         width: "50%"
                                     }}>
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "0"}}
                                             label={t("msh_phone_book.p_mobile")}
                                             placeholder="ex: 0656872674"
                                             size="11vw"
@@ -148,7 +137,7 @@ const Annuaire = () =>{
                                             setFormValue={setFormValue}
                                         />
                                         <InputElement
-                                            containerStyle={{marginBottom: "0"}} 
+                                            containerStyle={{marginBottom: "0"}}
                                             label={t("msh_phone_book.p_local")}
                                             placeholder="ex: 0130987654"
                                             size="11vw"
@@ -164,9 +153,9 @@ const Annuaire = () =>{
                     </Modal.Body>
                     <Modal.Footer>
                         {footerState && <Modal.Footer>
-                            <Button variant="dark" onClick={(event) => {
-                                handleSubmitData2(event, "hotel", userDB.hotelId, 'contact', newData)
-                                addNotification(notif, userDB.hotelId)
+                            <Button variant="dark" onClick={() => {
+                                addContact({ path: ['hotels', userDB.hotelId, 'contact'], data: newData })
+                                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                                 return handleClose()
                             }}>{t("msh_general.g_button.b_send")}</Button>
                         </Modal.Footer>}

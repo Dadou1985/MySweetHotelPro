@@ -1,19 +1,19 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { db, functions, FirebaseContext } from '../../../../Firebase'
+import { functions, FirebaseContext } from '../../../../config/Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
+import { useFirestoreSubscription, useAdd, useSet, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 function PhoneAdmin() {
     const { userDB } = useContext(FirebaseContext)
     const [formValue, setFormValue] = useState({username: "", email: ""})
     const [activate, setActivate] = useState(false)
-    const [info, setInfo] = useState([])
     const [expand, setExpand] = useState(false)
-    const [language, setLanguage] = useState(navigator.language || navigator.userLanguage)
+    const [language] = useState(navigator.language || navigator.userLanguage)
     const { t } = useTranslation()
 
     const isMobile = window.innerWidth < 768
@@ -29,13 +29,15 @@ function PhoneAdmin() {
     const handleShow = () => setActivate(true)
     const handleHide = () => setActivate(false)
 
-    const addNotification = (notification) => {
-        return db.collection('notifications')
-            .add({
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()})
-    }
+    const { data: info = [] } = useFirestoreSubscription(
+        ['businessUsers'],
+        { where: ['hotelId', '==', userDB.hotelId] }
+    )
+
+    const { mutate: notify } = useAdd()
+    const { mutate: setBusinessUser } = useSet([['businessUsers']])
+    const { mutate: updateUserStatus } = useUpdate([['businessUsers']])
+    const { mutate: deleteBusinessUser } = useDelete([['businessUsers']])
 
     const createUser = functions.httpsCallable('createUser')
     const deleteUser = functions.httpsCallable('deleteUser')
@@ -45,60 +47,41 @@ function PhoneAdmin() {
         event.preventDefault()
         //setFormValue("")
         const notif = t("msh_admin_board.a_notif")
-        addNotification(notif)
+        notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         await createUser({email: formValue.email, password: "password", username: formValue.username, uid: newUid})
-        return db.collection('businessUsers')
-        .doc(newUid)
-        .set({  
-        username: formValue.username,  
-        adminStatus: false, 
-        email: formValue.email,
-        password: "password",
-        hotelId: userDB.hotelId,
-        hotelName: userDB.hotelName,
-        hotelRegion: userDB.hotelRegion,
-        hotelDept: userDB.hotelDept,
-        createdAt: Date.now(),
-        userId: newUid,
-        city: userDB.city,
-        country: userDB.country,
-        room: userDB.room,
-        classement: userDB.classement,
-        code_postal: userDB.code_postal,
-        language: language.substring(0, 2),
-        logo: userDB.logo,
-        appLink: userDB.appLink,
-        pricingModel: userDB.pricingModel
-        }) 
-        .then(handleHide())
+        setBusinessUser({
+            path: ['businessUsers', newUid],
+            data: {
+                username: formValue.username,
+                adminStatus: false,
+                email: formValue.email,
+                password: "password",
+                hotelId: userDB.hotelId,
+                hotelName: userDB.hotelName,
+                hotelRegion: userDB.hotelRegion,
+                hotelDept: userDB.hotelDept,
+                createdAt: Date.now(),
+                userId: newUid,
+                city: userDB.city,
+                country: userDB.country,
+                room: userDB.room,
+                classement: userDB.classement,
+                code_postal: userDB.code_postal,
+                language: language.substring(0, 2),
+                logo: userDB.logo,
+                appLink: userDB.appLink,
+                pricingModel: userDB.pricingModel
+            }
+        })
+        handleHide()
       }
 
       const changeUserStatus = (documentId, status) => {
-        return db.collection('businessUsers')
-          .doc(documentId)
-          .update({
-            adminStatus: status,
-        })      
+        updateUserStatus({
+            path: ['businessUsers', documentId],
+            data: { adminStatus: status }
+        })
       }
-
-    useEffect(() => {
-        const toolOnAir = () => {
-            return db.collection('businessUsers')
-            .where("hotelId", "==", userDB.hotelId)
-        }
-
-        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
-                    const snapInfo = []
-                  snapshot.forEach(function(doc) {          
-                    snapInfo.push({
-                        id: doc.id,
-                        ...doc.data()
-                      })        
-                    });
-                    setInfo(snapInfo)
-                });
-                return unsubscribe
-     },[])
 
     return (
         <div className="phone_container">
@@ -134,15 +117,7 @@ function PhoneAdmin() {
                     </td>}
                     {expand && <td>{flow.email}</td>}
                     <td className="bg-light"><Button variant={isMobile ? "danger" : "outline-danger"} size="sm" onClick={async()=>{
-                        await db.collection('businessUsers')
-                        .doc(flow.id)
-                        .delete()
-                        .then(function() {
-                          console.log("Document successfully deleted!");
-                        }).catch(function(error) {
-                            console.log(error);
-                        })
-
+                        deleteBusinessUser({ path: ['businessUsers', flow.id] })
                         return deleteUser({uid: flow.userId})
                     }}>{isMobile ? "x": t("msh_general.g_button.b_delete")}</Button></td>
                 </tr>

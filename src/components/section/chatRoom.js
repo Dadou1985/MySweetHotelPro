@@ -1,52 +1,25 @@
-import React, { useState, useEffect, useMemo, useCallback, useContext } from 'react'
+import React, { useMemo, useCallback, useContext } from 'react'
 import Message from './messageCommunizi'
 import PerfectScrollbar from 'react-perfect-scrollbar'
-import {
-    fetchCollectionByMapping2,
-    fetchCollectionBySorting3
-} from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import { FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
-// Helper to process Firestore snapshots
-const processSnapshot = (snapshot) => {
-    const data = []
-    snapshot.forEach((doc) => {
-        data.push({ id: doc.id, ...doc.data() })
-    })
-    return data
-}
 
 export default function ChatRoom({ title }) {
     const { user, userDB } = useContext(FirebaseContext)
-    const [messages, setMessages] = useState([])
-    const [chatRoom, setChatRoom] = useState(null)
 
     // Fetch chat messages
-    useEffect(() => {
-        if (!userDB?.hotelId || !title) return
-
-        const unsubscribe = fetchCollectionBySorting3(
-            "hotels", userDB.hotelId, "chat", title, "chatRoom", "markup", "desc", 50
-        ).onSnapshot((snapshot) => {
-            setMessages(processSnapshot(snapshot))
-        })
-
-        return unsubscribe
-    }, [userDB?.hotelId, title])
+    const { data: messages = [] } = useFirestoreSubscription(
+        ['hotels', userDB?.hotelId, 'chat', title, 'chatRoom'],
+        { orderBy: ['markup', 'desc'], limit: 50, enabled: !!(userDB?.hotelId && title) }
+    )
 
     // Fetch chat room metadata
-    useEffect(() => {
-        if (!userDB?.hotelId || !title) return
-
-        const unsubscribe = fetchCollectionByMapping2(
-            "hotels", userDB.hotelId, "chat", "title", "==", title
-        ).onSnapshot((snapshot) => {
-            const rooms = processSnapshot(snapshot)
-            setChatRoom(rooms[0] || null)
-        })
-
-        return unsubscribe
-    }, [userDB?.hotelId, title])
+    const { data: chatRooms = [] } = useFirestoreSubscription(
+        ['hotels', userDB?.hotelId, 'chat'],
+        { where: ['title', '==', title], enabled: !!(userDB?.hotelId && title) }
+    )
+    const chatRoom = chatRooms[0] || null
 
     // Get translation based on user language
     const getTranslation = useCallback((flow) => {

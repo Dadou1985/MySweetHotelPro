@@ -1,29 +1,26 @@
 import React, {useState } from 'react'
-import Stick from '../../images/postIt.png'
+import Stick from '../../assets/images/postIt.png'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import { db } from '../../config/Firebase'
 import Avatar from 'react-avatar'
 import  '../css/section/post-it.css'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
+import { useDelete } from '../../utils/hooks/useFirestore'
 
 const PostIt = ({author, title, text, markup, userDB}) => {
 
     const [visible, setVisible] = useState(false)
     const { t } = useTranslation()
+    const { mutate: deleteSticker } = useDelete(['hotels', userDB.hotelId, 'stickers'])
 
     const showSticker = () => {
         setVisible(true)
       }
-    
+
     const removeSticker = (event) => {
         console.log(event)
         setVisible(false)
-        return db.collection('hotels')
-            .doc(userDB.hotelId)
-            .collection('stickers')
-            .doc(markup)
-            .delete()      
+        return deleteSticker({ path: ['hotels', userDB.hotelId, 'stickers', markup] })
       }
     
     const handleClose = () => {
@@ -45,7 +42,7 @@ const PostIt = ({author, title, text, markup, userDB}) => {
       </Tooltip>
     }>
       <div onClick={showSticker}>
-        <StaticImage objectFit='contain' placeholder='blurred' src='../../images/postIt.png' alt="stick" className="stick" style={{
+        <StaticImage objectFit='contain' placeholder='blurred' src='../../assets/images/postIt.png' alt="stick" className="stick" style={{
             width: "100%",
             height: "100%",
             cursor: "pointer"

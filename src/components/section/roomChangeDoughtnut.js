@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next"
 import { Chart } from 'primereact/chart';
-import BarChart from '../../images/barChart.png'
-import { fetchCollectionByMapping2 } from '../../utils/globalCommonFunctions';
+import BarChart from '../../assets/images/barChart.png'
+import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import {
-    stackedDataForWeek, 
-    stackedDataForMonth, 
-    stackedDataForSemester, 
-    stackedDataForYear} 
+    stackedDataForWeek,
+    stackedDataForMonth,
+    stackedDataForSemester,
+    stackedDataForYear}
 from '../../utils/timeRange/stackedData';
 
 const RoomChangeDoughtnut = ({userDB, filter, period}) => {
-    const [data, setData] = useState([])
-    const [roomChangeCategory, setRoomChangeCategory] = useState({noise: [], temperature: [], maintenance: [], housekeeping: [], others: []});
     const { t } = useTranslation()
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2('hotels', userDB.hotelId, 'roomChange', "markup", '>=', filter).onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
+    const { data: snapInfo = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'roomChange'],
+        { where: ['markup', '>=', filter] }
+    )
 
-            const noise = snapInfo && snapInfo.filter(reason => reason.reason === "noise")
-            const temperature = snapInfo && snapInfo.filter(reason => reason.reason === "temperature")
-            const maintenance = snapInfo && snapInfo.filter(reason => reason.reason === "maintenance")
-            const cleaning = snapInfo && snapInfo.filter(reason => reason.reason === "cleaning")
-            const others = snapInfo && snapInfo.filter(reason => reason.reason === "others")
-            
-            setData(snapInfo)
-            setRoomChangeCategory({
-                noise: noise,
-                temperature: temperature,
-                maintenance: maintenance,
-                housekeeping: cleaning,
-                others: others
-            })
-        });
-        return unsubscribe
-    },[filter])   
+    const data = snapInfo
+    const roomChangeCategory = {
+        noise: snapInfo.filter(reason => reason.reason === "noise"),
+        temperature: snapInfo.filter(reason => reason.reason === "temperature"),
+        maintenance: snapInfo.filter(reason => reason.reason === "maintenance"),
+        housekeeping: snapInfo.filter(reason => reason.reason === "cleaning"),
+        others: snapInfo.filter(reason => reason.reason === "others"),
+    }
 
         const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
         const dMonth = t("msh_dashboard.d_time_period.t_week").charAt(0)

@@ -1,42 +1,31 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form } from 'react-bootstrap'
 import Send from '../../../../images/paper-plane.png'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import moment from 'moment'
 import 'moment/locale/fr';
-import { db, FirebaseContext } from '../../../../Firebase'
+import { db, FirebaseContext } from '../../../../config/Firebase'
 import Avatar from '@material-ui/core/Avatar';
 import DefaultProfile from "../../../../svg/profile.png"
 import { useTranslation } from "react-i18next"
-import { 
-    fetchCollectionBySorting2, 
-    handleCreateData1, 
-    handleSubmitData2, 
-    handleUpdateData1 
-} from '../../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../../helper/formCommonFunctions'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
+import { useFirestoreSubscription, useAdd, useSet, useUpdate } from '../../../../utils/hooks/useFirestore'
 
 export default function PhoneSupport() {
     const { user, userDB } = useContext(FirebaseContext)
     const [note, setNote] = useState("")
-    const [messages, setMessages] = useState([])
     const [chatRoom, setChatRoom] = useState(null)
     const { t } = useTranslation()
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2('assistance', userDB.hotelName, "chatRoom", "markup", "desc", 50).onSnapshot(function(snapshot) {
-            const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            setMessages(snapInfo)
-        });
-        return unsubscribe
-    }, [])
+    const { data: messages = [] } = useFirestoreSubscription(
+        ['assistance', userDB.hotelName, 'chatRoom'],
+        { orderBy: ['markup', 'desc'], limit: 50 }
+    )
+
+    const { mutate: addMessage } = useAdd([['assistance', userDB.hotelName, 'chatRoom']])
+    const { mutate: setChatRoomDoc } = useSet([['assistance']])
+    const { mutate: updateChatRoomDoc } = useUpdate([['assistance']])
 
     const getChatRoom = async () => {
         const doc = await db.collection('assistance')
@@ -55,7 +44,7 @@ export default function PhoneSupport() {
         markup: Date.now(),
         pricingModel: userDB.pricingModel === "Premium" ? "Premium" : ""
     }
-    
+
     const createdData = {
         adminSpeak: false,
         hotelId: userDB.hotelId,
@@ -166,20 +155,16 @@ export default function PhoneSupport() {
                     alignItems: "center",
                     }}>
                     <Form.Control style={{width: "85%", borderRadius: "20px", backgroundColor: 'lightgrey', color: "black"}} value={note} name="note" type="text" placeholder={t("msh_support.s_input_placeholder")} onChange={handleChange} required />
-                    <img src={Send} alt="sendIcon" style={{width: "6%", height: "6%"}} onClick={async(event) => {
+                    <img src={Send} alt="sendIcon" style={{width: "6%", height: "6%"}} onClick={async() => {
                     await getChatRoom()
                         if(chatRoom !== null) {
-                            return handleUpdateData1(event, 'assistance', userDB.hotelName, updatedData)
-                            .then(() => {
-                                setNote("")
-                                handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
-                            })
+                            updateChatRoomDoc({ path: ['assistance', userDB.hotelName], data: updatedData })
+                            setNote("")
+                            addMessage({ path: ['assistance', userDB.hotelName, 'chatRoom'], data: newData })
                         }else{
-                            return handleCreateData1(event, 'assistance', userDB.hotelName, createdData)
-                            .then(() => {
-                                setNote("")
-                                handleSubmitData2(event, "assistance", userDB.hotelName, "chatRoom", newData)
-                            })
+                            setChatRoomDoc({ path: ['assistance', userDB.hotelName], data: createdData })
+                            setNote("")
+                            addMessage({ path: ['assistance', userDB.hotelName, 'chatRoom'], data: newData })
                         }
                     }} />          
                 </Form.Group>

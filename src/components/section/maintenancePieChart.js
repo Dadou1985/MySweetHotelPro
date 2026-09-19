@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useTranslation } from "react-i18next"
 import { Chart } from 'primereact/chart'
 import { StaticImage } from 'gatsby-plugin-image'
-import { fetchCollectionByMapping2 } from '../../utils/globalCommonFunctions';
+import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import {
-    stackedDataForWeek, 
-    stackedDataForMonth, 
-    stackedDataForSemester, 
-    stackedDataForYear} 
+    stackedDataForWeek,
+    stackedDataForMonth,
+    stackedDataForSemester,
+    stackedDataForYear}
 from '../../utils/timeRange/stackedData';
 
 const MaintenancePieChart = ({userDB, filter, period}) => {
-    const [data, setData] = useState([])
-    const [maintenanceCategory, setMaintenanceCategory] = useState({paint: [], electricity: [], plumbery: [], cleaning: [], others: []});
     const { t } = useTranslation()
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2('hotels', userDB.hotelId, 'maintenance', "markup", '>=', filter).onSnapshot(function(snapshot) {
-                const snapInfo = []
-                snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                    })        
-                });
+    const { data: snapInfo = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'maintenance'],
+        { where: ['markup', '>=', filter] }
+    )
 
-                const paint = snapInfo && snapInfo.filter(reason => reason.type === "paint")
-                const electricity = snapInfo && snapInfo.filter(reason => reason.type === "electricity")
-                const plumbery = snapInfo && snapInfo.filter(reason => reason.type === "plumbery")
-                const housekeeping = snapInfo && snapInfo.filter(reason => reason.type === "cleaning")
-                const others = snapInfo && snapInfo.filter(reason => reason.type === "others")
-
-                setData(snapInfo)
-                setMaintenanceCategory({
-                    paint: paint,
-                    electricity: electricity,
-                    plumbery: plumbery,
-                    cleaning: housekeeping,
-                    others: others
-                })
-            });
-            return unsubscribe
-        },[filter])   
+    const data = snapInfo
+    const maintenanceCategory = {
+        paint: snapInfo.filter(reason => reason.type === "paint"),
+        electricity: snapInfo.filter(reason => reason.type === "electricity"),
+        plumbery: snapInfo.filter(reason => reason.type === "plumbery"),
+        cleaning: snapInfo.filter(reason => reason.type === "cleaning"),
+        others: snapInfo.filter(reason => reason.type === "others"),
+    }
 
         const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
         const dMonth = t("msh_dashboard.d_time_period.t_week").charAt(0)
@@ -249,7 +233,7 @@ const MaintenancePieChart = ({userDB, filter, period}) => {
                 marginTop: "2vh",
                 marginBottom: "2vh"
             }}>
-                <StaticImage objectFit='contain' src='../../images/barChart.png' style={{width: "3vw"}} />
+                <StaticImage objectFit='contain' src='../../assets/images/barChart.png' style={{width: "3vw"}} />
             </div>
             <h6>{t("msh_dashboard.d_no_data")}</h6>
         </div>}

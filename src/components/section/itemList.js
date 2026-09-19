@@ -1,33 +1,25 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useContext } from 'react'
 import { Button, Table } from 'react-bootstrap'
 import { FirebaseContext } from '../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { fetchCollectionBySorting3, handleDeleteData3 } from '../../utils/globalCommonFunctions';
+import { useFirestoreSubscription, useDelete } from '../../utils/hooks/useFirestore'
 
 const ItemList = ({item}) => {
 
-    const [info, setInfo] = useState([])
     const { t } = useTranslation()
     const { userDB } = useContext(FirebaseContext)
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting3("hotels", userDB.hotelId, 'housekeeping', 'item', item, 'markup', 'asc').onSnapshot(function(snapshot) {
-            const snapInfo = []
-                snapshot.forEach(function(doc) {          
-                snapInfo.push({
-                    id: doc.id,
-                    ...doc.data()
-                    })        
-                });
-                setInfo(snapInfo)
-            });
-        return unsubscribe
-     },[item])
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'housekeeping', item, 'item'],
+        { orderBy: ['markup', 'asc'] }
+    )
 
-     moment.locale('fr')
+    const { mutate: deleteItem } = useDelete(['hotels', userDB.hotelId, 'housekeeping', item, 'item'])
+
+    moment.locale('fr')
 
     return (
         <div>
@@ -49,7 +41,7 @@ const ItemList = ({item}) => {
                             <td>{moment(flow.markup).startOf('hour').fromNow()}</td>
                             <td className="bg-dark">
                                 <Button variant="outline-danger" size="sm" onClick={()=>{
-                                return handleDeleteData3("hotels", userDB.hotelId, "housekeeping", 'item', item, flow.id) 
+                                return deleteItem({ path: ['hotels', userDB.hotelId, 'housekeeping', item, 'item', flow.id] })
                                 }}>{t("msh_general.g_button.b_delete")}</Button>
                             </td>
                             </tr>

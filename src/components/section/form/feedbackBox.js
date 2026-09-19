@@ -7,14 +7,14 @@ import {
     Modal, 
     FloatingLabel 
 } from 'react-bootstrap'
-import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import TextareaElement from '../../../helper/common/textareaElement'
-import Feedback from '../../../images/feedback.png'
+import ModalHeaderFormTemplate from '../../../utils/modal/modalHeaderFormTemplate'
+import TextareaElement from '../../../utils/form/textareaElement'
+import Feedback from '../../../assets/images/feedback.png'
 import { useTranslation } from "react-i18next"
 import {
     handleChange,
     handleSubmit
-} from '../../../helper/formCommonFunctions'
+} from '../../../utils/form/formCommonFunctions'
 
 const FeedbackBox = ({userDB}) =>{
    

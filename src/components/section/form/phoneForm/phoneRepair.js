@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
-import { storage } from '../../../../Firebase'
+import { storage, FirebaseContext } from '../../../../config/Firebase'
 import moment from 'moment'
 import 'moment/locale/fr';
 import Drawer from '@material-ui/core/Drawer'
@@ -10,21 +10,11 @@ import Picture from '../../../../svg/picture.svg'
 import AddPhotoURL from '../../../../svg/camera.svg'
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import { handleDeleteImg } from '../../../../helper/globalCommonFunctions'
+import { deleteImg } from '../../../../utils/commonFunctions'
 import InputElement from '../../../../helper/common/InputElement'
 import TextareaElement from '../../../../helper/common/textareaElement'
-import { 
-    fetchCollectionBySorting2, 
-    handleSubmitData2, 
-    addNotification,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../../helper/globalCommonFunctions'
-import {
-    handleChange,
-    deleteData
-} from '../../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../../Firebase'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 /*
     ! FIX => PHOTO SUBMISSION
@@ -41,7 +31,6 @@ const PhoneRepair = () =>{
         url: ""
     })
     const [typeClone, setTypeClone] = useState("")
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [img, setImg] = useState("")
@@ -49,6 +38,16 @@ const PhoneRepair = () =>{
     const [newImg, setNewImg] = useState("")
     const [url, setUrl] = useState("")
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'maintenance'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addMaintenance } = useAdd([['hotels', userDB.hotelId, 'maintenance']])
+    const { mutate: notify } = useAdd()
+    const { mutate: updateMaintenance } = useUpdate([['hotels', userDB.hotelId, 'maintenance']])
+    const { mutate: deleteMaintenance } = useDelete([['hotels', userDB.hotelId, 'maintenance']])
 
     const handleShow = () => setActivate(true)
     const handleHide = () => {
@@ -63,7 +62,7 @@ const PhoneRepair = () =>{
     }
 
     const notif = t("msh_maintenance.m_notif")
-    const dataStatus = {status: false} 
+    const dataStatus = {status: false}
 
     const newData = {
         author: userDB.username,
@@ -91,36 +90,22 @@ const PhoneRepair = () =>{
               .ref("msh-photo-lost")
               .child(newImg.name)
               .getDownloadURL()
-              .then(url => {
+              .then(photoUrl => {
                 const uploadTask = () => {
-                    handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
-                    addNotification(notif, userDB.hotelId)
+                    addMaintenance({ path: ['hotels', userDB.hotelId, 'maintenance'], data: { ...newData, photo: photoUrl } })
+                    notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                     return handleHide()
                 }
-                  return setUrl(url, uploadTask())})
+                  return setUrl(photoUrl, uploadTask())})
           }
         )
         }else{
-            handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
-            addNotification(notif, userDB.hotelId)
+            addMaintenance({ path: ['hotels', userDB.hotelId, 'maintenance'], data: newData })
+            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
             return handleHide()
         }
-        
-    }
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "maintenance", "markup", "asc").onSnapshot(function(snapshot) {
-             const snapInfo = []
-             snapshot.forEach(function(doc) {          
-             snapInfo.push({
-                 id: doc.id,
-                 ...doc.data()
-                 })        
-             });
-             setInfo(snapInfo)
-         });
-         return unsubscribe  
-      },[])
+    }
 
     return(
         
@@ -156,7 +141,7 @@ const PhoneRepair = () =>{
                             <td>
                             <Switch
                                 checked={flow.status}
-                                onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
+                                onChange={() => updateMaintenance({ path: ['hotels', userDB.hotelId, 'maintenance', flow.id], data: dataStatus })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                             />
                             </td>
@@ -169,9 +154,9 @@ const PhoneRepair = () =>{
                             {expand && <td>{flow.author}</td>}
                             {expand && <td className="bg-dark"><Button variant="outline-danger" size="sm" onClick={()=> {
                                 if(flow.img){
-                                    handleDeleteImg(flow.img)
+                                    deleteImg(flow.img)
                                 }
-                                return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
+                                deleteMaintenance({ path: ['hotels', userDB.hotelId, 'maintenance', flow.id] })
                             }}>{t("msh_general.g_button.b_delete")}</Button></td>}
                             </tr>
                         ))}

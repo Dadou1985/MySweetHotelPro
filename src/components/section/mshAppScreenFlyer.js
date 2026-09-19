@@ -1,5 +1,5 @@
 import React from 'react'
-import AppVisual from '../../images/msh-front-app.png'
+import AppVisual from '../../assets/images/msh-front-app.png'
 import { StaticImage } from 'gatsby-plugin-image'
 
 export default function MshAppScreenFlyer({logo}) {

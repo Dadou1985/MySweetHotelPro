@@ -10,9 +10,9 @@ import 'moment/locale/fr';
 import { functions, storage, FirebaseContext } from '../../config/Firebase'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
-import Bubbles from '../../images/bubbles.png'
+import Bubbles from '../../assets/images/bubbles.png'
 import { StaticImage } from 'gatsby-plugin-image'
-import Send from '../../images/paper-plane.png'
+import Send from '../../assets/images/paper-plane.png'
 import {
     handleUpdateData2,
     fetchCollectionByMapping1,
@@ -299,7 +299,7 @@ export default function CommunIzi() {
                   filter: "drop-shadow(2px 4px 6px)", 
                   marginBottom: "1vh"
                 }}>
-                  <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                  <StaticImage objectFit='contain' src='../../assets/images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
                 </div>
                 <h6 style={{
                   width: "40%",
@@ -358,7 +358,7 @@ export default function CommunIzi() {
                 filter: "drop-shadow(2px 4px 6px)", 
                 marginBottom: "1vh"
               }}>
-                <StaticImage objectFit='contain' src='../../images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
+                <StaticImage objectFit='contain' src='../../assets/images/binoculars.png' placeholder="blurred" style={{width: "5vw", marginBottom: "1vh", filter: "invert() drop-shadow(1px 1px 1px)"}} />
               </div>
               <h6 style={{
                 width: "40%",

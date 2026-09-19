@@ -15,7 +15,7 @@ import Feedback from '../../assets/svg/feedbackBox.svg'
 import { auth, FirebaseContext } from '../../config/Firebase'
 import Housekeeping from '../../components/section/form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
 import Support from '../../components/section/form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
-import Connection from '../../images/admin.png'
+import Connection from '../../assets/images/admin.png'
 import PhoneOverlay from '../../components/customHooks/phoneOverlayHook'
 import { t } from 'i18next';
 import '../../components/css/common/drawer.css'

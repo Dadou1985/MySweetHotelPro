@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -19,23 +19,26 @@ import { useTranslation } from "react-i18next"
 import '../css/section/chat.css'
 import '../css/section/accordion.css'
 import { handleChange } from '../../utils/formCommonFunctions'
-import { 
-  handleUpdateData1, 
-  fetchCollectionBySorting1, 
-  handleSubmitData2, 
-  addNotification 
-} from '../../utils/globalCommonFunctions'
+import { useFirestoreSubscription, useUpdate, useAdd } from '../../utils/hooks/useFirestore'
 import { FirebaseContext } from '../../config/Firebase'
 
 export default function Assistance() {
   const { user, userDB } = useContext(FirebaseContext)
-    
-  const [info, setInfo] = useState([])
+
   const [note, setNote] = useState('')
   const [expanded, setExpanded] = useState('')
   const [activate, setActivate] = useState(false)
   const [initialFilter, setInitialFilter] = useState('')
   const { t, i18n } = useTranslation()
+
+  const { data: info = [] } = useFirestoreSubscription(
+    ['assistance'],
+    { orderBy: ['markup', 'desc'] }
+  )
+
+  const { mutate: updateAssistance } = useUpdate([['assistance']])
+  const { mutate: addMessage } = useAdd([['assistance']])
+  const { mutate: notify } = useAdd()
 
   const handleHideDrawer = () => {
     setActivate(false)
@@ -60,20 +63,6 @@ export default function Assistance() {
   }
 
   const handleChangeExpanded = (title) => setExpanded(title)
-  
-  useEffect(() => {
-    let unsubscribe = fetchCollectionBySorting1("assistance", "markup", "desc").onSnapshot(function(snapshot) {
-        const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-            id: doc.id,
-            ...doc.data()
-          })        
-        });
-        setInfo(snapInfo)
-    });
-    return unsubscribe
-    },[])
 
     return (
         <div className="communizi-container">
@@ -96,7 +85,7 @@ export default function Assistance() {
                             <div style={{display: "flex", alignItems: "center"}}>
                               <Switch
                                 checked={flow.status}
-                                onChange={() => handleUpdateData1("assistance", flow.id, newRoomData)}
+                                onChange={() => updateAssistance({ path: ['assistance', flow.id], data: newRoomData })}
                                 inputProps={{ 'aria-label': 'secondary checkbox' }}
                               />
                               <i style={{color: "gray", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
@@ -121,11 +110,11 @@ export default function Assistance() {
                     id="dark_message_note" />
                 </FormGroup>
                     <div className="communizi-button-container">
-                        <img src='../../images/paper-plane.png' alt="sendIcon" className="communizi-send-button" onClick={(event) => {
-                          handleSubmitData2(event, "assistance", `${expanded}`, "chatRoom", newData)
-                          addNotification(notif, userDB.hotelId)
+                        <img src='../../assets/images/paper-plane.png' alt="sendIcon" className="communizi-send-button" onClick={(event) => {
+                          addMessage({ path: ['assistance', expanded, 'chatRoom'], data: newData })
+                          notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                           return handleHideDrawer()
-                        }} />          
+                        }} />
                       </div>
                 </Form>
             </div>
@@ -159,8 +148,8 @@ export default function Assistance() {
                       onChange={(event) => handleChange(event, setNote)} />
               </div>
               <Button variant="success" size="lg" onClick={(event) => {
-                handleSubmitData2(event, "assistance", `${expanded}`, "chatRoom", newData)
-                addNotification(notif, userDB.hotelId)
+                addMessage({ path: ['assistance', expanded, 'chatRoom'], data: newData })
+                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                 return handleHideDrawer()
                     }}>Envoyer</Button>
             </Drawer>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, {useState, useContext } from 'react'
 import {
     Form,
     Button,
@@ -15,41 +15,47 @@ import Switch from '@material-ui/core/Switch'
 import Picture from '../../../svg/picture.svg'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
-import { handleDeleteImg } from '../../../helper/globalCommonFunctions'
-import { StyledBadge } from '../../../helper/formCommonUI'
-import InputElement from "../../../helper/common/InputElement"
-import BadgeContent from '../../../helper/common/badgeContent'
-import ModalHeaderFormTemplate from '../../../helper/common/modalHeaderFormTemplate'
-import TextareaElement from '../../../helper/common/textareaElement'
-import ModalFormImgLayout from '../../../helper/common/modalFormImgLayout'
-import { 
-    fetchCollectionBySorting2, 
-    fetchCollectionByMapping2, 
-    handleSubmitData2, 
-    addNotification,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../Firebase'
+import { handleDeleteImg } from '../../../utils/commonFunctions'
+import { StyledBadge } from '../../../utils/formCommonUI'
+import InputElement from "../../../utils/form/InputElement"
+import BadgeContent from '../../../utils/common/badgeContent'
+import ModalHeaderFormTemplate from '../../../utils/common/modalHeaderFormTemplate'
+import TextareaElement from '../../../utils/common/textareaElement'
+import ModalFormImgLayout from '../../../utils/common/modalFormImgLayout'
+import { handleChange } from '../../../utils/formCommonFunctions'
+import { FirebaseContext } from '../../../config/Firebase'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../utils/hooks/useFirestore'
 
 const Repair = () =>{
     const { userDB } = useContext(FirebaseContext)
 
     const [list, setList] = useState(false)
-    const [info, setInfo] = useState([])
     const [formValue, setFormValue] = useState({
-        room: "", 
+        room: "",
         client: "",
-        details: "", 
+        details: "",
         type: "paint"
     })
     const [typeClone, setTypeClone] = useState("")
-    const [issueQty, setIssueQty] = useState([])
     const [img, setImg] = useState("")
     const [imgFrame, setImgFrame] = useState(false)
     const [footerState, setFooterState] = useState(true)
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'maintenance'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { data: issueQty = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'maintenance'],
+        { where: ['status', '==', true] }
+    )
+
+    const { mutate: addRepair } = useAdd(['hotels', userDB.hotelId, 'maintenance'])
+    const { mutate: updateRepair } = useUpdate(['hotels', userDB.hotelId, 'maintenance'])
+    const { mutate: deleteRepair } = useDelete(['hotels', userDB.hotelId, 'maintenance'])
+    const { mutate: notify } = useAdd()
 
     const handleShow = () => setList(true)
     const handleClose = () => {
@@ -74,34 +80,6 @@ const Repair = () =>{
         status: false
     }
     
-    useEffect(() => {
-       let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "maintenance", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe  
-     },[])
-
-     useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "maintenance", "status", "==", true).onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setIssueQty(snapInfo)
-        });
-        return unsubscribe
-     },[])
-
     return(
         <div>
             <StyledBadge badgeContent={issueQty.length} color="secondary">
@@ -226,7 +204,7 @@ const Repair = () =>{
                                                     <td>
                                                         <Switch
                                                             checked={flow.status}
-                                                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "maintenance", flow.id, dataStatus)}
+                                                            onChange={() => updateRepair({ path: ['hotels', userDB.hotelId, 'maintenance', flow.id], data: dataStatus })}
                                                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                                                         />
                                                     </td>
@@ -234,7 +212,7 @@ const Repair = () =>{
                                                         if(flow.img){
                                                             handleDeleteImg(flow.img)
                                                         }
-                                                            return handleDeleteData2("hotels", userDB.hotelId, "maintenance", flow.id)
+                                                            return deleteRepair({ path: ['hotels', userDB.hotelId, 'maintenance', flow.id] })
                                                     }}>{t("msh_general.g_button.b_delete")}</Button></td>
                                                 </tr>
                                             ))}
@@ -250,8 +228,9 @@ const Repair = () =>{
                     </Modal.Body>
                     {footerState && <Modal.Footer>
                         <Button className='btn-msh-dark' onClick={(event) => {
-                            handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
-                            addNotification(notif, userDB.hotelId)
+                            event.preventDefault()
+                            addRepair({ path: ['hotels', userDB.hotelId, 'maintenance'], data: newData })
+                            notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                             return handleClose()
                         }}>{t("msh_general.g_button.b_send")}</Button>
                     </Modal.Footer>}

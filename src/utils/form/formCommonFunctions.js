@@ -1,5 +1,5 @@
-import { db } from '../config/Firebase'
-import { addNotification } from "./globalCommonFunctions"
+import { db } from '../../config/Firebase'
+import { addNotification } from "../commonFunctions"
 
 export const handleChange = (event, setState) =>{
     event.persist()

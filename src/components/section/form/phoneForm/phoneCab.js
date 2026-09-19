@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Button, Table, FloatingLabel } from 'react-bootstrap'
 import moment from 'moment'
 import Drawer from '@material-ui/core/Drawer'
@@ -11,15 +11,9 @@ import {
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
 import InputElement from '../../../../helper/common/InputElement'
-import { 
-    fetchCollectionBySorting2, 
-    handleSubmitData2, 
-    addNotification,
-    handleUpdateData2,
-    handleDeleteData2
-} from '../../../../helper/globalCommonFunctions'
-import { handleChange } from '../../../../helper/formCommonFunctions'
-import { FirebaseContext } from '../../../../Firebase'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
+import { FirebaseContext } from '../../../../config/Firebase'
+import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
 
 const PhoneCab = () =>{
     const { userDB } = useContext(FirebaseContext)
@@ -33,12 +27,21 @@ const PhoneCab = () =>{
         model:"", 
         destination: ""
     })
-    const [info, setInfo] = useState([])
     const [activate, setActivate] = useState(false)
     const [expand, setExpand] = useState(false)
     const [step, setStep] = useState(false)
     const [modelClone, setModelClone] = useState("")
     const { t } = useTranslation()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'cab'],
+        { orderBy: ['markup', 'asc'] }
+    )
+
+    const { mutate: addCab } = useAdd([['hotels', userDB.hotelId, 'cab']])
+    const { mutate: notify } = useAdd()
+    const { mutate: updateCab } = useUpdate([['hotels', userDB.hotelId, 'cab']])
+    const { mutate: deleteCab } = useDelete([['hotels', userDB.hotelId, 'cab']])
 
     const handleShow = () => setActivate(true)
     const handleHide = () => {
@@ -52,7 +55,7 @@ const PhoneCab = () =>{
     };
 
     const notif = t("msh_cab.c_notif")
-    const dataStatus = {status: false} 
+    const dataStatus = {status: false}
     const breakPoint = window.innerWidth > 510
 
     const newData = {
@@ -69,20 +72,6 @@ const PhoneCab = () =>{
         status: false,
         hotelId: userDB.hotelId
     }
-
-    useEffect(() => {
-        let unsubscribe = fetchCollectionBySorting2("hotels", userDB.hotelId, "cab", "markup", "asc").onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe
-    },[])
 
     return(
         <div className="phone_container">
@@ -119,14 +108,14 @@ const PhoneCab = () =>{
                         <td>
                         <Switch
                             checked={flow.status}
-                            onChange={() => handleUpdateData2("hotels", userDB.hotelId, "cab", flow.id, dataStatus)}
+                            onChange={() => updateCab({ path: ['hotels', userDB.hotelId, 'cab', flow.id], data: dataStatus })}
                             inputProps={{ 'aria-label': 'secondary checkbox' }}
                         />
                         </td>
                         {expand && <td>{flow.model}</td>}
                         {expand && <td>{flow.destination}</td>}
                         {expand && <td className="bg-dark">
-                            <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "cab", flow.id)}>
+                            <Button variant="outline-danger" size="sm" onClick={()=> deleteCab({ path: ['hotels', userDB.hotelId, 'cab', flow.id] })}>
                                 {t("msh_general.g_button.b_delete")}
                             </Button>
                         </td>}
@@ -224,9 +213,9 @@ const PhoneCab = () =>{
                 </>}
                 {step && <>
                     <Button variant='link' className="btn-msh-outline phone_return" onClick={() => setStep(false)}>{t("msh_general.g_button.b_back")}</Button>
-                    <Button className="btn-msh phone_submitButton" onClick={(event) => {
-                         handleSubmitData2(event, "hotels", userDB.hotelId, "maintenance", newData)
-                         addNotification(notif, userDB.hotelId)
+                    <Button className="btn-msh phone_submitButton" onClick={() => {
+                         addCab({ path: ['hotels', userDB.hotelId, 'cab'], data: newData })
+                         notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                          return handleHide()
                     }}>{t("msh_cab.c_phone_button.b_validation")}</Button>                
                 </>}

@@ -3,10 +3,10 @@ import { Form, Button } from 'react-bootstrap'
 import 'moment/locale/fr';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import { handleSubmitData2, addNotification } from '../../../../helper/globalCommonFunctions';
-import { handleChange } from '../../../../helper/formCommonFunctions'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
 import TextareaElement from '../../../../helper/common/textareaElement'
-import { FirebaseContext } from '../../../../Firebase'
+import { FirebaseContext } from '../../../../config/Firebase'
+import { useAdd } from '../../../../utils/hooks/useFirestore'
 
 function PhoneFeedback() {
     const { userDB } = useContext(FirebaseContext)
@@ -14,6 +14,9 @@ function PhoneFeedback() {
     const [list, setList] = useState(false)
     const [formValue, setFormValue] = useState({categorie: "improvement", feedback: ""})
     const { t } = useTranslation()
+
+    const { mutate: addFeedback } = useAdd([['feedbacks']])
+    const { mutate: notify } = useAdd()
 
     const handleClose = () => {
         setList(false)
@@ -62,9 +65,9 @@ function PhoneFeedback() {
                 size="md" 
                 style={{position: "absolute", bottom: 0,left: 0, width: "100%", padding: "3%", borderRadius: 0}} 
                 className="phone_submitButton" 
-                onClick={(event) => {
-                    handleSubmitData2(event, "feedbacks", "category", formValue.categorie, newData)
-                    addNotification(notif, userDB.hotelId)
+                onClick={() => {
+                    addFeedback({ path: ['feedbacks', 'category', formValue.categorie], data: newData })
+                    notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
                     return handleClose()
                 }}>{t("msh_feedback_box.f_phone_button")}</Button>
         </div>
