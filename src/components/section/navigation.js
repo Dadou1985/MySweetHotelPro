@@ -64,7 +64,7 @@ const Navigation = () =>{
         await auth.signOut().then(()=>navigate('/'))
     }
 
-    const handleMove = () => navigate('/singlePage')
+    const handleMove = () => navigate('/homePage')
 
     let previousDays = Date.now() - 123274000
 
@@ -211,7 +211,7 @@ const Navigation = () =>{
                         height: "7vh",
                         // marginLeft: "10vw"
                     }}>
-                        <Link className='cental-menu' style={{display: isDesktop}} to="/singlePage">{t("msh_dashboard.d_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/homePage">{t("msh_dashboard.d_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
                         <Link className='cental-menu' style={{display: isTablet}} to="/crm">C.R.M</Link>

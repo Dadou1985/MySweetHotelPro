@@ -45,7 +45,7 @@ export default function TemporaryDrawer() {
     >
         <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
-        <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/singlePage")}} />
+        <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/homePage")}} />
         {!!user && !!userDB &&
         <PhoneOverlay category="chat" index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />

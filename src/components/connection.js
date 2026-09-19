@@ -39,12 +39,14 @@ const Connection = () => {
       setList(false)
   }
 
+  console.log("AUTH==========", auth)
+
   const handleSubmit = (event) => {
     event.preventDefault()
     auth.signInWithEmailAndPassword(formValue.email, formValue.password)
     .then(async(authUser) => {
       await authUser.user.updateProfile({ displayName: formValue.username})
-      return navigate('singlePage')})
+      return navigate('homePage')})
     .catch(error=>{
       if (error.message !== ""){
         return document.getElementById('warning').innerHTML = t("msh_connexion.c_warning")
@@ -55,7 +57,7 @@ const Connection = () => {
   return (
     <div className="connection_container">
         <div id="jumbo" className="bg-light">
-          <StaticImage objectFit='contain' src="../../assets/svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" alt="Logo" />
+          <StaticImage objectFit='contain' src="../assets/svg/new-logo-msh.png" placeholder="blurred" className="connection-logo" alt="Logo" />
         </div>
         <form 
           method="post"

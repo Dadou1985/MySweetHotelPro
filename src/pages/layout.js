@@ -14,7 +14,7 @@ const Layout = ({ children }) => {
   const [user, setUser] = useState(null)
 
   const homePagePath = children?.key
-        console.log("AUTH========", auth)
+        console.log("AUTH========DB", auth, db)
 
   useEffect(() => {
     if (!auth) {

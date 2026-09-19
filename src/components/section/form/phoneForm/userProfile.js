@@ -107,9 +107,10 @@ const UserProfile = ({user, userDB, setUserDB}) => {
     const handleCloseUpdatePhoto = () => setConfModal(false)
 
     const handleChangeEmail = () => {
+        if (!auth) return
         const notif = t("msh_user_panel.u_section.s_email.e_notif")
 
-         auth.signInWithEmailAndPassword(user.email, userDB.password)
+        auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
             notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
@@ -117,6 +118,7 @@ const UserProfile = ({user, userDB, setUserDB}) => {
       }
 
       const handleChangePassword = () => {
+        if (!auth) return
         const notif = t("msh_user_panel.u_section.s_password.p_notif")
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)

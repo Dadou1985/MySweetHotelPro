@@ -3,7 +3,7 @@ import { auth, functions } from '../../../config/Firebase'
 import { useTranslation } from "react-i18next"
 import { withTrans } from '../../../../i18n/withTrans'
 import { handleChange } from '../../../utils/form/formCommonFunctions'
-import { handleMutateSet } from '../../../utils/form/formCommonFunctions'
+import { handleMutateSet } from '../../../utils/commonFunctions'
 import { Button } from 'react-bootstrap'
 import { sha256 } from 'js-sha256'
 
