@@ -1,12 +1,12 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, Table } from 'react-bootstrap'
-import { functions, FirebaseContext } from '../../../../config/Firebase'
+import { functions, FirebaseContext } from '../../config/Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Switch from '@material-ui/core/Switch';
 import { useTranslation } from "react-i18next"
 import '../../../css/section/form/phoneForm/phonePageTemplate.css'
-import InputElement from '../../../../utils/form/InputElement'
-import { useFirestoreSubscription, useAdd, useSet, useUpdate, useDelete } from '../../../../utils/hooks/useFirestore'
+import InputElement from '../../utils/form/InputElement'
+import { useFirestoreSubscription, useAdd, useSet, useUpdate, useDelete } from '../../utils/hooks/useFirestore'
 
 function PhoneAdmin() {
     const { userDB } = useContext(FirebaseContext)

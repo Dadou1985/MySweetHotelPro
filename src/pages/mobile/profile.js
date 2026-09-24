@@ -3,7 +3,7 @@ import {FirebaseContext} from '../../config/Firebase'
 import UserProfile from '../../components/section/form/phoneForm/userProfile'
 import { withTrans } from '../../../i18n/withTrans'
 
-const UserPage = () => {
+const Profile = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
   return(
@@ -15,4 +15,4 @@ const UserPage = () => {
   )
 }
 
-export default withTrans(UserPage)
+export default withTrans(Profile)

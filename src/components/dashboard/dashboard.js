@@ -4,18 +4,18 @@ import moment from 'moment'
 import 'moment/locale/fr'
 import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
-import Notebook from '../../assets/svg/notebook.png'
-import ChatLogo from '../../assets/images/chat.png'
-import BarChart from '../../assets/images/barChart.png'
-import RoomChangeRate from './roomChangeRate'
-import MaintenanceRate from './maintenanceRate'
+import Notebook from '../assets/svg/notebook.png'
+import ChatLogo from '../assets/images/chat.png'
+import BarChart from '../assets/images/barChart.png'
+import RoomChangeRate from '../components/section/roomChangeRate'
+import MaintenanceRate from '../components/section/maintenanceRate'
 import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import { stackedDataForWeek } from '../../utils/timeRange/stackedData'
 import { sevenDayAgo } from '../../utils/timeRange/week'
 import { FirebaseContext } from '../../config/Firebase'
-import '../css/section/dashboard.css'
+import '../components/css/section/dashboard.css'
 
-const Dashboard = () => {
+const DashboardComponent = () => {
   const { userDB } = useContext(FirebaseContext)
   const { t } = useTranslation()
   const [showRoomChangeModal, setShowRoomChangeModal] = useState(false);
@@ -231,4 +231,4 @@ const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
   </div>;
 }
 
-export default Dashboard
+export default DashboardComponent

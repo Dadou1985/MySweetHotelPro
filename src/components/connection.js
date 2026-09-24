@@ -7,7 +7,7 @@ import { withTrans } from '../../i18n/withTrans'
 import { handleChange } from '../utils/form/formCommonFunctions'
 import './css/section/connection.css'
 import { Modal } from 'react-bootstrap'
-import RegisterForm from './section/form/registerForm'
+import RegisterForm from './auth/registerForm'
 import { sha256 } from 'js-sha256'
 
 const Connection = () => {
@@ -43,6 +43,7 @@ const Connection = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault()
+    if (!auth) return
     auth.signInWithEmailAndPassword(formValue.email, formValue.password)
     .then(async(authUser) => {
       await authUser.user.updateProfile({ displayName: formValue.username})

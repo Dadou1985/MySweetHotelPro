@@ -5,7 +5,7 @@ import UserList from './userList'
 import Divider from '@material-ui/core/Divider';
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
-import { FirebaseContext } from '../../../config/Firebase'
+import { FirebaseContext } from '../../config/Firebase'
 
 const AdminBoard = () =>{
     const { user, userDB } = useContext(FirebaseContext)

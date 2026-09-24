@@ -4,7 +4,7 @@ import {db, auth} from '../config/Firebase'
 import Loader from '../utils/loader/mshLoader'
 import Navigation from '../components/section/navigation'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '../config/tanstack-query'
+import { queryClient } from '../config/tanstackQuery'
 
 import PropTypes from "prop-types"
 import "../components/css/layout.css"

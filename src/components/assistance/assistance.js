@@ -2,7 +2,7 @@ import React, {useState, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
-import SupportRoom from './supportRoom'
+import SupportRoom from '../support/supportRoom'
 import { Button, DropdownButton, Dropdown } from 'react-bootstrap'
 import {
   Accordion,

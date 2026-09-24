@@ -4,9 +4,9 @@ import { Form, Button, Modal, OverlayTrigger, Tooltip, Spinner, Alert } from 're
 import Avatar from '@material-ui/core/Avatar';
 import { db, auth, storage, FirebaseContext } from '../../config/Firebase'
 import Divider from '@material-ui/core/Divider';
-import Sticker from './sticker'
-import Flyer from './flyer'
-import Band from './band'
+import Sticker from '../memo/sticker'
+import Flyer from '../visual/flyer'
+import Band from '../visual/band'
 import { PDFExport } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
@@ -19,7 +19,7 @@ import '../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
 
 
-const Dilema = () => {
+const Profile = () => {
     const { user, userDB, setUserDB } = useContext(FirebaseContext)
 
     const [confModal, setConfModal] = useState(true)
@@ -459,7 +459,7 @@ const Dilema = () => {
             filter: "grayscale(90%) drop-shadow(1px 1px 1px)",
             zIndex: "10"
         }}
-        onClick={() => navigate("/userPage")} />
+        onClick={() => navigate("/profile")} />
        
         <StaticImage objectFit='contain' src='../../assets/svg/camera.svg' placeholder="blurred" alt="add photoURL" 
         className="dilema-add-photo-icon" />
@@ -502,4 +502,4 @@ const Dilema = () => {
     )
 }
 
-export default Dilema
+export default Profile

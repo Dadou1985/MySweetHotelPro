@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react'
 import { Form, Button, DropdownButton, Dropdown, ButtonGroup, ToggleButton } from 'react-bootstrap'
 import { Input } from 'reactstrap'
-import { functions, FirebaseContext } from '../../../../config/Firebase'
+import { functions, FirebaseContext } from '../../../config/Firebase'
 import Drawer from '@material-ui/core/Drawer'
 import Close from '../../../../assets/svg/close.svg'
-import { useFirestoreSubscription, useAdd } from '../../../../utils/hooks/useFirestore'
-import { handleMutateUpdate, handleMutateAdd, handleMutateSet } from '../../../../utils/commonFunctions'
+import { useFirestoreSubscription, useAdd } from '../../../utils/hooks/useFirestore'
+import { handleMutateUpdate, handleMutateAdd, handleMutateSet } from '../../../utils/commonFunctions'
 
 export default function PhoneMagic() {
     const { user, userDB } = useContext(FirebaseContext)

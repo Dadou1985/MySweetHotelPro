@@ -8,7 +8,7 @@ import Dasboard from "../../assets/images/dashboard.png"
 import CheckList from '../../assets/svg/todoList.svg'
 import PowerSettingsNewIcon from '@material-ui/icons/PowerSettingsNew'
 import { navigate } from 'gatsby'
-import Notifications from '../../components/section/notifications'
+import Notifications from '../../components/notification/notifications'
 import Fom from '../../assets/svg/fom.svg'
 import Notebook from '../../assets/svg/notebook.png'
 import Feedback from '../../assets/svg/feedbackBox.svg'
@@ -45,7 +45,7 @@ export default function TemporaryDrawer() {
     >
         <h4 className="drawer_title">{t("msh_drawer.d_menu")}</h4>
         <List className="drawer_listIcons">
-        <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/homePage")}} />
+        <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/home")}} />
         {!!user && !!userDB &&
         <PhoneOverlay category="chat" index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
@@ -68,7 +68,7 @@ export default function TemporaryDrawer() {
       <List className="drawer_listIcons3">
         <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
         {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
-        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/userPage")}} />
+        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/profile")}} />
         {/* {!!user && !!userDB &&
         <Support user={user} userDB={userDB} />} */}
       </List>

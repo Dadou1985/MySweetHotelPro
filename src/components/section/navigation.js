@@ -5,7 +5,7 @@ import Drawer from '../../utils/drawer/drawer'
 import SuperAdminDrawer from '@material-ui/core/Drawer'
 import { StaticImage } from 'gatsby-plugin-image'
 import Support from './form/phoneForm/phoneToolbarOverlays/supportOverlay'
-import Notifications from './notifications'
+import Notifications from '../notification/notifications'
 import { db, auth, storage } from '../../config/Firebase'
 import List from '@material-ui/core/List';
 import moment from 'moment'
@@ -18,8 +18,8 @@ import 'moment/locale/en-gb';
 import { useTranslation } from "react-i18next"
 import { Link } from 'gatsby'
 import { Menubar } from 'primereact/menubar';
-import AdminRegister from './form/adminRegister'
-import UserList from './form/userList'
+import AdminRegister from '../profile/adminRegister'
+import UserList from '../profile/userList'
 import Logo from '../../assets/svg/msh-newLogo-transparent.png'
 import '../css/section/navigation.css'
 import {FirebaseContext} from '../../config/Firebase'
@@ -64,7 +64,7 @@ const Navigation = () =>{
         await auth.signOut().then(()=>navigate('/'))
     }
 
-    const handleMove = () => navigate('/homePage')
+    const handleMove = () => navigate('/home')
 
     let previousDays = Date.now() - 123274000
 
@@ -161,7 +161,7 @@ const Navigation = () =>{
                 {
                     label: t("msh_navigation.tooltip_user_profile"),
                     icon: 'pi pi-fw pi-id-card',
-                    command: ()=> navigate('/doorsStage'),
+                    command: ()=> navigate('/profile'),
                 },
                 {
                     label: t("msh_admin_board.a_title"),
@@ -211,11 +211,11 @@ const Navigation = () =>{
                         height: "7vh",
                         // marginLeft: "10vw"
                     }}>
-                        <Link className='cental-menu' style={{display: isDesktop}} to="/homePage">{t("msh_dashboard.d_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/home">{t("msh_dashboard.d_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/notebook">{t("msh_messenger.m_note_big_title")}</Link>
                         <Link className='cental-menu' style={{display: isDesktop}} to="/chat">{t('msh_chat.c_chat_title')}</Link>
                         <Link className='cental-menu' style={{display: isTablet}} to="/crm">C.R.M</Link>
-                        <Link className='cental-menu' style={{display: isDesktop}} to="/Lost">{t("msh_lost_found.l_title")}</Link>
+                        <Link className='cental-menu' style={{display: isDesktop}} to="/lostAndFound">{t("msh_lost_found.l_title")}</Link>
                     </div>
                     <div className="nav_container">
                     <Menubar model={items} style={{backgroundColor: "white", border: "none"}} />

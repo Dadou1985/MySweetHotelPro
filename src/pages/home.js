@@ -2,7 +2,7 @@ import React, { useContext } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
 import ToolBar from "../components/section/toolbar"
 import {FirebaseContext} from '../config/Firebase'
-import Dashboard from '../components/section/dashboard'
+import Dashboard from '../components/dashboard/dashboard'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
 import Background from "../assets/images/newDeskDigital.png"

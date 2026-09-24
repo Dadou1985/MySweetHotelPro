@@ -3,7 +3,7 @@ import PhoneMagic from '../../components/section/form/phoneForm/phoneMagic'
 import {FirebaseContext, db, auth} from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
-function MagicBox() {
+function SuperAdminBoard() {
     const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
     return (
@@ -15,4 +15,4 @@ function MagicBox() {
     )
 }
 
-export default withTrans(MagicBox)
+export default withTrans(SuperAdminBoard)
