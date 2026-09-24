@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import { Form, Input, FormGroup } from 'reactstrap'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import 'react-perfect-scrollbar/dist/css/styles.css'
@@ -13,13 +13,7 @@ import { useTranslation } from "react-i18next"
 import Bubbles from '../../assets/images/bubbles.png'
 import { StaticImage } from 'gatsby-plugin-image'
 import Send from '../../assets/images/paper-plane.png'
-import {
-    handleUpdateData2,
-    fetchCollectionByMapping1,
-    fetchCollectionByMapping2,
-    handleSubmitData3,
-    handleSubmitData1
-} from '../../utils/commonFunctions'
+import { useFirestoreSubscription, useAdd, useUpdate } from '../../utils/hooks/useFirestore'
 import '../css/section/chat.css'
 
 /*
@@ -28,27 +22,47 @@ import '../css/section/chat.css'
 
 export default function CommunIzi() {
   const { user, userDB } = useContext(FirebaseContext)
-  const [present, setPresent] = useState([]);
-  const [arrival, setArrival] = useState([]);
   const [note, setNote] = useState('')
   const [img, setImg] = useState(null)
   const [showModal, setShowModal] = useState(false)
-  const [guestList, setGuestList] = useState([])
   const [guest, setGuest] = useState(null);
-  const [payload, setPayload] = useState({
-    token:{}, 
-    logo:"", 
-    language:"",
-    hotelName: userDB.hotelName, 
-    hotelId: userDB.hotelId, 
-    isChatting:""
-  })
   const [showAlert, setShowAlert] = useState(false)
   const [accordionSelected, setAccordionSelected] = useState("")
   const { t } = useTranslation()
 
   const newAdminStatus = {hotelResponding: true}
   const sendPushNotification = functions.httpsCallable('sendPushNotification')
+
+  const { data: chatRaw = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'chat'],
+    { where: ['checkoutDate', '!=', ''] }
+  )
+  const present = chatRaw.filter(g => g.room !== "" && g.room !== "Pre-checkin")
+  const arrival = chatRaw.filter(g => g.room === "Pre-checkin")
+
+  const { data: guestList = [] } = useFirestoreSubscription(
+    ['guestUsers'],
+    { where: ['hotelId', '==', userDB.hotelId] }
+  )
+
+  const { data: guestChatRaw = [] } = useFirestoreSubscription(
+    ['hotels', userDB.hotelId, 'chat'],
+    { where: ['title', '==', guest], enabled: !!guest }
+  )
+  const payload = guestChatRaw.length > 0
+    ? {
+        token: guestChatRaw[0].token,
+        logo: userDB.logo,
+        language: guestChatRaw[0].guestLanguage,
+        hotelName: userDB.hotelName,
+        hotelId: userDB.hotelId,
+        isChatting: guestChatRaw[0].isChatting
+      }
+    : { token: {}, logo: "", language: "", hotelName: userDB.hotelName, hotelId: userDB.hotelId, isChatting: "" }
+
+  const { mutate: updateChat } = useUpdate()
+  const { mutate: addNotif } = useAdd()
+  const { mutate: addMessage } = useAdd()
 
   const newData = {
     author: userDB.username,
@@ -60,13 +74,9 @@ export default function CommunIzi() {
   }
 
   const changeRoomStatus = (roomName) => {
-    const newStatus = {
-      status: false,
-      markup: Date.now()
-    }
     setGuest(null)
     setAccordionSelected("")
-    return handleUpdateData2('hotels', userDB.hotelId, "chat", roomName, newStatus)
+    updateChat({ path: ['hotels', userDB.hotelId, 'chat', roomName], data: { status: false, markup: Date.now() } })
   }
 
   const handleRowSelection = (flow) => {
@@ -74,14 +84,9 @@ export default function CommunIzi() {
     return accordionSelected === flow.markup ? setAccordionSelected("") : setAccordionSelected(flow.markup)
   }
 
-  const addNotification = async (event, notification) => {
-    const notif = {
-            content: notification,
-            hotelId: userDB.hotelId,
-            markup: Date.now()
-        }
-    handleSubmitData1(event, "notifications", notif)
-    return console.log('nouvelle notitfication')
+  const addNotification = (event, notification) => {
+    event.preventDefault()
+    addNotif({ path: ['notifications'], data: { content: notification, hotelId: userDB.hotelId, markup: Date.now() } })
   }
 
   const handleSubmit = (event) =>{
@@ -99,7 +104,7 @@ export default function CommunIzi() {
             .getDownloadURL()
             .then(url => {
               const uploadTask = () => { 
-                handleSubmitData3(event, "hotels", userDB.hotelId, "chat", guest, 'chatRoom', {...newData, img: url})
+                addMessage({ path: ['hotels', userDB.hotelId, 'chat', guest, 'chatRoom'], data: {...newData, img: url} })
                 setNote('')
               return setShowModal(false)
             }
@@ -108,68 +113,12 @@ export default function CommunIzi() {
         }
       )
     }else{
-      handleSubmitData3(event, "hotels", userDB.hotelId, "chat", guest, 'chatRoom', newData)
+      addMessage({ path: ['hotels', userDB.hotelId, 'chat', guest, 'chatRoom'], data: newData })
       setNote('')
       return setShowModal(false)
     }  
   }
   
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping2("hotels", userDB.hotelId, "chat", "checkoutDate", "!=", "").onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-          id: doc.id,
-          ...doc.data()
-        })        
-      })
-        
-      const presentGuest = snapInfo && snapInfo.filter(guest => guest.room !== "" && guest.room !== "Pre-checkin")
-      const arrivalGuest = snapInfo && snapInfo.filter(guest => guest.room == "Pre-checkin")
-
-      setPresent(presentGuest)
-      setArrival(arrivalGuest)
-    });
-    return unsubscribe
-  },[])
-
-  useEffect(() => {
-    let unsubscribe = fetchCollectionByMapping1("guestUsers", 'hotelId', "==", userDB.hotelId).onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-          id: doc.id,
-          ...doc.data()
-        })        
-      });
-      setGuestList(snapInfo)
-    });
-    return unsubscribe
-  },[])
-
-  useEffect(() => {
-    if(guest !== null) {
-      let unsubscribe = fetchCollectionByMapping2("hotels", userDB?.hotelId, "chat", "title", "==", guest).onSnapshot(function(snapshot) {
-      const snapInfo = []
-      snapshot.forEach(function(doc) {          
-        snapInfo.push({
-          id: doc.id,
-          ...doc.data()
-        })        
-      });
-
-      snapInfo.map(doc => setPayload({
-        token: doc.token,
-        logo: userDB.logo,
-        language: doc.guestLanguage,
-        hotelName: userDB.hotelName,
-        hotelId: userDB.hotelId,
-        isChatting: doc.isChatting
-      }))
-    });
-    return unsubscribe
-    }
-  }, [guest])
 
   return (
     <div className="communizi-container">  
@@ -215,7 +164,7 @@ export default function CommunIzi() {
                 if(guest) {
                   if(e.key === "Enter" && note) {
                     handleSubmit(e)
-                    handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
+                    updateChat({ path: ['hotels', userDB.hotelId, 'chat', guest], data: newAdminStatus })
                     sendPushNotification({payload: payload})
                   } else {
                     if(e.key === "Enter") {
@@ -235,7 +184,7 @@ export default function CommunIzi() {
                 if(guest) {
                   if(note) {
                     handleSubmit(event)
-                    handleUpdateData2("hotels", userDB.hotelId, "chat", guest, newAdminStatus)
+                    updateChat({ path: ['hotels', userDB.hotelId, 'chat', guest], data: newAdminStatus })
                     sendPushNotification({payload: payload})
                   } else {
                     return addNotification(event, t("msh_chat.c_alert_no_message"))

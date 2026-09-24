@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
-import {FirebaseContext, db, auth} from '../config/Firebase'
+import FirebaseContext from '../context/context'
+import {db, auth} from '../config/Firebase'
 import Loader from '../utils/loader/mshLoader'
 import Navigation from '../components/section/navigation'
 import { QueryClientProvider } from '@tanstack/react-query'

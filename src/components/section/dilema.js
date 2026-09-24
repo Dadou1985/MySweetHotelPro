@@ -12,7 +12,8 @@ import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
 import DefaultProfile from "../../assets/svg/profile.png"
 import { StaticImage } from 'gatsby-plugin-image'
-import { handleUpdateData1, fetchCollectionByMapping1, addNotification } from '../../utils/commonFunctions'
+import { handleMutateUpdate } from '../../utils/commonFunctions'
+import { useFirestoreSubscription, useAdd } from '../../utils/hooks/useFirestore'
 import ModalHeaderFormTemplate from '../../utils/modal/modalHeaderFormTemplate';
 import '../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
@@ -22,7 +23,6 @@ const Dilema = () => {
     const { user, userDB, setUserDB } = useContext(FirebaseContext)
 
     const [confModal, setConfModal] = useState(true)
-    const [info, setInfo] = useState([])
     const [listEmail, setListEmail] = useState(false)
     const [listPassword, setListPassword] = useState(false)
     const [listVisuel, setlistVisuel] = useState(false)
@@ -40,6 +40,18 @@ const Dilema = () => {
     const bandPdfRef = useRef(null)
     const { data } = useShortenUrl(url);
     const { t } = useTranslation()
+
+    const { mutate: addNotif } = useAdd()
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['businessUsers'],
+        { where: ['userId', '==', user.uid] }
+    )
+
+    const { data: businessUsersWithHotelId = [] } = useFirestoreSubscription(
+        ['businessUsers'],
+        { where: ['hotelId', '==', userDB.hotelId] }
+    )
 
     const hotelNameForUrl = userDB?.hotelName
     const emailModalTitle = t("msh_user_panel.u_section.s_email.e_label")
@@ -64,29 +76,19 @@ const Dilema = () => {
     };
  
     useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping1("businessUsers", "hotelId", "==", userDB.hotelId).onSnapshot(function(snapshot) {
-        const snapInfo = []
-          snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-              })        
-            });
-            if(data){
-                snapInfo.map((user) => {
-                    return handleUpdateData1('businessUsers', user.userId, {
-                        logo: data.link,
-                        base64Url: baseUrl,
-                        appLink: `https://mysweethotel.eu/?url=${data.link}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
-                    })
+        if (data && businessUsersWithHotelId.length > 0) {
+            businessUsersWithHotelId.forEach((u) => {
+                handleMutateUpdate(['businessUsers', u.userId], {
+                    logo: data.link,
+                    base64Url: baseUrl,
+                    appLink: `https://mysweethotel.eu/?url=${data.link}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
                 })
-            }
-        });
-        return unsubscribe
-    },[data])
+            })
+        }
+    }, [data])
 
     const handleFirestoreNewData = (shortenUrl) => {
-        handleUpdateData1("hotels", userDB.hotelId, {
+        handleMutateUpdate(['hotels', userDB.hotelId], {
             logo: shortenUrl,
             base64Url: baseUrl,
             appLink: `https://mysweethotel.eu/?url=${shortenUrl}&hotelId=${userDB.hotelId}&hotelName=${hotelNameForUrl}`
@@ -219,48 +221,36 @@ const Dilema = () => {
     const handleUpdateEmail = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        return handleUpdateData1("businessUsers", user.uid, {email: field})
+        return handleMutateUpdate(['businessUsers', user.uid], {email: field})
         .then(handleLoadUserDB())
     }
 
     const handleUpdatePassword = async(event, field) => {
         event.preventDefault()
         setFormValue({email: ""})
-        return handleUpdateData1("businessUsers", user.uid, {password: sha256(field)})
+        return handleMutateUpdate(['businessUsers', user.uid], {password: sha256(field)})
         .then(handleLoadUserDB())
     }
 
-    useEffect(() => {
-        let unsubscribe = fetchCollectionByMapping1("businessUsers", "userId", "==", user.uid).onSnapshot(function(snapshot) {
-            const snapInfo = []
-            snapshot.forEach(function(doc) {          
-            snapInfo.push({
-                id: doc.id,
-                ...doc.data()
-                })        
-            });
-            setInfo(snapInfo)
-        });
-        return unsubscribe      
-     },[])
-
     const handleChangeEmail = () => {
-        const notif = t("msh_user_panel.u_section.s_email.e_notif") 
+        if (!auth) return
+        const notif = t("msh_user_panel.u_section.s_email.e_notif")
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updateEmail(formValue.email)
-            addNotification(notif, userDB.hotelId)
+            addNotif({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
     }
 
     const handleChangePassword = () => {
-        const notif = t("msh_user_panel.u_section.s_password.p_notif") 
+        if (!auth) return
+        const notif = t("msh_user_panel.u_section.s_password.p_notif")
 
         auth.signInWithEmailAndPassword(user.email, userDB.password)
         .then(function(userCredential) {
             userCredential.user.updatePassword(formValue.password)
-            addNotification(notif, userDB.hotelId)
+            addNotif({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
         })
     }
     

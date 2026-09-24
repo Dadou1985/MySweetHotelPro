@@ -23,27 +23,6 @@ const Dashboard = () => {
 
 const dDay = t("msh_dashboard.d_time_period.t_day").charAt(0)
 
-const roomChangeData = {
-  labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
-  datasets: [
-    {
-        data: stackedDataForWeek(roomChange),
-        backgroundColor: "black",
-        label: t('msh_dashboard.d_rate')
-      }
-    ]
-  };
-
-  const maintenanceData = {
-    labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
-    datasets: [
-      {
-        data: stackedDataForWeek(maintenance),
-        backgroundColor: "black",
-        label: t('msh_dashboard.d_rate')
-      }]
-  }
-
   let basicOptions = {
     maintainAspectRatio: false,
     aspectRatio: .8,
@@ -94,6 +73,16 @@ const roomChangeData = {
     ['hotels', userDB.hotelId, 'maintenance'],
     { where: ['markup', '>=', sevenDayAgo] }
   )
+
+  const roomChangeData = {
+    labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
+    datasets: [{ data: stackedDataForWeek(roomChange), backgroundColor: "black", label: t('msh_dashboard.d_rate') }]
+  }
+
+  const maintenanceData = {
+    labels: [`${dDay}-6`, `${dDay}-5`, `${dDay}-4`, `${dDay}-3`, `${dDay}-2`, `${dDay}-1`, `${dDay} 0`],
+    datasets: [{ data: stackedDataForWeek(maintenance), backgroundColor: "black", label: t('msh_dashboard.d_rate') }]
+  }
 
   return <div style={{
       display: "flex",

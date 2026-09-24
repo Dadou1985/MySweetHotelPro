@@ -172,6 +172,7 @@ export default function RegisterFormSteps() {
     }
     
     const handleCreateUser = async (newUrl) => {
+        if (!auth) return
         setIsLoading(true)
         const authUser = await auth.createUserWithEmailAndPassword(formValue.email.trim(), `msh-admin-${formValue.firstName}`)
         authUser.user.updateProfile({

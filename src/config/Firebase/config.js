@@ -21,7 +21,11 @@ const isBrowser = typeof window !== 'undefined';
 const hasCredentials = Boolean(firebaseConfig.apiKey);
 
 if (isBrowser && hasCredentials && !firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+  try {
+    firebase.initializeApp(firebaseConfig);
+  } catch (e) {
+    console.error('[Firebase] initializeApp failed:', e);
+  }
 }
 
 const db = isBrowser && hasCredentials && firebase.apps.length ? firebase.firestore() : null;
