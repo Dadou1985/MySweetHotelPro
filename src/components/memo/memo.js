@@ -1,6 +1,6 @@
 import React from 'react'
 import StickList from './stickList'
-import '../css/section/memo.css'
+import '../../css/section/memo.css'
 import Divider from '@material-ui/core/Divider'
 import { useTranslation } from "react-i18next"
 

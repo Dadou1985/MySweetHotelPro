@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../../config/Firebase'
-import PhoneMaid from '../../components/section/form/phoneForm/phoneMaid'
+import MobileMaid from '../../components/section/sidebar/mobile/maid.mobile'
 import { withTrans } from '../../../i18n/withTrans'
 
 const RoomChange = () => {
@@ -10,7 +10,7 @@ const RoomChange = () => {
     <> 
         <div className="landscape-display"></div>    
         {!!user && !!userDB &&
-        <PhoneMaid user={user} userDB={userDB} />}
+        <MobileMaid user={user} userDB={userDB} />}
     </>
   )
 }

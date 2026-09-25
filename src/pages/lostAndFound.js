@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../config/Firebase'
-import LostNFound from '../components/section/LostNFound'
+import LostNFound from '../components/lostAndFound/lostNFound'
 import { withTrans } from '../../i18n/withTrans'
-import ToolBar from "../components/section/toolbar"
+import Sidebar from "../components/section/sidebar/sidebar"
 
 const Lost = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -13,7 +13,7 @@ const Lost = () => {
          <div style={{
             display: "flex"
           }}>
-          <ToolBar />
+          <Sidebar />
           {!!user && !!userDB &&
           <LostNFound />}
         </div>

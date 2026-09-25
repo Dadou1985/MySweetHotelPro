@@ -11,7 +11,7 @@ import DefaultProfile from "../../assets/svg/profile.png"
 import Bubble from "../../assets/svg/bubble.svg"
 import { useTranslation } from "react-i18next"
 import { useFirestoreSubscription, useUpdate, useSet, useAdd } from '../../utils/hooks/useFirestore'
-import '../css/section/chatTemplate.css'
+import '../../css/section/chatTemplate.css'
 
 export default function CallCenter() {
   const { user, userDB } = useContext(FirebaseContext)

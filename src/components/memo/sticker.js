@@ -5,7 +5,7 @@ import HousekeepingLogo from '../../assets/svg/maid.svg'
 import RepairLogo from '../../assets/svg/repair.svg'
 import TimerLogo from '../../assets/svg/timer.svg'
 import CabLogo from '../../assets/svg/taxi.svg'
-import '../css/section/sticker.css'
+import '../../css/section/sticker.css'
 import { useTranslation } from "react-i18next"
 
 export default function Sticker({url, logo}) {

@@ -2,7 +2,7 @@ import React, {useState } from 'react'
 import Stick from '../../assets/images/postIt.png'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import Avatar from 'react-avatar'
-import  '../css/section/post-it.css'
+import  '../../css/section/post-it.css'
 import { useTranslation } from "react-i18next"
 import { StaticImage } from 'gatsby-plugin-image'
 import { useDelete } from '../../utils/hooks/useFirestore'

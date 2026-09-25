@@ -1,6 +1,5 @@
 import React from 'react'
 import { db } from "../config/Firebase"
-import hotel from '../../../hotels/'
 
 export default function HotelRegitrator() {
 

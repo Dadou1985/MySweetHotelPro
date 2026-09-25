@@ -5,7 +5,7 @@ import PerfectScrollbar from 'react-perfect-scrollbar'
 import { useTranslation } from "react-i18next"
 import { handleChange } from '../../utils/form/formCommonFunctions'
 import { useFirestoreSubscription, useAdd, useUpdate, useDelete } from '../../utils/hooks/useFirestore'
-import '../css/section/checkList.css'
+import '../../css/section/checkList.css'
 
 const CheckListTable = ({shift}) => {
 

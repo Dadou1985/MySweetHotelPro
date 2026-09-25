@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../../config/Firebase'
-import PhoneClock from '../../components/section/form/phoneForm/phoneClock'
+import MobileClock from '../../components/section/sidebar/mobile/clock.mobile'
 import { withTrans } from '../../../i18n/withTrans'
 
 const Clock = () => {
@@ -10,7 +10,7 @@ const Clock = () => {
     <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneClock user={user} userDB={userDB} />}
+        <MobileClock user={user} userDB={userDB} />}
     </>
   )
 }

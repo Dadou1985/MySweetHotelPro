@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
-import PhoneAdmin from '../../components/section/form/phoneForm/phoneAdmin'
-import {FirebaseContext} from '../../config/Firebase'
+import MobileAdminBoard from '../../components/profile/admin/phoneAdmin'
+import { FirebaseContext } from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
 function AdminBoard() {
@@ -10,7 +10,7 @@ function AdminBoard() {
        <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneAdmin />}
+        <MobileAdminBoard />}
     </>
     )
 }

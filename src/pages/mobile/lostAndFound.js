@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../../config/Firebase'
-import PhoneLost from '../../components/section/form/phoneForm/phoneLost'
+import MobileLost from '../../components/section/sidebar/mobile/lost.mobile'
 import { withTrans } from '../../../i18n/withTrans'
 
 const LostAndFound = () => {
@@ -10,7 +10,7 @@ const LostAndFound = () => {
     <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneLost user={user} userDB={userDB} />}
+        <MobileLost user={user} userDB={userDB} />}
     </>
   )
 }

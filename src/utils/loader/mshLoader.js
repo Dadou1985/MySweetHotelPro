@@ -2,7 +2,7 @@ import React from "react"
 import { Puff } from "react-loader-spinner"
 import { StaticImage } from 'gatsby-plugin-image'
 import Mascott from '../../assets/svg/receptionist.svg'
-import '../../components/css/common/loader.css'
+import '../../css/common/loader.css'
 
 const ShiftLoader = ({hide}) => {
   const isBrowser = () => typeof window !== "undefined"

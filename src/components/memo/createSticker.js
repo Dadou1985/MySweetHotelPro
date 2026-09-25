@@ -1,7 +1,7 @@
 import React, {useState, useContext } from 'react'
 import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useTranslation } from "react-i18next"
-import '../css/section/createSticker.css'
+import '../../css/section/createSticker.css'
 import PostIt from '../../assets/images/postItPlus.png'
 import { handleChange } from '../../utils/form/formCommonFunctions'
 import { FirebaseContext } from '../../config/Firebase'

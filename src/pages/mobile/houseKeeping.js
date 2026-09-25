@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../../config/Firebase'
-import PhoneHouseKeeping from '../../components/section/form/phoneForm/phoneHouseKeeping'
+import MobileHouseKeeping from '../../components/section/sidebar/mobile/houseKeeping.mobile'
 import { withTrans } from '../../../i18n/withTrans'
 
 const HouseKeeping = () => {
@@ -10,7 +10,7 @@ const HouseKeeping = () => {
     <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneHouseKeeping />}
+        <MobileHouseKeeping />}
     </>
   )
 }

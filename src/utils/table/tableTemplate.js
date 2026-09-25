@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Table } from 'react-bootstrap'
 import Switch from '@material-ui/core/Switch';
-import { handleUpdateData2, handleDeleteData2 } from '../commonFunctions';
+import { handleMutateUpdate, handleMutateDelete } from '../commonFunctions';
 import { useTranslation } from "react-i18next"
 
 const TableTemplate = ({data, scale, userDB, dataStatus}) => {
@@ -35,12 +35,12 @@ const TableTemplate = ({data, scale, userDB, dataStatus}) => {
                 <td>
                 <Switch
                     checked={flow.status}
-                    onChange={() => handleUpdateData2("hotels", userDB.hotelId, "cab", flow.id, dataStatus)}
+                    onChange={() => handleMutateUpdate(["hotels", userDB.hotelId, "cab", flow.id], dataStatus)}
                     inputProps={{ 'aria-label': 'secondary checkbox' }}
                 />
                 </td>
                 {scale && <td className="bg-dark">
-                    <Button variant="outline-danger" size="sm" onClick={()=> handleDeleteData2("hotels", userDB.hotelId, "cab", flow.id)}>
+                    <Button variant="outline-danger" size="sm" onClick={()=> handleMutateDelete(["hotels", userDB.hotelId, "cab", flow.id])}>
                         {t("msh_general.g_button.b_delete")}
                     </Button>
                 </td>}

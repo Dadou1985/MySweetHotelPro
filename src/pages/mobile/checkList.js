@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../../config/Firebase'
-import PhoneCheckList from '../../components/section/form/phoneForm/phoneCheckList'
+import MobileCheckList from '../../components/section/sidebar/mobile/checkList.mobile'
 import { withTrans } from '../../../i18n/withTrans'
 
 const CheckList = () => {
@@ -10,7 +10,7 @@ const CheckList = () => {
     <> 
         <div className="landscape-display"></div>   
         {!!user && !!userDB &&
-        <PhoneCheckList user={user} userDB={userDB} />}
+        <MobileCheckList user={user} userDB={userDB} />}
     </>
   )
 }

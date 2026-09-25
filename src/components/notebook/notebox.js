@@ -1,0 +1,131 @@
+import React, {useState, useContext } from 'react'
+import {
+    Accordion,
+    AccordionItem,
+    AccordionItemHeading,
+    AccordionItemButton,
+    AccordionItemPanel,
+  } from 'react-accessible-accordion'
+import moment from 'moment'
+import 'moment/locale/fr';
+import Avatar from 'react-avatar'
+import Checkbox from '@material-ui/core/Checkbox';
+import { FirebaseContext } from '../../config/Firebase'
+import { withStyles } from '@material-ui/core/styles';
+import { green } from '@material-ui/core/colors';
+import { useTranslation } from "react-i18next"
+import Arrow from '../../assets/svg/arrowDown.svg'
+import { StaticImage } from 'gatsby-plugin-image'
+import '../../css/section/accordion.css'
+import { useFirestoreSubscription, useUpdate } from '../../utils/hooks/useFirestore'
+
+const Notebox = ({filterDate, category, title}) => {
+
+    const [expanded, setExpanded] = useState(null)
+    const { t } = useTranslation()
+    const [data, setData] = useState(false);
+
+    const {userDB} = useContext(FirebaseContext)
+
+    const { data: allNotes = [] } = useFirestoreSubscription(
+      ['hotels', userDB.hotelId, 'note'],
+      {
+        where: ['date', '==', moment(filterDate).format('LL')],
+        orderBy: ['markup', 'desc'],
+      }
+    )
+
+    const messages = allNotes.length > 0 ? allNotes.filter(note => note.status == category) : []
+
+    const { mutate: updateNote } = useUpdate(['hotels', userDB.hotelId, 'note'])
+
+    const handleChangeCheckboxStatus = (noteId, status) => {
+      return updateNote({ path: ['hotels', userDB.hotelId, 'note', noteId], data: { isChecked: status } })
+    }
+
+    const GreenCheckbox = withStyles({
+      root: {
+        color: "black",
+        '&$checked': {
+          color: "black",
+        },
+      },
+      checked: {},
+    })((props) => <Checkbox color={props.color} {...props} />);
+
+    return (
+      <>
+      <h6 style={{color: category, borderBottom: `1px solid ${category}`}}>
+        <b>{t(title)}</b> {messages.length > 0 ? `- ${messages.length} consigne(s)` : null} <div onClick={() => setData(!data)}>
+          <img src={Arrow} style={{
+            width: "2vw", 
+            color: "red", 
+            float: "right", 
+            transform: data ? "rotate(180deg)" : "rotate(0deg)", 
+            backgroundColor: category, 
+            borderRadius: "50%",
+            padding: "1%"}} 
+            />
+        </div>
+      </h6>
+        <Accordion allowZeroExpanded className="accordion-note">
+                {data && messages.length > 0 && messages.map((flow, index) => {
+                  return <AccordionItem key={flow.id} onClick={() => setExpanded(index)} className="user_Message">
+                    <AccordionItemHeading style={{
+                      paddingLeft: "1%",
+                      paddingRight: "1%",
+                      borderLeft: `5px solid ${flow.status}`,
+                      borderBottom: `5px solid ${flow.status}`,
+                      borderTopLeftRadius: "5px",
+                      borderTopRightRadius: "5px"
+                      }}>
+                        <AccordionItemButton style={{
+                            display: "flex",
+                            flexFlow: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            outline: "none"}}>
+                         <div>
+                         <Avatar 
+                            round={true}
+                            name={flow.author}
+                            size="30"
+                            color={flow.status}
+                            style={{marginRight: "2vw"}} />
+                            <b>{flow.title}</b>
+                         </div>
+                          <div style={{
+                            display:"flex",
+                            flexflow: "row",
+                            alignItems: "center"
+                          }}>
+                            <GreenCheckbox 
+                              checked={flow.isChecked} 
+                              onChange={(event) => handleChangeCheckboxStatus(flow.id, event.target.checked)}
+                              color={flow.status}
+                            />
+                            <i style={{color: "black", float: "right", fontSize: "13px"}}>{moment(flow.markup).format('ll')}</i>
+                          </div>
+                        </AccordionItemButton>
+                    </AccordionItemHeading>
+                    <AccordionItemPanel style={{
+                        display: "flex",
+                        flexFlow: "column",
+                        backgroundColor: 'white',
+                        padding: "2%",
+                        width: "100%"}}>
+                      {flow.img &&
+                        <span>
+                            <img src={flow.img} style={{width: "100%", backgroundSize: "cover", marginBottom: "1vh"}} />
+                        </span>}
+                      {flow.text}
+                    {flow.markup !== 0 && <div><i style={{color: "gray", float: "right", fontWeight: "bolder"}}> noté à {moment(flow.markup).format('LT')}</i></div>}
+                    </AccordionItemPanel>
+                  </AccordionItem> 
+                })}
+              </Accordion>
+      </>
+    )
+}
+
+export default Notebox

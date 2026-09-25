@@ -4,16 +4,16 @@ import moment from 'moment'
 import 'moment/locale/fr'
 import { navigate } from 'gatsby'
 import { Chart } from 'primereact/chart';
-import Notebook from '../assets/svg/notebook.png'
-import ChatLogo from '../assets/images/chat.png'
-import BarChart from '../assets/images/barChart.png'
-import RoomChangeRate from '../components/section/roomChangeRate'
-import MaintenanceRate from '../components/section/maintenanceRate'
+import Notebook from '../../assets/svg/notebook.png'
+import ChatLogo from '../../assets/images/chat.png'
+import BarChart from '../../assets/images/barChart.png'
+import RoomChangeRate from './roomChange/roomChangeRate'
+import MaintenanceRate from './maintenance/maintenanceRate'
 import { useFirestoreSubscription } from '../../utils/hooks/useFirestore'
 import { stackedDataForWeek } from '../../utils/timeRange/stackedData'
 import { sevenDayAgo } from '../../utils/timeRange/week'
 import { FirebaseContext } from '../../config/Firebase'
-import '../components/css/section/dashboard.css'
+import '../../css/section/dashboard.css'
 
 const DashboardComponent = () => {
   const { userDB } = useContext(FirebaseContext)

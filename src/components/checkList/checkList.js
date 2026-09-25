@@ -1,7 +1,7 @@
 import React, {useState } from 'react'
 import { Modal, OverlayTrigger, Tooltip, Nav, Row, Col, Tab } from 'react-bootstrap'
 import CheckListTable from './checkListTable'
-import TodoList from '../../../assets/svg/todoList.svg'
+import TodoList from '../../assets/svg/todoList.svg'
 import { useTranslation } from "react-i18next"
 import '../../css/section/checkList.css'
 

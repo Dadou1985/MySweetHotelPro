@@ -13,12 +13,11 @@ import Fom from '../../assets/svg/fom.svg'
 import Notebook from '../../assets/svg/notebook.png'
 import Feedback from '../../assets/svg/feedbackBox.svg'
 import { auth, FirebaseContext } from '../../config/Firebase'
-import Housekeeping from '../../components/section/form/phoneForm/phoneToolbarOverlays/housekeepingOverlay'
-import Support from '../../components/section/form/phoneForm/phoneToolbarOverlays/callCenterOverlay'
+import Housekeeping from '../../components/section/sidebar/mobile/icon/housekeeping.icon'
 import Connection from '../../assets/images/admin.png'
-import PhoneOverlay from '../../components/customHooks/phoneOverlayHook'
+import Generic from '../../components/section/sidebar/mobile/icon/generic.icon'
 import { t } from 'i18next';
-import '../../components/css/common/drawer.css'
+import '../../css/common/drawer.css'
 
 export default function TemporaryDrawer() {
   const { user, userDB } = useContext(FirebaseContext)
@@ -47,7 +46,7 @@ export default function TemporaryDrawer() {
         <List className="drawer_listIcons">
         <img src={Dasboard} alt="Dashboard" className="drawer_icons" onClick={()=>{navigate("/home")}} />
         {!!user && !!userDB &&
-        <PhoneOverlay category="chat" index={3} />}
+        <Generic category="chat" index={3} />}
         <img src={Notebook} alt="Notebook" className="drawer_icons" onClick={()=>{navigate("/notebook")}} />
         </List>
         <Divider />
@@ -55,20 +54,20 @@ export default function TemporaryDrawer() {
         {!!user && !!userDB &&
         <Housekeeping />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="cab" index={0} />}
+        <Generic category="cab" index={0} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="clock" index={1} />}
+        <Generic category="clock" index={1} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="maintenance" index={2} />}
+        <Generic category="maintenance" index={2} />}
         {!!user && !!userDB &&
-        <PhoneOverlay category="roomChange" index={4} />}
-        <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/lostAndFound")}} />
+        <Generic category="roomChange" index={4} />}
+        <img src={Lost} alt="Cab" className="drawer_icons" onClick={()=>{navigate("/mobile/lostAndFound")}} />
       </List>
       <Divider />
       <List className="drawer_listIcons3">
-        <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/checkList")}} />
-        {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/adminBoard")}} />}
-        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/profile")}} />
+        <img src={CheckList} alt="Checklist" className="drawer_icons" onClick={()=>{navigate("/mobile/checkList")}} />
+        {userDB.adminStatus && <img src={Connection} alt="Admin Panel" className="drawer_icons" onClick={()=>{navigate("/mobile/adminBoard")}} />}
+        <img src={Fom} alt="user-portal" className="drawer_icons" onClick={()=>{navigate("/mobile/profile")}} />
         {/* {!!user && !!userDB &&
         <Support user={user} userDB={userDB} />} */}
       </List>

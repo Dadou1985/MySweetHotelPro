@@ -1,0 +1,53 @@
+import React, { useContext } from 'react'
+import { Nav, Row, Col, Tab } from 'react-bootstrap'
+import CheckListTable from '../../../checkList/checkListTable'
+import { useTranslation } from "react-i18next"
+import '../../../../css/section/form/phoneForm/phonePageTemplate.css'
+import { FirebaseContext } from '../../../../config/Firebase'
+
+const PhoneCheckList = () =>{
+    const { user, userDB } = useContext(FirebaseContext)
+    const { t } = useTranslation()
+
+
+    return(
+        <div className="phoneCheckList_container">
+            <h3 className="phone_title">{t("msh_check_list.c_title")}</h3>
+            <Tab.Container defaultActiveKey="matin">
+            <Row>
+                <Col sm={2}>
+                <Nav variant="pills" className="flex-row" style={{marginBottom: "1vh"}}>
+                <Nav.Item>
+                    <Nav.Link eventKey="matin">{t("msh_check_list.c_button.b_morning_shift")}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                    <Nav.Link eventKey="soir">{t("msh_check_list.c_button.b_afternoon_shift")}</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item>
+                    <Nav.Link eventKey="nuit">{t("msh_check_list.c_button.b_night_shift")}</Nav.Link>
+                    </Nav.Item>
+                </Nav>
+                </Col>
+                <Col sm={10}>
+                <Tab.Content>
+                    <Tab.Pane eventKey="matin">
+                        {!!userDB && !!user && 
+                        <CheckListTable shift="matin" />}
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="soir">
+                    {!!userDB && !!user &&
+                        <CheckListTable shift="soir" />}
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="nuit">
+                    {!!userDB && !!user &&
+                        <CheckListTable shift="nuit" />}
+                    </Tab.Pane>
+                </Tab.Content>
+                </Col>
+            </Row>
+        </Tab.Container>
+    </div>
+    )
+}
+
+export default PhoneCheckList

@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react"
-import FirebaseContext from '../context/context'
+import FirebaseContext from '../context/firebaseContext'
 import {db, auth} from '../config/Firebase'
 import Loader from '../utils/loader/mshLoader'
-import Navigation from '../components/section/navigation'
+import Navigation from '../components/section/layout/navigation'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from '../config/tanstackQuery'
+import { queryClient } from '../config/tanstackQuery/tanstackQuery'
 
 import PropTypes from "prop-types"
-import "../components/css/layout.css"
+import "../css/layout.css"
 
 const Layout = ({ children }) => {
   const [hide, setHide] = useState("flex")

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from 'react'
-import NotificationsBar from './notificationsBar'
+import Bar from './bar'
 import { FirebaseContext, db } from '../../config/Firebase'
 
 export default function Notifications() {
@@ -34,7 +34,7 @@ export default function Notifications() {
     return (
         <>
             {info.map(stick => (
-                <NotificationsBar
+                <Bar
                 message={stick.content}
                 key={stick.markup}
                 markup={stick.id}

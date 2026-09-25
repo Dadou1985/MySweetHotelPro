@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import PhoneCab from '../../components/section/form/phoneForm/phoneCab'
+import MobileCab from '../../components/section/sidebar/mobile/cab.mobile'
 import {FirebaseContext} from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
@@ -10,7 +10,7 @@ const Cab = () => {
     <> 
       <div className="landscape-display"></div>   
       {!!user && !!userDB &&
-      <PhoneCab user={user} userDB={userDB} />}
+      <MobileCab user={user} userDB={userDB} />}
     </>
   )
 }

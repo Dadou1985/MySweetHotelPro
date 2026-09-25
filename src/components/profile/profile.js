@@ -5,8 +5,8 @@ import Avatar from '@material-ui/core/Avatar';
 import { db, auth, storage, FirebaseContext } from '../../config/Firebase'
 import Divider from '@material-ui/core/Divider';
 import Sticker from '../memo/sticker'
-import Flyer from '../visual/flyer'
-import Band from '../visual/band'
+import Flyer from '../visual/flyer/flyer'
+import Band from '../visual/band/band'
 import { PDFExport } from "@progress/kendo-react-pdf"
 import { useShortenUrl } from 'react-shorten-url';
 import { useTranslation } from "react-i18next"
@@ -15,7 +15,7 @@ import { StaticImage } from 'gatsby-plugin-image'
 import { handleMutateUpdate } from '../../utils/commonFunctions'
 import { useFirestoreSubscription, useAdd } from '../../utils/hooks/useFirestore'
 import ModalHeaderFormTemplate from '../../utils/modal/modalHeaderFormTemplate';
-import '../css/section/dilema.css'
+import '../../css/section/dilema.css'
 import { sha256 } from 'js-sha256'
 
 

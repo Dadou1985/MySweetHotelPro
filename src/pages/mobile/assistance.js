@@ -1,19 +1,21 @@
 import React, { useContext } from "react"
-import PhoneSupport from '../../components/section/form/phoneForm/phoneSupport'
+import MobileAssistance from '../../components/support/assistance'
 import {FirebaseContext} from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
-const Assistance = () => {
+const AssistancePage = () => {
     const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
 
-  return(
-    <>
-      <div className="landscape-display"></div>     
-      {!!user && !!userDB &&
-      <PhoneSupport />}
+    return (
+       <> 
+        <div className="landscape-display"></div>   
+       <div id="iziChat" className="dark_messenger_communizi_container">
+            <h5 className="font-weight-bolder dark_messenger_title">Support Technique</h5>
+            {!!userDB && !!user&&
+            <MobileAssistance />}
+        </div>
     </>
-  )
+    )
 }
 
-
-export default withTrans(Assistance)
+export default withTrans(AssistancePage)

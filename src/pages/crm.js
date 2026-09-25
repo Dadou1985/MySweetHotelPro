@@ -1,8 +1,8 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../config/Firebase'
-import GuestDatabase from '../components/section/guestDatabase'
+import CrmTable from '../components/crm/crmTable'
 import { withTrans } from '../../i18n/withTrans'
-import ToolBar from "../components/section/toolbar"
+import Sidebar from "../components/section/sidebar/sidebar"
 
 const UserDatabase = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -13,9 +13,9 @@ const UserDatabase = () => {
         <div style={{
             display: "flex"
           }}>
-          <ToolBar />
+          <Sidebar />
           {!!user && !!userDB &&
-          <GuestDatabase />}
+          <CrmTable />}
         </div>
     </>
   )

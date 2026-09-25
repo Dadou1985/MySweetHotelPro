@@ -1,0 +1,292 @@
+import React, {useState, useRef, useContext } from 'react'
+import {
+    Form,
+    Button,
+    Table,
+    Tabs,
+    Tab,
+    Modal
+} from 'react-bootstrap'
+import SafeIcon from '../../../../assets/svg/vault.svg'
+import { useReactToPrint } from 'react-to-print';
+import { FirebaseContext } from '../../../../config/Firebase'
+import moment from 'moment'
+import 'moment/locale/fr';
+import PerfectScrollbar from 'react-perfect-scrollbar'
+import DateFnsUtils from '@date-io/date-fns';
+import {
+    MuiPickersUtilsProvider,
+    DatePicker
+  } from '@material-ui/pickers';
+import { useTranslation } from "react-i18next"
+import { StyledBadge } from '../../../../utils/form/formCommonUI'
+import BadgeContent from '../../../../utils/badge/badgeContent'
+import SafeTableRow from '../../../../utils/safe/safeTableRow'
+import { safeTableDetailsCoins, safeTableDetailsRolls } from '../../../../utils/safe/safeDetailSheet'
+import { handleChange } from '../../../../utils/form/formCommonFunctions'
+import { useFirestoreSubscription, useAdd, useDelete } from '../../../../utils/hooks/useFirestore'
+
+/* 
+    ! FIX => BUG SUBMIT DATA (TOTAL AMOUNT AND SHIFT CLONE)
+ */
+
+const Safe = () => {
+    const [list, setList] = useState(false)
+    const [formValue, setFormValue] = useState({shift: "matin", shiftClone: ""})
+    const {userDB} = useContext(FirebaseContext)
+    const [footerState, setFooterState] = useState(true)
+    const [filterDate, setFilterDate] = useState(new Date())
+    const { t } = useTranslation()
+
+    const details = [...safeTableDetailsCoins, ...safeTableDetailsRolls]
+
+    const buildInitialQuantities = () =>
+      details.reduce((acc, d) => {
+        acc[d.cellInputId] = 0
+        return acc
+      }, {})
+
+    const [quantities, setQuantities] = useState(buildInitialQuantities)
+
+    const totals = details.reduce(
+      (acc, d) => {
+        const qty = Number(quantities[d.cellInputId] ?? 0) || 0
+        acc.totalQty += qty
+        acc.totalAmount += qty * Number(d.value)
+        return acc
+      },
+      { totalQty: 0, totalAmount: 0 }
+    )
+
+    const onQtyChange = (inputId, value) => {
+      // Keep only non-negative numbers, default to 0
+      const n = Math.max(0, Number(value) || 0)
+      setQuantities((prev) => ({ ...prev, [inputId]: n }))
+    }
+
+    const handleShow = () => setList(true)
+    const handleClose = () => {
+        setList(false)
+        setFormValue("")
+        handleReset()
+    }
+
+    const notif = t("msh_safe.s_notif")
+    const tooltipTitle = t("msh_coolbar.tooltip_safe")
+    const componentRef = useRef();
+
+    const newData = {
+        author: userDB.username,
+        date: moment(new Date()).format('LL'),
+        amount: totals.totalAmount.toFixed(2),
+        shift: formValue.shift,
+        shiftClone: formValue.shiftClone !== "" ? formValue.shiftClone : t("msh_safe.s_select.s_morning_shift"),
+        markup: Date.now()
+    }
+
+    const handleReset = async () => {
+      setQuantities(buildInitialQuantities())
+      return setFormValue({ shift: "matin" })
+    }
+
+    const handleDateChange = (date) => {
+        setFilterDate(date);
+      };
+
+    const { data: info = [] } = useFirestoreSubscription(
+        ['hotels', userDB.hotelId, 'safe'],
+        { where: ['date', '==', moment(filterDate).format('LL')] }
+    )
+
+    const { mutate: addSafe } = useAdd(['hotels', userDB.hotelId, 'safe'])
+    const { mutate: deleteSafe } = useDelete(['hotels', userDB.hotelId, 'safe'])
+    const { mutate: notify } = useAdd()
+
+    //  const handlePrint = useReactToPrint({
+    //     content: () => componentRef.current,
+    // })
+
+
+    return(
+        <div style={{
+            display: "flex",
+            flexFlow: "row",
+            justifyContent: "center",
+            width: "33%"
+        }}>
+            <StyledBadge color="secondary">
+                <BadgeContent tooltipTitle={tooltipTitle} icon={SafeIcon} handleShow={handleShow} />
+            </StyledBadge>
+            <Modal show={list}
+                size="xl"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+                onHide={handleClose}
+                >
+                <Modal.Header closeButton className="msh-bg">
+                    <Modal.Title id="contained-modal-title-vcenter" style={{
+                        display: "flex",
+                        flexFlow: "row",
+                        justifyContent: "space-between", 
+                        width: "90%"
+                    }}>
+                        {t("msh_safe.s_title")}
+                        <div style={{
+                            maxWidth: "70%",
+                            display: "flex",
+                            flexFlow: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center"
+                        }}>
+                        <div style={{fontSize: "15px", fontWeight: "bolder"}}>{t("msh_safe.s_select.s_label")}</div>
+                        <Form.Group controlId="exampleForm.SelectCustom">
+                            <Form.Select className="selectpicker" value={formValue.shift} id="shift" name="shift" onChange={(event) => handleChange(event, setFormValue)} 
+                            style={{ 
+                            height: "4vh", 
+                            border: "1px solid lightgrey", 
+                            borderRadius: "3px",
+                            backgroundColor: "white",
+                            marginLeft: "1vw",
+                            fontSize: "15px", 
+                            paddingLeft: "10px", 
+                            marginRight: footerState ? "0px" : "2vw"}}>
+                                <option value="morning" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_morning_shift"))}>{t("msh_safe.s_select.s_morning_shift")}</option>
+                                <option value="evening" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_afternoon_shift"))}>{t("msh_safe.s_select.s_afternoon_shift")}</option>
+                                <option value="night" onClick={() => setFormValue.shiftClone(t("msh_safe.s_select.s_night_shift"))}>{t("msh_safe.s_select.s_night_shift")}</option>
+                            </Form.Select>
+                            </Form.Group>
+                            {!footerState && <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                            <DatePicker
+                                variant="inline"
+                                ampm={false}
+                                value={filterDate}
+                                label={t('msh_messenger.m_calendar')}
+                                disableFuture
+                                onChange={handleDateChange}
+                                onError={console.log}
+                                format={userDB.language === "en" ? "MM/dd/yyyy" : "dd/MM/yyyy"}
+                                style={{left: "10%"}}
+                                autoOk
+                            />                                        
+                            </MuiPickersUtilsProvider>}
+                        </div>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <form id="moneyBoxes"> 
+                        <Modal.Body>
+                            <Tabs defaultActiveKey="Caisse du shift" id="uncontrolled-tab-example" onSelect={(eventKey) => {
+                                if(eventKey === 'Journal des caisses'){
+                                    return setFooterState(false)
+                                }else{
+                                    return setFooterState(true)
+                                }
+                            }}>
+                            <Tab eventKey="Caisse du shift" title={t("msh_safe.s_first_tab_title")}>
+                            <PerfectScrollbar style={{height: "55vh"}}>
+                            <Table striped bordered hover variant="dark" size="sm" className="text-center">
+                                <thead>
+                                    <tr>
+                                    <th>{t("msh_general.g_table.t_value")}</th>
+                                    <th>{t("msh_general.g_table.t_quantity")}</th>
+                                    <th>{t("msh_general.g_table.t_amount")}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {safeTableDetailsCoins.map((details) => {
+                                        return (
+                                            <SafeTableRow
+                                                key={details.id}
+                                              rowId={details.id}
+                                              label={details.label}
+                                              value={details.value}
+                                              inputId={details.cellInputId}
+                                              outputId={details.cellOutputId}
+                                              qty={quantities[details.cellInputId]}
+                                              onQtyChange={onQtyChange}
+                                            />)
+                                    })}
+                                    <tr>
+                                        <td></td>
+                                        <td><b>{t("msh_general.g_table.t_rolls")}</b></td>
+                                        <td></td>
+                                    </tr>
+                                    {safeTableDetailsRolls.map((details) => {
+                                        return (
+                                            <SafeTableRow
+                                            key={details.id}
+                                              rowId={details.id}
+                                              label={details.label}
+                                              value={details.value}
+                                              inputId={details.cellInputId}
+                                              outputId={details.cellOutputId}
+                                              qty={quantities[details.cellInputId]}
+                                              onQtyChange={onQtyChange}
+                                            />)
+                                    })}
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td></td>
+                                        <td><b>{t("msh_general.g_table.t_total_qty")}</b></td>
+                                        <td><b>{t("msh_general.g_table.t_total")}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td><output id="total">{totals.totalQty.toFixed(2)}</output></td>
+                                        <td><output id="montant">{totals.totalAmount.toFixed(2)}</output></td>
+                                    </tr>
+                                </tfoot>
+                                </Table>
+                                </PerfectScrollbar>
+                            </Tab>
+                            <Tab eventKey="Journal des caisses" title={t("msh_safe.s_second_tab_title")}>
+                            <PerfectScrollbar style={{height: "55vh"}}>
+                            <Table striped bordered hover size="sm" className="text-center" ref={componentRef}>
+                                <thead className="bg-dark text-center text-light">
+                                    <tr>
+                                    <th>{t("msh_general.g_table.t_username")} {t("msh_general.g_table.t_coworker")}</th>
+                                    <th>{t("msh_general.g_table.t_amount")}</th>
+                                    <th>{t("msh_general.g_table.t_shift")}</th>
+                                    <th>{t("msh_general.g_table.t_date")}</th>
+                                    <th className="bg-dark"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {info.map((flow, key) =>(
+                                        <tr key={key}>
+                                            <td>{flow.author}</td>
+                                            <td>{flow.amount} {t("msh_safe.s_currency")}</td>
+                                            <td>{flow.shiftClone}</td>
+                                            <td>{moment(flow.markup).format('L')}</td>
+                                            <td className="bg-dark">
+                                                <Button variant="outline-danger" size="sm" onClick={()=> deleteSafe({ path: ['hotels', userDB.hotelId, 'safe', flow.id] })}>
+                                                    {t("msh_general.g_button.b_delete")}
+                                                </Button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </Table>
+                            </PerfectScrollbar>
+                            </Tab>
+                        </Tabs>
+                    </Modal.Body>
+                    <Modal.Footer>
+                        {footerState && <>
+                            <Button className='btn-msh-dark-outline' onClick={handleReset}>{t("msh_general.g_button.b_reset")}</Button>
+                            <Button className='btn-msh-dark' onClick={(event) => {
+                                event.preventDefault()
+                                addSafe({ path: ['hotels', userDB.hotelId, 'safe'], data: newData })
+                                notify({ path: ['notifications'], data: { content: notif, hotelId: userDB.hotelId, markup: Date.now() } })
+                                return handleClose()
+                        }}>{t("msh_general.g_button.b_send")}</Button>
+                        </>}
+                        {/*!footerState && <Button variant="outline-info" style={{width: "7vw"}} onClick={handlePrint}>Imprimer</Button>*/}
+                    </Modal.Footer>
+                    </form>
+                </Modal>
+        </div>
+    )
+}
+
+export default Safe

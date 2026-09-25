@@ -1,6 +1,6 @@
 import React, { useContext } from "react"
 import 'bootstrap/dist/css/bootstrap.min.css'
-import ToolBar from "../components/section/toolbar"
+import Sidebar from "../components/section/sidebar/sidebar"
 import {FirebaseContext} from '../config/Firebase'
 import Dashboard from '../components/dashboard/dashboard'
 import { withTrans } from '../../i18n/withTrans'
@@ -9,7 +9,7 @@ import Background from "../assets/images/newDeskDigital.png"
 import moment from 'moment'
 import 'moment/locale/fr';
 
-const HomePage = () => {
+const Home = () => {
   const firebaseCtx = useContext(FirebaseContext) || { user: null, userDB: null }
   const { userDB, user } = firebaseCtx
   const { t } = useTranslation()
@@ -27,7 +27,7 @@ const HomePage = () => {
           // backgroundPositionX: "5vw",
           // backgroundPositionY: "-5vh"
         }}>
-          <ToolBar />
+          <Sidebar />
           <div style={{
             display: "flex",
             flexFlow: "row",
@@ -58,4 +58,4 @@ const HomePage = () => {
   )
 }
 
-export default withTrans(HomePage)
+export default withTrans(Home)

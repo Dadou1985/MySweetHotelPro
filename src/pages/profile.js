@@ -1,12 +1,12 @@
 import React, { useContext } from "react"
 import Profile from '../components/profile/profile'
-import {FirebaseContext} from '../config/Firebase'
+import { FirebaseContext } from '../config/Firebase'
 import { ShortenUrlProvider } from 'react-shorten-url';
 import { withTrans } from '../../i18n/withTrans'
 
-const Profile = () => {
+const ProfilePage = () => {
     const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
-  
+
     return (
         <>
             <div className="landscape-display"></div>
@@ -18,4 +18,4 @@ const Profile = () => {
     )
 }
 
-export default withTrans(Profile)
+export default withTrans(ProfilePage)

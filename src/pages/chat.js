@@ -1,10 +1,10 @@
 import React, { useContext } from "react"
 import {FirebaseContext} from '../config/Firebase'
-import Chat from '../components/section/communIzi'
-import PhoneChat from '../components/section/phoneCommunIzi'
+import Chat from '../components/chat/chat'
+import MobileChat from '../components/chat/mobile/chat.mobile'
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
-import ToolBar from "../components/section/toolbar"
+import Sidebar from "../components/section/sidebar/sidebar"
 
 const ChatPage = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -20,7 +20,7 @@ const isBrowser = () => typeof window !== "undefined"
           }}>
             {isBrowser() && window.innerWidth > 1023 ?
             <>
-              <ToolBar />
+              <Sidebar />
               <div id="iziChat" className="dark_messenger_communizi_container">
                 <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
                 {!!userDB && !!user&&
@@ -28,11 +28,11 @@ const isBrowser = () => typeof window !== "undefined"
               </div>
             </> : 
             <>
-            {isBrowser() && window.innerWidth > 768 && <ToolBar />}
+            {isBrowser() && window.innerWidth > 768 && <Sidebar />}
               <div id="iziChat" className="dark_messenger_communizi_container">
                 <h3 className="dark_messenger_title">{t('msh_chat.c_chat_title')}</h3>
                 {!!userDB && !!user&&
-                <PhoneChat />}
+                <MobileChat />}
               </div>
             </>}
           </div>

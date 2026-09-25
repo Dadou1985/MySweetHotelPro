@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useContext } from 'react'
-import Message from './messageSupport'
+import Message from './message'
 import PerfectScrollbar from 'react-perfect-scrollbar'
 import { db, FirebaseContext } from '../../config/Firebase'
 

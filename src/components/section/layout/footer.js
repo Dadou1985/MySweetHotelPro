@@ -1,0 +1,17 @@
+import React, { useContext } from 'react'
+import Notifications from '../../notification/notifications'
+import { FirebaseContext } from '../../../config/Firebase'
+import '../../../css/section/footer.css'
+
+const Footer = () =>{
+    const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
+
+    return(
+        <div className="footer_container">
+            {!!userDB && !!setUserDB && !!user && !!setUser &&
+            <Notifications userDB={userDB} setUserDB={setUserDB} />}
+        </div>
+    )
+}
+
+export default Footer

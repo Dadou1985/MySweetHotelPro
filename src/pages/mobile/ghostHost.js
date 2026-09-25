@@ -1,5 +1,5 @@
 import React, { useContext } from "react"
-import PhoneGhost from '../../components/section/form/phoneForm/phoneGhost'
+import MobileGhost from '../../components/section/sidebar/mobile/ghost.mobile'
 import {FirebaseContext} from '../../config/Firebase'
 import { withTrans } from '../../../i18n/withTrans'
 
@@ -10,7 +10,7 @@ const GhostHost = () => {
        <> 
         <div className="landscape-display"></div>  
         {!!user && !!userDB && !!setUserDB &&
-        <PhoneGhost user={user} userDB={userDB} setUserDB={setUserDB} />}
+        <MobileGhost user={user} userDB={userDB} setUserDB={setUserDB} />}
     </>
     )
 }

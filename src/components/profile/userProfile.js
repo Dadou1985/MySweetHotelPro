@@ -1,17 +1,17 @@
 import React, { useState } from 'react'
 import { Button, Modal } from 'react-bootstrap'
 import Avatar from '@material-ui/core/Avatar'
-import DefaultProfile from "../../../../assets/svg/profile.png"
+import DefaultProfile from "../../assets/svg/profile.png"
 import Drawer from '@material-ui/core/Drawer'
 import IconButton from '@material-ui/core/IconButton';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
-import { auth, db, storage } from '../../../../config/Firebase'
+import { auth, db, storage } from '../../config/Firebase'
 import { useTranslation } from "react-i18next"
-import '../../../css/section/form/phoneForm/phoneUserProfile.css'
-import InputElement from '../../../../utils/form/InputElement'
+import '../../css/section/form/phoneForm/phoneUserProfile.css'
+import InputElement from '../../utils/form/InputElement'
 import { sha256 } from 'js-sha256'
-import { useFirestoreSubscription, useAdd } from '../../../../utils/hooks/useFirestore'
-import { handleMutateUpdate } from '../../../../utils/commonFunctions'
+import { useFirestoreSubscription, useAdd } from '../../utils/hooks/useFirestore'
+import { handleMutateUpdate } from '../../utils/commonFunctions'
 
 const UserProfile = ({user, userDB, setUserDB}) => {
     
