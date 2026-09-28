@@ -22,7 +22,6 @@ exports.onCreateWebpackConfig = ({
     actions.setWebpackConfig({
       externals: getConfig().externals.concat(({context, request}, cb) => {
         const regex = /^@?firebase(\/(.+))?/
-        // exclude firebase products from being bundled, so they will be loaded using require() at runtime.
         if (regex.test(request)) {
           return cb(null, `commonjs ${request}`) // <- use commonjs!
         }

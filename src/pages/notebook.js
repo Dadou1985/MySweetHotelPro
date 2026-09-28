@@ -1,19 +1,19 @@
 import React, { useState, useContext } from "react"
-import {FirebaseContext} from '../Firebase'
-import Notebook from '../components/section/messenger'
+import {FirebaseContext} from '../config/Firebase'
+import Notebook from '../components/notebook/nootebook'
 import MomentUtils from "@date-io/moment";
-import Memo from '../components/section/memo'
+import Memo from '../components/memo/memo'
 import {
   MuiPickersUtilsProvider,
   DatePicker
 } from '@material-ui/pickers';
 import { withTrans } from '../../i18n/withTrans'
 import { useTranslation } from "react-i18next"
-import ToolBar from "../components/section/toolbar"
+import Sidebar from "../components/section/sidebar/sidebar"
 import moment from 'moment'
 import 'moment/locale/fr';
 import DateFnsUtils from '@date-io/date-fns';
-import Background from "../images/desk-note.png"
+import Background from "../assets/images/desk-note.png"
 
 const NotebookPage = () => {
   const { userDB, setUserDB, user, setUser } = useContext(FirebaseContext)
@@ -36,7 +36,7 @@ const NotebookPage = () => {
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
           }}>
-          <ToolBar />
+          <Sidebar />
           <div id="iziChat"  style={{
             display: "flex",
             flexFlow: "row wrap",

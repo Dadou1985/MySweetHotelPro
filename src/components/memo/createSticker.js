@@ -1,0 +1,80 @@
+import React, {useState, useContext } from 'react'
+import { Button, Modal, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { useTranslation } from "react-i18next"
+import '../../css/section/createSticker.css'
+import PostIt from '../../assets/images/postItPlus.png'
+import { handleChange } from '../../utils/form/formCommonFunctions'
+import { FirebaseContext } from '../../config/Firebase'
+import { useAdd } from '../../utils/hooks/useFirestore'
+
+/*
+    ! FIX => OVERLAYtRIGGER TOOLTIP POSITION
+*/
+
+const CreateSticker = () => {
+    const { userDB } = useContext(FirebaseContext)
+    const [visible, setVisible] = useState(false)
+    const [formValue, setFormValue] = useState({title: "", text: ""})
+    const { t } = useTranslation()
+    const { mutate: addSticker } = useAdd(['hotels', userDB.hotelId, 'stickers'])
+
+    const showSticker = () => {
+        setVisible(true)
+    }
+
+    const handleClose = (event) => {
+        setVisible(false)
+    }
+
+    return (
+        <div>
+            <OverlayTrigger
+            placement="top"
+            overlay={
+                <Tooltip id="title">
+                {t("msh_memo.m_create_sticker.s_tooltip")}
+                </Tooltip>
+            }>
+            <img src={PostIt} alt="post-it" className="sticker_img" onClick={showSticker} />
+            </OverlayTrigger>
+            <Modal show={visible}
+            onHide={handleClose}
+            size="lg"
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            >
+                <Modal.Header className="bg-light">
+                    <Modal.Title id="contained-modal-title-vcenter" style={{
+                        diplay: "flex",
+                        flexFlow: "row",
+                        justifyContent: "space-between",
+                        width: "100%"
+                    }}>
+                    <input value={formValue.title} name="title" type="text" placeholder={t("msh_memo.m_create_sticker.s_title")} onChange={(event) => handleChange(event, setFormValue)}
+                    className="sticker_modalTitle_input" required />
+                    </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <textarea value={formValue.text} name="text" placeholder={t("msh_memo.m_create_sticker.s_body")} onChange={(event) => handleChange(event, setFormValue)}
+                    className="sticker_modalBody_textarea" required></textarea>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="outline-secondary" onClick={handleClose}>{t("msh_memo.m_create_sticker.s_close_button")}</Button>
+                    <Button variant="outline-success" onClick={(event) => {
+                        addSticker({ path: ['hotels', userDB.hotelId, 'stickers'], data: {
+                            title: formValue.title,
+                            text: formValue.text,
+                            author: userDB.username,
+                            markup: Date.now()
+                        }})
+                        setFormValue({title: "", text: ""})
+                        setVisible(false)
+                        return handleClose()
+                    }}>{t("msh_memo.m_create_sticker.s_stick_button")}</Button>
+                </Modal.Footer>
+            </Modal>
+        </div>
+    )
+}
+
+export default CreateSticker

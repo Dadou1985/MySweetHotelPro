@@ -6,13 +6,12 @@ import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 
-import Connection from '../components/connection'
+import Login from '../components/auth/login'
 
-const IndexPage = () => {
-
+const Index = () => {
   return(
-    <Connection />
+    <Login />
   )
 }
 
-export default IndexPage
+export default Index

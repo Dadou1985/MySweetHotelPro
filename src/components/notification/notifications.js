@@ -1,0 +1,45 @@
+import React, {useState, useEffect, useContext } from 'react'
+import Bar from './bar'
+import { FirebaseContext, db } from '../../config/Firebase'
+
+export default function Notifications() {
+
+    const [info, setInfo] = useState([])
+
+    const {userDB} = useContext(FirebaseContext)
+
+
+    useEffect(() => {
+        const toolOnAir = () => {
+            return db.collection('notifications')
+            .where("hotelId", "==", userDB.hotelId)
+        }
+
+        let unsubscribe = toolOnAir().onSnapshot(function(snapshot) {
+                    const snapStick = []
+                  snapshot.forEach(function(doc) {          
+                    snapStick.push({
+                        id: doc.id,
+                        ...doc.data()
+                      })        
+                    })
+                    
+                    setInfo(snapStick)
+                });
+                return unsubscribe
+                
+           
+     },[])
+
+    return (
+        <>
+            {info.map(stick => (
+                <Bar
+                message={stick.content}
+                key={stick.markup}
+                markup={stick.id}
+              />
+            ))}
+        </>
+    )
+}

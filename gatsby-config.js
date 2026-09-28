@@ -20,7 +20,7 @@ module.exports = {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,
-        path: `${__dirname}/src/images/`,
+        path: `${__dirname}/src/assets/images/`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -35,7 +35,7 @@ module.exports = {
         background_color: `#630c13`,
         theme_color: `#630c13`,
         display: `standalone`,
-        icon: `src/svg/mshPro-newLogo-transparent.png`, // This path is relative to the root of the site.
+        icon: `src/assets/svg/mshPro-newLogo-transparent.png`, // This path is relative to the root of the site.
       },
     },
     ...(hasFirebaseConfig
